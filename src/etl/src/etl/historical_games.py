@@ -4,9 +4,9 @@ import pandas as pd
 from nba_api.stats.endpoints import leaguegamefinder
 from src.database.supabase_client import get_supabase_client
 
-def fetch_historical_games(start_year=1970):
+def fetch_historical_games(start_year=1980):
     """
-    Extrae partidos de la NBA desde 1970 y los sube a Supabase.
+    Extrae partidos de la NBA fdsjhdskahdesde 1980 y los sube a Supabase.
     Limpia datos conflictivos (NaN, Inf) mediante doble serialización JSON.
     """
     supabase = get_supabase_client()
