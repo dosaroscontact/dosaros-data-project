@@ -22,22 +22,25 @@ def fetch_historical_games(start_year=1970):
             games = game_finder.get_data_frames()[0]
             
             if not games.empty:
-                # 1. Limpieza inicial de nulos e infinitos con Pandas
+                # 1. LIMPIEZA AGRESIVA DE DUPLICADOS
+                # Mantenemos solo la primera aparición de cada combinación clave
+                # Esto garantiza que Postgres reciba solo una instrucción por fila
+                games = games.drop_duplicates(subset=['GAME_ID', 'TEAM_ID'], keep='first')
+                
+                # 2. LIMPIEZA DE TIPOS Y NULOS
                 games = games.replace([float('inf'), float('-inf')], None)
+                # Forzamos que GAME_ID sea string (a veces viene mezclado)
+                games['GAME_ID'] = games['GAME_ID'].astype(str)
                 games = games.where(pd.notnull(games), None)
                 
-                # 2. Doble conversión JSON para limpiar tipos de datos incompatibles (numpy types)
-                # Esto garantiza que el envío sea compatible con la API de Supabase
-                clean_json = games.to_json(orient='records', date_format='iso')
-                data = json.loads(clean_json)
+                # 3. CONVERSIÓN A TIPOS NATIVOS
+                # Eliminamos cualquier rastro de tipos de numpy que confunden al serializador
+                data = json.loads(games.to_json(orient='records', date_format='iso'))
                 
-                # 3. Carga masiva mediante upsert para evitar duplicados
+                # 4. ENVÍO EN LOTES PEQUEÑOS (Opcional pero ayuda a depurar)
                 supabase.table("nba_games").upsert(data).execute()
-                print(f"Exito: {len(data)} partidos cargados de la temporada {season_str}")
-            else:
-                print(f"Aviso: No hay datos para {season_str}")
+                print(f"Exito: {len(data)} partidos cargados de la temporada {season_str}")            # Pausa obligatoria para evitar bloqueos por rate limiting
             
-            # Pausa obligatoria para evitar bloqueos por rate limiting
             time.sleep(2) 
             
         except Exception as e:
