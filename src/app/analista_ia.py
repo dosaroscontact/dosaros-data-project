@@ -4,7 +4,7 @@ import json
 
 # Configuración del laboratorio Dos Aros
 DB_PATH = "/mnt/nba_data/dosaros_local.db"
-MODELO_IA = "llama3.2"  # Versión 3B optimizada para la RAM de la Pi
+MODELO_IA = "deepseek-coder:1.3b"  # Versión 3B optimizada para la RAM de la Pi
 
 def obtener_esquema_db():
     """Extrae la estructura de la tabla para que la IA sepa qué columnas existen."""
