@@ -2,7 +2,8 @@ import sqlite3
 import os
 
 # Definimos la ruta de la base de datos (Data Warehouse Real)
-DB_PATH = "dosaros_local.db"
+#DB_PATH = "dosaros_local.db"
+DB_PATH = "/mnt/nba_data/dosaros_local.db"
 
 def init_db():
     print(f"Inicializando base de datos local en: {DB_PATH}...")

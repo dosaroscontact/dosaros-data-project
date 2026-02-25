@@ -4,7 +4,8 @@ import pandas as pd
 from nba_api.stats.endpoints import leaguegamefinder
 
 # Ruta a tu base de datos local en la Raspberry Pi
-LOCAL_DB_PATH = "dosaros_local.db"
+#LOCAL_DB_PATH = "dosaros_local.db"
+LOCAL_DB_PATH = "/mnt/nba_data/dosaros_local.db"
 
 def fetch_historical_games(start_year=1983):
     # Conexión local: velocidad máxima
