@@ -40,7 +40,8 @@ def descargar_pbp_por_temporada(season_id_prefix):
             df.to_sql('nba_pbp', conn, if_exists='append', index=False)
             
             # Pausa de seguridad para la Raspberry Pi y la API
-            time.sleep(2.5) 
+            # Dentro del bucle:
+            time.sleep(4)
             
         except Exception as e:
             print(f"Error en partido {game_id}: {e}")
