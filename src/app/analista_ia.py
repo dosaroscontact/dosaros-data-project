@@ -9,7 +9,7 @@ DB_PATH = "/mnt/nba_data/dosaros_local.db"
 
 # Inicializamos el cliente con el modelo más avanzado de tu lista
 client = genai.Client(api_key=API_KEY)
-MODELO_ACTIVO = "gemini-2.0-flash" 
+MODELO_ACTIVO = "gemini-1.5-flash"
 
 # 2. DEFINICIÓN DE LA "GEMA" (Instrucciones maestras)
 # Aquí es donde le explicamos a la IA cómo es tu mundo de datos
