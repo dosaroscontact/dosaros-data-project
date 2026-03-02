@@ -3,25 +3,40 @@ import pandas as pd
 import sqlite3
 import time
 
-def descargar_temporada(season_str):
-    # 1. Consultar el endpoint de búsqueda de partidos
-    # '00' es el ID para la NBA
-    query = leaguegamefinder.LeagueGameFinder(
-        season_nullable=season_str,
-        league_id_nullable='00',
-        season_type_nullable='Regular Season'
-    )
+def descargar_periodo_historico(ano_inicio, ano_fin):
+    # Ruta al archivo en el disco duro externo
+    db_path = "/mnt/nba_data/dosaros_local.db"
     
-    # 2. Transformar los datos a un formato tabular (DataFrame)
-    df = query.get_data_frames()[0]
-    
-    # 3. Almacenamiento en base de datos local
-    conexion = sqlite3.connect('nba_data_warehouse.db')
-    df.to_sql('partidos_nba', conexion, if_exists='append', index=False)
-    conexion.close()
-    
-    return len(df)
+    for ano in range(ano_inicio, ano_fin):
+        # Generar formato: 1980-81, 1981-82, etc.
+        sig_ano = str(ano + 1)[-2:]
+        season_str = f"{ano}-{sig_ano}"
+        
+        print(f"Descargando temporada {season_str}...")
+        
+        try:
+            # Petición a la API
+            query = leaguegamefinder.LeagueGameFinder(
+                season_nullable=season_str,
+                league_id_nullable='00',
+                season_type_nullable='Regular Season'
+            )
+            
+            df = query.get_data_frames()[0]
+            
+            # Guardar en la tabla existente 'nba_games'
+            conexion = sqlite3.connect(db_path)
+            df.to_sql('nba_games', conexion, if_exists='append', index=False)
+            conexion.close()
+            
+            print(f"Éxito: {len(df)} registros añadidos.")
+            
+            # Pausa de seguridad para evitar bloqueos (Rate Limiting)
+            time.sleep(2.5)
+            
+        except Exception as e:
+            print(f"Error en temporada {season_str}: {e}")
+            time.sleep(10) # Pausa más larga si hay error
 
-# Ejemplo: Descargar la temporada 2023-24
-cantidad = descargar_temporada('2023-24')
-print(f"Se han descargado {cantidad} registros de partidos.")
+# Ejecución desde 1980 hasta la actualidad
+descargar_periodo_historico(1980, 2026)
