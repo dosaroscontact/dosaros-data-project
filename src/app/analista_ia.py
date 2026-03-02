@@ -3,71 +3,74 @@ import pandas as pd
 from google import genai
 from google.genai import types
 
-# Configuración del Laboratorio
+# 1. CONFIGURACIÓN DEL LABORATORIO
 API_KEY = "AIzaSyAnz9CXRL3Fyjjz8wWqH4lowmeAkeM_cy4" 
 DB_PATH = "/mnt/nba_data/dosaros_local.db"
 
-# Inicialización del cliente con el nuevo SDK oficial
+# Inicializamos el cliente con el modelo más avanzado de tu lista
 client = genai.Client(api_key=API_KEY)
+MODELO_ACTIVO = "gemini-2.0-flash" 
 
-# Configuración de la "Gema" mediante Instrucciones del Sistema
+# 2. DEFINICIÓN DE LA "GEMA" (Instrucciones maestras)
+# Aquí es donde le explicamos a la IA cómo es tu mundo de datos
 instruccion_sistema = """
-Eres el motor de traducción SQL para el Proyecto Dos Aros. 
-Tu función es convertir preguntas en lenguaje natural en consultas SQL precisas para SQLite.
+Eres el motor de investigación del Proyecto Dos Aros. 
+Tu misión es traducir preguntas de lenguaje natural a SQL para SQLite.
 
-INFORMACIÓN DEL ESQUEMA:
-- Tabla: 'nba_games'
-- Columnas clave: SEASON_ID, GAME_DATE, TEAM_ABBREVIATION, WL, PTS, REB, AST, PLUS_MINUS.
+DATOS DISPONIBLES (Tabla 'nba_games'):
+- SEASON_ID: Identificador de temporada. 
+  * '2' + año (ej: '21987') para Temporada Regular.
+  * '4' + año (ej: '41987') para Playoffs.
+- GAME_DATE: Fecha del partido.
+- PTS: Puntos anotados.
+- PLUS_MINUS: Diferencial de puntos.
+- WL: Resultado (W/L).
 
-LÓGICA DE NEGOCIO:
-1. Temporada Regular: SEASON_ID debe empezar por '2' (ej. LIKE '2%').
-2. Playoffs: SEASON_ID debe empezar por '4' (ej. LIKE '4%').
-3. Año: El formato en SEASON_ID es el año de inicio. Ejemplo: '21987' es Regular Season de 1987.
-4. PROHIBIDO: Usar la función YEAR(). Para fechas usa strftime o filtros sobre SEASON_ID.
-
-SALIDA:
-- Devuelve ÚNICAMENTE el código SQL plano, sin bloques de código markdown (sin ```sql).
+REGLAS DE ORO:
+1. No inventes columnas. Usa solo las mencionadas.
+2. PROHIBIDO usar la función YEAR(). Para filtrar por año usa SEASON_ID LIKE '%1987'.
+3. Responde ÚNICAMENTE con el código SQL plano, sin explicaciones ni markdown.
 """
 
 def preguntar_a_gemini(pregunta_usuario):
-    """Envía la consulta a Gemini y extrae el SQL."""
+    """Envía la pregunta a la Gema y extrae el SQL."""
     try:
         response = client.models.generate_content(
-            model="gemini-1.5-flash",
+            model=MODELO_ACTIVO,
             contents=pregunta_usuario,
             config=types.GenerateContentConfig(
                 system_instruction=instruccion_sistema,
-                temperature=0.0
+                temperature=0.0  # Creatividad cero para evitar errores
             )
         )
-        # Limpieza de posibles etiquetas markdown
+        # Limpiamos el resultado por si Gemini añade formato markdown
         sql = response.text.replace("```sql", "").replace("```", "").strip()
         return sql
     except Exception as e:
-        return f"Error en la petición a Gemini: {e}"
+        return f"Error en la petición: {e}"
 
 def ejecutar_en_hdd(sql):
-    """Ejecuta la consulta directamente en el disco duro externo."""
-    if "Error" in sql:
-        return sql
-        
+    """Lanza la consulta contra el disco duro externo."""
+    if "Error" in sql: return sql
+    
     try:
         conn = sqlite3.connect(DB_PATH)
         df = pd.read_sql_query(sql, conn)
         conn.close()
         return df
     except Exception as e:
-        return f"Error de ejecución SQL: {e}\nQuery intentada: {sql}"
+        return f"Error SQL: {e}\nQuery intentada: {sql}"
 
+# 3. EJECUCIÓN DE PRUEBA
 if __name__ == "__main__":
-    print("--- Analista IA Dos Aros (Gemini Flash) ---")
-    pregunta = "¿Cual es el promedio de puntos en temporada regular vs playoffs en 1987?"
+    print(f"--- Laboratorio Dos Aros (Motor: {MODELO_ACTIVO}) ---")
+    pregunta = "¿Cuál es el promedio de puntos en temporada regular vs playoffs en 1987?"
     
-    print(f"Pregunta: {pregunta}")
+    print(f"Analizando: {pregunta}")
     sql_generado = preguntar_a_gemini(pregunta)
     
     print(f"SQL Generado: {sql_generado}")
     
     resultado = ejecutar_en_hdd(sql_generado)
-    print("\n--- Resultado del Laboratorio ---")
+    print("\n--- Resultado de la Investigación ---")
     print(resultado)
