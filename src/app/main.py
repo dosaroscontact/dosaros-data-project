@@ -1,11 +1,43 @@
 import streamlit as st
 import pandas as pd
 import altair as alt
+import sqlite3
+import os
+from google import genai
+from dotenv import load_dotenv
 from src.database.supabase_client import get_supabase_client
 from src.etl.nba_games_extractor import sync_nba_games
 
-st.set_page_config(page_title="Proyecto Dos Aros", layout="wide")
+# 1. Configuración de Seguridad y Entorno
+load_dotenv()
+API_KEY = os.getenv("GEMINI_API_KEY")
+LOCAL_DB = "/mnt/nba_data/dosaros_local.db" # Tu base de datos del HDD
+client = genai.Client(api_key=API_KEY)
 
+st.set_page_config(page_title="Proyecto Dos Aros", page_icon="🏀", layout="wide")
+
+# --- LÓGICA DEL ANALISTA IA (MOTOR LOCAL) ---
+def obtener_sql_ia(pregunta):
+    contexto = """
+    Eres experto en SQLite. Tablas: 'nba_games' (equipos) y 'nba_players_games' (jugadores).
+    Reglas: No uses YEAR(). Filtra año con LIKE '%AÑO'.
+    Fase: Regular (LIKE '2%'), Playoffs (LIKE '4%').
+    Salida: Solo SQL plano sin markdown.
+    """
+    prompt = f"{contexto}\n\nPregunta: {pregunta}"
+    response = client.models.generate_content(model="gemini-flash-latest", contents=prompt)
+    return response.text.replace("```sql", "").replace("```", "").strip()
+
+def consultar_db_local(sql):
+    try:
+        conn = sqlite3.connect(LOCAL_DB)
+        df = pd.read_sql_query(sql, conn)
+        conn.close()
+        return df
+    except Exception as e:
+        return f"Error SQL: {e}"
+
+# --- SIDEBAR EXISTENTE ---
 with st.sidebar:
     st.header("Configuración")
     temporada = st.selectbox(
@@ -20,9 +52,13 @@ with st.sidebar:
             st.success("Sincronización finalizada")
             st.cache_data.clear()
             st.rerun()
+    
+    st.divider()
+    st.info(f"BBDD Local: {os.path.getsize(LOCAL_DB)/(1024*1024):.1f} MB")
 
 st.title("Proyecto Dos Aros 🏀")
 
+# --- CARGA DE DATOS (SUPABASE) ---
 @st.cache_data
 def load_data(table_name, season_filter=None):
     try:
@@ -48,7 +84,8 @@ col1.metric("Equipos", len(df_teams))
 col2.metric("Partidos", len(df_games))
 col3.metric("Acciones de Jugadores", len(df_players))
 
-tab1, tab2, tab3 = st.tabs(["Resultados", "Análisis de Jugadores", "Equipos"])
+# --- TABS (AÑADIMOS EL ANALISTA) ---
+tab1, tab2, tab3, tab4 = st.tabs(["Resultados", "Análisis de Jugadores", "Equipos", "🕵️ Analista IA"])
 
 with tab1:
     if not df_games.empty:
@@ -59,28 +96,36 @@ with tab1:
         st.dataframe(df_display[['game_date', 'Local', 'home_points', 'Visitante', 'visitor_points']], use_container_width=True)
 
 with tab2:
+    # ... (Mantenemos tu lógica de Altair intacta)
     if not df_players.empty and not df_games.empty:
+        st.subheader("Eficiencia vs Volumen de Anotación")
         game_ids = df_games['game_id'].tolist()
         df_view = df_players[df_players['game_id'].isin(game_ids)].copy()
         
-        if not df_view.empty:
-            st.subheader("Eficiencia vs Volumen de Anotación")
-            
-            # Gráfico de dispersión con Altair
-            chart = alt.Chart(df_view).mark_circle(size=100).encode(
-                x=alt.X('field_goals_pct:Q', title='Eficiencia (FG%)', scale=alt.Scale(domain=[0, 1])),
-                y=alt.Y('points:Q', title='Puntos Anotados'),
-                color=alt.Color('team_id:N', legend=None),
-                tooltip=['player_name', 'points', 'field_goals_pct', 'minutes']
-            ).interactive().properties(height=400)
-            
-            st.altair_chart(chart, use_container_width=True)
-            
-            st.subheader("Top 10 Anotadores")
-            df_view['Equipo'] = df_view['team_id'].map(team_map)
-            st.table(df_view.sort_values(by='points', ascending=False).head(10)[['player_name', 'Equipo', 'points', 'minutes']])
-    else:
-        st.info("Sincroniza datos para ver el análisis de jugadores.")
+        chart = alt.Chart(df_view).mark_circle(size=100).encode(
+            x=alt.X('field_goals_pct:Q', title='Eficiencia (FG%)', scale=alt.Scale(domain=[0, 1])),
+            y=alt.Y('points:Q', title='Puntos Anotados'),
+            color=alt.Color('team_id:N', legend=None),
+            tooltip=['player_name', 'points', 'field_goals_pct']
+        ).interactive().properties(height=400)
+        st.altair_chart(chart, use_container_width=True)
 
 with tab3:
     st.dataframe(df_teams, use_container_width=True)
+
+with tab4:
+    st.header("Consulta a la Gema")
+    st.write("Usa lenguaje natural para interrogar la base de datos histórica (1980-2025).")
+    
+    pregunta = st.text_input("Haz tu pregunta técnica:", placeholder="Ej: ¿Qué jugador anotó más puntos en un partido en los 90?")
+    
+    if pregunta:
+        with st.spinner("Traduciendo a SQL..."):
+            sql = obtener_sql_ia(pregunta)
+            st.code(sql, language="sql")
+            
+            res = consultar_db_local(sql)
+            if isinstance(res, pd.DataFrame):
+                st.table(res)
+            else:
+                st.error(res)
