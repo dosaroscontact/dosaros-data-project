@@ -71,7 +71,9 @@ def run_season_import(season, start_game=1, end_game=340):
 
 def fetch_pbp_data(season, game_code):
     """Obtiene los eventos minuto a minuto del partido."""
-    url = f"https://api-live.euroleague.net/v1/games/season/{season}/game/{game_code}/playbyplay"
+    #url = f"https://api-live.euroleague.net/v1/games/season/{season}/game/{game_code}/playbyplay"
+    # Cambia esto en fetch_game_data y fetch_pbp_data:
+    url = f"https://api-live.euroleague.net/v1/games/season/E{season}/game/{game_code}/boxscore"
     try:
         r = requests.get(url, headers=HEADERS, timeout=10)
         if r.status_code == 200:
@@ -126,7 +128,9 @@ def run_full_import(season, code):
 
 def fetch_pbp_data(season, game_code):
     """Obtiene los eventos minuto a minuto del partido."""
-    url = f"https://api-live.euroleague.net/v1/games/season/{season}/game/{game_code}/playbyplay"
+    #url = f"https://api-live.euroleague.net/v1/games/season/{season}/game/{game_code}/playbyplay"
+    # Cambia esto en fetch_game_data y fetch_pbp_data:
+    url = f"https://api-live.euroleague.net/v1/games/season/E{season}/game/{game_code}/boxscore"
     try:
         r = requests.get(url, headers=HEADERS, timeout=10)
         if r.status_code == 200:
