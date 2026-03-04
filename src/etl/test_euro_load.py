@@ -1,42 +1,41 @@
 import sys
 from pathlib import Path
-
-# Añadimos la raíz del proyecto al path para que encuentre tus módulos
-sys.path.append(str(Path(__file__).parent.parent.parent))
+# Asegúrate de que el path sea correcto para tu Raspberry Pi
+sys.path.append("/home/pi/dosaros-data-project")
 
 from src.etl.euro_extractor import fetch_game_data, process_and_save, fetch_pbp_data, process_pbp
 import sqlite3
 
-def test_load(season=2025, num_games=5):
-    print(f"--- Iniciando Carga de Prueba: Temporada {season} ---")
+def test_real_games():
+    # Vamos a probar con los IDs que me has pasado
+    # Formato: E2025 (Temporada) y el número del final de la URL
+    season = "2025"
+    games_to_test = [281, 283, 286] 
     
-    for code in range(1, num_games + 1):
+    print(f"--- Probando con Partidos Reales: Temporada {season} ---")
+    
+    for code in games_to_test:
         game_id = f"E{season}_{code}"
-        print(f"Procesando {game_id}...")
+        print(f"Intentando descargar: {game_id}...")
         
-        # 1. Boxscore
+        # OJO: La URL base debe llevar la 'E' antes del año
+        # Asegúrate de que en euro_extractor.py la URL sea:
+        # f"https://api-live.euroleague.net/v1/games/season/E{season}/game/{code}/boxscore"
+        
         box = fetch_game_data(season, code)
         if box:
             process_and_save(box)
-            
-            # 2. Play-by-Play
             pbp = fetch_pbp_data(season, code)
             if pbp:
                 process_pbp(pbp, game_id)
         else:
-            print(f"Salto: El partido {code} no parece estar disponible.")
+            print(f"Error: No se pudo obtener el partido {code}. Revisa la URL en euro_extractor.py")
 
-    # Verificación final
+    # Verificación
     conn = sqlite3.connect("/mnt/nba_data/dosaros_local.db")
-    cursor = conn.cursor()
-    
-    print("\n--- Resultados en DB ---")
-    tables = ['euro_games', 'euro_players_games', 'euro_pbp']
-    for table in tables:
-        count = cursor.execute(f"SELECT COUNT(*) FROM {table}").fetchone()[0]
-        print(f"Tabla {table}: {count} filas.")
-    
+    res = conn.execute("SELECT COUNT(*) FROM euro_games").fetchone()[0]
+    print(f"\nÉxito: {res} partidos nuevos en la base de datos.")
     conn.close()
 
 if __name__ == "__main__":
-    test_load()
+    test_real_games()
