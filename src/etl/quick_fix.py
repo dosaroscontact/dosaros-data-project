@@ -25,6 +25,10 @@ def test_new_api():
         print(f"Resultado: {r.status_code}")
         if r.status_code == 200:
             print("¡LO TENEMOS! Los datos están aquí.")
+            # En quick_fix.py, después del r.status_code == 200:
+            data = r.json()
+            print("Llaves principales del JSON:", data.keys())
+            # Mira si hay algo como 'Header', 'Live', 'Points', etc.
             return True
     return False
 
