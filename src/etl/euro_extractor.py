@@ -7,14 +7,31 @@ DB_PATH = "/mnt/nba_data/dosaros_local.db"
 HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
 
 def fetch_game_data(season, game_code):
-    """Obtiene el JSON crudo de la web de Euroliga."""
-    url = f"https://api-live.euroleague.net/v1/games/season/{season}/game/{game_code}/boxscore"
+    """URL actualizada para el Boxscore (Funciona en 2026)"""
+    # Importante: season debe ser E2025
+    url = f"https://live.euroleague.net/api/Boxscore?gamecode={game_code}&seasoncode=E{season}"
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+        "Referer": "https://www.euroleaguebasketball.net/"
+    }
     try:
-        r = requests.get(url, headers=HEADERS, timeout=10)
+        r = requests.get(url, headers=headers, timeout=10)
         if r.status_code == 200:
             return r.json()
     except Exception as e:
-        print(f"Error en S{season} G{game_code}: {e}")
+        print(f"Error Boxscore G{game_code}: {e}")
+    return None
+
+def fetch_pbp_data(season, game_code):
+    """URL actualizada para el Play-by-Play"""
+    url = f"https://live.euroleague.net/api/PlayByPlay?gamecode={game_code}&seasoncode=E{season}"
+    headers = {"User-Agent": "Mozilla/5.0", "Referer": "https://www.euroleaguebasketball.net/"}
+    try:
+        r = requests.get(url, headers=headers, timeout=10)
+        if r.status_code == 200:
+            return r.json()
+    except Exception as e:
+        print(f"Error PBP G{game_code}: {e}")
     return None
 
 def process_and_save(game_data):
@@ -69,19 +86,6 @@ def run_season_import(season, start_game=1, end_game=340):
         else:
             print(f"No hay más datos para el código {code}")
 
-def fetch_pbp_data(season, game_code):
-    """Obtiene los eventos minuto a minuto del partido."""
-    #url = f"https://api-live.euroleague.net/v1/games/season/{season}/game/{game_code}/playbyplay"
-    # Cambia esto en fetch_game_data y fetch_pbp_data:
-    url = f"https://api-live.euroleague.net/v1/games/season/E{season}/game/{game_code}/boxscore"
-    try:
-        r = requests.get(url, headers=HEADERS, timeout=10)
-        if r.status_code == 200:
-            return r.json()
-    except Exception as e:
-        print(f"Error PBP S{season} G{game_code}: {e}")
-    return None
-
 def process_pbp(pbp_data, game_id):
     """Normaliza y guarda los eventos en euro_pbp."""
     if not pbp_data or 'firstQuarter' not in pbp_data:
@@ -125,19 +129,6 @@ def run_full_import(season, code):
         # 2. Play-by-Play (Eventos y Tiros)
         pbp_data = fetch_pbp_data(season, code)
         process_pbp(pbp_data, game_id)
-
-def fetch_pbp_data(season, game_code):
-    """Obtiene los eventos minuto a minuto del partido."""
-    #url = f"https://api-live.euroleague.net/v1/games/season/{season}/game/{game_code}/playbyplay"
-    # Cambia esto en fetch_game_data y fetch_pbp_data:
-    url = f"https://api-live.euroleague.net/v1/games/season/E{season}/game/{game_code}/boxscore"
-    try:
-        r = requests.get(url, headers=HEADERS, timeout=10)
-        if r.status_code == 200:
-            return r.json()
-    except Exception as e:
-        print(f"Error PBP S{season} G{game_code}: {e}")
-    return None
 
 def process_pbp(pbp_data, game_id):
     """Normaliza y guarda los eventos en euro_pbp."""
