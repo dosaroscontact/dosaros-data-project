@@ -35,46 +35,50 @@ def fetch_pbp_data(season, game_code):
     return None
 
 def process_and_save(game_data):
-    """Extrae info de 'euro_games' y 'euro_players_games'."""
-    if not game_data:
-        return
-
-    conn = sqlite3.connect(DB_PATH)
+    if not game_data: return
     
-    # 1. Datos del Partido (euro_games)
-    header = game_data.get('game', {})
-    game_id = f"E{header.get('seasonCode')}_{header.get('gameCode')}"
+    # Extraemos los nodos principales
+    live = game_data.get('Live', {})
+    stats = game_data.get('Stats', []) # Lista de 2 diccionarios (Home y Away)
     
+    # Construimos el ID del partido
+    season = "2025"
+    game_code = live.get('GameCode')
+    game_id = f"E{season}_{game_code}"
+    
+    # 1. Datos para 'euro_games'
     game_entry = {
         "game_id": game_id,
-        "date": header.get('gameDate'),
-        "home_team": game_data['home']['team']['name'],
-        "away_team": game_data['away']['team']['name'],
-        "score_home": game_data['home']['score'],
-        "score_away": game_data['away']['score']
+        "date": game_data.get('Date'), # Suele estar en la raíz
+        "home_team": live.get('Home'),
+        "away_team": live.get('Away'),
+        "score_home": int(live.get('ScoreA', 0)),
+        "score_away": int(live.get('ScoreB', 0))
     }
     
-    # 2. Datos de Jugadores (euro_players_games)
+    # 2. Datos para 'euro_players_games'
     players_list = []
-    for side in ['home', 'away']:
-        team_id = game_data[side]['team']['code']
-        for p in game_data[side]['players']:
-            if p['minutes']: # Solo si ha jugado
+    for team_stats in stats:
+        team_id = team_stats.get('Team')
+        # En esta API, los jugadores suelen estar en 'PlayersStats'
+        for p in team_stats.get('PlayersStats', []):
+            # Solo guardamos si han jugado (minutos no vacíos)
+            if p.get('Minutes'):
                 players_list.append({
                     "game_id": game_id,
-                    "player_id": p['player']['code'],
+                    "player_id": p.get('Player_ID'),
                     "team_id": team_id,
-                    "pts": p['points'],
-                    "reb": p['totalRebounds'],
-                    "ast": p['assists']
+                    "pts": int(p.get('Points', 0)),
+                    "reb": int(p.get('TotalRebounds', 0)),
+                    "ast": int(p.get('Assists', 0))
                 })
 
-    # Carga rápida con Pandas
+    # Carga en SQLite
+    conn = sqlite3.connect(DB_PATH)
     pd.DataFrame([game_entry]).to_sql("euro_games", conn, if_exists="append", index=False)
     pd.DataFrame(players_list).to_sql("euro_players_games", conn, if_exists="append", index=False)
-    
     conn.close()
-    print(f"Partido {game_id} guardado.")
+    print(f"Partido {game_id} procesado con éxito.")
 
 def run_season_import(season, start_game=1, end_game=340):
     """Bucle para importar una temporada completa."""
