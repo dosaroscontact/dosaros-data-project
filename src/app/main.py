@@ -98,10 +98,18 @@ with tab2:
 with tab3:
     st.header("Estadísticas por Equipo (NBA)")
     if not df_games.empty:
-        equipo = st.selectbox("Selecciona equipo:", df_games['home_team'].unique())
-        df_eq = df_games[df_games['home_team'] == equipo]
-        st.line_chart(df_eq['home_points'])
-
+        # Buscamos la columna de equipo local (puede variar según el extractor usado)
+        posibles_columnas = ['home_team', 'team_home', 'visitor_team']
+        col_equipo = next((c for c in posibles_columnas if c in df_games.columns), None)
+        
+        if col_equipo:
+            equipo = st.selectbox("Selecciona equipo:", df_games[col_equipo].unique())
+            df_eq = df_games[df_games[col_equipo] == equipo]
+            # Buscamos columna de puntos
+            col_pts = 'home_points' if 'home_points' in df_eq.columns else df_eq.columns[2]
+            st.line_chart(df_eq[col_pts])
+        else:
+            st.warning("No se encontró la columna de equipos en nba_games. Revisa el esquema de la DB.")
 with tab4:
     st.header("Analista IA")
     pregunta = st.text_input("Haz tu pregunta técnica (NBA o EuroLeague):")
