@@ -54,4 +54,4 @@ def bulk_load(start_code, end_code):
 
 if __name__ == "__main__":
     # Probamos con los primeros 100 partidos de la temporada
-    bulk_load(1, 100)
+    bulk_load(1, 500)
