@@ -1,7 +1,16 @@
+import sys
+from pathlib import Path
+
+# Detecta la raíz del proyecto (dosaros-data-project) y la añade al path
+root_path = Path(__file__).resolve().parent.parent.parent
+if str(root_path) not in sys.path:
+    sys.path.append(str(root_path))
+
 import time
 import sqlite3
 from src.etl.euro_extractor import fetch_game_data, process_and_save, fetch_pbp_data, process_pbp
 
+# ... resto del código que ya tienes ...
 DB_PATH = "/mnt/nba_data/dosaros_local.db"
 SEASON = 2024 # Temporada actual 2024-25
 
