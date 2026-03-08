@@ -1,25 +1,24 @@
 import pandas as pd
 
-def normalize_coordinates(val, max_val=100):
+def normalize_euro_coords(x, y):
     """
-    Normaliza coordenadas a escala 0-100.
-    La Euroliga suele enviar 0-100 en su API moderna, 
-    pero esto asegura consistencia.
+    La Euroliga usa un canvas donde el centro es (0,0) o 
+    un sistema de 0-100. Este mapper asegura el estándar Dos Aros.
     """
     try:
-        return round((float(val) / float(max_val)) * 100, 2)
-    except (ValueError, TypeError):
-        return None
+        # La API de Euroliga moderna suele enviar COORD_X en rango aprox -250 a 250
+        # y COORD_Y de 0 a 1400. Normalizamos a escala 0-100 para consistencia.
+        norm_x = ((float(x) + 250) / 500) * 100
+        norm_y = (float(y) / 1400) * 100
+        return round(norm_x, 2), round(norm_y, 2)
+    except:
+        return None, None
 
 def map_euro_to_canonical(df, data_type="pbp"):
-    """
-    Traduce las columnas de Euroleague API al estándar Dos Aros.
-    """
     if df is None or df.empty:
         return pd.DataFrame()
 
     if data_type == "pbp":
-        # Mapeo según la librería euroleague-api y tu DB
         mapping = {
             'NUMBER': 'event_num',
             'PERIOD': 'period',
@@ -30,13 +29,11 @@ def map_euro_to_canonical(df, data_type="pbp"):
             'COORD_Y': 'y'
         }
         
-        # Renombramos solo las columnas que existan en el DF
         df = df.rename(columns={k: v for k, v in mapping.items() if k in df.columns})
         
-        # Aplicamos normalización si hay coordenadas
-        if 'x' in df.columns:
-            df['x'] = df['x'].apply(lambda v: normalize_coordinates(v))
-        if 'y' in df.columns:
-            df['y'] = df['y'].apply(lambda v: normalize_coordinates(v))
+        # Normalización matemática de la pista
+        if 'x' in df.columns and 'y' in df.columns:
+            coords = df.apply(lambda row: normalize_euro_coords(row['x'], row['y']), axis=1)
+            df['x_norm'], df['y_norm'] = zip(*coords)
             
-    return df
+        return df

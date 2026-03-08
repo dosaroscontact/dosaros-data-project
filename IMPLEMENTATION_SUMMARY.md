@@ -190,3 +190,13 @@ Si quieres, hago una pasada adicional para:
 - `load_data(table_name, season_filter=None)` — `src/app/main.py`
 - `sync_player_stats(limit_games=200)` — `src/etl/nba_player_extractor.py`
 - `descargar_pbp_por_temporada(season_id_prefix)` — `src/etl/pbp_extractor.py`
+
+## Paquete `src/` - Actualizaciones Recientes
+
+### App (UI / IA)
+- `src/app/main.py`: Ahora incluye pestañas para análisis de Euroliga y visualización de Shot Charts con Plotly (Tema Light/Flat).
+
+### ETL & Utils
+- `src/etl/euro_extractor.py`: Motor de extracción para EuroLeague API (Boxscores y PBP).
+- `src/etl/euro_bulk_load.py`: Script de ingesta masiva con control de duplicados.
+- `src/utils/mapper.py`: Lógica de normalización de coordenadas (0-100) para unificar visualizaciones NBA/EuroLeague.
