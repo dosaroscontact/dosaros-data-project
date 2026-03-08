@@ -25,7 +25,7 @@ h1, h2, h3 { color: #4A4A4A; font-family: 'Helvetica Neue', sans-serif; font-wei
 .stTabs [data-baseweb="tab"] { height: 50px; background-color: transparent; border: none; color: #888; }
 .stTabs [aria-selected="true"] { color: #4A4A4A !important; border-bottom: 2px solid #88D4AB !important; }
 </style>
-""", unsafe_allow_stdio=True)
+""", unsafe_allow_html=True)
 
 # --- FUNCIONES DE APOYO ---
 
