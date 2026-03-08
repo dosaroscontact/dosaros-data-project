@@ -1,6 +1,9 @@
-import sqlite3
 import pandas as pd
-from euroleague_api import Boxscore, PlayByPlay
+import sqlite3
+from euroleague_api.boxscore_data import BoxScoreData  # Validado con OK
+from euroleague_api.play_by_play_data import PlayByPlayData # Siguiendo la misma estructura
+from src.utils.mapper import map_euro_to_canonical
+
 
 
 # Ruta al HDD en la Raspberry Pi
