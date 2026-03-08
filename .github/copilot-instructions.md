@@ -56,4 +56,14 @@ Referencias principales del workspace
 - Visualización: El Dashboard usa `plotly_white` y colores `#88D4AB` (Acierto) y `#FF8787` (Fallo).
 - Rutas: La DB local en la Pi es la fuente de verdad absoluta para PBP.
 
+# Reglas Técnicas Actualizadas
+- **Normalización**: Las coordenadas de Euroliga DEBEN pasar por `src/utils/mapper.py` para convertirse a escala 0-100 antes de guardarse o visualizarse.
+- **UI Standard**: El dashboard usa `plotly_white` con colores Mint (`#88D4AB`) para aciertos y Coral (`#FF8787`) para fallos.
+- **Data Source**: La tabla `euro_pbp` es la fuente principal para mapas de calor y volumen de tiro.
+
+# Estándares Visuales y de Datos
+- Coordenadas: Usar siempre `x_norm` e `y_norm` (escala 0-100).
+- Colores: Acierto: `#88D4AB` (Mint), Fallo: `#FF8787` (Coral).
+- Tema: Plotly White / Streamlit Light.
+
 Fin.
