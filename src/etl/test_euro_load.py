@@ -15,19 +15,33 @@ def test_real_games():
     print(f"--- Probando con Partidos Reales: Temporada {season} ---")
     
     for code in games_to_test:
-        game_id = f"E{season}_{code}"
-        print(f"Intentando descargar: {game_id}...")
+            game_id = f"E{season}_{code}"
+            print(f"Intentando descargar: {game_id}...")
+            
+            box = fetch_game_data(season, code)
+            
+            # Corrección del error 'truth value is ambiguous'
+            if box is not None and not box.empty:
+                process_and_save(box, season, code)
+                
+                pbp = fetch_pbp_data(season, code)
+                if pbp is not None and not pbp.empty:
+                    process_pbp(pbp, season, code)
+                    print(f"✅ Éxito: {game_id} guardado.")
+            else:
+                print(f"❌ Error al obtener {game_id}.")
         
         # OJO: La URL base debe llevar la 'E' antes del año
         # Asegúrate de que en euro_extractor.py la URL sea:
         # f"https://api-live.euroleague.net/v1/games/season/E{season}/game/{code}/boxscore"
         
-        box = fetch_game_data(season, code)
-        if box:
-            process_and_save(box)
-            pbp = fetch_pbp_data(season, code)
-            if pbp:
-                process_pbp(pbp, game_id)
+    box = fetch_game_data(season, code)
+    if box is not None and not box.empty:
+        process_and_save(box, season, code)
+        pbp = fetch_pbp_data(season, code)
+        if pbp is not None and not pbp.empty:
+            process_pbp(pbp, season, code)
+            print(f"✅ Éxito: Partido {code} cargado.")
         else:
             print(f"Error: No se pudo obtener el partido {code}. Revisa la URL en euro_extractor.py")
 
