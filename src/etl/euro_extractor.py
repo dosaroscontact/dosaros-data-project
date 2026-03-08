@@ -20,7 +20,11 @@ def fetch_pbp_data(season, game_code):
     try:
         pbp_inst = PlayByPlay(COMPETITION)
         data = pbp_inst.get_game_play_by_play_data(int(season), int(game_code))
-        return pd.DataFrame(data) if data else None
+        
+        # Corrección: Convertimos a DataFrame ANTES de cualquier validación
+        if data is not None and len(data) > 0:
+            return pd.DataFrame(data)
+        return None
     except Exception as e:
         print(f"Error en PBP: {e}")
         return None
