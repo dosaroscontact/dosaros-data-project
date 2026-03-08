@@ -6,6 +6,19 @@ from src.utils.mapper import map_euro_to_canonical
 
 DB_PATH = "/mnt/nba_data/dosaros_local.db"
 
+
+def fetch_game_data(season, game_code):
+    """Extrae boxscore usando los argumentos validados (season, gamecode)."""
+    try:
+        bx = BoxScoreData()
+        # Cambiamos game_code= por gamecode=
+        data = bx.get_boxscore_data(season=int(season), gamecode=int(game_code))
+        # Como devuelve una lista de diccionarios, la pasamos a DataFrame
+        return pd.DataFrame(data) if data else None
+    except Exception as e:
+        print(f"Error en boxscore: {e}")
+        return None
+
 def fetch_game_data(season, game_code):
     """Extrae boxscore del partido usando el método validado."""
     try:
