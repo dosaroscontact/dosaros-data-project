@@ -77,18 +77,24 @@ with tab1:
     except:
         c2.metric("Partidos EuroLeague", "0")
         c3.metric("Eventos Euro", "0")
-
 with tab2:
     st.header("Eficiencia vs Volumen (NBA)")
     if not df_players.empty:
-        chart = alt.Chart(df_players).mark_circle(size=100, opacity=0.6).encode(
+        # Aseguramos que existan las columnas necesarias o usamos nombres genéricos
+        # Si tu DB usa 'player_id' en lugar de 'player_name', lo mapeamos aquí
+        df_eff = df_players.copy()
+        if 'player_name' not in df_eff.columns and 'player_id' in df_eff.columns:
+            df_eff['player_name'] = df_eff['player_id']
+
+        chart = alt.Chart(df_eff).mark_circle(size=100, opacity=0.6).encode(
             x=alt.X('field_goals_pct:Q', title='FG%'),
             y=alt.Y('points:Q', title='Puntos'),
             color=alt.value('#88D4AB'),
-            tooltip=['player_name', 'points']
+            # Usamos :N para indicar que es un dato Nominal (texto)
+            tooltip=[alt.Tooltip('player_name:N', title='Jugador'), 
+                     alt.Tooltip('points:Q', title='Puntos')]
         ).interactive().properties(height=500)
         st.altair_chart(chart, use_container_width=True)
-
 with tab3:
     st.header("Estadísticas por Equipo (NBA)")
     if not df_games.empty:
