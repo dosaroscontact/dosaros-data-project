@@ -16,23 +16,14 @@ client = genai.Client(api_key=API_KEY)
 
 st.set_page_config(page_title="Proyecto Dos Aros", page_icon="🏀", layout="wide")
 
-# 2. Estilo CSS para look "Flat & Light"
+# 2. Estilo CSS - Alineado a la izquierda para evitar errores de indentación
 st.markdown("""
 <style>
-    .main { background-color: #FDFDFD; }
-    h1, h2, h3 { color: #4A4A4A; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 300; }
-    .stTabs [data-baseweb="tab-list"] { gap: 24px; border-bottom: 1px solid #E0E0E0; }
-    .stTabs [data-baseweb="tab"] { 
-        height: 50px; 
-        background-color: transparent; 
-        border: none; 
-        color: #888; 
-        font-weight: 400;
-    }
-    .stTabs [aria-selected="true"] { 
-        color: #4A4A4A !important; 
-        border-bottom: 2px solid #88D4AB !important; 
-    }
+.main { background-color: #FDFDFD; }
+h1, h2, h3 { color: #4A4A4A; font-family: 'Helvetica Neue', sans-serif; font-weight: 300; }
+.stTabs [data-baseweb="tab-list"] { gap: 24px; border-bottom: 1px solid #E0E0E0; }
+.stTabs [data-baseweb="tab"] { height: 50px; background-color: transparent; border: none; color: #888; }
+.stTabs [aria-selected="true"] { color: #4A4A4A !important; border-bottom: 2px solid #88D4AB !important; }
 </style>
 """, unsafe_allow_stdio=True)
 
@@ -48,6 +39,7 @@ def obtener_sql_ia(pregunta):
     prompt = f"{contexto}\n\nPregunta: {pregunta}"
     response = client.models.generate_content(model="gemini-flash-latest", contents=prompt)
     return response.text.replace("```sql", "").replace("```", "").strip()
+
 
 def dibujar_pista_flat(fig):
     """Añade líneas de pista minimalistas al gráfico de Plotly."""
@@ -118,34 +110,44 @@ with tab4:
         except Exception as e:
             st.error(f"Error en SQL: {e}")
 
+# --- ESTRUCTURA DE PESTAÑAS ---
+tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
+    "Dashboard Global", "Eficiencia", "Equipos", "Analista IA", "Explorador EuroLeague", "Configuración"
+])
+
 with tab5:
-    st.header("🎯 Explorador EuroLeague")
+    st.header("🎯 Análisis de Tiro: EuroLeague")
     try:
         conn = sqlite3.connect(LOCAL_DB)
         euro_players = pd.read_sql("SELECT DISTINCT player_id FROM euro_pbp WHERE player_id IS NOT NULL", conn)
         
         col_in, col_ch = st.columns([1, 3])
         with col_in:
-            p_sel = st.selectbox("Selecciona Jugador Euro:", euro_players['player_id'].sort_values())
+            p_sel = st.selectbox("Selecciona Jugador:", euro_players['player_id'].sort_values())
             
         if p_sel:
-            df_s = pd.read_sql(f"SELECT x_norm, y_norm, action_type FROM euro_pbp WHERE player_id = '{p_sel}'", conn)
+            query = f"SELECT x_norm, y_norm, action_type FROM euro_pbp WHERE player_id = '{p_sel}'"
+            df_s = pd.read_sql(query, conn)
+            
             if not df_s.empty:
                 df_s['Resultado'] = df_s['action_type'].apply(
                     lambda x: 'Acierto' if any(w in x for w in ['Made', 'Dunk', 'Layup', 'Score']) else 'Fallo'
                 )
-                fig = px.scatter(df_s, x='x_norm', y='y_norm', color='Resultado',
-                                 color_discrete_map={'Acierto': '#88D4AB', 'Fallo': '#FF8787'},
-                                 range_x=[0, 100], range_y=[0, 1000], template="plotly_white")
+                
+                fig = px.scatter(
+                    df_s, x='x_norm', y='y_norm', color='Resultado',
+                    color_discrete_map={'Acierto': '#88D4AB', 'Fallo': '#FF8787'},
+                    range_x=[0, 100], range_y=[0, 1000], template="plotly_white"
+                )
                 fig = dibujar_pista_flat(fig)
-                fig.update_layout(height=700, xaxis=dict(visible=False), yaxis=dict(visible=False))
+                fig.update_layout(height=700, showlegend=True, xaxis=dict(visible=False), yaxis=dict(visible=False))
                 st.plotly_chart(fig, use_container_width=True)
         conn.close()
     except Exception as e:
-        st.error(f"Error Euroliga: {e}")
+        st.error(f"Error de conexión: {e}")
 
 with tab6:
     st.header("Configuración")
     st.write(f"Ruta DB: `{LOCAL_DB}`")
-    if st.button("Check Conexión HDD"):
+    if st.button("Check Conexión"):
         st.success("HDD Detectado") if os.path.exists(LOCAL_DB) else st.error("HDD No Encontrado")
