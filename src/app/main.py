@@ -31,9 +31,25 @@ h1, h2, h3 { color: #4A4A4A; font-family: 'Helvetica Neue', sans-serif; font-wei
 
 def obtener_sql_ia(pregunta):
     contexto = """
-    Eres experto en SQLite. Tablas: 'nba_games', 'nba_players_games' y 'euro_pbp'.
-    Reglas: No uses YEAR(). Filtra año con LIKE '%AÑO'.
-    Para Euroliga usa 'euro_pbp'.
+    Eres experto en SQLite. Tienes estas tablas:
+    
+    1. nba_games (FORMATO LARGO - una fila por equipo por partido):
+       - SEASON_ID, TEAM_ID, TEAM_ABBREVIATION, TEAM_NAME
+       - GAME_ID, GAME_DATE, MATCHUP, WL
+       - PTS, FGM, FGA, FG_PCT, FG3M, FG3A, FG3_PCT, FTM, FTA, FT_PCT
+       - OREB, DREB, REB, AST, STL, BLK, TOV, PF, PLUS_MINUS, MIN
+       IMPORTANTE: NO hay columnas team_name_home/away o pts_home/away. Cada juego tiene DOS filas (una por equipo).
+       
+    2. nba_players_games: estadísticas de jugadores individuales
+    
+    3. euro_pbp: datos de EuroLeague con columnas x_norm, y_norm (coordenadas normalizadas 0-100)
+    
+    REGLAS:
+    - No uses YEAR(). Filtra temporada con: LIKE '%AÑO' sobre SEASON_ID (ej: LIKE '%2024')
+    - Para obtener ambos equipos de un partido: JOIN nba_games consigo mismo por GAME_ID
+    - Para puntos totales de ambos equipos: suma los dos PTS de las dos filas por GAME_ID
+    - Para EuroLeague usa euro_pbp y columas x_norm, y_norm
+    
     Salida: Solo SQL plano sin markdown.
     """
     prompt = f"{contexto}\n\nPregunta: {pregunta}"
