@@ -7,6 +7,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 from google import genai
 from dotenv import load_dotenv
+from src.utils.mapper import normalize_euro_coords
 
 # 1. Configuración de Seguridad y Entorno
 load_dotenv()
@@ -146,10 +147,14 @@ with tab5:
             p_sel = st.selectbox("Selecciona Jugador:", euro_players['player_id'].sort_values())
             
         if p_sel:
-            query = f"SELECT x_norm, y_norm, action_type FROM euro_pbp WHERE player_id = '{p_sel}'"
+            query = f"SELECT x_canvas, y_canvas, action_type FROM euro_pbp WHERE player_id = '{p_sel}'"
             df_s = pd.read_sql(query, conn)
             
             if not df_s.empty:
+                # Normalizar coordenadas canvas a escala 0-100
+                df_s['x_norm'] = df_s['x_canvas'].apply(lambda x: ((float(x) + 250) / 500) * 100 if x is not None else None)
+                df_s['y_norm'] = df_s['y_canvas'].apply(lambda y: (float(y) / 1400) * 100 if y is not None else None)
+                
                 df_s['Resultado'] = df_s['action_type'].apply(
                     lambda x: 'Acierto' if any(w in x for w in ['Made', 'Dunk', 'Layup', 'Score']) else 'Fallo'
                 )
