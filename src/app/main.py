@@ -144,17 +144,33 @@ with tab5:
     st.header("🎯 Análisis de Tiro: EuroLeague")
     try:
         conn = sqlite3.connect(LOCAL_DB)
-        euro_players = pd.read_sql("SELECT DISTINCT player_id FROM euro_pbp WHERE player_id IS NOT NULL", conn)
+        # Obtener lista de jugadores con su información (ID + conteo de eventos)
+        euro_players_data = pd.read_sql("""
+            SELECT player_id, COUNT(*) as events 
+            FROM euro_pbp 
+            WHERE player_id IS NOT NULL 
+            GROUP BY player_id 
+            ORDER BY events DESC
+        """, conn)
         
         col_in, col_ch = st.columns([1, 3])
         with col_in:
-            p_sel = st.selectbox("Selecciona Jugador:", euro_players['player_id'].sort_values())
+            # Crear etiquetas amigables: "ID (X eventos)"
+            player_labels = [f"{row['player_id']} ({row['events']} eventos)" 
+                           for _, row in euro_players_data.iterrows()]
+            player_ids = euro_players_data['player_id'].tolist()
+            
+            p_sel_idx = st.selectbox("Selecciona Jugador:", 
+                                     range(len(player_labels)), 
+                                     format_func=lambda x: player_labels[x])
+            p_sel = player_ids[p_sel_idx]
             
         if p_sel:
             query = f"SELECT x, y, action_type FROM euro_pbp WHERE player_id = '{p_sel}'"
             df_s = pd.read_sql(query, conn)
             
             if not df_s.empty:
+                st.subheader(f"Disparos de {p_sel}")
                 # Normalizar coordenadas a escala 0-100
                 df_s['x_norm'] = df_s['x'].apply(lambda x: ((float(x) + 250) / 500) * 100 if x is not None else None)
                 df_s['y_norm'] = df_s['y'].apply(lambda y: (float(y) / 1400) * 100 if y is not None else None)
