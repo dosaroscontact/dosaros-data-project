@@ -3,11 +3,15 @@ import pandas as pd
 import altair as alt
 import sqlite3
 import os
+import sys
 import plotly.express as px
 import plotly.graph_objects as go
 from google import genai
 from dotenv import load_dotenv
-from ..utils.mapper import normalize_euro_coords
+
+# Add project root to path for proper imports
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..'))
+from src.utils.mapper import normalize_euro_coords
 
 # 1. Configuración de Seguridad y Entorno
 load_dotenv()
