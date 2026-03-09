@@ -192,7 +192,15 @@ with tab5:
         st.error(f"Error de conexión: {e}")
 
 with tab6:
-    st.header("Configuración")
-    st.write(f"Ruta DB: `{LOCAL_DB}`")
-    if st.button("Check Conexión"):
-        st.success("HDD Detectado") if os.path.exists(LOCAL_DB) else st.error("HDD No Encontrado")
+    st.header("Estado del Sistema")
+    if os.path.exists(LOCAL_DB):
+        st.success(f"Archivo detectado en: {LOCAL_DB}")
+        try:
+            conn = sqlite3.connect(LOCAL_DB)
+            conn.execute("SELECT 1")
+            conn.close()
+            st.success("Conexión SQL: OK")
+        except Exception as e:
+            st.error(f"Error de acceso: {e}")
+    else:
+        st.error(f"¡ALERTA! El archivo no existe en {LOCAL_DB}. ¿Está el HDD montado?")
