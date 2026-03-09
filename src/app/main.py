@@ -7,7 +7,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 from google import genai
 from dotenv import load_dotenv
-from src.utils.mapper import normalize_euro_coords
+from ..utils.mapper import normalize_euro_coords
 
 # 1. Configuración de Seguridad y Entorno
 load_dotenv()
