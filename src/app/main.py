@@ -135,11 +135,6 @@ with tab4:
         except Exception as e:
             st.error(f"Error en SQL: {e}")
 
-# --- ESTRUCTURA DE PESTAÑAS ---
-tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
-    "Dashboard Global", "Eficiencia", "Equipos", "Analista IA", "Explorador EuroLeague", "Configuración"
-])
-
 with tab5:
     st.header("🎯 Análisis de Tiro: EuroLeague")
     try:
