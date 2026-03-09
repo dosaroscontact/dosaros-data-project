@@ -114,16 +114,11 @@ with tab2:
 with tab3:
     st.header("Estadísticas por Equipo (NBA)")
     if not df_games.empty:
-        # Buscamos la columna de equipo local (puede variar según el extractor usado)
-        posibles_columnas = ['home_team', 'team_home', 'visitor_team']
-        col_equipo = next((c for c in posibles_columnas if c in df_games.columns), None)
-        
-        if col_equipo:
-            equipo = st.selectbox("Selecciona equipo:", df_games[col_equipo].unique())
-            df_eq = df_games[df_games[col_equipo] == equipo]
-            # Buscamos columna de puntos
-            col_pts = 'home_points' if 'home_points' in df_eq.columns else df_eq.columns[2]
-            st.line_chart(df_eq[col_pts])
+        # Usamos TEAM_NAME del esquema real de nba_games
+        if 'TEAM_NAME' in df_games.columns and 'PTS' in df_games.columns:
+            equipo = st.selectbox("Selecciona equipo:", df_games['TEAM_NAME'].unique())
+            df_eq = df_games[df_games['TEAM_NAME'] == equipo].sort_values('GAME_DATE')
+            st.line_chart(df_eq[['GAME_DATE', 'PTS']].set_index('GAME_DATE'))
         else:
             st.warning("No se encontró la columna de equipos en nba_games. Revisa el esquema de la DB.")
 with tab4:
