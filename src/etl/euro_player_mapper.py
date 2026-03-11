@@ -18,11 +18,12 @@ def crear_mapeo_jugadores():
     # donde aparezcan el ID y el nombre juntos.
     # Si solo tienes IDs en euro_pbp, el siguiente paso será usar la API.
     try:
-        # Intentamos obtener la relación desde los datos de juego
+
+        # Modifica esta parte en src/etl/euro_player_mapper.py
         query = """
-        SELECT DISTINCT player_id, player_name 
-        FROM euro_pbp 
-        WHERE player_id IS NOT NULL AND player_name IS NOT NULL
+        SELECT DISTINCT PLAYER_ID as player_id, PLAYER as player_name 
+        FROM euro_stats 
+        WHERE PLAYER_ID IS NOT NULL
         """
         df_players = pd.read_sql(query, conn)
         
