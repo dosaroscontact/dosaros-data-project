@@ -144,26 +144,31 @@ with tab5:
     st.header("🎯 Análisis de Tiro: EuroLeague")
     try:
         conn = sqlite3.connect(LOCAL_DB)
-        # Obtener lista de jugadores con su información (ID + conteo de eventos)
-        euro_players_data = pd.read_sql("""
-            SELECT player_id, COUNT(*) as events 
-            FROM euro_pbp 
-            WHERE player_id IS NOT NULL 
-            GROUP BY player_id 
-            ORDER BY events DESC
-        """, conn)
         
         col_in, col_ch = st.columns([1, 3])
         with col_in:
-            # Crear etiquetas amigables: "ID (X eventos)"
-            player_labels = [f"{row['player_id']} ({row['events']} eventos)" 
-                           for _, row in euro_players_data.iterrows()]
-            player_ids = euro_players_data['player_id'].tolist()
+            # Query para obtener jugadores únicos
+            query_jugadores = """
+                SELECT DISTINCT player_id 
+                FROM euro_pbp 
+                WHERE player_id IS NOT NULL 
+                ORDER BY player_id
+            """
+            euro_players = pd.read_sql(query_jugadores, conn)
             
-            p_sel_idx = st.selectbox("Selecciona Jugador:", 
-                                     range(len(player_labels)), 
-                                     format_func=lambda x: player_labels[x])
-            p_sel = player_ids[p_sel_idx]
+            # Diccionario manual temporal (opcional, mientras creamos la tabla de nombres)
+            nombres_manuales = {
+                "P003941": "Facundo Campazzo",
+                "P005230": "Kendrick Nunn"
+            }
+            
+            # Creamos una columna para mostrar en el selectbox
+            euro_players['display_name'] = euro_players['player_id'].apply(
+                lambda x: f"{nombres_manuales.get(x, x)} ({x})"
+            )
+            
+            p_display = st.selectbox("Selecciona Jugador:", euro_players['display_name'])
+            p_sel = p_display.split(" (")[-1].replace(")", "")  # Extraemos el ID para la query SQL
             
         if p_sel:
             query = f"SELECT x, y, action_type FROM euro_pbp WHERE player_id = '{p_sel}'"
