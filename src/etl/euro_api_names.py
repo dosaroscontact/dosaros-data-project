@@ -9,7 +9,7 @@ def mapear_nombres():
     game_ids = pd.read_sql("SELECT DISTINCT game_id FROM euro_pbp", conn)['game_id'].tolist()
     
     # Instanciamos la clase para la EuroLeague (competencia 'E')
-    ps = PlayerStats(competition_code='E')
+    ps = PlayerStats()
     
     mapeo = []
     print(f"Procesando {len(game_ids)} partidos para mapear jugadores...")
