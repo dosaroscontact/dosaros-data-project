@@ -2,50 +2,60 @@ import sqlite3
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
-import re
 
 DB_PATH = "/mnt/nba_data/dosaros_local.db"
 
-def scrape_jugadores_euro():
-    # 1. Instalación rápida de dependencia si falta
-    # pip install beautifulsoup4
+def extraer_nombres_oficial():
+    # La página de todos los jugadores es la mejor fuente
+    url = "https://www.euroleaguebasketball.net/euroleague/players/?seasonCode=E2024&pageType=all"
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+    }
     
-    url = "https://www.euroleaguebasketball.net/euroleague/players/"
-    headers = {'User-Agent': 'Mozilla/5.0'}
+    print("Iniciando extracción desde el roster oficial...")
     
-    print("Accediendo a la web oficial de la Euroliga...")
     try:
-        response = requests.get(url, headers=headers, timeout=15)
-        soup = BeautifulSoup(response.text, 'html.parser')
+        r = requests.get(url, headers=headers, timeout=20)
+        soup = BeautifulSoup(r.text, 'html.parser')
+        
+        # Buscamos todas las tarjetas de jugador según tu HTML
+        items = soup.find_all('li', class_='all-players-list_filterListItem__UlZLg')
         
         mapeo = []
-        # Buscamos los enlaces de jugadores que contienen el ID y el Nombre
-        # Ejemplo de link: /euroleague/players/facundo-campazzo/003941/
-        links = soup.find_all('a', href=re.compile(r'/players/.*'))
-
-        for link in links:
-            href = link.get('href')
-            parts = href.strip('/').split('/')
-            if len(parts) >= 3:
-                # El nombre suele ser el penúltimo y el ID el último
-                raw_name = parts[-2].replace('-', ' ').title()
-                raw_id = parts[-1]
+        for item in items:
+            link_tag = item.find('a', href=True)
+            if not link_tag:
+                continue
                 
-                # Adaptamos al formato 'P00xxxx' que tienes en tu DB
-                player_id = f"P{raw_id.zfill(6)}" 
-                mapeo.append({'player_id': player_id, 'player_name': raw_name})
+            # Extraemos ID del href: /en/euroleague/players/melvin-ajinca/010316/
+            href = link_tag['href']
+            player_id = href.strip('/').split('/')[-1]
+            
+            # Extraemos nombre y apellido de las clases que pasaste
+            first_name = item.find('div', class_=lambda x: x and 'playerFirstName' in x)
+            last_name = item.find('div', class_=lambda x: x and 'playerLastName' in x)
+            
+            if player_id and first_name and last_name:
+                full_name = f"{first_name.text.strip()} {last_name.text.strip()}".title()
+                mapeo.append({
+                    'player_id': player_id, 
+                    'player_name': full_name
+                })
 
         if mapeo:
             conn = sqlite3.connect(DB_PATH)
             df = pd.DataFrame(mapeo).drop_duplicates(subset=['player_id'])
+            # Guardamos en la tabla de referencia
             df.to_sql('euro_players_ref', conn, if_exists='replace', index=False)
-            print(f"✅ ¡POR FIN! {len(df)} jugadores registrados mediante scraping.")
+            # Creamos el índice para que las búsquedas futuras sean instantáneas
+            conn.execute("CREATE UNIQUE INDEX IF NOT EXISTS idx_pid ON euro_players_ref (player_id);")
+            print(f"Éxito: {len(df)} jugadores guardados en euro_players_ref.")
             conn.close()
         else:
-            print("❌ No se encontraron jugadores en la página. La estructura web puede haber cambiado.")
+            print("No se han detectado jugadores. Revisa si el User-Agent es bloqueado.")
 
     except Exception as e:
-        print(f"❌ Error durante el scraping: {e}")
+        print(f"Error en el proceso: {e}")
 
 if __name__ == "__main__":
-    scrape_jugadores_euro()
+    extraer_nombres_oficial()
