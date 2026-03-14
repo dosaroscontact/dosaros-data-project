@@ -3,18 +3,18 @@ import json
 import os
 
 DB_PATH = "/mnt/nba_data/dosaros_local.db"
-# Prueba primero con el archivo que tenga más información (el bruto)
-JSON_INPUT = "src/utils/all_eureleague_web.json" 
+# Usamos el archivo que ya tienes con los datos completos
+JSON_INPUT = "src/utils/all_eureleague_web.json"
 
-def cargar_datos():
+def cargar_desde_local():
     if not os.path.exists(JSON_INPUT):
-        print(f"❌ Error: No se encuentra {JSON_INPUT}")
+        print(f"El archivo {JSON_INPUT} no esta en la ruta.")
         return
 
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
-    # 1. Crear tablas con toda la artillería
+    # Creamos las tablas necesarias
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS euro_players_bio (
             player_id TEXT PRIMARY KEY,
@@ -41,61 +41,60 @@ def cargar_datos():
 
     try:
         with open(JSON_INPUT, 'r', encoding='utf-8') as f:
-            datos = json.load(f)
+            datos_unificados = json.load(f)
         
-        count_bio = 0
-        count_stats = 0
+        for bloque in datos_unificados:
+            # Extraemos la data segun la estructura 'bruta' que creamos
+            file_data = bloque.get('data', {})
+            page_props = file_data.get('pageProps', {})
+            main_data = page_props.get('data', {})
+            hero = main_data.get('hero', {})
+            stats = main_data.get('stats', {})
 
-        for item in datos:
-            # --- LÓGICA DE DETECCIÓN DE ESTRUCTURA ---
-            # Caso A: Estructura Bruta (all_eureleague_web.json)
-            if 'data' in item and 'pageProps' in item['data']:
-                main = item['data']['pageProps'].get('data', {})
-                hero = main.get('hero', {})
-                stats_block = main.get('stats', {})
-                
-                p_id = hero.get('id')
-                nombre = f"{hero.get('firstName')} {hero.get('lastName')}"
-                pos = hero.get('position')
-                alt = hero.get('height')
-                club = hero.get('clubName')
-                nac = hero.get('nationality')
-                img = hero.get('photo')
+            if not hero:
+                continue
 
-                # Carga de estadísticas si existen
-                current = stats_block.get('currentSeason', {}).get('widget', [])
-                if current:
-                    s_list = current[0].get('stats', [])
-                    def get_val(name):
-                        return next((s['value'][0]['statValue'] for s in s_list if s['name'] == name), 0)
-                    
-                    cursor.execute("INSERT OR REPLACE INTO euro_stats_summary VALUES (?,?,?,?,?,?)",
-                                 (p_id, "2024-25", get_val('PTS'), get_val('REB'), get_val('AST'), get_val('PIR')))
-                    count_stats += 1
+            # 1. Carga de Biografia
+            p_id = hero.get('id')
+            nombre = f"{hero.get('firstName')} {hero.get('lastName')}"
+            
+            cursor.execute("""
+                INSERT OR REPLACE INTO euro_players_bio 
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+            """, (
+                p_id,
+                nombre,
+                hero.get('position'),
+                hero.get('height'),
+                hero.get('clubName'),
+                hero.get('nationality'),
+                hero.get('photo')
+            ))
 
-            # Caso B: Estructura Básica (players_manual.json)
-            else:
-                p_id = item.get('player_id')
-                nombre = item.get('player_name')
-                img = item.get('image_url')
-                # El resto de campos no existen en este formato
-                pos, alt, club, nac = None, None, None, None
+            # 2. Carga de Estadisticas (Promedios)
+            current = stats.get('currentSeason', {}).get('widget', [])
+            if current:
+                # Buscamos los valores en el array de widgets
+                stat_list = current[0].get('stats', [])
+                pts = next((s['value'][0]['statValue'] for s in stat_list if s['name'] == 'PTS'), 0)
+                reb = next((s['value'][0]['statValue'] for s in stat_list if s['name'] == 'REB'), 0)
+                ast = next((s['value'][0]['statValue'] for s in stat_list if s['name'] == 'AST'), 0)
+                pir = next((s['value'][0]['statValue'] for s in stat_list if s['name'] == 'PIR'), 0)
 
-            # --- INSERCIÓN EN BIO ---
-            if p_id and nombre:
                 cursor.execute("""
-                    INSERT OR REPLACE INTO euro_players_bio 
-                    VALUES (?, ?, ?, ?, ?, ?, ?)
-                """, (p_id, nombre, pos, alt, club, nac, img))
-                count_bio += 1
+                    INSERT OR REPLACE INTO euro_stats_summary
+                    VALUES (?, ?, ?, ?, ?, ?)
+                """, (p_id, "2024-25", pts, reb, ast, pir))
+
+            print(f"Procesado: {nombre}")
 
         conn.commit()
-        print(f"✅ Éxito: {count_bio} bios y {count_stats} tablas de stats cargadas.")
+        print("Carga local finalizada con éxito.")
 
     except Exception as e:
-        print(f"❌ Error crítico: {e}")
+        print(f"Error en el proceso: {e}")
     finally:
         conn.close()
 
 if __name__ == "__main__":
-    cargar_datos()
+    cargar_desde_local()
