@@ -1,70 +1,101 @@
 import sqlite3
 import json
-import pandas as pd
 import os
 
 DB_PATH = "/mnt/nba_data/dosaros_local.db"
-JSON_INPUT = "src/etl/players_manual.json"
+# Prueba primero con el archivo que tenga más información (el bruto)
+JSON_INPUT = "src/utils/all_eureleague_web.json" 
 
-def carga_final():
+def cargar_datos():
     if not os.path.exists(JSON_INPUT):
-        print(f"❌ El archivo {JSON_INPUT} no existe.")
+        print(f"❌ Error: No se encuentra {JSON_INPUT}")
         return
 
-    print(f"Leyendo {JSON_INPUT}...")
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+
+    # 1. Crear tablas con toda la artillería
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS euro_players_bio (
+            player_id TEXT PRIMARY KEY,
+            player_name TEXT,
+            position TEXT,
+            height INTEGER,
+            club_name TEXT,
+            nationality TEXT,
+            image_url TEXT
+        )
+    """)
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS euro_stats_summary (
+            player_id TEXT,
+            season TEXT,
+            points REAL,
+            rebounds REAL,
+            assists REAL,
+            pir REAL,
+            PRIMARY KEY (player_id, season)
+        )
+    """)
+
     try:
         with open(JSON_INPUT, 'r', encoding='utf-8') as f:
-            texto = f.read().strip()
-            if not texto:
-                print("❌ El archivo está vacío.")
-                return
-            data = json.loads(texto)
+            datos = json.load(f)
         
-        print(f"Estructura detectada: {type(data)}")
+        count_bio = 0
+        count_stats = 0
 
-        # Lógica para extraer la lista de jugadores según el origen
-        players = []
-        if isinstance(data, list):
-            players = data
-        elif isinstance(data, dict):
-            # Probar diferentes rutas de la API de Euroliga
-            players = data.get('pageProps', {}).get('players', {}).get('items', [])
-            if not players:
-                players = data.get('pageProps', {}).get('dataPlayers', {}).get('players', [])
+        for item in datos:
+            # --- LÓGICA DE DETECCIÓN DE ESTRUCTURA ---
+            # Caso A: Estructura Bruta (all_eureleague_web.json)
+            if 'data' in item and 'pageProps' in item['data']:
+                main = item['data']['pageProps'].get('data', {})
+                hero = main.get('hero', {})
+                stats_block = main.get('stats', {})
+                
+                p_id = hero.get('id')
+                nombre = f"{hero.get('firstName')} {hero.get('lastName')}"
+                pos = hero.get('position')
+                alt = hero.get('height')
+                club = hero.get('clubName')
+                nac = hero.get('nationality')
+                img = hero.get('photo')
 
-        if not players:
-            print("❌ No se encontró la lista de jugadores. Primeros caracteres del archivo:")
-            print(texto[:200])
-            return
+                # Carga de estadísticas si existen
+                current = stats_block.get('currentSeason', {}).get('widget', [])
+                if current:
+                    s_list = current[0].get('stats', [])
+                    def get_val(name):
+                        return next((s['value'][0]['statValue'] for s in s_list if s['name'] == name), 0)
+                    
+                    cursor.execute("INSERT OR REPLACE INTO euro_stats_summary VALUES (?,?,?,?,?,?)",
+                                 (p_id, "2024-25", get_val('PTS'), get_val('REB'), get_val('AST'), get_val('PIR')))
+                    count_stats += 1
 
-        df = pd.DataFrame(players)
-        
-        # Mapeo de columnas dinámico
-        cols = df.columns
-        if 'id' in cols: df = df.rename(columns={'id': 'player_id'})
-        if 'personId' in cols: df = df.rename(columns={'personId': 'player_id'})
-        
-        if 'player_name' not in cols:
-            if 'playerName' in cols:
-                df = df.rename(columns={'playerName': 'player_name'})
-            elif 'firstName' in cols and 'lastName' in cols:
-                df['player_name'] = df['firstName'] + " " + df['lastName']
+            # Caso B: Estructura Básica (players_manual.json)
+            else:
+                p_id = item.get('player_id')
+                nombre = item.get('player_name')
+                img = item.get('image_url')
+                # El resto de campos no existen en este formato
+                pos, alt, club, nac = None, None, None, None
 
-        # Limpieza final
-        df = df[['player_id', 'player_name']].drop_duplicates()
-        df['player_name'] = df['player_name'].str.title()
+            # --- INSERCIÓN EN BIO ---
+            if p_id and nombre:
+                cursor.execute("""
+                    INSERT OR REPLACE INTO euro_players_bio 
+                    VALUES (?, ?, ?, ?, ?, ?, ?)
+                """, (p_id, nombre, pos, alt, club, nac, img))
+                count_bio += 1
 
-        conn = sqlite3.connect(DB_PATH)
-        df.to_sql('euro_players_ref', conn, if_exists='replace', index=False)
-        conn.execute("CREATE UNIQUE INDEX IF NOT EXISTS idx_pid ON euro_players_ref (player_id);")
-        
-        print(f"✅ ¡Éxito! {len(df)} jugadores registrados.")
+        conn.commit()
+        print(f"✅ Éxito: {count_bio} bios y {count_stats} tablas de stats cargadas.")
+
+    except Exception as e:
+        print(f"❌ Error crítico: {e}")
+    finally:
         conn.close()
 
-    except json.JSONDecodeError as e:
-        print(f"❌ Error de formato JSON: {e}")
-    except Exception as e:
-        print(f"❌ Error técnico: {e}")
-
 if __name__ == "__main__":
-    carga_final()
+    cargar_datos()
