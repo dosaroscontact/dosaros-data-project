@@ -3,18 +3,20 @@ import json
 import os
 
 DB_PATH = "/mnt/nba_data/dosaros_local.db"
-# Usamos el archivo que ya tienes con los datos completos
 JSON_INPUT = "src/utils/all_eureleague_web.json"
 
-def cargar_desde_local():
+def procesar_datos():
     if not os.path.exists(JSON_INPUT):
-        print(f"El archivo {JSON_INPUT} no esta en la ruta.")
+        print(f"No existe el archivo {JSON_INPUT}")
         return
+
+    with open(JSON_INPUT, 'r', encoding='utf-8') as f:
+        nodos = json.load(f)
 
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
-    # Creamos las tablas necesarias
+    # Creación de tablas
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS euro_players_bio (
             player_id TEXT PRIMARY KEY,
@@ -27,74 +29,35 @@ def cargar_desde_local():
         )
     """)
 
-    cursor.execute("""
-        CREATE TABLE IF NOT EXISTS euro_stats_summary (
-            player_id TEXT,
-            season TEXT,
-            points REAL,
-            rebounds REAL,
-            assists REAL,
-            pir REAL,
-            PRIMARY KEY (player_id, season)
-        )
-    """)
+    for nodo in nodos:
+        # Navegación por la jerarquía detectada
+        bloque_data = nodo.get('data', {})
+        props = bloque_data.get('pageProps', {})
+        inner_data = props.get('data', {})
+        hero = inner_data.get('hero', {})
 
-    try:
-        with open(JSON_INPUT, 'r', encoding='utf-8') as f:
-            datos_unificados = json.load(f)
+        if not hero:
+            continue
+
+        p_id = hero.get('id')
+        nombre = f"{hero.get('firstName')} {hero.get('lastName')}"
         
-        for bloque in datos_unificados:
-            # Extraemos la data segun la estructura 'bruta' que creamos
-            file_data = bloque.get('data', {})
-            page_props = file_data.get('pageProps', {})
-            main_data = page_props.get('data', {})
-            hero = main_data.get('hero', {})
-            stats = main_data.get('stats', {})
+        datos_bio = (
+            p_id,
+            nombre,
+            hero.get('position'),
+            hero.get('height'),
+            hero.get('clubName'),
+            hero.get('nationality'),
+            hero.get('photo')
+        )
 
-            if not hero:
-                continue
+        cursor.execute("INSERT OR REPLACE INTO euro_players_bio VALUES (?,?,?,?,?,?,?)", datos_bio)
+        print(f"Cargado: {nombre}")
 
-            # 1. Carga de Biografia
-            p_id = hero.get('id')
-            nombre = f"{hero.get('firstName')} {hero.get('lastName')}"
-            
-            cursor.execute("""
-                INSERT OR REPLACE INTO euro_players_bio 
-                VALUES (?, ?, ?, ?, ?, ?, ?)
-            """, (
-                p_id,
-                nombre,
-                hero.get('position'),
-                hero.get('height'),
-                hero.get('clubName'),
-                hero.get('nationality'),
-                hero.get('photo')
-            ))
-
-            # 2. Carga de Estadisticas (Promedios)
-            current = stats.get('currentSeason', {}).get('widget', [])
-            if current:
-                # Buscamos los valores en el array de widgets
-                stat_list = current[0].get('stats', [])
-                pts = next((s['value'][0]['statValue'] for s in stat_list if s['name'] == 'PTS'), 0)
-                reb = next((s['value'][0]['statValue'] for s in stat_list if s['name'] == 'REB'), 0)
-                ast = next((s['value'][0]['statValue'] for s in stat_list if s['name'] == 'AST'), 0)
-                pir = next((s['value'][0]['statValue'] for s in stat_list if s['name'] == 'PIR'), 0)
-
-                cursor.execute("""
-                    INSERT OR REPLACE INTO euro_stats_summary
-                    VALUES (?, ?, ?, ?, ?, ?)
-                """, (p_id, "2024-25", pts, reb, ast, pir))
-
-            print(f"Procesado: {nombre}")
-
-        conn.commit()
-        print("Carga local finalizada con éxito.")
-
-    except Exception as e:
-        print(f"Error en el proceso: {e}")
-    finally:
-        conn.close()
+    conn.commit()
+    conn.close()
+    print("Proceso terminado.")
 
 if __name__ == "__main__":
-    cargar_desde_local()
+    procesar_datos()
