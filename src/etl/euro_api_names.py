@@ -4,43 +4,39 @@ import requests
 
 DB_PATH = "/mnt/nba_data/dosaros_local.db"
 
-def mapear_nombres_directo():
+def mapear_nombres_temporada():
     conn = sqlite3.connect(DB_PATH)
-    # Obtenemos los pares season/game_code de tus datos
-    game_ids = pd.read_sql("SELECT DISTINCT game_id FROM euro_pbp", conn)['game_id'].tolist()
+    # Identificamos qué temporadas tenemos en la base de datos (ej: E2023, E2024)
+    seasons = conn.execute("SELECT DISTINCT substr(game_id, 1, 5) FROM euro_pbp").fetchall()
+    seasons = [s[0] for s in seasons]
     
+    headers = {'User-Agent': 'Mozilla/5.0'}
     mapeo = []
-    print(f"Procesando {len(game_ids)} partidos vía API directa...")
 
-    for g_id in game_ids:
+    for season in seasons:
+        print(f"Descargando lista de jugadores para {season}...")
+        # Endpoint masivo: trae a todos los jugadores de la temporada de una vez
+        url = f"https://api-live.euroleague.net/v1/players?seasonCode={season}&showAll=true"
         try:
-            # E2024_1 -> season=E2024, game_code=1
-            season_code, game_code = g_id.split('_')
-            
-            # URL oficial de la Euroliga para estadísticas de partido
-            url = f"https://api-live.euroleague.net/v1/games/traditionalstats?seasonCode={season_code}&gameCode={game_code}"
-            response = requests.get(url, timeout=10)
-            data = response.json()
-            
-            # Extraemos jugadores de ambos equipos
-            for team in ['home', 'away']:
-                for player in data.get(team, {}).get('players', []):
-                    mapeo.append({
-                        'player_id': player['personId'], 
-                        'player_name': player['playerName']
-                    })
-        except Exception:
+            r = requests.get(url, headers=headers, timeout=10)
+            if r.status_code == 200:
+                data = r.json()
+                for p in data.get('players', []):
+                    mapeo.append({'player_id': p['personId'], 'player_name': p['playerName']})
+            else:
+                print(f"⚠️ {season} no disponible (Status {r.status_code})")
+        except Exception as e:
             continue
 
     if mapeo:
-        df_final = pd.DataFrame(mapeo).drop_duplicates(subset=['player_id'])
-        df_final.to_sql('euro_players_ref', conn, if_exists='replace', index=False)
+        df = pd.DataFrame(mapeo).drop_duplicates(subset=['player_id'])
+        df.to_sql('euro_players_ref', conn, if_exists='replace', index=False)
         conn.execute("CREATE UNIQUE INDEX IF NOT EXISTS idx_pid ON euro_players_ref (player_id);")
-        print(f"✅ ¡POR FIN! {len(df_final)} jugadores mapeados en 'euro_players_ref'.")
+        print(f"✅ ¡CONSEGUIDO! {len(df)} jugadores mapeados.")
     else:
-        print("❌ Error: No se pudo obtener información de la API oficial.")
+        print("❌ La API sigue sin responder. Pasamos al Objetivo 3 para no frenar la jornada.")
     
     conn.close()
 
 if __name__ == "__main__":
-    mapear_nombres_directo()
+    mapear_nombres_temporada()
