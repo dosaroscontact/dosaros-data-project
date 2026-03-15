@@ -1,0 +1,1759 @@
+=========================================================
+ DOCUMENTACIÓN DE ESTRUCTURA JSON
+ Archivo: nge.json
+ URL de origen: URL no determinada (estructura no estándar)
+=========================================================
+
+📂 root (Objeto)
+  📂 headerData (Objeto)
+    📂 euroleague (Objeto)
+      📂 clubs (Objeto)
+        🔹 id: str | ℹ️ Identificador único en el sistema de origen
+        🔹 contentType: str
+        📜 clubs (Lista con 20 elementos de tipo: {'dict': 20})
+          🔍 Estructura del primer hijo:
+            - name: str
+            - url: str
+            - logo: dict
+            - order: int
+      📂 header (Objeto)
+        📂 partners (Objeto)
+          🔹 id: str | ℹ️ Identificador único en el sistema de origen
+          🔹 heading: str
+          📜 partnerPromoBlocks (Lista con 0 elementos de tipo: {})
+        📂 affiliates (Objeto)
+          🔹 id: str | ℹ️ Identificador único en el sistema de origen
+          🔹 contentType: str
+          📜 affiliates (Lista con 3 elementos de tipo: {'dict': 3})
+            🔍 Estructura del primer hijo:
+              - name: str
+              - url: str
+              - logo: dict
+              - order: int
+      📂 siteNavigationWithPopups (Objeto)
+        🔹 id: str | ℹ️ Identificador único en el sistema de origen
+        🔹 contentType: str
+        🔹 siteLogoUrl: str
+        📂 siteLogoImage (Objeto)
+          🔹 id: str | ℹ️ Identificador único en el sistema de origen
+          🔹 contentType: str
+          🔹 url: str
+          🔹 alt: NoneType
+          🔹 caption: NoneType
+          🔹 title: NoneType
+          🔹 thumbnail: NoneType
+          🔹 sponsor: NoneType
+          🔹 link: NoneType
+        📜 menuItems (Lista con 9 elementos de tipo: {'dict': 9})
+          🔍 Estructura del primer hijo:
+            - title: str
+            - url: str
+            - subItems: list
+            - useAutomaticSubItems: NoneType
+            - sideMenuIcon: dict
+        📜 profileLinks (Lista con 2 elementos de tipo: {'dict': 2})
+          🔍 Estructura del primer hijo:
+            - title: str
+            - url: str
+            - openInNewTab: bool
+            - image: dict
+        📜 sideMenuLinks (Lista con 1 elementos de tipo: {'dict': 1})
+          🔍 Estructura del primer hijo:
+            - title: str
+            - url: str
+            - openInNewTab: bool
+            - image: dict
+      🔹 alternativeLogoImage: NoneType
+    📂 eurocup (Objeto)
+      📂 clubs (Objeto)
+        🔹 id: str | ℹ️ Identificador único en el sistema de origen
+        🔹 contentType: str
+        📜 clubs (Lista con 20 elementos de tipo: {'dict': 20})
+          🔍 Estructura del primer hijo:
+            - name: str
+            - url: str
+            - logo: dict
+            - order: int
+      📂 header (Objeto)
+        📂 partners (Objeto)
+          🔹 id: str | ℹ️ Identificador único en el sistema de origen
+          🔹 heading: str
+          📜 partnerPromoBlocks (Lista con 1 elementos de tipo: {'dict': 1})
+            🔍 Estructura del primer hijo:
+              - banner: dict
+              - campaign: str
+        📂 affiliates (Objeto)
+          🔹 id: str | ℹ️ Identificador único en el sistema de origen
+          🔹 contentType: str
+          📜 affiliates (Lista con 3 elementos de tipo: {'dict': 3})
+            🔍 Estructura del primer hijo:
+              - name: str
+              - url: str
+              - logo: dict
+              - order: int
+      📂 siteNavigationWithPopups (Objeto)
+        🔹 id: str | ℹ️ Identificador único en el sistema de origen
+        🔹 contentType: str
+        🔹 siteLogoUrl: str
+        📂 siteLogoImage (Objeto)
+          🔹 id: str | ℹ️ Identificador único en el sistema de origen
+          🔹 contentType: str
+          🔹 url: str
+          🔹 alt: NoneType
+          🔹 caption: NoneType
+          🔹 title: NoneType
+          🔹 thumbnail: NoneType
+          🔹 sponsor: NoneType
+          🔹 link: NoneType
+        📜 menuItems (Lista con 8 elementos de tipo: {'dict': 8})
+          🔍 Estructura del primer hijo:
+            - title: str
+            - url: str
+            - subItems: list
+            - useAutomaticSubItems: NoneType
+            - sideMenuIcon: dict
+        📜 profileLinks (Lista con 2 elementos de tipo: {'dict': 2})
+          🔍 Estructura del primer hijo:
+            - title: str
+            - url: str
+            - openInNewTab: bool
+            - image: dict
+        📜 sideMenuLinks (Lista con 1 elementos de tipo: {'dict': 1})
+          🔍 Estructura del primer hijo:
+            - title: str
+            - url: str
+            - openInNewTab: bool
+            - image: dict
+      🔹 alternativeLogoImage: NoneType
+    📂 nge (Objeto)
+      📂 clubs (Objeto)
+        🔹 id: str | ℹ️ Identificador único en el sistema de origen
+        🔹 contentType: str
+        📜 clubs (Lista con 8 elementos de tipo: {'dict': 8})
+          🔍 Estructura del primer hijo:
+            - name: str
+            - url: str
+            - logo: dict
+            - order: int
+      📂 header (Objeto)
+        📂 partners (Objeto)
+          🔹 id: str | ℹ️ Identificador único en el sistema de origen
+          🔹 heading: str
+          📜 partnerPromoBlocks (Lista con 1 elementos de tipo: {'dict': 1})
+            🔍 Estructura del primer hijo:
+              - banner: dict
+              - campaign: str
+        📂 affiliates (Objeto)
+          🔹 id: str | ℹ️ Identificador único en el sistema de origen
+          🔹 contentType: str
+          📜 affiliates (Lista con 3 elementos de tipo: {'dict': 3})
+            🔍 Estructura del primer hijo:
+              - name: str
+              - url: str
+              - logo: dict
+              - order: int
+      📂 siteNavigationWithPopups (Objeto)
+        🔹 id: str | ℹ️ Identificador único en el sistema de origen
+        🔹 contentType: str
+        🔹 siteLogoUrl: str
+        📂 siteLogoImage (Objeto)
+          🔹 id: str | ℹ️ Identificador único en el sistema de origen
+          🔹 contentType: str
+          🔹 url: str
+          🔹 alt: NoneType
+          🔹 caption: NoneType
+          🔹 title: NoneType
+          🔹 thumbnail: NoneType
+          🔹 sponsor: NoneType
+          🔹 link: NoneType
+        📜 menuItems (Lista con 7 elementos de tipo: {'dict': 7})
+          🔍 Estructura del primer hijo:
+            - title: str
+            - url: str
+            - subItems: list
+            - useAutomaticSubItems: NoneType
+            - sideMenuIcon: dict
+        📜 profileLinks (Lista con 2 elementos de tipo: {'dict': 2})
+          🔍 Estructura del primer hijo:
+            - title: str
+            - url: str
+            - openInNewTab: bool
+            - image: dict
+        📜 sideMenuLinks (Lista con 1 elementos de tipo: {'dict': 1})
+          🔍 Estructura del primer hijo:
+            - title: str
+            - url: str
+            - openInNewTab: bool
+            - image: dict
+      🔹 alternativeLogoImage: NoneType
+    📂 main (Objeto)
+      📂 header (Objeto)
+        📂 partners (Objeto)
+          🔹 id: str | ℹ️ Identificador único en el sistema de origen
+          🔹 heading: str
+          📜 partnerPromoBlocks (Lista con 0 elementos de tipo: {})
+        📂 affiliates (Objeto)
+          🔹 id: str | ℹ️ Identificador único en el sistema de origen
+          🔹 contentType: str
+          📜 affiliates (Lista con 3 elementos de tipo: {'dict': 3})
+            🔍 Estructura del primer hijo:
+              - name: str
+              - url: str
+              - logo: dict
+              - order: int
+      📂 siteNavigationWithPopups (Objeto)
+        🔹 id: str | ℹ️ Identificador único en el sistema de origen
+        🔹 contentType: str
+        🔹 siteLogoUrl: str
+        📂 siteLogoImage (Objeto)
+          🔹 id: str | ℹ️ Identificador único en el sistema de origen
+          🔹 contentType: str
+          🔹 url: str
+          🔹 alt: NoneType
+          🔹 caption: NoneType
+          🔹 title: NoneType
+          🔹 thumbnail: NoneType
+          🔹 sponsor: NoneType
+          🔹 link: NoneType
+        📜 menuItems (Lista con 2 elementos de tipo: {'dict': 2})
+          🔍 Estructura del primer hijo:
+            - title: str
+            - url: str
+            - subItems: list
+            - useAutomaticSubItems: NoneType
+            - sideMenuIcon: NoneType
+        📜 profileLinks (Lista con 2 elementos de tipo: {'dict': 2})
+          🔍 Estructura del primer hijo:
+            - title: str
+            - url: str
+            - openInNewTab: bool
+            - image: dict
+        📜 sideMenuLinks (Lista con 1 elementos de tipo: {'dict': 1})
+          🔍 Estructura del primer hijo:
+            - title: str
+            - url: str
+            - openInNewTab: bool
+            - image: dict
+      🔹 alternativeLogoImage: NoneType
+    📂 one-team (Objeto)
+      📂 header (Objeto)
+        📂 partners (Objeto)
+          🔹 id: str | ℹ️ Identificador único en el sistema de origen
+          🔹 heading: str
+          📜 partnerPromoBlocks (Lista con 0 elementos de tipo: {})
+        📂 affiliates (Objeto)
+          🔹 id: str | ℹ️ Identificador único en el sistema de origen
+          🔹 contentType: str
+          📜 affiliates (Lista con 3 elementos de tipo: {'dict': 3})
+            🔍 Estructura del primer hijo:
+              - name: str
+              - url: str
+              - logo: dict
+              - order: int
+      📂 siteNavigationWithPopups (Objeto)
+        🔹 id: str | ℹ️ Identificador único en el sistema de origen
+        🔹 contentType: str
+        🔹 siteLogoUrl: str
+        📂 siteLogoImage (Objeto)
+          🔹 id: str | ℹ️ Identificador único en el sistema de origen
+          🔹 contentType: str
+          🔹 url: str
+          🔹 alt: NoneType
+          🔹 caption: NoneType
+          🔹 title: NoneType
+          🔹 thumbnail: NoneType
+          🔹 sponsor: NoneType
+          🔹 link: NoneType
+        📜 menuItems (Lista con 6 elementos de tipo: {'dict': 6})
+          🔍 Estructura del primer hijo:
+            - title: str
+            - url: str
+            - subItems: list
+            - useAutomaticSubItems: NoneType
+            - sideMenuIcon: dict
+        📜 profileLinks (Lista con 2 elementos de tipo: {'dict': 2})
+          🔍 Estructura del primer hijo:
+            - title: str
+            - url: str
+            - openInNewTab: bool
+            - image: dict
+        📜 sideMenuLinks (Lista con 1 elementos de tipo: {'dict': 1})
+          🔍 Estructura del primer hijo:
+            - title: str
+            - url: str
+            - openInNewTab: bool
+            - image: dict
+      🔹 alternativeLogoImage: NoneType
+    📂 ebinstitute (Objeto)
+      📂 header (Objeto)
+        📂 partners (Objeto)
+          🔹 id: str | ℹ️ Identificador único en el sistema de origen
+          🔹 heading: str
+          📜 partnerPromoBlocks (Lista con 0 elementos de tipo: {})
+        📂 affiliates (Objeto)
+          🔹 id: str | ℹ️ Identificador único en el sistema de origen
+          🔹 contentType: str
+          📜 affiliates (Lista con 3 elementos de tipo: {'dict': 3})
+            🔍 Estructura del primer hijo:
+              - name: str
+              - url: str
+              - logo: dict
+              - order: int
+      📂 siteNavigationWithPopups (Objeto)
+        🔹 id: str | ℹ️ Identificador único en el sistema de origen
+        🔹 contentType: str
+        🔹 siteLogoUrl: str
+        📂 siteLogoImage (Objeto)
+          🔹 id: str | ℹ️ Identificador único en el sistema de origen
+          🔹 contentType: str
+          🔹 url: str
+          🔹 alt: NoneType
+          🔹 caption: NoneType
+          🔹 title: NoneType
+          🔹 thumbnail: NoneType
+          🔹 sponsor: NoneType
+          🔹 link: NoneType
+        📜 menuItems (Lista con 2 elementos de tipo: {'dict': 2})
+          🔍 Estructura del primer hijo:
+            - title: str
+            - url: str
+            - subItems: list
+            - useAutomaticSubItems: NoneType
+            - sideMenuIcon: NoneType
+        📜 profileLinks (Lista con 2 elementos de tipo: {'dict': 2})
+          🔍 Estructura del primer hijo:
+            - title: str
+            - url: str
+            - openInNewTab: bool
+            - image: dict
+        📜 sideMenuLinks (Lista con 1 elementos de tipo: {'dict': 1})
+          🔍 Estructura del primer hijo:
+            - title: str
+            - url: str
+            - openInNewTab: bool
+            - image: dict
+      🔹 alternativeLogoImage: NoneType
+  📂 footerData (Objeto)
+    📂 euroleague (Objeto)
+      📂 clubSponsor (Objeto)
+        🔹 id: str | ℹ️ Identificador único en el sistema de origen
+        🔹 contentType: str
+        📂 clubSponsor (Objeto)
+          🔹 name: str
+          🔹 link: str
+          📂 logo (Objeto)
+            🔹 image: str
+            🔹 title: str
+            🔹 content: NoneType
+          🔹 order: int
+      📜 footerLinksSection (Lista con 4 elementos de tipo: {'dict': 4})
+        🔍 Estructura del primer hijo:
+          - id: str | ℹ️ Identificador único en el sistema de origen
+          - contentType: str
+          - title: str
+          - url: str
+          - links: list
+      📂 basement (Objeto)
+        🔹 id: str | ℹ️ Identificador único en el sistema de origen
+        🔹 contentType: str
+        🔹 copyrightNotice: str
+        📜 links (Lista con 2 elementos de tipo: {'dict': 2})
+          🔍 Estructura del primer hijo:
+            - title: str
+            - url: str
+            - order: int
+        📜 socialLinks (Lista con 1 elementos de tipo: {'dict': 1})
+          🔍 Estructura del primer hijo:
+            - title: str
+            - socialLinks: list
+    📂 eurocup (Objeto)
+      📂 clubSponsor (Objeto)
+        🔹 id: str | ℹ️ Identificador único en el sistema de origen
+        🔹 contentType: str
+        📂 clubSponsor (Objeto)
+          🔹 name: str
+          🔹 link: str
+          📂 logo (Objeto)
+            🔹 image: str
+            🔹 title: str
+            🔹 content: NoneType
+          🔹 order: int
+      📜 footerLinksSection (Lista con 4 elementos de tipo: {'dict': 4})
+        🔍 Estructura del primer hijo:
+          - id: str | ℹ️ Identificador único en el sistema de origen
+          - contentType: str
+          - title: str
+          - url: str
+          - links: list
+      📂 basement (Objeto)
+        🔹 id: str | ℹ️ Identificador único en el sistema de origen
+        🔹 contentType: str
+        🔹 copyrightNotice: str
+        📜 links (Lista con 2 elementos de tipo: {'dict': 2})
+          🔍 Estructura del primer hijo:
+            - title: str
+            - url: str
+            - order: int
+        📜 socialLinks (Lista con 1 elementos de tipo: {'dict': 1})
+          🔍 Estructura del primer hijo:
+            - title: str
+            - socialLinks: list
+    📂 nge (Objeto)
+      📂 clubSponsor (Objeto)
+        🔹 id: str | ℹ️ Identificador único en el sistema de origen
+        🔹 contentType: str
+        📂 clubSponsor (Objeto)
+          🔹 name: str
+          🔹 link: str
+          📂 logo (Objeto)
+            🔹 image: str
+            🔹 title: str
+            🔹 content: NoneType
+          🔹 order: int
+      📜 footerLinksSection (Lista con 4 elementos de tipo: {'dict': 4})
+        🔍 Estructura del primer hijo:
+          - id: str | ℹ️ Identificador único en el sistema de origen
+          - contentType: str
+          - title: str
+          - url: str
+          - links: list
+      📂 basement (Objeto)
+        🔹 id: str | ℹ️ Identificador único en el sistema de origen
+        🔹 contentType: str
+        🔹 copyrightNotice: str
+        📜 links (Lista con 2 elementos de tipo: {'dict': 2})
+          🔍 Estructura del primer hijo:
+            - title: str
+            - url: str
+            - order: int
+        📜 socialLinks (Lista con 1 elementos de tipo: {'dict': 1})
+          🔍 Estructura del primer hijo:
+            - title: str
+            - socialLinks: list
+    📂 main (Objeto)
+      📂 clubSponsor (Objeto)
+        🔹 id: str | ℹ️ Identificador único en el sistema de origen
+        🔹 contentType: str
+        📂 clubSponsor (Objeto)
+          🔹 name: str
+          🔹 link: str
+          📂 logo (Objeto)
+            🔹 image: str
+            🔹 title: str
+            🔹 content: NoneType
+          🔹 order: int
+      📜 footerLinksSection (Lista con 4 elementos de tipo: {'dict': 4})
+        🔍 Estructura del primer hijo:
+          - id: str | ℹ️ Identificador único en el sistema de origen
+          - contentType: str
+          - title: str
+          - url: str
+          - links: list
+      📂 basement (Objeto)
+        🔹 id: str | ℹ️ Identificador único en el sistema de origen
+        🔹 contentType: str
+        🔹 copyrightNotice: str
+        📜 links (Lista con 2 elementos de tipo: {'dict': 2})
+          🔍 Estructura del primer hijo:
+            - title: str
+            - url: str
+            - order: int
+        📜 socialLinks (Lista con 1 elementos de tipo: {'dict': 1})
+          🔍 Estructura del primer hijo:
+            - title: str
+            - socialLinks: list
+    📂 one-team (Objeto)
+      📂 clubSponsor (Objeto)
+        🔹 id: str | ℹ️ Identificador único en el sistema de origen
+        🔹 contentType: str
+        📂 clubSponsor (Objeto)
+          🔹 name: str
+          🔹 link: str
+          📂 logo (Objeto)
+            🔹 image: str
+            🔹 title: str
+            🔹 content: NoneType
+          🔹 order: int
+      📜 footerLinksSection (Lista con 4 elementos de tipo: {'dict': 4})
+        🔍 Estructura del primer hijo:
+          - id: str | ℹ️ Identificador único en el sistema de origen
+          - contentType: str
+          - title: str
+          - url: str
+          - links: list
+      📂 basement (Objeto)
+        🔹 id: str | ℹ️ Identificador único en el sistema de origen
+        🔹 contentType: str
+        🔹 copyrightNotice: str
+        📜 links (Lista con 2 elementos de tipo: {'dict': 2})
+          🔍 Estructura del primer hijo:
+            - title: str
+            - url: str
+            - order: int
+        📜 socialLinks (Lista con 1 elementos de tipo: {'dict': 1})
+          🔍 Estructura del primer hijo:
+            - title: str
+            - socialLinks: list
+    📂 ebinstitute (Objeto)
+      📂 clubSponsor (Objeto)
+        🔹 id: str | ℹ️ Identificador único en el sistema de origen
+        🔹 contentType: str
+        📂 clubSponsor (Objeto)
+          🔹 name: str
+          🔹 link: str
+          📂 logo (Objeto)
+            🔹 image: str
+            🔹 title: str
+            🔹 content: NoneType
+          🔹 order: int
+      📜 footerLinksSection (Lista con 4 elementos de tipo: {'dict': 4})
+        🔍 Estructura del primer hijo:
+          - id: str | ℹ️ Identificador único en el sistema de origen
+          - contentType: str
+          - title: str
+          - url: str
+          - links: list
+      📂 basement (Objeto)
+        🔹 id: str | ℹ️ Identificador único en el sistema de origen
+        🔹 contentType: str
+        🔹 copyrightNotice: str
+        📜 links (Lista con 2 elementos de tipo: {'dict': 2})
+          🔍 Estructura del primer hijo:
+            - title: str
+            - url: str
+            - order: int
+        📜 socialLinks (Lista con 1 elementos de tipo: {'dict': 1})
+          🔍 Estructura del primer hijo:
+            - title: str
+            - socialLinks: list
+  🔹 cookieData: NoneType
+  📂 stickyFooterModalData (Objeto)
+    🔹 contentType: str
+    🔹 id: str | ℹ️ Identificador único en el sistema de origen
+    🔹 title: str
+    📂 content (Objeto)
+      🔹 text: str
+      🔹 isHtml: bool
+    🔹 buttonText: str
+    🔹 buttonLink: str
+    🔹 showAppCta: bool
+  📂 marketingPreferenceTexts (Objeto)
+    🔹 id: str | ℹ️ Identificador único en el sistema de origen
+    🔹 contentType: str
+    🔹 consent: str
+    🔹 consentAsterisk: str
+    🔹 agreeButton: str
+    🔹 disagreeButton: str
+    📂 signInInformation (Objeto)
+      🔹 contentType: str
+      🔹 id: str | ℹ️ Identificador único en el sistema de origen
+      🔹 title: str
+      📂 description (Objeto)
+        🔹 text: str
+        🔹 isHtml: bool
+      🔹 asteriskText: str
+    🔹 loginLogoImage: str
+    📂 favoriteTeamText (Objeto)
+      🔹 contentType: str
+      🔹 id: str | ℹ️ Identificador único en el sistema de origen
+      🔹 competitionSelectionText: str
+    📂 memberExclusiveModal (Objeto)
+      🔹 contentType: str
+      🔹 id: str | ℹ️ Identificador único en el sistema de origen
+      🔹 title: str
+      🔹 subtitle: str
+      🔹 signUpCta: str
+      🔹 logInCta: str
+    📂 subscriptionModal (Objeto)
+      🔹 contentType: str
+      🔹 id: str | ℹ️ Identificador único en el sistema de origen
+      🔹 title: str
+      📜 features (Lista con 3 elementos de tipo: {'str': 3})
+      🔹 CTAAcceptTitle: str
+      🔹 CTARefuseTitle: str
+      📂 image (Objeto)
+        🔹 id: str | ℹ️ Identificador único en el sistema de origen
+        🔹 contentType: str
+        🔹 url: str
+        🔹 alt: NoneType
+        🔹 caption: NoneType
+        🔹 title: NoneType
+        🔹 thumbnail: NoneType
+        🔹 sponsor: NoneType
+        🔹 link: NoneType
+    📂 profileConfig (Objeto)
+      🔹 contentType: str
+      🔹 id: str | ℹ️ Identificador único en el sistema de origen
+      📂 preferencesImage (Objeto)
+        🔹 id: str | ℹ️ Identificador único en el sistema de origen
+        🔹 contentType: str
+        🔹 url: str
+        🔹 alt: NoneType
+        🔹 caption: NoneType
+        🔹 title: NoneType
+        🔹 thumbnail: NoneType
+        🔹 sponsor: NoneType
+        🔹 link: NoneType
+      📂 accountDeletionInfo (Objeto)
+        🔹 text: str
+        🔹 isHtml: bool
+      🔹 accountDeletionFormId: str
+  📂 siteVideoConfig (Objeto)
+    🔹 videoPrerollAdvertConfig: NoneType
+  🔹 __lang: str
+  📂 __namespaces (Objeto)
+    📂 common (Objeto)
+      🔹 % of points from two-pointers: str
+      🔹 +/-: str
+      🔹 1st Quarter: str
+      🔹 2-pointers made: str
+      🔹 2FG %: str
+      🔹 2FG M/A: str
+      🔹 2nd Quarter: str
+      🔹 2P%: str
+      🔹 3-pointers made: str
+      🔹 3FG %: str
+      🔹 3FG M/A: str
+      🔹 3P%: str
+      🔹 3rd Quarter: str
+      🔹 4th Quarter: str
+      🔹 500 internal server error: str
+      🔹 A: str
+      🔹 About: str
+      🔹 About you: str
+      🔹 account-locked: str
+      🔹 Accumulated: str
+      🔹 Achievements: str
+      🔹 Advanced: str
+      🔹 Advanced Notifications: str
+      🔹 Ahead behind: str
+      🔹 All: str
+      🔹 All player stats: str
+      🔹 All Season: str
+      🔹 All season: str
+      🔹 All seasons: str
+      🔹 All team stats: str
+      🔹 All the final fours: str
+      🔹 All time stats: str
+      🔹 All-Time: str
+      🔹 All time: str
+      🔹 Already have an account?: str
+      🔹 Apply: str
+      🔹 Apply filters: str
+      🔹 April: str
+      🔹 Arena: str
+      🔹 Article: str
+      🔹 Assist to turnover ratio: str
+      🔹 Assistant coach: str
+      🔹 Assists: str
+      🔹 AST: str
+      🔹 Attendance: str
+      🔹 August: str
+      🔹 Ave.: str
+      🔹 Average: str
+      🔹 Awards: str
+      🔹 Awards videos: str
+      🔹 Away record: str
+      🔹 Back to sign in: str
+      🔹 bad-credentials: str
+      🔹 Best-of-five series: str
+      🔹 Biography: str
+      🔹 BLK: str
+      🔹 BLKA: str
+      🔹 Blocks: str
+      🔹 Blocks A: str
+      🔹 Blocks against: str
+      🔹 Blocks F: str
+      🔹 Born: str
+      🔹 Boxscore: str
+      🔹 Boxscore Unavailable
+It looks like we don't have any scores to show you at the moment.
+Please try again later.: str
+      🔹 By agreeing to the terms above, you consent to Euroleague Ventures SA using your personal data in accordance with our <a href="https://id.euroleague.net/legal/privacypolicyEV" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.: str
+      🔹 By checking this box you consent to receive commercial communications about products, services, news, offers and contests around EuroLeague and its official sponsors. For more info, please check the Privacy Policy.: str
+      🔹 By checking this box you consent to receive commercial communications about products, services, news, offers and contests around EuroLeague and its official sponsors. For more info, please check the <a href="https://id.euroleague.net/legal/privacypolicyEV" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.: str
+      🔹 By quarter: str
+      🔹 Calendar: str
+      🔹 Career highs: str
+      🔹 Center: str
+      🔹 CHAMPIONSHIP GAME: str
+      🔹 Championship game highlights: str
+      🔹 Change team: str
+      🔹 Choose which event you'd like to be notified about.: str
+      🔹 Choose your language: str
+      🔹 City: str
+      🔹 Club: str
+      🔹 Club address: str
+      🔹 Coaches: str
+      🔹 Coming Soon
+This game hasn't started yet, please come back later.: str
+      🔹 Communication preferences: str
+      🔹 Comparison: str
+      🔹 Competition format: str
+      🔹 confirm-new-pass: str
+      🔹 Contact: str
+      🔹 common.action.all-videos: str
+      🔹 Continue: str
+      🔹 Country: str
+      🔹 Create account: str
+      🔹 Current standings: str
+      🔹 Customise your in-app experience by selecting your favorite team: str
+      🔹 Date of Birth: str
+      🔹  (optional): str
+      🔹 December: str
+      🔹 Defense: str
+      🔹 Defensive rebounds: str
+      🔹 Delete my account: str
+      🔹 Do you have a favorite team?: str
+      🔹 Done: str
+      🔹 Don't have an account yet?: str
+      🔹 Don’t have an account?: str
+      🔹 DR: str
+      🔹 error-required-field: str
+      🔹 Effective field goal %: str
+      🔹 Email address: str
+      🔹 End Game: str
+      🔹 End of quarter: str
+      🔹 End Quarter: str
+      🔹 English: str
+      🔹 Euroleague Basketball documentaries: str
+      🔹 Exclusive Fan Content: str
+      🔹 F4 Tickets Benefits & Raffles: str
+      🔹 Fan Votes: str
+      🔹 Fantasy: str
+      🔹 FAQs: str
+      🔹 Favorite Team: str
+      🔹 Favorite team unavailable
+An error occurred while selecting your favorite team. Please try again later.: str
+      🔹 Favorite team updated
+You can update your team preferences in the Euroleague ID page at any time.: str
+      🔹 FC: str
+      🔹 FD: str
+      🔹 Featured News: str
+      🔹 February: str
+      🔹 FG%: str
+      🔹 Filter: str
+      🔹 Filters Unavailable
+It looks like we don't have any filters to show you at the moment.
+Please try again later.: str
+      🔹 Final Four: str
+      🔹 Final four events: str
+      🔹 Final four highlights: str
+      🔹 Final four mini-movies: str
+      🔹 Final four miscellaneous: str
+      🔹 Final four MVP's: str
+      🔹 Final four mvps: str
+      🔹 Final four news: str
+      🔹 Final four top plays: str
+      🔹 Final four videos: str
+      🔹 Final fours, 2002 to 2021: str
+      🔹 Final Score: str
+      🔹 Find a player: str
+      🔹 First name: str
+      🔹 Forgot password: str
+      🔹 Format: str
+      🔹 Forward: str
+      🔹 Fouls: str
+      🔹 Fouls C: str
+      🔹 Fouls commited: str
+      🔹 Fouls D: str
+      🔹 Free access to all game highlights and original documentaries on EuroLeagueTV: str
+      🔹 Free Throw rate: str
+      🔹 Free throws made: str
+      🔹 Free Throws Made: str
+      🔹 Free-throw %: str
+      🔹 French: str
+      🔹 FT %: str
+      🔹 FT M/A: str
+      🔹 FT%: str
+      🔹 Full list: str
+      🔹 Full team stats: str
+      🔹 Game Center: str
+      🔹 Game info: str
+      🔹 Game news: str
+      🔹 Game Report: str
+      🔹 Game videos: str
+      🔹 Games: str
+      🔹 Games Played: str
+      🔹 Games played: str
+      🔹 Games started: str
+      🔹 Games Unavailable
+It looks like we don't have any games to show you at the moment.
+Please try again later.: str
+      🔹 German: str
+      🔹 get-email-instructions: str
+      🔹 Get free access to premium articles, videos, and more by signing up for EuroLeagueID: str
+      🔹 Go to homepage: str
+      🔹 Go to news: str
+      🔹 Go to News: str
+      🔹 Good Afternoon: str
+      🔹 Good Evening: str
+      🔹 Good Morning: str
+      🔹 GP: str
+      🔹 Game Leaders: str
+      🔹 Game performance: str
+      🔹 Greek: str
+      🔹 Group A: str
+      🔹 Group B: str
+      🔹 GS: str
+      🔹 Guard: str
+      🔹 H: str
+      🔹 Half Time: str
+      🔹 Head coach: str
+      🔹 Head coach:: str
+      🔹 Height: str
+      🔹 Hi: str
+      🔹 Home: str
+      🔹 Home Away: str
+      🔹 Home record: str
+      🔹 Homepage Unavailable
+It looks like we don't have any content to show you at the moment.
+Please try again late.: str
+      🔹 I agree to the <a href=\"https://id.euroleague.net/terms\" target=\"_blank\" rel=\"noopener noreferrer\">Terms and Conditions</a> and the <a href=\"https://id.euroleague.net/legal/privacypolicyEV\" target=\"_blank\" rel=\"noopener noreferrer\">Privacy Policy</a>.: str
+      🔹 Index Rating: str
+      🔹 Interviews: str
+      🔹 Invalid email or password: str
+      🔹 Italian: str
+      🔹 January: str
+      🔹 July: str
+      🔹 June: str
+      🔹 Key stats: str
+      🔹 L10: str
+      🔹 Language Preferences: str
+      🔹 Last 10 games record: str
+      🔹 Last name: str
+      🔹 Latest News: str
+      🔹 Latest Videos: str
+      🔹 Latest videos: str
+      🔹 Licences Agreement: str
+      🔹 Lithuanian: str
+      🔹 Live Games: str
+      🔹 Load more: str
+      🔹 Location Services: str
+      🔹 Log in: str
+      🔹 Login: str
+      🔹 Loss: str
+      🔹 Lost: str
+      🔹 Lost (L): str
+      🔹 Manage Your EuroLeagueTV Subscription for Live Game Streams: str
+      🔹 Manage your password: str
+      🔹 March: str
+      🔹 Margins: str
+      🔹 May: str
+      🔹 Media partners: str
+      🔹 Min: str
+      🔹 Minutes played: str
+      🔹 More: str
+      🔹 More detailed standings: str
+      🔹 More Information: str
+      🔹 More to come: str
+      🔹 My account: str
+      🔹 My Team: str
+      🔹 My team: str
+      🔹 Nationality: str
+      🔹 Naming sponsor: str
+      🔹 New password: str
+      🔹 new-pass-below: str
+      🔹 News: str
+      🔹 News Alerts: str
+      🔹 No favorite team: str
+      🔹 No Favourite Team
+Select a team to keep up to date with the latest scores, standings and news for your team.
+Choose now: str
+      🔹 No Results 
+It looks like we couldn't find what you were looking for.
+Please try a different search.: str
+      🔹 No, nothing to see here: str
+      🔹 Notification Preference: str
+      🔹 Notification preferences: str
+      🔹 November: str
+      🔹 Number of losses: str
+      🔹 Number of points conceded: str
+      🔹 Number of points scored: str
+      🔹 Number of Wins: str
+      🔹 October: str
+      🔹 Offense: str
+      🔹 Offensive Rebounds: str
+      🔹 Official partners: str
+      🔹 Official website: str
+      🔹 One team games gallery: str
+      🔹 One team story: str
+      🔹 OR: str
+      🔹 OT: str
+      🔹 OT1: str
+      🔹 OT2: str
+      🔹 OT3: str
+      🔹 OT4: str
+      🔹 OT5: str
+      🔹 Our Ambassadors: str
+      🔹 Our latest videos: str
+      🔹 Our Programs: str
+      🔹 Our stories: str
+      🔹 Our Tournaments: str
+      🔹 Overtime record: str
+      🔹 Partners: str
+      🔹 Password: str
+      🔹 Percentage of wins vs losses: str
+      🔹 Performance index rating: str
+      🔹 Performance Index Rating: str
+      🔹 Personal fouls committed: str
+      🔹 Personal fouls drawn: str
+      🔹 Personalized online experience: str
+      🔹 Phase: str
+      🔹 PIR: str
+      🔹 Play EuroLeague Fantasy Challenge & Other Games: str
+      🔹 Play-by-play: str
+      🔹 Play-by-play Unavailable
+It looks like we don't have any commentary to show you at the moment.
+Please try again later.: str
+      🔹 Player: str
+      🔹 Player Articles: str
+      🔹 Player name: str
+      🔹 Players: str
+      🔹 Players Unavailable
+It looks like we don't have any players to show you at the moment.
+Please try again later.: str
+      🔹 Playoff: str
+      🔹 Playoffs: str
+      🔹 Plus / Minus (+/-): str
+      🔹 Podcast: str
+      🔹 Point difference: str
+      🔹 Points: str
+      🔹 Points per game: str
+      🔹 Points scored: str
+      🔹 Position: str
+      🔹 Pos: str
+      🔹 President: str
+      🔹 Previous seasons results: str
+      🔹 Premium partners: str
+      🔹 Privacy Policy: str
+      🔹 Profile: str
+      🔹 psw-too-simple: str
+      🔹 PTS: str
+      🔹 PTS-: str
+      🔹 PTS+: str
+      🔹 Purchase tickets: str
+      🔹 REB: str
+      🔹 Rebound %: str
+      🔹 Rebounds AST: str
+      🔹 Rebounds D: str
+      🔹 Rebounds O: str
+      🔹 Rebounds STL: str
+      🔹 Rebounds T: str
+      🔹 Rebounds TO: str
+      🔹 Recent results: str
+      🔹 Records: str
+      🔹 Referees: str
+      🔹 Register now: str
+      🔹 Regular Season: str
+      🔹 REGULAR SEASON: str
+      🔹 Related: str
+      🔹 Related Content Unavailable: str
+      🔹 Repeat new password: str
+      🔹 Repeat password: str
+      🔹 Reset: str
+      🔹 Reset Password: str
+      🔹 Results: str
+      🔹 Roster: str
+      🔹 Roster Unavailable: str
+      🔹 Round: str
+      🔹 Russian: str
+      🔹 Save changes: str
+      🔹 Scoring: str
+      🔹 Search: str
+      🔹 Season: str
+      🔹 Season averages: str
+      🔹 Season team leaders: str
+      🔹 See more stats: str
+      🔹 Select language: str
+      🔹 Send email: str
+      🔹 September: str
+      🔹 Serbian: str
+      🔹 Show all: str
+      🔹 Show less: str
+      🔹 Show more: str
+      🔹 Sign In: str
+      🔹 Sign In/ Register: str
+      🔹 Sign out: str
+      🔹 Sign up: str
+      🔹 sign-up-banner: str
+      🔹 Skip: str
+      🔹 Socials: str
+      🔹 Something went wrong on our end, please try again later.: str
+      🔹 Spanish: str
+      🔹 Sports business MBA: str
+      🔹 Standings: str
+      🔹 Standings key: str
+      🔹 Starters: str
+      🔹 Stats Home: str
+      🔹 Standings Unavailable: str
+      🔹 Standings view: str
+      🔹 Start Game: str
+      🔹 Start Quarter: str
+      🔹 Stats: str
+      🔹 Stats Unavailable: str
+      🔹 Stats vs Team: str
+      🔹 Stats info: str
+      🔹 Stats overview: str
+      🔹 Stats Stories: str
+      🔹 Stats Tables: str
+      🔹 Stay close to the game, wherever you are. We use this to make sure we deliver the most relevant content to you.: str
+      🔹 Stay on the ball and be the first to hear the latest news including live game updates. You can update these at any time in Settings.: str
+      🔹 Steals: str
+      🔹 STL: str
+      🔹 Store: str
+      🔹 Streaks: str
+      🔹 Table view: str
+      🔹 Team: str
+      🔹 Team news: str
+      🔹 Teams: str
+      🔹 Teams Unavailable: str
+      🔹 The page you're looking for cannot be found. Please either return to the previous page or visit our homepage: str
+      🔹 THIRD PLACE GAME: str
+      🔹 This app needs to update: str
+      🔹 This season: str
+      🔹 Three-point %: str
+      🔹 Three-point rate: str
+      🔹 Three-pointers Attempted: str
+      🔹 Three-pointers attempted: str
+      🔹 Three-pointers Made: str
+      🔹 Three-pointers made: str
+      🔹 Three-pointers made share: str
+      🔹 Three-Point Rate<br/>% of field goal attempts that are three-pointers.: str
+      🔹 Two-Point Rate<br/>% of a player's field goal attempts that are two-pointers.: str
+      🔹 Time Played: str
+      🔹 TO: str
+      🔹 To enjoy exclusive & personalized content, please login or register: str
+      🔹 To keep using the Euroleague app you will need to update to the latest version from the App Store: str
+      🔹 Today's top story: str
+      🔹 Top 5 Leaders: str
+      🔹 Top 5 team leaders: str
+      🔹 Top Performers: str
+      🔹 Top plays videos: str
+      🔹 Total rebounds: str
+      🔹 TR: str
+      🔹 Trademarks: str
+      🔹 Traditional: str
+      🔹 Turkish: str
+      🔹 Turnovers: str
+      🔹 TV: str
+      🔹 TV list: str
+      🔹 Two-point %: str
+      🔹 Two-pointers Made: str
+      🔹 Two-pointers made: str
+      🔹 Two-pointers made share: str
+      🔹 Two-Point Rate: str
+      🔹 Upcoming Games: str
+      🔹 Update now: str
+      🔹 Updates Coming Soon: str
+      🔹 Video: str
+      🔹 Videos: str
+      🔹 Videos Unavailable: str
+      🔹 View all articles: str
+      🔹 View all videos: str
+      🔹 View full table: str
+      🔹 Visit Kaunas: str
+      🔹 Vlog: str
+      🔹 Watch Live: str
+      🔹 We track app usage date in order to monitor performance and understand fan behavior. Learn more here: str
+      🔹 Welcome to Euroleague: str
+      🔹 Where to watch: str
+      🔹 Win: str
+      🔹 Win%: str
+      🔹 Won: str
+      🔹 Won (W): str
+      🔹 Year: str
+      🔹 You can opt-in to notifications on a per game basis in the Game Center.: str
+      🔹 You may exercise, if you wish, the rights of access, rectification and deletion of data, as well as request that you limit the processing of your personal data, oppose it, request the portability of your data, as well as not to be subject to automated individual decisions sending a written communication to our <a href="mailto:data.protection.officer@euroleague.net">Data Protection Officer</a>.: str
+      📂 SITE_NAVIGATION (Objeto)
+        🔹 YOUR_ACCOUNT: str
+        🔹 GAMES: str
+        🔹 STANDINGS: str
+        🔹 REGULAR_SEASON: str
+        🔹 FORMAT: str
+        🔹 STATS: str
+        🔹 GENERAL: str
+        🔹 PLAYERS: str
+        🔹 TEAMS: str
+        🔹 ALL_PLAYERS: str
+        🔹 PLAYERS_STATS: str
+        🔹 NEWS: str
+        🔹 ARTICLES: str
+        🔹 INTERVIEWS: str
+        🔹 GAME_REPORTS: str
+        🔹 MORE: str
+        🔹 FINAL_FOUR: str
+        🔹 HOME: str
+        🔹 TICKETS: str
+        🔹 FANTASY: str
+        🔹 GET_STARTED: str
+        🔹 WATCH: str
+        🔹 VIDEOS: str
+        🔹 PODCASTS: str
+        🔹 GAMES_ON: str
+        🔹 WATCH_GAMES_ON: str
+        🔹 YOUR: str
+        🔹 ABOUT: str
+        🔹 OUR_PROGRAMS: str
+        🔹 OUR_AMBASSADORS: str
+        🔹 SPORT_BUSINESS_MBA: str
+        🔹 ELTV: str
+        🔹 PRIZES_AND_RULES: str
+        🔹 SCHEDULE: str
+        🔹 OVERVIEW: str
+        🔹 BACKED_BY: str
+        🔹 PARTNER_INITIATIVES: str
+        🔹 BOUNCING_FOR_GOOD: str
+        🔹 ONE_TEAM_LEGACY: str
+      🔹 Your location: str
+      🔹 Your team: str
+      🔹 CHOOSE_YOUR_FAVOURITE_TEAM: str
+      📂 SIGN_IN (Objeto)
+        🔹 LOGIN_WITH_EUROLEAGUE_ID: str
+        🔹 DONT_HAVE_ACCOUNT: str
+        🔹 REGISTER: str
+        🔹 LOGIN: str
+        🔹 FORGOT_PASSWORD: str
+      📂 FORGOT_PASSWORD (Objeto)
+        🔹 RECEIVE_EMAIL_SOON: str
+        🔹 EMAIL_SENT_TO: str
+        🔹 SET_NEW_PASSWORD: str
+        🔹 YOUR_PASSWORD_CHANGED: str
+      📂 SIGN_UP (Objeto)
+        🔹 CREATE_EUROLEAGUE_ID: str
+        🔹 ALREADY_HAVE_ACCOUNT: str
+        🔹 PREFERENCES_TEXT: str
+        🔹 POLICY_TEXT: str
+      📂 PERSONALIZATION_FORM (Objeto)
+        🔹 FILL_YOUR_INFORMATION: str
+        🔹 PERSONAL_INFORMATION: str
+        🔹 FAVORITE_TEAM: str
+        🔹 UNLOCK_BETTER_EXPERIENCE: str
+        🔹 CHOOSE_YOUR_TEAM: str
+        🔹 SELECT_TEAM_FROM_COMPETITION: str
+        🔹 YOU_ARE_ALL_SET: str
+        🔹 EXPLORE_EUROLEAGUE_ID: str
+        🔹 ENJOY_PERSONALIZED_EXPERIENCE: str
+        🔹 EUROLEAGUE_TV_ACCESS: str
+        🔹 ENJOY_EXCLUSIVE_EUROLEAGUE_TV: str
+        🔹 EUROLEAGUE_GAMING_HUB: str
+        🔹 WIN_BIG_PRIZES_GAMING_HUB: str
+        🔹 FINAL_FOUR_PRE_SALE: str
+        🔹 ENTER_LUCKY_DRAW: str
+        🔹 SKIP_PERSONALIZATION: str
+        🔹 SKIP: str
+        🔹 BUTTON_NEXT: str
+        🔹 BUTTON_BACK: str
+        🔹 BUTTON_FINISH: str
+      🔹 YES: str
+      🔹 NO: str
+      📂 SIGN_FLOW (Objeto)
+        🔹 ENJOY_ALL_PERKS: str
+        🔹 EUROLEAGUE_TV_ACCESS: str
+        🔹 EUROLEAGUE_GAMING_HUB: str
+        🔹 FINAL_FOUR_PRE_SALE: str
+        🔹 GAME_TICKETS_JERSEYS: str
+        🔹 MANY_MORE_BENEFITS: str
+      🔹 THE_OFFICIAL_SITE: str
+      🔹 CHECK_OUT_LIVE_MATCHES: str
+      🔹 25TH_ANNIVERSARY: str
+      📂 MY_TEAM (Objeto)
+        🔹 CTA_LABEL_MY_TEAM: str
+      📂 AUTHENTICATION_BUTTON (Objeto)
+        🔹 DESKTOP_LABEL: str
+        🔹 MOBILE_LABEL: str
+      📂 OUR_TOURNAMENTS (Objeto)
+        🔹 GO_TO_WEBSITE: str
+      📂 BROADCAST (Objeto)
+        🔹 WATCH_LIVE: str
+      📂 CLUB_INFO (Objeto)
+        🔹 POSITION: str
+        🔹 POS: str
+        🔹 WON: str
+        🔹 W: str
+        🔹 LOST: str
+        🔹 L: str
+      📂 MESSAGES (Objeto)
+        🔹 PLEASE_SIGN_IN: str
+      📂 CATEGORY_FILTER (Objeto)
+        🔹 ARTICLE: str
+        🔹 TRADEMARKS: str
+        🔹 INTERVIEWS: str
+        🔹 GAME_REPORT: str
+        🔹 FINAL_FOUR: str
+        🔹 AWARDS: str
+        🔹 VLOG: str
+        🔹 STATS: str
+        🔹 ALL: str
+        🔹 PODCAST: str
+      📂 BOXSCORE (Objeto)
+        🔹 ON_COURT: str
+      📂 ACTION (Objeto)
+        🔹 CLOSE: str
+        🔹 SHOW_ALL: str
+        🔹 HIDE_ALL: str
+        🔹 ALL_ARTICLES: str
+        🔹 ALL_VIDEOS: str
+        🔹 SEE_ALL_NEWS: str
+        🔹 LATEST_NEWS: str
+        🔹 READ_MORE: str
+      📂 HEAD_TO_HEAD (Objeto)
+        🔹 TITLE: str
+        🔹 SUBTITLE: str
+      📂 GAME_CENTER_TAB (Objeto)
+        🔹 BOX_SCORE: str
+        🔹 COMPARISON: str
+        🔹 GAME_INFO: str
+        🔹 GRAPHIC_STATS: str
+        🔹 PLAY_BY_PLAY: str
+        🔹 ROSTER: str
+        🔹 SHOOTING_CHART: str
+        🔹 OVERVIEW: str
+        🔹 ROSTERS: str
+        🔹 HEAD_TO_HEAD: str
+        🔹 TEAM_STATS: str
+      🔹 STANDINGS: str
+      📂 PLAY_BY_PLAY (Objeto)
+        🔹 PERIOD_START: str
+        🔹 PERIOD_END: str
+        🔹 GAME_END: str
+        🔹 FINAL_SCORE: str
+        🔹 QUARTER1: str
+        🔹 QUARTER2: str
+        🔹 QUARTER3: str
+        🔹 QUARTER4: str
+        🔹 OVERTIME: str
+      🔹 CLICK_TO_EXPAND: str
+      🔹 CLICK_TO_HIDE: str
+      🔹 ALL_STATS: str
+      🔹 PRESENTED_BY: str
+      🔹 GENERAL: str
+      📂 CHANGE_PASSWORD_FORM (Objeto)
+        🔹 ENTER_NEW_PASSWORD_BELOW: str
+        🔹 NEW_PASSWORD_INPUT_LABEL: str
+        🔹 REPEAT_PASSWORD_INPUT_LABEL: str
+        🔹 CONFIRM_BUTTON: str
+        🔹 FORM_TITLE: str
+      📂 BANNER_TEXTS (Objeto)
+        🔹 CONTENT_SPECIFIC_TO_YOUR_LANGUAGE: str
+        🔹 BANNER_TITLE_FIRST_PART: str
+        🔹 BANNER_TITLE_SECOND_PART: str
+      🔹 ALL_FILTERS: str
+      📂 GAME_TICKER_CARD (Objeto)
+        🔹 WATCH_GAME: str
+      📂 ELTV_PLAYER (Objeto)
+        🔹 BY_TICKETS: str
+        🔹 WATCH_PREGAME: str
+        🔹 WATCH_LIVE: str
+        🔹 ALSO_ON: str
+        🔹 UPGRADE_NOW: str
+        🔹 STREAM_STARTS_HERE: str
+      📂 ELTV_PLAYER_MODAL (Objeto)
+        🔹 NEVER_MISS_A_GAME: str
+        🔹 REGISTER_NOW_TO_WATCH: str
+        🔹 REGISTER_TO_WATCH_FREE_PREGAME: str
+        🔹 BUY_EUROLEAGUE_PASS: str
+        🔹 RECOMMENDED: str
+        🔹 CHOOSE_A_PLAN: str
+      🔹 CHAMPIONS: str
+      🔹 THERE_ARE_NO_GAMES_MATCHING_CRITERIA: str
+      🔹 2021_PARTICIPATION_WITHDRAWN_EUROLEAGUE: str
+      🔹 2021_PARTICIPATION_WITHDRAWN_EUROCUP: str
+      🔹 SHOWS_THE_QUALIFIED_TEAMS: str
+      🔹 PLAY_IN_QUALIFICATION: str
+      🔹 LEARN_ABOUT_EUROLEAGUE_FORMAT: str
+      🔹 LEARN_ABOUT_EUROCUP_FORMAT: str
+      🔹 TOP_PLAYER: str
+      🔹 ELTV_WATCH_PREGAME_FREE: str
+      🔹 ELTV_UPGRADE_TO_WATCH_FULL_GAME: str
+      🔹 PURCHASE_EUROLEAGUE_PASS_FOR_FULL_GAME: str
+      🔹 LIVE: str
+      🔹 PREGAME_STREAM_WILL_END: str
+      🔹 UPGRADE_TO_SEE_FULL_GAME: str
+      🔹 PREGAME: str
+      🔹 TUNE_IN_TO_LOCAL_TV: str
+      🔹 NEVER_MISS_A_EUROCUP_GAME: str
+      🔹 SOMETHING_WENT_WRONG: str
+      🔹 TRY_ENABLING_STREAM_LATER: str
+      🔹 PREGAME_STREAM_ENDED: str
+      🔹 UPGRADE: str
+      🔹 1_GAME: str
+      🔹 NR_OF_GAMES: str
+      📂 GAME_STREAKS (Objeto)
+        🔹 WINS: str
+        🔹 LEADS: str
+        🔹 TIED: str
+      🔹 VS: str
+      🔹 VIEW_GAMES: str
+      🔹 SELECT_TEAM: str
+      📂 COUNTDOWN_BANNER (Objeto)
+        🔹 SPONSORED_BY: str
+        🔹 NEXT_ROUND_STARTS_IN: str
+      📂 UNIT_ABBREVIATIONS (Objeto)
+        🔹 DAYS: str
+        🔹 HOURS: str
+        🔹 MINUTES: str
+        🔹 SECONDS: str
+      📂 SELECTED_TEAM_BANNER (Objeto)
+        🔹 VIEW_FULL_SCHEDULE: str
+        🔹 INFO: str
+      📂 WATCH_BUTTON (Objeto)
+        🔹 WATCH_LIVE: str
+        🔹 OVERVIEW: str
+      🔹 FILTERS: str
+      🔹 SELECT_ROUND: str
+      📂 FAN_XP (Objeto)
+        🔹 BANNER_TEXT: str
+        🔹 BANNER_SUBTITLE: str
+        🔹 COMMUNICATION_INFO: str
+        🔹 FILL_FIELDS: str
+        🔹 APPLICANT_DETAILS: str
+        🔹 NAME_INPUT_LABEL: str
+        🔹 SURNAME_INPUT_LABEL: str
+        🔹 EMAIL_INPUT_LABEL: str
+        🔹 MOBILE_INPUT_LABEL: str
+        🔹 COUNTRY_INPUT_LABEL: str
+        🔹 COUNTRY_INPUT_PLACEHOLDER: str
+        🔹 TERMS_AND_CONDITIONS_P1: str
+        🔹 TERMS_AND_CONDITIONS_P2: str
+        🔹 TERMS_AND_CONDITIONS_P3: str
+        🔹 TERMS_AND_CONDITIONS_LINK1: str
+        🔹 TERMS_AND_CONDITIONS_LINK2: str
+        🔹 GET_NEWS: str
+        🔹 COMPANY_DETAILS: str
+        🔹 COMPANY_NAME_LABEL: str
+        🔹 COMPANY_WEBSITE_LABEL: str
+        🔹 COMPANY_X_LABEL: str
+        🔹 COMPANY_FACEBOOK_LABEL: str
+        🔹 COMPANY_LINKEDIN_LABEL: str
+        🔹 COMPANY_INSTGRAM_LABEL: str
+        🔹 FROM_BOTTOM_INFO: str
+        🔹 NEXT_BUTTON: str
+        🔹 BACK_BUTTON: str
+        🔹 SUBMIT_APPLICATION_BUTTON: str
+        🔹 PROJECT_DETAILS: str
+        🔹 PROVIDE_PROJECT_DETAILS: str
+        🔹 PROJECT_NUMBER_HEADER: str
+        🔹 PROJECT_NAME_LABEL: str
+        🔹 PROJECT_DESCRIPTION_LABEL: str
+        🔹 PROJECT_TYPES_LABEL: str
+        🔹 BUSINESS_PROBLEM_LABEL: str
+        🔹 BUSINESS_SOLUTION_LABEL: str
+        🔹 COMPETITIVE_ADVANTAGE_LABEL: str
+        🔹 CUSTOMER_SEGMENT_LABEL: str
+        🔹 OPTIMAL_REASON_LABEL: str
+        🔹 DEVELOPMENT_STAGE_LABEL: str
+        🔹 SELECT_OPTION_PLACEHOLDER: str
+        🔹 SOLUTION_TESTED_LABEL: str
+        🔹 FINANCIAL_INFORMATION: str
+        🔹 INVESMENT_RAISED_LABEL: str
+        🔹 ACCUMULATED_SALES_LABEL: str
+        🔹 EXECUTIVE_SUMMARY_LABEL: str
+        🔹 PARTICIPATION_MOTIVATION_LABEL: str
+        🔹 UPLOAD_FILES_LABEL: str
+        🔹 UPLOAD_BUTTON: str
+        🔹 SPORTS_BENEFIT_LABEL: str
+        🔹 TEAM_MEMBERS: str
+        🔹 REQUIRED_VALIDATION: str
+        🔹 ADD_MEMBER_BUTTON: str
+        🔹 ADD_PROJECT_BUTTON: str
+        🔹 LINKEDIN_LABEL: str
+        🔹 BIO_LABEL: str
+        🔹 THANK_YOU: str
+        🔹 SUCCESSFUL_SUBMITION: str
+        🔹 BACK_TO_HOME_BUTTON: str
+        🔹 NAME_INPUT_REQUIRED: str
+        🔹 SURNAME_INPUT_REQUIRED: str
+        🔹 EMAIL_INPUT_REQUIRED: str
+        🔹 MOBILE_INPUT_REQUIRED: str
+        🔹 MOBILE_INPUT_INVALID: str
+        🔹 COUNTRY_INPUT_REQUIRED: str
+        🔹 TERMS_INPUT_REQUIRED: str
+        🔹 COMPANY_NAME_INPUT_REQUIRED: str
+        🔹 COMPANY_WEBSITE_INPUT_REQUIRED: str
+        🔹 COMPANY_LINKEDIN_INPUT_REQUIRED: str
+        🔹 LINKEDIN_INPUT_REQUIRED: str
+        🔹 BIO_INPUT_REQUIRED: str
+        🔹 DESCRIPTION_INPUT_REQUIRED: str
+        🔹 PROJECT_TYPE_INPUT_REQUIRED: str
+        🔹 PROBLEM_INPUT_REQUIRED: str
+        🔹 SOLUTION_INPUT_REQUIRED: str
+        🔹 MEMBER_REQUIRED: str
+        🔹 PROJECT_REQUIRED: str
+      🔹 MATCH_INFORMATION: str
+      📂 PROFILE (Objeto)
+        🔹 CHANGE_PASSWORD: str
+        🔹 PREFERENCES: str
+        🔹 PROFILE_SETTINGS: str
+        🔹 EDIT_PROFILE: str
+        🔹 EMAIL_NOTIFICATIONS: str
+        🔹 EMAIL_NOTIFICATIONS_DESC: str
+        🔹 LOG_OUT: str
+        🔹 DELETE: str
+      🔹 SAVE: str
+      📂 SUBSCRIBE (Objeto)
+        🔹 SUBSCRIBE_NOW: str
+        🔹 SIGN_IN: str
+        🔹 SHARE_ON: str
+        🔹 VISIT_HELP_CENTER: str
+        🔹 MORE: str
+        🔹 AVAILABLE_ON: str
+        🔹 ACTIVE: str
+        🔹 DISCOUNT: str
+      🔹 PLAYER_TO_WATCH: str
+      🔹 SOCIAL_NETWORKS: str
+      📂 TOP_PLAYERS (Objeto)
+        🔹 TITLE: str
+      📂 LAST_GAMES (Objeto)
+        🔹 VIEW: str
+        🔹 CLOSE: str
+        🔹 TITLE: str
+      🔹 ALL_GAMES: str
+      🔹 RESULT: str
+      🔹 SEASON_COMPARISON: str
+      🔹 GAME_COMPARISON: str
+      📂 PLAYER_POLL (Objeto)
+        🔹 LABEL: str
+        🔹 TITLE: str
+        🔹 VOTE: str
+        🔹 LOG_IN_TO_VOTE_TEXT: str
+        🔹 LOG_IN_TO_VOTE_ACTION: str
+        🔹 THANKS_FOR_VOTING_TITLE: str
+        🔹 THANKS_FOR_VOTING_MESSAGE: str
+      🔹 FAN_FAVORITE: str
+      🔹 MONTH: str
+      🔹 DAY: str
+      🔹 ANNUAL: str
+      🔹 MAIN_PARTNERS: str
+      🔹 WATCH: str
+      🔹 TODAY: str
+      🔹 TOMORROW: str
+      🔹 ENDED: str
+      🔹 VIEW_ALL_GAMES: str
+      🔹 MORE_ARTICLES: str
+      🔹 ADD_TO_CALENDAR: str
+      🔹 NEXT_ROUND_IN: str
+      🔹 GROUP: str
+      🔹 SEE_ALL: str
+      🔹 ALL_TEAMS: str
+      🔹 ENTER_PLAYER_NAME: str
+      🔹 ENTER_TEAM_NAME: str
+      🔹 CANCEL: str
+      🔹 FEATURED: str
+      🔹 STAY_CONNECTED: str
+  🔹 __N_SSG: bool
+  📂 pageProps (Objeto)
+    🔹 pageId: str
+    📜 content (Lista con 12 elementos de tipo: {'dict': 12})
+      🔍 Estructura del primer hijo:
+        - contentType: str
+        - id: str | ℹ️ Identificador único en el sistema de origen
+        - newsIds: list
+        - widgets: list
+        - isGameTickerEnabled: bool
+    📂 metaData (Objeto)
+      🔹 title: str
+      🔹 description: str
+      🔹 ogTitle: NoneType
+      🔹 ogDescription: NoneType
+      🔹 ogType: NoneType
+      🔹 ogImageUrl: NoneType
+      🔹 twitterCard: NoneType
+      🔹 twitterSite: NoneType
+      🔹 twitterCreator: NoneType
+    📜 featuredNews (Lista con 6 elementos de tipo: {'dict': 6})
+      🔍 Estructura del primer hijo:
+        - pageType: str
+        - generatedUrl: str
+        - id: str | ℹ️ Identificador único en el sistema de origen
+        - publishDate: str
+        - lastModified: str
+        - displayCategory: dict
+        - author: dict
+        - slug: str
+        - heroMedia: dict
+        - linkedIds: list
+        - readTimeMinutes: int
+        - auth: dict
+        - content: list
+        - categories: list
+        - language: str
+        - pinned: bool
+        - localisedVersions: list
+        - articleMetadata: dict
+    📂 featuredTopNews (Objeto)
+      🔹 pageType: str
+      🔹 generatedUrl: str
+      🔹 id: str | ℹ️ Identificador único en el sistema de origen
+      🔹 publishDate: str
+      🔹 lastModified: str
+      📂 displayCategory (Objeto)
+        🔹 id: str | ℹ️ Identificador único en el sistema de origen
+        🔹 text: str
+      📂 author (Objeto)
+        🔹 name: str
+        🔹 title: NoneType
+        🔹 imageUrl: NoneType
+        📜 socialHandles (Lista con 1 elementos de tipo: {'dict': 1})
+          🔍 Estructura del primer hijo:
+            - provider: str
+            - handle: str
+            - link: str
+      🔹 slug: str
+      📂 heroMedia (Objeto)
+        📂 content (Objeto)
+          🔹 contentType: str
+          🔹 image: str
+          🔹 title: NoneType
+          🔹 description: str
+        🔹 title: str
+        🔹 summary: str
+      📜 linkedIds (Lista con 29 elementos de tipo: {'dict': 29})
+        🔍 Estructura del primer hijo:
+          - text: str
+          - sourceSystem: str
+          - sourceSystemId: str
+      🔹 readTimeMinutes: int
+      📂 auth (Objeto)
+        🔹 loginRequired: NoneType
+        📜 roles (Lista con 0 elementos de tipo: {})
+        📜 entitlements (Lista con 0 elementos de tipo: {})
+      📜 content (Lista con 8 elementos de tipo: {'dict': 8})
+        🔍 Estructura del primer hijo:
+          - id: str | ℹ️ Identificador único en el sistema de origen
+          - contentType: str
+          - text: str
+          - isHtml: bool
+          - sponsor: NoneType
+      📜 categories (Lista con 8 elementos de tipo: {'dict': 8})
+        🔍 Estructura del primer hijo:
+          - text: str
+          - id: str | ℹ️ Identificador único en el sistema de origen
+      🔹 language: str
+      🔹 pinned: bool
+      📜 localisedVersions (Lista con 0 elementos de tipo: {})
+      📂 articleMetadata (Objeto)
+        🔹 title: str
+        🔹 description: str
+        🔹 ogTitle: NoneType
+        🔹 ogDescription: NoneType
+        🔹 ogType: NoneType
+        🔹 ogImageUrl: NoneType
+        🔹 twitterCard: NoneType
+        🔹 twitterSite: NoneType
+        🔹 twitterCreator: NoneType
+    📜 fixturesCarousel (Lista con 12 elementos de tipo: {'dict': 12})
+      🔍 Estructura del primer hijo:
+        - microsite: str
+        - id: str | ℹ️ Identificador único en el sistema de origen
+        - code: int
+        - date: str
+        - season: dict
+        - group: dict
+        - phaseType: dict
+        - round: dict
+        - status: str
+        - minute: str
+        - quarter: NoneType
+        - quarterMinute: NoneType
+        - isTodayGame: bool
+        - isUpcomingGame: bool
+        - isPreviousGame: bool
+        - home: dict
+        - away: dict
+        - url: str
+        - renderMarker: bool
+        - isTestGame: bool
+        - venue: NoneType
+    📂 heroComponent (Objeto)
+      📂 featuredArticle (Objeto)
+        🔹 pageType: str
+        🔹 generatedUrl: str
+        🔹 id: str | ℹ️ Identificador único en el sistema de origen
+        🔹 publishDate: str
+        🔹 lastModified: str
+        📂 displayCategory (Objeto)
+          🔹 id: str | ℹ️ Identificador único en el sistema de origen
+          🔹 text: str
+        📂 author (Objeto)
+          🔹 name: NoneType
+          🔹 title: NoneType
+          🔹 imageUrl: NoneType
+          📜 socialHandles (Lista con 0 elementos de tipo: {})
+        🔹 slug: str
+        📂 heroMedia (Objeto)
+          📂 content (Objeto)
+            🔹 contentType: str
+            🔹 image: str
+            🔹 title: NoneType
+            🔹 description: str
+          🔹 title: str
+          🔹 summary: str
+        📜 linkedIds (Lista con 5 elementos de tipo: {'dict': 5})
+          🔍 Estructura del primer hijo:
+            - text: str
+            - sourceSystem: str
+            - sourceSystemId: str
+        🔹 readTimeMinutes: int
+        📂 auth (Objeto)
+          🔹 loginRequired: NoneType
+          📜 roles (Lista con 0 elementos de tipo: {})
+          📜 entitlements (Lista con 0 elementos de tipo: {})
+        📜 content (Lista con 8 elementos de tipo: {'dict': 8})
+          🔍 Estructura del primer hijo:
+            - id: str | ℹ️ Identificador único en el sistema de origen
+            - contentType: str
+            - text: str
+            - isHtml: bool
+            - sponsor: NoneType
+        📜 categories (Lista con 10 elementos de tipo: {'dict': 10})
+          🔍 Estructura del primer hijo:
+            - text: str
+            - id: str | ℹ️ Identificador único en el sistema de origen
+        🔹 language: str
+        🔹 pinned: bool
+        📜 localisedVersions (Lista con 0 elementos de tipo: {})
+        📂 articleMetadata (Objeto)
+          🔹 title: str
+          🔹 description: NoneType
+          🔹 ogTitle: NoneType
+          🔹 ogDescription: NoneType
+          🔹 ogType: NoneType
+          🔹 ogImageUrl: NoneType
+          🔹 twitterCard: NoneType
+          🔹 twitterSite: NoneType
+          🔹 twitterCreator: NoneType
+      🔹 theme: str
+      🔹 orientation: str
+    📂 homepageLandingHero (Objeto)
+      📂 heroArticle (Objeto)
+        🔹 pageType: str
+        🔹 generatedUrl: str
+        🔹 id: str | ℹ️ Identificador único en el sistema de origen
+        🔹 publishDate: str
+        🔹 lastModified: str
+        📂 displayCategory (Objeto)
+          🔹 id: str | ℹ️ Identificador único en el sistema de origen
+          🔹 text: str
+        📂 author (Objeto)
+          🔹 name: NoneType
+          🔹 title: NoneType
+          🔹 imageUrl: NoneType
+          📜 socialHandles (Lista con 0 elementos de tipo: {})
+        🔹 slug: str
+        📂 heroMedia (Objeto)
+          📂 content (Objeto)
+            🔹 contentType: str
+            🔹 image: str
+            🔹 title: NoneType
+            🔹 description: str
+          🔹 title: str
+          🔹 summary: str
+        📜 linkedIds (Lista con 25 elementos de tipo: {'dict': 25})
+          🔍 Estructura del primer hijo:
+            - text: str
+            - sourceSystem: str
+            - sourceSystemId: str
+        🔹 readTimeMinutes: int
+        📂 auth (Objeto)
+          🔹 loginRequired: NoneType
+          📜 roles (Lista con 0 elementos de tipo: {})
+          📜 entitlements (Lista con 0 elementos de tipo: {})
+        📜 content (Lista con 1 elementos de tipo: {'dict': 1})
+          🔍 Estructura del primer hijo:
+            - id: str | ℹ️ Identificador único en el sistema de origen
+            - contentType: str
+            - text: str
+            - isHtml: bool
+            - sponsor: NoneType
+        📜 categories (Lista con 10 elementos de tipo: {'dict': 10})
+          🔍 Estructura del primer hijo:
+            - text: str
+            - id: str | ℹ️ Identificador único en el sistema de origen
+        🔹 language: str
+        🔹 pinned: bool
+        📜 localisedVersions (Lista con 0 elementos de tipo: {})
+        📂 articleMetadata (Objeto)
+          🔹 title: str
+          🔹 description: str
+          🔹 ogTitle: NoneType
+          🔹 ogDescription: NoneType
+          🔹 ogType: NoneType
+          🔹 ogImageUrl: NoneType
+          🔹 twitterCard: NoneType
+          🔹 twitterSite: NoneType
+          🔹 twitterCreator: NoneType
+      📜 relatedArticles (Lista con 1 elementos de tipo: {'dict': 1})
+        🔍 Estructura del primer hijo:
+          - pageType: str
+          - generatedUrl: str
+          - id: str | ℹ️ Identificador único en el sistema de origen
+          - publishDate: str
+          - lastModified: str
+          - displayCategory: dict
+          - author: dict
+          - slug: str
+          - heroMedia: dict
+          - linkedIds: list
+          - readTimeMinutes: int
+          - auth: dict
+          - content: list
+          - categories: list
+          - language: str
+          - pinned: bool
+          - localisedVersions: list
+          - articleMetadata: dict
+      📜 subHeroArticles (Lista con 3 elementos de tipo: {'dict': 3})
+        🔍 Estructura del primer hijo:
+          - pageType: str
+          - generatedUrl: str
+          - id: str | ℹ️ Identificador único en el sistema de origen
+          - publishDate: str
+          - lastModified: str
+          - displayCategory: dict
+          - author: dict
+          - slug: str
+          - heroMedia: dict
+          - linkedIds: list
+          - readTimeMinutes: int
+          - auth: dict
+          - content: list
+          - categories: list
+          - language: str
+          - pinned: bool
+          - localisedVersions: list
+          - articleMetadata: dict
+    📂 heroWithWidgets (Objeto)
+      📂 component (Objeto)
+        🔹 contentType: str
+        🔹 id: str | ℹ️ Identificador único en el sistema de origen
+        📜 newsIds (Lista con 4 elementos de tipo: {'str': 4})
+        📜 widgets (Lista con 1 elementos de tipo: {'dict': 1})
+          🔍 Estructura del primer hijo:
+            - type: str
+        🔹 isGameTickerEnabled: bool
+      📜 newsFeed (Lista con 4 elementos de tipo: {'dict': 4})
+        🔍 Estructura del primer hijo:
+          - pageType: str
+          - generatedUrl: str
+          - id: str | ℹ️ Identificador único en el sistema de origen
+          - publishDate: str
+          - lastModified: str
+          - displayCategory: dict
+          - author: dict
+          - slug: str
+          - heroMedia: dict
+          - linkedIds: list
+          - readTimeMinutes: int
+          - auth: dict
+          - content: list
+          - categories: list
+          - language: str
+          - pinned: bool
+          - localisedVersions: list
+          - articleMetadata: dict
+    🔹 currentSeasonCode: str
+    🔹 currentRound: int
+    🔹 roundCountdown: NoneType
+    📂 teamStandingsTable (Objeto)
+    🔹 surroundingBanners: NoneType
