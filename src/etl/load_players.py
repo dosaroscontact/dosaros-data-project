@@ -29,7 +29,7 @@ def cargar_jugadores():
                 p_id = hero.get('id')
                 nombre = f"{hero.get('firstName')} {hero.get('lastName')}"
                 
-                # 1. Datos biográficos
+                # 1. Bio del jugador
                 cursor.execute("""
                     INSERT OR REPLACE INTO euro_players 
                     (player_id, player_name, position, height, club_name, nationality, image_url)
@@ -38,14 +38,14 @@ def cargar_jugadores():
                       hero.get('club', {}).get('code'), hero.get('nationality'), hero.get('photo')))
                 p_count += 1
 
-                # 2. Estadísticas de carrera (Ruta corregida según tus llaves)
-                # Accedemos a 'stats' y luego a 'alltime'
-                stats_obj = p_data.get('stats', {})
-                alltime_obj = stats_obj.get('alltime', {})
+                # 2. Estadísticas de carrera (Ruta validada: stats -> alltime -> statTables)
+                stats_folder = p_data.get('stats', {})
+                alltime_obj = stats_folder.get('alltime', {})
                 stat_tables = alltime_obj.get('statTables', [])
 
                 for table in stat_tables:
                     g_name = table.get('groupName', "")
+                    # Acepta "EuroLeague" o "Turkish Airlines EuroLeague"
                     es_euro = "EuroLeague" in g_name
                     
                     for row in table.get('stats', []):
@@ -63,7 +63,7 @@ def cargar_jugadores():
 
     conn.commit()
     conn.close()
-    print(f"Hecho. Jugadores: {p_count} | Estadísticas: {s_count}")
+    print(f"Hecho. Jugadores: {p_count} | Registros de carrera: {s_count}")
 
 if __name__ == "__main__":
     cargar_jugadores()
