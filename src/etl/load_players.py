@@ -11,10 +11,6 @@ def cargar_jugadores():
     cursor = conn.cursor()
     
     archivos = glob.glob(DATA_PATH)
-    if not archivos:
-        print(f"No hay archivos en {DATA_PATH}")
-        return
-
     print(f"Procesando {len(archivos)} archivos...")
 
     p_count = 0
@@ -33,7 +29,7 @@ def cargar_jugadores():
                 p_id = hero.get('id')
                 nombre = f"{hero.get('firstName')} {hero.get('lastName')}"
                 
-                # 1. Inserción del Jugador
+                # 1. Datos biográficos
                 cursor.execute("""
                     INSERT OR REPLACE INTO euro_players 
                     (player_id, player_name, position, height, club_name, nationality, image_url)
@@ -42,10 +38,11 @@ def cargar_jugadores():
                       hero.get('club', {}).get('code'), hero.get('nationality'), hero.get('photo')))
                 p_count += 1
 
-                # 2. Inserción de Estadísticas (Ruta corregida)
+                # 2. Estadísticas de carrera (Ruta corregida según tus llaves)
+                # Accedemos a 'stats' y luego a 'alltime'
                 stats_obj = p_data.get('stats', {})
-                alltime = stats_obj.get('alltime', {})
-                stat_tables = alltime.get('statTables', [])
+                alltime_obj = stats_obj.get('alltime', {})
+                stat_tables = alltime_obj.get('statTables', [])
 
                 for table in stat_tables:
                     g_name = table.get('groupName', "")
