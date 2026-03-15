@@ -3,8 +3,8 @@ import os
 import sqlite3
 import glob
 
-# Rutas absolutas verificadas
 DB_PATH = "/mnt/nba_data/dosaros_local.db"
+# Ruta absoluta basada en tu comando find
 DATA_PATH = "/home/pi/dosaros-data-project/src/etl/players/players_data/*.json"
 
 def cargar_jugadores():
@@ -12,73 +12,64 @@ def cargar_jugadores():
     cursor = conn.cursor()
     
     archivos = glob.glob(DATA_PATH)
-    print(f"Encontrados {len(archivos)} archivos. Iniciando proceso...")
+    if not archivos:
+        print(f"❌ No se encontraron archivos en {DATA_PATH}")
+        return
 
-    stats_count = 0
-    players_count = 0
+    print(f"Encontrados {len(archivos)} archivos. Procesando...")
+
+    p_count = 0
+    s_count = 0
 
     for ruta in archivos:
         with open(ruta, 'r', encoding='utf-8') as f:
             try:
                 datos = json.load(f)
-                player_data = datos.get('pageProps', {}).get('data', {})
-                hero = player_data.get('hero', {})
+                # Intentamos ruta estándar: pageProps -> data
+                p_props = datos.get('pageProps', {})
+                p_data = p_props.get('data', {})
                 
+                hero = p_data.get('hero')
                 if not hero:
                     continue
 
                 p_id = hero.get('id')
                 nombre = f"{hero.get('firstName')} {hero.get('lastName')}"
                 
-                # 1. Inserción en euro_players
+                # Inserción Jugador
                 cursor.execute("""
                     INSERT OR REPLACE INTO euro_players 
                     (player_id, player_name, position, height, club_name, nationality, image_url)
                     VALUES (?, ?, ?, ?, ?, ?, ?)
-                """, (
-                    p_id,
-                    nombre,
-                    hero.get('position'),
-                    hero.get('height'),
-                    hero.get('club', {}).get('code'),
-                    hero.get('nationality'),
-                    hero.get('photo')
-                ))
-                players_count += 1
+                """, (p_id, nombre, hero.get('position'), hero.get('height'), 
+                      hero.get('club', {}).get('code'), hero.get('nationality'), hero.get('photo')))
+                p_count += 1
 
-                # 2. Inserción en euro_stats_career
-                stat_tables = player_data.get('alltime', {}).get('statTables', [])
+                # Inserción Estadísticas (alltime puede estar en p_data o en p_props)
+                alltime = p_data.get('alltime', p_props.get('alltime', {}))
+                stat_tables = alltime.get('statTables', [])
+
                 for table in stat_tables:
-                    # Detectamos si es Euroliga (acepta "EuroLeague" o nombres largos)
-                    group_name = table.get('groupName', "")
-                    es_euroliga = "EuroLeague" in group_name
+                    g_name = table.get('groupName', "")
+                    # Marcamos si es Euroliga para el Dashboard
+                    es_euro = "EuroLeague" in g_name
                     
                     for row in table.get('stats', []):
                         cursor.execute("""
                             INSERT OR REPLACE INTO euro_stats_career
                             (player_id, season_code, team_name, games_played, pts, reb, ast, pir, is_euroleague)
                             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-                        """, (
-                            p_id,
-                            row.get('season'),
-                            row.get('club'),
-                            row.get('gamesPlayed'),
-                            row.get('points'),
-                            row.get('rebounds'),
-                            row.get('assists'),
-                            row.get('pir'),
-                            es_euroliga
-                        ))
-                        stats_count += 1
+                        """, (p_id, row.get('season'), row.get('club'), row.get('gamesPlayed'),
+                              row.get('points'), row.get('rebounds'), row.get('assists'), 
+                              row.get('pir'), es_euro))
+                        s_count += 1
                 
             except Exception as e:
-                print(f"Error en archivo {os.path.basename(ruta)}: {e}")
+                print(f"Error en {os.path.basename(ruta)}: {e}")
 
     conn.commit()
     conn.close()
-    print(f"✅ Proceso finalizado.")
-    print(f"Jugadores procesados: {players_count}")
-    print(f"Registros de carrera insertados: {stats_count}")
+    print(f"✅ Finalizado. Jugadores: {p_count} | Registros de carrera: {s_count}")
 
 if __name__ == "__main__":
     cargar_jugadores()
