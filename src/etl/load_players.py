@@ -4,7 +4,7 @@ import sqlite3
 import glob
 
 # Configuración de rutas
-DB_PATH = "../database/dosaros_local.db"
+DB_PATH = "/mnt/nba_data/dosaros_local.db"
 DATA_PATH = "players/players_data/*.json"
 
 def cargar_jugadores():
