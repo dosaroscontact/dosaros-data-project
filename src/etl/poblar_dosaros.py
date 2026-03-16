@@ -1,19 +1,10 @@
 import json
-import os
-import re
 import sqlite3
-import sys
+import re
 from pathlib import Path
-from datetime import datetime
-
-try:
-    from tqdm import tqdm
-except ImportError:
-    os.system("pip install tqdm")
-    from tqdm import tqdm
+from tqdm import tqdm
 
 # ── CONFIGURACIÓN ──────────────────────────────────────────────────────────────
-# Ajustamos las rutas para que funcionen desde src/etl/
 SCRIPT_DIR = Path(__file__).parent
 JSON_FOLDER = SCRIPT_DIR / ".." / ".." / "data" / "raw"
 DB_PATH     = Path("/mnt/nba_data/dosaros_local.db")
@@ -22,13 +13,56 @@ DB_PATH     = Path("/mnt/nba_data/dosaros_local.db")
 DB_PATH.parent.mkdir(parents=True, exist_ok=True)
 # ───────────────────────────────────────────────────────────────────────────────
 
+def create_tables(conn):
+    """Crea la estructura de la base de datos si no existe."""
+    schema = """
+    CREATE TABLE IF NOT EXISTS teams (
+        code TEXT PRIMARY KEY,
+        name TEXT,
+        logo_url TEXT,
+        is_active INTEGER DEFAULT 1
+    );
+
+    CREATE TABLE IF NOT EXISTS players (
+        id TEXT PRIMARY KEY,
+        name TEXT,
+        position TEXT,
+        height TEXT,
+        nationality TEXT,
+        image_url TEXT,
+        current_team_code TEXT,
+        FOREIGN KEY (current_team_code) REFERENCES teams(code)
+    );
+
+    CREATE TABLE IF NOT EXISTS player_season_stats (
+        id TEXT PRIMARY KEY,
+        player_id TEXT,
+        season_code TEXT,
+        team_code TEXT,
+        competition TEXT,
+        total_games INTEGER,
+        total_points INTEGER,
+        total_rebounds INTEGER,
+        total_assists INTEGER,
+        total_pir INTEGER,
+        FOREIGN KEY (player_id) REFERENCES players(id)
+    );
+    
+    CREATE TABLE IF NOT EXISTS venues (
+        id TEXT PRIMARY KEY,
+        name TEXT,
+        capacity INTEGER,
+        city TEXT
+    );
+    """
+    conn.executescript(schema)
+    conn.commit()
+
 def load_json_safe(path: Path):
-    """Carga un JSON con manejo de encoding."""
     for enc in ("utf-8", "utf-8-sig", "latin-1"):
         try:
             with open(path, encoding=enc) as f:
-                content = f.read().strip()
-            return json.loads(content)
+                return json.loads(f.read())
         except Exception:
             continue
     return None
@@ -40,7 +74,6 @@ def safe_int(v):
         return None
 
 def upsert(conn, table, data):
-    """Inserta o actualiza un registro basándose en su ID."""
     keys = list(data.keys())
     values = list(data.values())
     placeholders = ",".join(["?"] * len(keys))
@@ -52,19 +85,16 @@ def upsert(conn, table, data):
     """
     conn.execute(sql, values)
 
-def process_player_json(conn, data, filename):
-    """Procesa el JSON de un jugador: Bio + Carrera Completa."""
+def process_player_json(conn, data):
     p_data = data.get("pageProps", {}).get("data", {})
     hero = p_data.get("hero", {})
     if not hero: return
 
     player_id = str(hero.get("id"))
-    nombre = f"{hero.get('firstName')} {hero.get('lastName')}"
-
-    # 1. Tabla: players (Bio)
+    
     upsert(conn, "players", {
         "id": player_id,
-        "name": nombre,
+        "name": f"{hero.get('firstName')} {hero.get('lastName')}",
         "position": hero.get("position"),
         "height": hero.get("height"),
         "nationality": hero.get("nationality"),
@@ -72,20 +102,13 @@ def process_player_json(conn, data, filename):
         "current_team_code": hero.get("club", {}).get("code")
     })
 
-    # 2. Estadísticas de CARRERA (Historial completo)
-    # Ruta corregida: stats -> alltime -> statTables
     stats_obj = p_data.get("stats", {})
     alltime_obj = stats_obj.get("alltime", {})
-    stat_tables = alltime_obj.get("statTables", [])
-
-    for table in stat_tables:
+    for table in alltime_obj.get("statTables", []):
         group_name = table.get("groupName", "")
-        # Procesamos cada fila de la tabla (una por temporada/equipo)
         for row in table.get("stats", []):
             season_code = row.get("season")
             club_code = row.get("club")
-            
-            # ID único para la combinación jugador-temporada-equipo
             stat_id = f"{player_id}_{season_code}_{club_code}"
             
             upsert(conn, "player_season_stats", {
@@ -102,16 +125,12 @@ def process_player_json(conn, data, filename):
             })
 
 def process_team_json(conn, data):
-    """Procesa el JSON de un equipo."""
     pp = data.get("pageProps", {})
     club = pp.get("club", {})
     if not club: return
 
-    team_code = pp.get("clubCode")
-    
-    # Tabla: teams
     upsert(conn, "teams", {
-        "code": team_code,
+        "code": pp.get("clubCode"),
         "name": club.get("name"),
         "logo_url": club.get("logo", {}).get("image"),
         "is_active": 1
@@ -121,24 +140,25 @@ def main():
     conn = sqlite3.connect(DB_PATH)
     conn.execute("PRAGMA journal_mode=WAL")
     
-    # Usamos rglob para encontrar todos los JSONs en las subcarpetas de data/raw
+    # PASO CLAVE: Crear las tablas antes de insertar
+    print("Inicializando esquema de base de datos...")
+    create_tables(conn)
+
     json_files = list(JSON_FOLDER.rglob("*.json"))
-    print(f"Procesando {len(json_files)} archivos en {JSON_FOLDER}...")
+    print(f"Procesando {len(json_files)} archivos...")
 
     for path in tqdm(json_files):
         data = load_json_safe(path)
         if not data: continue
 
-        # Identificar tipo de archivo por nombre o estructura
         name = path.stem
         if re.match(r'^\d{5,6}$', name):
-            process_player_json(conn, data, name)
+            process_player_json(conn, data)
         elif "club" in data.get("pageProps", {}):
             process_team_json(conn, data)
 
     conn.commit()
     
-    # Verificación final
     print("\nResumen de carga:")
     for table in ["players", "player_season_stats", "teams"]:
         count = conn.execute(f"SELECT COUNT(*) FROM {table}").fetchone()[0]
