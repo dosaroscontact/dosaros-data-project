@@ -136,8 +136,8 @@ def process_team_json(conn, data):
         "name": club.get("name"),
         "logo_url": club.get("logo", {}).get("image"),
         "is_active": 1
-    })
-
+    }, pk_name="code") # <--- Aquí especificamos que la PK es 'code'
+    
 def main():
     conn = sqlite3.connect(DB_PATH)
     conn.execute("PRAGMA journal_mode=WAL")
