@@ -140,7 +140,6 @@ def main():
     conn = sqlite3.connect(DB_PATH)
     conn.execute("PRAGMA journal_mode=WAL")
     
-    # PASO CLAVE: Crear las tablas antes de insertar
     print("Inicializando esquema de base de datos...")
     create_tables(conn)
 
@@ -149,20 +148,33 @@ def main():
 
     for path in tqdm(json_files):
         data = load_json_safe(path)
-        if not data: continue
+        
+        # Validación crítica: asegurar que 'data' es un diccionario
+        if not isinstance(data, dict):
+            continue
 
         name = path.stem
+        # Extraer pageProps de forma segura
+        page_props = data.get("pageProps", {})
+        
+        # Asegurar que page_props también es un diccionario
+        if not isinstance(page_props, dict):
+            continue
+
         if re.match(r'^\d{5,6}$', name):
             process_player_json(conn, data)
-        elif "club" in data.get("pageProps", {}):
+        elif "club" in page_props:
             process_team_json(conn, data)
 
     conn.commit()
     
     print("\nResumen de carga:")
     for table in ["players", "player_season_stats", "teams"]:
-        count = conn.execute(f"SELECT COUNT(*) FROM {table}").fetchone()[0]
-        print(f"  {table}: {count} registros")
+        try:
+            count = conn.execute(f"SELECT COUNT(*) FROM {table}").fetchone()[0]
+            print(f"  {table}: {count} registros")
+        except sqlite3.OperationalError:
+            print(f"  {table}: error al acceder a la tabla")
     
     conn.close()
 
