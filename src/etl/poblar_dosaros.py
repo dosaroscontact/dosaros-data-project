@@ -9,12 +9,11 @@ SCRIPT_DIR = Path(__file__).parent
 JSON_FOLDER = SCRIPT_DIR / ".." / ".." / "data" / "raw"
 DB_PATH     = Path("/mnt/nba_data/dosaros_local.db")
 
-# Aseguramos que la carpeta de la base de datos exista
 DB_PATH.parent.mkdir(parents=True, exist_ok=True)
 # ───────────────────────────────────────────────────────────────────────────────
 
 def create_tables(conn):
-    """Crea la estructura de la base de datos si no existe."""
+    """Prepara el esquema completo de Dos Aros."""
     schema = """
     CREATE TABLE IF NOT EXISTS teams (
         code TEXT PRIMARY KEY,
@@ -47,38 +46,23 @@ def create_tables(conn):
         total_pir INTEGER,
         FOREIGN KEY (player_id) REFERENCES players(id)
     );
-    
-    CREATE TABLE IF NOT EXISTS venues (
-        id TEXT PRIMARY KEY,
-        name TEXT,
-        capacity INTEGER,
-        city TEXT
-    );
     """
     conn.executescript(schema)
     conn.commit()
 
-def load_json_safe(path: Path):
-    for enc in ("utf-8", "utf-8-sig", "latin-1"):
-        try:
-            with open(path, encoding=enc) as f:
-                return json.loads(f.read())
-        except Exception:
-            continue
-    return None
-
 def safe_int(v):
+    if v is None or v == "" or str(v).lower() == "none":
+        return 0
     try:
-        return int(v) if v not in (None, "", "None") else None
+        return int(float(v))
     except (ValueError, TypeError):
-        return None
+        return 0
 
 def upsert(conn, table, data, pk_name="id"):
-    """Inserta o actualiza un registro basándose en su llave primaria."""
+    """Inserta o actualiza detectando la clave primaria correcta."""
     keys = list(data.keys())
     values = list(data.values())
     placeholders = ",".join(["?"] * len(keys))
-    # Filtramos la columna que es PK para no intentar actualizarla
     set_clause = ",".join([f"{k}=excluded.{k}" for k in keys if k != pk_name])
     
     sql = f"""
@@ -87,6 +71,7 @@ def upsert(conn, table, data, pk_name="id"):
     ON CONFLICT({pk_name}) DO UPDATE SET {set_clause}
     """
     conn.execute(sql, values)
+
 def process_player_json(conn, data):
     p_data = data.get("pageProps", {}).get("data", {})
     hero = p_data.get("hero", {})
@@ -104,20 +89,33 @@ def process_player_json(conn, data):
         "current_team_code": hero.get("club", {}).get("code")
     })
 
-    stats_obj = p_data.get("stats", {})
-    alltime_obj = stats_obj.get("alltime", {})
-    for table in alltime_obj.get("statTables", []):
-        group_name = table.get("groupName", "")
-        for row in table.get("stats", []):
-            season_code = row.get("season")
-            club_code = row.get("club")
-            stat_id = f"{player_id}_{season_code}_{club_code}"
+    # Navegación hacia las estadísticas de carrera
+    stats_root = p_data.get("stats", {})
+    alltime = stats_root.get("alltime", {})
+    stat_tables = alltime.get("statTables", [])
+
+    for table in stat_tables:
+        group_name = table.get("groupName", "Unknown")
+        
+        # Escaneo de filas: intentamos varias claves posibles en el JSON
+        rows = []
+        for key in ["stats", "tableStats", "rows", "items"]:
+            if key in table and isinstance(table[key], list):
+                rows = table[key]
+                break
+        
+        for row in rows:
+            season = row.get("season")
+            club = row.get("club")
+            if not season or not club: continue
+
+            stat_id = f"{player_id}_{season}_{club}"
             
             upsert(conn, "player_season_stats", {
                 "id": stat_id,
                 "player_id": player_id,
-                "season_code": season_code,
-                "team_code": club_code,
+                "season_code": season,
+                "team_code": club,
                 "competition": group_name,
                 "total_games": safe_int(row.get("gamesPlayed")),
                 "total_points": safe_int(row.get("points")),
@@ -136,48 +134,38 @@ def process_team_json(conn, data):
         "name": club.get("name"),
         "logo_url": club.get("logo", {}).get("image"),
         "is_active": 1
-    }, pk_name="code") # <--- Aquí especificamos que la PK es 'code'
-    
+    }, pk_name="code")
+
 def main():
     conn = sqlite3.connect(DB_PATH)
     conn.execute("PRAGMA journal_mode=WAL")
-    
-    print("Inicializando esquema de base de datos...")
     create_tables(conn)
 
     json_files = list(JSON_FOLDER.rglob("*.json"))
-    print(f"Procesando {len(json_files)} archivos...")
+    print(f"Poblando base de datos desde {len(json_files)} archivos...")
 
     for path in tqdm(json_files):
-        data = load_json_safe(path)
+        try:
+            with open(path, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+        except: continue
         
-        # Validación crítica: asegurar que 'data' es un diccionario
-        if not isinstance(data, dict):
-            continue
-
+        if not isinstance(data, dict): continue
+        
         name = path.stem
-        # Extraer pageProps de forma segura
-        page_props = data.get("pageProps", {})
+        props = data.get("pageProps", {})
         
-        # Asegurar que page_props también es un diccionario
-        if not isinstance(page_props, dict):
-            continue
-
         if re.match(r'^\d{5,6}$', name):
             process_player_json(conn, data)
-        elif "club" in page_props:
+        elif "club" in props:
             process_team_json(conn, data)
 
     conn.commit()
     
-    print("\nResumen de carga:")
-    for table in ["players", "player_season_stats", "teams"]:
-        try:
-            count = conn.execute(f"SELECT COUNT(*) FROM {table}").fetchone()[0]
-            print(f"  {table}: {count} registros")
-        except sqlite3.OperationalError:
-            print(f"  {table}: error al acceder a la tabla")
-    
+    print("\n--- RESUMEN FINAL ---")
+    for table in ["players", "teams", "player_season_stats"]:
+        res = conn.execute(f"SELECT COUNT(*) FROM {table}").fetchone()[0]
+        print(f"Registros en {table}: {res}")
     conn.close()
 
 if __name__ == "__main__":
