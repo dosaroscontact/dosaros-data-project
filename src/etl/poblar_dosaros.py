@@ -73,18 +73,20 @@ def safe_int(v):
     except (ValueError, TypeError):
         return None
 
-def upsert(conn, table, data):
+def upsert(conn, table, data, pk_name="id"):
+    """Inserta o actualiza un registro basándose en su llave primaria."""
     keys = list(data.keys())
     values = list(data.values())
     placeholders = ",".join(["?"] * len(keys))
-    set_clause = ",".join([f"{k}=excluded.{k}" for k in keys if k != "id"])
+    # Filtramos la columna que es PK para no intentar actualizarla
+    set_clause = ",".join([f"{k}=excluded.{k}" for k in keys if k != pk_name])
+    
     sql = f"""
     INSERT INTO {table} ({",".join(keys)})
     VALUES ({placeholders})
-    ON CONFLICT(id) DO UPDATE SET {set_clause}
+    ON CONFLICT({pk_name}) DO UPDATE SET {set_clause}
     """
     conn.execute(sql, values)
-
 def process_player_json(conn, data):
     p_data = data.get("pageProps", {}).get("data", {})
     hero = p_data.get("hero", {})
