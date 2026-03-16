@@ -26,6 +26,7 @@ import json
 import sqlite3
 import re
 import time
+import random
 import argparse
 import logging
 import requests
@@ -62,10 +63,32 @@ logging.basicConfig(
 log = logging.getLogger("dosaros")
 
 # ── CONSTANTES ────────────────────────────────────────────────────────────────
+# Headers que imitan Chrome real — clave para pasar Vercel bot detection
 HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-                  "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+    "User-Agent":                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
+    "Accept":                    "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
+    "Accept-Language":           "en-US,en;q=0.9,es;q=0.8",
+    "Accept-Encoding":           "gzip, deflate, br",
+    "Connection":                "keep-alive",
+    "Upgrade-Insecure-Requests": "1",
+    "Sec-Fetch-Dest":            "document",
+    "Sec-Fetch-Mode":            "navigate",
+    "Sec-Fetch-Site":            "none",
+    "Sec-Fetch-User":            "?1",
+    "Cache-Control":             "max-age=0",
 }
+
+HEADERS_JSON = {
+    **HEADERS,
+    "Accept":       "application/json, text/plain, */*",
+    "Sec-Fetch-Dest": "empty",
+    "Sec-Fetch-Mode": "cors",
+    "Sec-Fetch-Site": "same-origin",
+    "Referer":      "https://www.euroleaguebasketball.net/euroleague/",
+}
+
+# Fichero local para cachear el buildId entre ejecuciones
+BUILD_ID_CACHE = DATA_DIR / ".buildid_cache"
 SEASON_CODE    = "E2025"
 PHASE_CODE     = "RS"
 SLEEP_STD      = 1.5
@@ -76,36 +99,136 @@ SLEEP_RATE     = 6.0
 # HELPERS COMPARTIDOS
 # ══════════════════════════════════════════════════════════════════════════════
 
+def _session():
+    """Crea una sesión requests con cookies persistentes."""
+    s = requests.Session()
+    s.headers.update(HEADERS)
+    return s
+
+
 def get_build_id():
-    """Obtiene el buildId de Next.js — mismo método que download_teams.py."""
+    """
+    Obtiene el buildId de Next.js con técnica anti-bot:
+    1. Usa caché local para evitar peticiones innecesarias
+    2. Primera petición establece cookies de sesión (Vercel challenge)
+    3. Segunda petición con esas cookies ya pasa el checkpoint
+    4. Busca el buildId en el HTML o en los paths _next/static
+    """
+    # Intentar desde caché primero
+    if BUILD_ID_CACHE.exists():
+        cached = BUILD_ID_CACHE.read_text().strip()
+        if cached:
+            log.info(f"BuildId desde caché: {cached}")
+            return cached
+
     url = "https://www.euroleaguebasketball.net/euroleague/"
-    try:
-        response = requests.get(url, headers=HEADERS)
-        match = re.search(r'"buildId":"(.*?)"', response.text)
-        if match:
-            return match.group(1)
-        log.error("buildId no encontrado en el HTML de la home.")
-        return None
-    except Exception as e:
-        log.error(f"Error obteniendo buildId: {e}")
-        return None
+    session = _session()
+
+    for attempt in range(4):
+        try:
+            # Delay con jitter aleatorio — evita detección por patrón temporal
+            delay = 3 + random.uniform(1, 3) + attempt * 4
+            if attempt > 0:
+                log.info(f"  Reintento {attempt} — esperando {delay:.1f}s...")
+            time.sleep(delay)
+
+            r = session.get(url)
+            log.info(f"  GET home → HTTP {r.status_code} ({len(r.text)} chars)")
+
+            if r.status_code == 429:
+                # Vercel challenge: la sesión ya guardó las cookies,
+                # el siguiente intento debería pasar
+                log.warning(f"  429 recibido — cookies guardadas, reintentando...")
+                continue
+
+            if r.status_code != 200:
+                log.warning(f"  HTTP {r.status_code} inesperado")
+                continue
+
+            # Buscar buildId con varios patrones
+            for pat in [
+                r'"buildId":"(.*?)"',
+                r"/_next/static/([A-Za-z0-9_\-]{20,})/",
+                r'"buildId": "(.*?)"',
+            ]:
+                m = re.search(pat, r.text)
+                if m:
+                    build_id = m.group(1)
+                    log.info(f"  BuildId encontrado: {build_id}")
+                    # Guardar en caché
+                    BUILD_ID_CACHE.write_text(build_id)
+                    return build_id
+
+            log.warning(f"  buildId no encontrado en el HTML (intento {attempt+1})")
+
+        except Exception as e:
+            log.warning(f"  Error en intento {attempt+1}: {e}")
+
+    log.error("❌ No se pudo obtener el buildId tras 4 intentos.")
+    return None
+
+
+def invalidate_build_id_cache():
+    """Borra la caché del buildId — llamar si las URLs devuelven 404."""
+    if BUILD_ID_CACHE.exists():
+        BUILD_ID_CACHE.unlink()
+        log.info("  Caché de buildId invalidada.")
+
+
+# Sesión compartida para reutilizar cookies durante toda la ejecución
+_shared_session = None
+
+def get_session():
+    global _shared_session
+    if _shared_session is None:
+        _shared_session = requests.Session()
+        _shared_session.headers.update(HEADERS_JSON)
+    return _shared_session
 
 
 def fetch_json(url):
-    """GET con reintentos básicos. Retorna (data_dict, status_code)."""
-    for attempt in range(3):
+    """
+    GET JSON con sesión compartida, reintentos y backoff exponencial.
+    Retorna (data_dict, status_code).
+    Si recibe 404 dos veces seguidas, invalida la caché del buildId.
+    """
+    session    = get_session()
+    not_found  = 0
+
+    for attempt in range(4):
         try:
-            r = requests.get(url, headers=HEADERS)
+            # Jitter aleatorio entre peticiones
+            if attempt > 0:
+                delay = SLEEP_RATE * attempt + random.uniform(0.5, 2)
+                log.info(f"  Reintento {attempt} en {delay:.1f}s...")
+                time.sleep(delay)
+            else:
+                time.sleep(random.uniform(0.8, SLEEP_STD))
+
+            r = session.get(url)
+
             if r.status_code == 200:
                 return r.json(), 200
+
             elif r.status_code == 429:
-                log.warning(f"Rate limit en {url} — esperando {SLEEP_RATE}s (intento {attempt+1})")
-                time.sleep(SLEEP_RATE)
-            else:
+                log.warning(f"  Rate limit — esperando {SLEEP_RATE * 2}s (intento {attempt+1})")
+                time.sleep(SLEEP_RATE * 2)
+
+            elif r.status_code == 404:
+                not_found += 1
+                if not_found >= 2:
+                    # buildId probablemente caducado
+                    log.warning("  404 repetido — invalidando caché de buildId")
+                    invalidate_build_id_cache()
                 return None, r.status_code
+
+            else:
+                log.warning(f"  HTTP {r.status_code} en {url}")
+                return None, r.status_code
+
         except Exception as e:
-            log.warning(f"Request error en {url}: {e} (intento {attempt+1})")
-            time.sleep(SLEEP_STD)
+            log.warning(f"  Request error (intento {attempt+1}): {e}")
+
     return None, 0
 
 
