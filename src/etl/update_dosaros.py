@@ -170,7 +170,7 @@ def update_round(conn, gs: GameStats, round_number: int):
                 upsert(conn, "venues", {
                     "id": v_code, "name": safe_str(row.get("venue.name")),
                     "capacity": safe_int(row.get("venue.capacity")), "city": city or None,
-                })
+                }, pk="id")
 
             # euro_games
             upsert(conn, "euro_games", {
@@ -251,14 +251,16 @@ def update_round(conn, gs: GameStats, round_number: int):
                                     "current_team_code": team_code,
                                 }, pk="id")
 
-                                upsert(conn, "euro_players_games", {
-                                    "game_id":   game_id,
-                                    "player_id": player_code,
-                                    "team_id":   team_code,
-                                    "pts":       safe_int(stats.get("points")),
-                                    "reb":       safe_int(stats.get("totalRebounds")),
-                                    "ast":       safe_int(stats.get("assistances")),
-                                }, pk="game_id")
+                                try:
+                                    conn.execute(
+                                        "INSERT OR IGNORE INTO euro_players_games (game_id, player_id, team_id, pts, reb, ast) VALUES (?,?,?,?,?,?)",
+                                        [game_id, player_code, team_code,
+                                         safe_int(stats.get("points")),
+                                         safe_int(stats.get("totalRebounds")),
+                                         safe_int(stats.get("assistances"))]
+                                    )
+                                except Exception:
+                                    pass
 
                                 players_updated += 1
                 except Exception as e2:
