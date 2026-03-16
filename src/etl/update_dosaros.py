@@ -122,138 +122,154 @@ def get_current_round(gs: GameStats) -> int:
 
 def update_round(conn, gs: GameStats, round_number: int):
     """
-    Actualiza euro_games, euro_players_games y euro_players
-    para todos los partidos de una jornada.
+    Actualiza euro_games, euro_games_extended, venues y players_games
+    para todos los partidos de una jornada usando get_gamecodes_round
+    que ya incluye marcadores, cuartos, venue y árbitros.
+    Para las stats por jugador usa get_game_stats partido a partido.
     """
     log.info(f"  Procesando jornada {round_number}...")
 
     try:
-        # Obtener game_codes de la jornada
-        gamecodes_df = gs.get_gamecodes_round(SEASON, round_number)
-        if gamecodes_df.empty:
+        games_df = gs.get_gamecodes_round(SEASON, round_number)
+        if games_df.empty:
             log.info(f"  Jornada {round_number} — sin partidos")
             return 0
-
-        game_codes = gamecodes_df["Gamecode"].tolist() if "Gamecode" in gamecodes_df.columns else []
-        if not game_codes:
-            log.warning(f"  No se encontraron game codes para jornada {round_number}")
-            return 0
-
-        log.info(f"  {len(game_codes)} partidos en jornada {round_number}")
-
+        log.info(f"  {len(games_df)} partidos en jornada {round_number}")
     except Exception as e:
-        log.warning(f"  Error obteniendo game codes jornada {round_number}: {e}")
+        log.warning(f"  Error obteniendo jornada {round_number}: {e}")
         return 0
 
-    games_ok = 0
-    for game_code in game_codes:
+    season_code = f"E{SEASON}"
+    games_ok    = 0
+
+    for _, row in games_df.iterrows():
         try:
-            df = gs.get_game_stats(SEASON, int(game_code))
-            if df.empty:
-                continue
+            game_code   = int(row["gameCode"])
+            game_id     = safe_str(row.get("identifier")) or f"E{SEASON}_{game_code}"
+            home_code   = safe_str(row.get("local.club.code"))
+            away_code   = safe_str(row.get("road.club.code"))
+            home_score  = safe_int(row.get("local.score"))
+            away_score  = safe_int(row.get("road.score"))
+            game_date   = safe_str(row.get("date", ""))[:10] if row.get("date") else None
+            played      = bool(row.get("played", False))
 
-            row = df.iloc[0]
+            # Equipos
+            for code, name, tv, logo in [
+                (home_code, row.get("local.club.name"), row.get("local.club.tvCode"), row.get("local.club.images.crest")),
+                (away_code, row.get("road.club.name"),  row.get("road.club.tvCode"),  row.get("road.club.images.crest")),
+            ]:
+                if code:
+                    upsert(conn, "teams",      {"code": code, "name": safe_str(name), "logo_url": safe_str(logo), "is_active": 1}, pk="code")
+                    upsert(conn, "euro_teams", {"team_code": code, "team_name": safe_str(name), "tv_code": safe_str(tv), "logo_url": safe_str(logo)}, pk="team_code")
 
-            # IDs
-            game_id     = f"E{SEASON}_{int(game_code)}"
-            season_code = f"E{SEASON}"
-
-            # Equipos local y visitante
-            home_code = safe_str(row.get("local.team.code") or row.get("local.coach.code", "")[:3])
-            away_code = safe_str(row.get("road.team.code")  or row.get("road.coach.code", "")[:3])
-
-            # Buscar códigos de equipo dentro de los players si no están directamente
-            local_players = row.get("local.players", [])
-            road_players  = row.get("road.players", [])
-
-            if local_players and isinstance(local_players, list) and local_players:
-                home_code = safe_str(local_players[0].get("player", {}).get("club", {}).get("code"))
-            if road_players and isinstance(road_players, list) and road_players:
-                away_code = safe_str(road_players[0].get("player", {}).get("club", {}).get("code"))
-
-            home_score = safe_int(row.get("local.team.points"))
-            away_score = safe_int(row.get("road.team.points"))
+            # Venue
+            v_code = safe_str(row.get("venue.code"))
+            if v_code:
+                addr = safe_str(row.get("venue.address") or "")
+                city = addr.split(",")[-1].strip() if addr and "," in addr else addr
+                upsert(conn, "venues", {
+                    "id": v_code, "name": safe_str(row.get("venue.name")),
+                    "capacity": safe_int(row.get("venue.capacity")), "city": city or None,
+                })
 
             # euro_games
             upsert(conn, "euro_games", {
                 "game_id":    game_id,
-                "date":       None,
+                "date":       game_date,
                 "home_team":  home_code,
                 "away_team":  away_code,
-                "score_home": home_score,
-                "score_away": away_score,
+                "score_home": home_score if played else None,
+                "score_away": away_score if played else None,
             }, pk="game_id")
 
-            # euro_games_extended (si existe la tabla)
+            # euro_games_extended — cuartos y árbitros incluidos
             try:
                 upsert(conn, "euro_games_extended", {
                     "game_id":      game_id,
-                    "identifier":   f"E{SEASON}_{int(game_code)}",
+                    "identifier":   game_id,
                     "season_code":  season_code,
                     "comp_code":    COMP,
                     "round_number": round_number,
-                    "home_coach":   safe_str(row.get("local.coach.name")),
-                    "away_coach":   safe_str(row.get("road.coach.name")),
-                    "home_q1": None, "home_q2": None, "home_q3": None, "home_q4": None, "home_ot1": None,
-                    "away_q1": None, "away_q2": None, "away_q3": None, "away_q4": None, "away_ot1": None,
-                    "venue_id": None, "audience": None,
-                    "referee_1": None, "referee_2": None, "referee_3": None,
+                    "home_coach":   None,
+                    "away_coach":   None,
+                    "home_q1":  safe_int(row.get("local.partials.partials1")),
+                    "home_q2":  safe_int(row.get("local.partials.partials2")),
+                    "home_q3":  safe_int(row.get("local.partials.partials3")),
+                    "home_q4":  safe_int(row.get("local.partials.partials4")),
+                    "home_ot1": None,
+                    "away_q1":  safe_int(row.get("road.partials.partials1")),
+                    "away_q2":  safe_int(row.get("road.partials.partials2")),
+                    "away_q3":  safe_int(row.get("road.partials.partials3")),
+                    "away_q4":  safe_int(row.get("road.partials.partials4")),
+                    "away_ot1": None,
+                    "venue_id":   v_code,
+                    "audience":   safe_int(row.get("audience")),
+                    "referee_1":  safe_str(row.get("referee1.name")),
+                    "referee_2":  safe_str(row.get("referee2.name")),
+                    "referee_3":  safe_str(row.get("referee3.name")),
                 }, pk="game_id")
             except Exception:
                 pass
 
-            # Stats de jugadores del partido
+            # Stats por jugador — solo si el partido está jugado
             players_updated = 0
-            for side, players_list in [("home", local_players), ("away", road_players)]:
-                team_code = home_code if side == "home" else away_code
-                for entry in (players_list or []):
-                    if not isinstance(entry, dict):
-                        continue
-                    person = entry.get("player", {}).get("person", {})
-                    stats  = entry.get("stats", {})
-                    player_code = safe_str(person.get("code"))
-                    if not player_code:
-                        continue
+            if played:
+                try:
+                    stats_df = gs.get_game_stats(SEASON, game_code)
+                    if not stats_df.empty:
+                        stats_row     = stats_df.iloc[0]
+                        local_players = stats_row.get("local.players", [])
+                        road_players  = stats_row.get("road.players", [])
 
-                    # euro_players
-                    upsert(conn, "euro_players", {
-                        "player_id":   player_code,
-                        "player_name": safe_str(person.get("name")),
-                        "position":    safe_str(entry.get("player", {}).get("positionName")),
-                        "height":      safe_int(person.get("height")),
-                        "club_name":   safe_str(entry.get("player", {}).get("club", {}).get("name")),
-                        "nationality": safe_str((person.get("country") or {}).get("name")),
-                        "image_url":   safe_str((entry.get("player", {}).get("images") or {}).get("headshot")),
-                    }, pk="player_id")
+                        for team_code, players_list in [(home_code, local_players), (away_code, road_players)]:
+                            for entry in (players_list or []):
+                                if not isinstance(entry, dict):
+                                    continue
+                                person      = entry.get("player", {}).get("person", {})
+                                stats       = entry.get("stats", {})
+                                player_code = safe_str(person.get("code"))
+                                if not player_code:
+                                    continue
 
-                    # players
-                    upsert(conn, "players", {
-                        "id":                player_code,
-                        "name":              safe_str(person.get("name")),
-                        "position":          safe_str(entry.get("player", {}).get("positionName")),
-                        "height":            safe_str(person.get("height")),
-                        "nationality":       safe_str((person.get("country") or {}).get("name")),
-                        "image_url":         safe_str((entry.get("player", {}).get("images") or {}).get("headshot")),
-                        "current_team_code": team_code,
-                    }, pk="id")
+                                upsert(conn, "euro_players", {
+                                    "player_id":   player_code,
+                                    "player_name": safe_str(person.get("name")),
+                                    "position":    safe_str(entry.get("player", {}).get("positionName")),
+                                    "height":      safe_int(person.get("height")),
+                                    "club_name":   safe_str(team_code),
+                                    "nationality": safe_str((person.get("country") or {}).get("name")),
+                                    "image_url":   safe_str((entry.get("player", {}).get("images") or {}).get("headshot")),
+                                }, pk="player_id")
 
-                    # euro_players_games
-                    upsert(conn, "euro_players_games", {
-                        "game_id":   game_id,
-                        "player_id": player_code,
-                        "team_id":   team_code,
-                        "pts":       safe_int(stats.get("points")),
-                        "reb":       safe_int(stats.get("totalRebounds")),
-                        "ast":       safe_int(stats.get("assistances")),
-                    }, pk="game_id")
+                                upsert(conn, "players", {
+                                    "id":                player_code,
+                                    "name":              safe_str(person.get("name")),
+                                    "position":          safe_str(entry.get("player", {}).get("positionName")),
+                                    "height":            safe_str(person.get("height")),
+                                    "nationality":       safe_str((person.get("country") or {}).get("name")),
+                                    "image_url":         safe_str((entry.get("player", {}).get("images") or {}).get("headshot")),
+                                    "current_team_code": team_code,
+                                }, pk="id")
 
-                    players_updated += 1
+                                upsert(conn, "euro_players_games", {
+                                    "game_id":   game_id,
+                                    "player_id": player_code,
+                                    "team_id":   team_code,
+                                    "pts":       safe_int(stats.get("points")),
+                                    "reb":       safe_int(stats.get("totalRebounds")),
+                                    "ast":       safe_int(stats.get("assistances")),
+                                }, pk="game_id")
+
+                                players_updated += 1
+                except Exception as e2:
+                    log.debug(f"    Stats jugadores {game_id}: {e2}")
 
             games_ok += 1
-            log.info(f"    ✅ Partido {game_id} ({home_code} {home_score}-{away_score} {away_code}) — {players_updated} jugadores")
+            status = f"{home_score}-{away_score}" if played else "pendiente"
+            log.info(f"    ✅ {game_id}  {home_code} {status} {away_code}  jugadores: {players_updated}")
 
         except Exception as e:
-            log.warning(f"    ❌ Error en game_code {game_code}: {e}")
+            log.warning(f"    ❌ Error en fila {row.get('identifier','?')}: {e}")
 
     return games_ok
 
