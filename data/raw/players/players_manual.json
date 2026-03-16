@@ -1,0 +1,2389 @@
+[
+    {
+        "player_id": "003733",
+        "player_name": "Alberto Abalde",
+        "first_name": "Alberto",
+        "last_name": "Abalde",
+        "image_url": "https://media-cdn.cortextech.io/72807eac-571d-4e7b-ac26-93986d5d0e80.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "003527",
+        "player_name": "Awudu Abass",
+        "first_name": "Awudu",
+        "last_name": "Abass",
+        "image_url": "https://media-cdn.cortextech.io/433a611c-9dd9-46d0-8891-5655af2e1e37.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "013027",
+        "player_name": "Matteo Accorsi",
+        "first_name": "Matteo",
+        "last_name": "Accorsi",
+        "image_url": "https://media-cdn.cortextech.io/6a4a2f95-b2ae-43c6-ad14-c5230acdea84.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "010316",
+        "player_name": "Melvin Ajinca",
+        "first_name": "Melvin",
+        "last_name": "Ajinca",
+        "image_url": "https://media-cdn.cortextech.io/95228ab6-9d8d-4d35-a796-1734d65e28fb.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "011816",
+        "player_name": "Nicola Akele",
+        "first_name": "Nicola",
+        "last_name": "Akele",
+        "image_url": "https://media-cdn.cortextech.io/917bb62a-9e27-4933-b04c-6da52dc877ee.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "010105",
+        "player_name": "Izan Almansa",
+        "first_name": "Izan",
+        "last_name": "Almansa",
+        "image_url": "https://media-cdn.cortextech.io/94899581-0587-4377-bc88-feee33359afc.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014005",
+        "player_name": "Derrick Alston Jr.",
+        "first_name": "Derrick",
+        "last_name": "Alston Jr.",
+        "image_url": "https://media-cdn.cortextech.io/5b54806f-0a15-4135-85b9-48175ed741bd.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014118",
+        "player_name": "Egor Amosov",
+        "first_name": "Egor",
+        "last_name": "Amosov",
+        "image_url": "https://media-cdn.cortextech.io/501b0a80-3589-4616-9fd2-1296321059de.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "012795",
+        "player_name": "Justin Anderson",
+        "first_name": "Justin",
+        "last_name": "Anderson",
+        "image_url": "https://media-cdn.cortextech.io/fe45bbed-041c-4077-a770-db8d3c0946f0.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "010465",
+        "player_name": "Braian Angola",
+        "first_name": "Braian",
+        "last_name": "Angola",
+        "image_url": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCaiEI5/8a77bddd-1d92-4ec1-b784-9b71ba9cea1a.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "012268",
+        "player_name": "Adam Atamna",
+        "first_name": "Adam",
+        "last_name": "Atamna",
+        "image_url": "https://media-cdn.cortextech.io/c2ae0573-091b-4682-8a19-806b6fdc655f.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "003983",
+        "player_name": "Aleksa Avramovic",
+        "first_name": "Aleksa",
+        "last_name": "Avramovic",
+        "image_url": "https://media-cdn.cortextech.io/261a3a73-c380-4f6e-82bb-643fff9c7494.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "006904",
+        "player_name": "Joel Ayayi",
+        "first_name": "Joel",
+        "last_name": "Ayayi",
+        "image_url": "https://media-cdn.cortextech.io/3db448b6-8ede-4921-9522-2a01b163c996.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "011286",
+        "player_name": "Dwayne Bacon",
+        "first_name": "Dwayne",
+        "last_name": "Bacon",
+        "image_url": "https://media-cdn.cortextech.io/820ff618-bd11-4b19-be2a-41f9c427c44f.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014015",
+        "player_name": "Armando Bacot Jr.",
+        "first_name": "Armando",
+        "last_name": "Bacot Jr.",
+        "image_url": "https://media-cdn.cortextech.io/b0477ee7-8ebb-4140-b641-fa3e33f99abd.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "007527",
+        "player_name": "Brancou Badio",
+        "first_name": "Brancou",
+        "last_name": "Badio",
+        "image_url": "https://media-cdn.cortextech.io/24556d2c-01db-4a9c-a2d0-e2607a4fae52.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "013028",
+        "player_name": "Matteo Baiocchi",
+        "first_name": "Matteo",
+        "last_name": "Baiocchi",
+        "image_url": "https://media-cdn.incrowdsports.com/d1c094ca-9733-43ea-87f9-c070f60a4437.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "009863",
+        "player_name": "Wade Baldwin Iv",
+        "first_name": "Wade",
+        "last_name": "Baldwin Iv",
+        "image_url": "https://media-cdn.cortextech.io/4421c271-22aa-431d-abd7-99b29a85aea6.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "012597",
+        "player_name": "Kamar Baldwin",
+        "first_name": "Kamar",
+        "last_name": "Baldwin",
+        "image_url": "https://media-cdn.cortextech.io/acf4fd65-d077-415d-84fb-67005cb43e49.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "006590",
+        "player_name": "Rodrigue Beaubois",
+        "first_name": "Rodrigue",
+        "last_name": "Beaubois",
+        "image_url": "https://media-cdn.cortextech.io/281e3d42-9999-46b7-bbe4-4b03c18af2c5.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "008161",
+        "player_name": "Juhann Begarin",
+        "first_name": "Juhann",
+        "last_name": "Begarin",
+        "image_url": "https://media-cdn.cortextech.io/ef563cdb-4d77-4f8b-b343-7d1c0e0b19e2.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "003458",
+        "player_name": "Davis Bertans",
+        "first_name": "Davis",
+        "last_name": "Bertans",
+        "image_url": "https://media-cdn.cortextech.io/7210d5c7-adf0-4fb2-a475-1b92cab15443.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "006961",
+        "player_name": "Tarik Biberovic",
+        "first_name": "Tarik",
+        "last_name": "Biberovic",
+        "image_url": "https://media-cdn.cortextech.io/f62a393b-7a2e-4ba8-a90f-8f7b1d56570c.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "007182",
+        "player_name": "Khem Birch",
+        "first_name": "Khem",
+        "last_name": "Birch",
+        "image_url": "https://media-cdn.cortextech.io/07341c6e-b835-4434-bf94-87314dea546b.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "003091",
+        "player_name": "Metecan Birsen",
+        "first_name": "Metecan",
+        "last_name": "Birsen",
+        "image_url": "https://media-cdn.cortextech.io/b901a276-9bce-4d94-9dba-3ed59eb7e670.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "005504",
+        "player_name": "Laurynas Birutis",
+        "first_name": "Laurynas",
+        "last_name": "Birutis",
+        "image_url": "https://media-cdn.cortextech.io/ec9e23f4-7618-42d7-9ccd-05bb89fe2e4b.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "007929",
+        "player_name": "Onuralp Bitim",
+        "first_name": "Onuralp",
+        "last_name": "Bitim",
+        "image_url": "https://media-cdn.cortextech.io/e53d7478-8e6d-4ea5-bdef-d47b61d98e5e.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "013402",
+        "player_name": "Antonio Blakeney",
+        "first_name": "Antonio",
+        "last_name": "Blakeney",
+        "image_url": "https://media-cdn.cortextech.io/ea09b983-45e0-4140-a486-085bfe2cc4f6.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "013526",
+        "player_name": "Alex Blanco",
+        "first_name": "Alex",
+        "last_name": "Blanco",
+        "image_url": "https://media-cdn.cortextech.io/ef90feab-3b15-4909-bfd6-5c630c058356.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "011193",
+        "player_name": "Tamir Blatt",
+        "first_name": "Tamir",
+        "last_name": "Blatt",
+        "image_url": "https://media-cdn.cortextech.io/780f9309-2c9f-4a43-be7f-9f7a7182d133.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "011231",
+        "player_name": "Jaron Blossomgame",
+        "first_name": "Jaron",
+        "last_name": "Blossomgame",
+        "image_url": "https://media-cdn.cortextech.io/47740cf2-cdbf-4529-9cbe-3954f423f542.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014105",
+        "player_name": "Juom Maker Bol",
+        "first_name": "Juom Maker",
+        "last_name": "Bol",
+        "image_url": "https://media-cdn.cortextech.io/af4a17cb-5725-42bd-8659-fd45255482db.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "008985",
+        "player_name": "Leandro Bolmaro",
+        "first_name": "Leandro",
+        "last_name": "Bolmaro",
+        "image_url": "https://media-cdn.cortextech.io/1e179ffd-b315-4f4a-90ed-aeb356efa432.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "009035",
+        "player_name": "Joel Bolomboy",
+        "first_name": "Joel",
+        "last_name": "Bolomboy",
+        "image_url": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCbqcoI/bb62f12b-8d35-4487-a402-e86621caa387.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "006760",
+        "player_name": "Isaac Bonga",
+        "first_name": "Isaac",
+        "last_name": "Bonga",
+        "image_url": "https://media-cdn.cortextech.io/a838b518-6e96-4482-b67f-90f52f979588.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "007056",
+        "player_name": "Devin Booker",
+        "first_name": "Devin",
+        "last_name": "Booker",
+        "image_url": "https://media-cdn.cortextech.io/ea98130c-13f1-4e0b-b8d9-353132cd5816.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "012167",
+        "player_name": "Mitar Bosnjakovic",
+        "first_name": "Mitar",
+        "last_name": "Bosnjakovic",
+        "image_url": "https://media-cdn.cortextech.io/8735ac59-4000-4c04-9d53-632356eab964.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014016",
+        "player_name": "Brandon Boston Jr.",
+        "first_name": "Brandon",
+        "last_name": "Boston Jr.",
+        "image_url": "https://media-cdn.cortextech.io/e0c8086d-9ea8-43da-8292-7fc4c3889762.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014130",
+        "player_name": "Joaquim Boumtje Boumtje",
+        "first_name": "Joaquim",
+        "last_name": "Boumtje Boumtje",
+        "image_url": "https://media-cdn.cortextech.io/7c98507a-45bb-4e84-a9fb-590b84ed5a37.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "011983",
+        "player_name": "Ignas Brazdeikis",
+        "first_name": "Ignas",
+        "last_name": "Brazdeikis",
+        "image_url": "https://media-cdn.cortextech.io/32aea757-dc80-4848-82f4-525b77e0eb0d.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014127",
+        "player_name": "O'shae J Brissett",
+        "first_name": "O'shae J",
+        "last_name": "Brissett",
+        "image_url": "https://media-cdn.cortextech.io/0490793f-09f7-42be-b351-2cd6543d1613.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "009992",
+        "player_name": "Dario Brizuela",
+        "first_name": "Dario",
+        "last_name": "Brizuela",
+        "image_url": "https://media-cdn.cortextech.io/eaddc1f6-0aec-49e2-8c65-e0a3b8b2cfe3.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "013384",
+        "player_name": "Armoni Brooks",
+        "first_name": "Armoni",
+        "last_name": "Brooks",
+        "image_url": "https://media-cdn.cortextech.io/8c4d5e17-01aa-4f77-99b1-207d7c82d195.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "009622",
+        "player_name": "Lorenzo Brown",
+        "first_name": "Lorenzo",
+        "last_name": "Brown",
+        "image_url": "https://media-cdn.cortextech.io/8c072cdd-59ae-4c44-8388-6a1903cd239e.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "012720",
+        "player_name": "Sterling Brown",
+        "first_name": "Sterling",
+        "last_name": "Brown",
+        "image_url": "https://media-cdn.cortextech.io/7e089e46-481e-44e5-9fa0-192215101609.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "009846",
+        "player_name": "Elijah Bryant",
+        "first_name": "Elijah",
+        "last_name": "Bryant",
+        "image_url": "https://media-cdn.cortextech.io/c344f0a6-f545-4bfe-b59b-61f8ccce3c0e.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "002676",
+        "player_name": "Arnas Butkevicius",
+        "first_name": "Arnas",
+        "last_name": "Butkevicius",
+        "image_url": "https://media-cdn.cortextech.io/141e5608-9388-4c11-96ed-fbe12fa4a1bf.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014163",
+        "player_name": "Jared Butler",
+        "first_name": "Jared",
+        "last_name": "Butler",
+        "image_url": "https://media-cdn.cortextech.io/926f8dbb-c1ff-46cc-a86e-3a68f78a11f9.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "012096",
+        "player_name": "Bruno Caboclo",
+        "first_name": "Bruno",
+        "last_name": "Caboclo",
+        "image_url": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCbqcg0/8fa532db-fe10-413f-98d1-627e7df8d7e9.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "001932",
+        "player_name": "Nick Calathes",
+        "first_name": "Nick",
+        "last_name": "Calathes",
+        "image_url": "https://media-cdn.cortextech.io/485a2561-f9f3-4ba8-b5b8-1631294c4c99.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "013269",
+        "player_name": "Myles Cale",
+        "first_name": "Myles",
+        "last_name": "Cale",
+        "image_url": "https://media-cdn.cortextech.io/6e507052-0ca4-4ca4-8148-256d2ebd97fc.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "005928",
+        "player_name": "Facundo Campazzo",
+        "first_name": "Facundo",
+        "last_name": "Campazzo",
+        "image_url": "https://media-cdn.cortextech.io/c5274543-662b-4958-b6fa-3bf42b944255.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "010612",
+        "player_name": "Isaiah Canaan",
+        "first_name": "Isaiah",
+        "last_name": "Canaan",
+        "image_url": "https://media-cdn.cortextech.io/b6e0f4a8-c734-42b7-86d4-333594b9020b.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "011369",
+        "player_name": "Jorge Carot",
+        "first_name": "Jorge",
+        "last_name": "Carot",
+        "image_url": "https://media-cdn.cortextech.io/dca5f0a2-639c-44ef-9309-d416c633d274.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "011305",
+        "player_name": "Tyson Carter",
+        "first_name": "Tyson",
+        "last_name": "Carter",
+        "image_url": "https://media-cdn.cortextech.io/5fc0955e-a1d4-4815-9570-ec96ab919f97.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "013373",
+        "player_name": "Leopold Cavaliere",
+        "first_name": "Leopold",
+        "last_name": "Cavaliere",
+        "image_url": "https://media-cdn.cortextech.io/1c8b9667-d931-4ace-ac5e-792f58d25cf4.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "012925",
+        "player_name": "Mattia Ceccato",
+        "first_name": "Mattia",
+        "last_name": "Ceccato",
+        "image_url": "https://media-cdn.incrowdsports.com/d1c094ca-9733-43ea-87f9-c070f60a4437.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "013699",
+        "player_name": "Jimmy Clark Iii",
+        "first_name": "Jimmy",
+        "last_name": "Clark Iii",
+        "image_url": "https://media-cdn.cortextech.io/fc0e527c-4d5c-479e-a067-3701084cf554.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "004888",
+        "player_name": "Will Clyburn",
+        "first_name": "Will",
+        "last_name": "Clyburn",
+        "image_url": "https://media-cdn.cortextech.io/26d7203d-d138-432c-8d49-16af75d6895e.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "009783",
+        "player_name": "Bonzie Colson",
+        "first_name": "Bonzie",
+        "last_name": "Colson",
+        "image_url": "https://media-cdn.cortextech.io/3fa1da27-0721-4274-9d43-26910bec0f2d.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "009549",
+        "player_name": "Isaia Cordinier",
+        "first_name": "Isaia",
+        "last_name": "Cordinier",
+        "image_url": "https://media-cdn.cortextech.io/b9885dd5-53ca-4f41-96f7-4b7f1c8c4d5a.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "010444",
+        "player_name": "Matthew Costello",
+        "first_name": "Matthew",
+        "last_name": "Costello",
+        "image_url": "https://media-cdn.cortextech.io/daa41d29-1915-4021-b276-aff41df0b04b.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "011244",
+        "player_name": "Oscar Da Silva",
+        "first_name": "Oscar",
+        "last_name": "Da Silva",
+        "image_url": "https://media-cdn.cortextech.io/1cd31b45-1360-4dc2-a279-504d2a1c44e8.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "013155",
+        "player_name": "Mohamed Dabone",
+        "first_name": "Mohamed",
+        "last_name": "Dabone",
+        "image_url": "https://media-cdn.cortextech.io/c6831719-f974-4475-9d15-459553594b0e.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "005942",
+        "player_name": "Nemanja Dangubic",
+        "first_name": "Nemanja",
+        "last_name": "Dangubic",
+        "image_url": "https://media-cdn.cortextech.io/d79a6b0a-c9e6-45d7-b907-849e1ae9202f.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "012453",
+        "player_name": "Uros Danilovic",
+        "first_name": "Uros",
+        "last_name": "Danilovic",
+        "image_url": "https://media-cdn.incrowdsports.com/d1c094ca-9733-43ea-87f9-c070f60a4437.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "012185",
+        "player_name": "Dominykas Daubaris",
+        "first_name": "Dominykas",
+        "last_name": "Daubaris",
+        "image_url": "https://media-cdn.cortextech.io/4b1cd7c8-4f09-413e-b9aa-39601dbc0f86.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "007960",
+        "player_name": "Dejan Davidovac",
+        "first_name": "Dejan",
+        "last_name": "Davidovac",
+        "image_url": "https://media-cdn.cortextech.io/1f3790c6-a754-4e43-b322-9c50695d71d5.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "002100",
+        "player_name": "Nando De Colo",
+        "first_name": "Nando",
+        "last_name": "De Colo",
+        "image_url": "https://media-cdn.cortextech.io/768e4710-28ed-4e85-b513-3b5f613b9eb2.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "010750",
+        "player_name": "Sergio De Larrea",
+        "first_name": "Sergio",
+        "last_name": "De Larrea",
+        "image_url": "https://media-cdn.cortextech.io/5c52e29f-09dd-45b3-ae82-a839d68146f7.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "009005",
+        "player_name": "Gabriel Deck",
+        "first_name": "Gabriel",
+        "last_name": "Deck",
+        "image_url": "https://media-cdn.cortextech.io/85e6487b-9481-4012-87d5-807d4ae81b30.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "010318",
+        "player_name": "Brice Dessert",
+        "first_name": "Brice",
+        "last_name": "Dessert",
+        "image_url": "https://media-cdn.cortextech.io/c8e7af8c-604f-4412-bcea-f9519c87c1f7.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014027",
+        "player_name": "Mamadi Diakite",
+        "first_name": "Mamadi",
+        "last_name": "Diakite",
+        "image_url": "https://media-cdn.cortextech.io/eedc9090-ac8a-4063-8763-0849554a22e1.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "011226",
+        "player_name": "Alpha Diallo",
+        "first_name": "Alpha",
+        "last_name": "Diallo",
+        "image_url": "https://media-cdn.cortextech.io/62623d1f-4407-49ac-a0a8-5924cc103e8a.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014104",
+        "player_name": "Chiek Diallo",
+        "first_name": "Chiek",
+        "last_name": "Diallo",
+        "image_url": "https://media-cdn.cortextech.io/461738d7-abca-41b5-8b85-e605f0b900f7.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014108",
+        "player_name": "Aliou Diarra",
+        "first_name": "Aliou",
+        "last_name": "Diarra",
+        "image_url": "https://media-cdn.cortextech.io/799ab5da-55d8-4563-b1c0-8b93f3632d84.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "007990",
+        "player_name": "John Dibartolomeo",
+        "first_name": "John",
+        "last_name": "Dibartolomeo",
+        "image_url": "https://media-cdn.cortextech.io/8d21b46c-77f3-4241-834a-c819a514fc58.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "006085",
+        "player_name": "Neno Dimitrijevic",
+        "first_name": "Neno",
+        "last_name": "Dimitrijevic",
+        "image_url": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCbqcoI/d0eaec8a-4e8d-4c13-b312-b4597ffbc2a9.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "008072",
+        "player_name": "Khalifa Diop",
+        "first_name": "Khalifa",
+        "last_name": "Diop",
+        "image_url": "https://media-cdn.cortextech.io/d78b882f-2f17-4f2a-8685-55cd7f75be1b.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "013385",
+        "player_name": "Ousmane Diop",
+        "first_name": "Ousmane",
+        "last_name": "Diop",
+        "image_url": "https://media-cdn.cortextech.io/a4d81cad-3c3a-4e1a-946b-37e9cc06b35b.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "013374",
+        "player_name": "Mouhamet Diouf",
+        "first_name": "Mouhamet",
+        "last_name": "Diouf",
+        "image_url": "https://media-cdn.cortextech.io/b66cdc05-d0ad-4ffd-9cc7-11a8748b1768.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "013700",
+        "player_name": "Sava Djuric",
+        "first_name": "Sava",
+        "last_name": "Djuric",
+        "image_url": "https://media-cdn.incrowdsports.com/d1c094ca-9733-43ea-87f9-c070f60a4437.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "004007",
+        "player_name": "Ognjen Dobric",
+        "first_name": "Ognjen",
+        "last_name": "Dobric",
+        "image_url": "https://media-cdn.cortextech.io/80c68581-78c5-44b8-b3ea-21555bfaff4f.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014010",
+        "player_name": "Allan Dokossi",
+        "first_name": "Allan",
+        "last_name": "Dokossi",
+        "image_url": "https://media-cdn.cortextech.io/03ed0fcb-7fff-4907-99ff-559619e35156.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "009849",
+        "player_name": "Tyler Dorsey",
+        "first_name": "Tyler",
+        "last_name": "Dorsey",
+        "image_url": "https://media-cdn.cortextech.io/bc74ec12-71a8-425e-9ff8-e50eefec1f62.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "012044",
+        "player_name": "Yago Dos Santos",
+        "first_name": "Yago",
+        "last_name": "Dos Santos",
+        "image_url": "https://media-cdn.cortextech.io/e0f72d56-5553-431c-8cb8-b5db06684356.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014123",
+        "player_name": "Jeffrey Dowtin Jr",
+        "first_name": "Jeffrey",
+        "last_name": "Dowtin Jr",
+        "image_url": "https://media-cdn.cortextech.io/6976aa15-8d91-454e-987a-82f8e6059771.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "012742",
+        "player_name": "Pj Dozier",
+        "first_name": "Pj",
+        "last_name": "Dozier",
+        "image_url": "https://media-cdn.cortextech.io/ac43e15a-c08d-42ed-a896-599ef9c4c3fc.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "003048",
+        "player_name": "Bryant Dunston",
+        "first_name": "Bryant",
+        "last_name": "Dunston",
+        "image_url": "https://media-cdn.cortextech.io/e3c4915b-e70f-4813-9bdb-43bbbc606e33.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "006020",
+        "player_name": "Amit Ebo",
+        "first_name": "Amit",
+        "last_name": "Ebo",
+        "image_url": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCcz1GL/c02e839e-beea-433f-8a0f-6a8bf042f69f.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "006725",
+        "player_name": "Paul Eboua",
+        "first_name": "Paul",
+        "last_name": "Eboua",
+        "image_url": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCaiEI5/35a1208a-b3d4-415c-9c87-2e475552904e.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "011987",
+        "player_name": "Carsen Edwards",
+        "first_name": "Carsen",
+        "last_name": "Edwards",
+        "image_url": "https://media-cdn.cortextech.io/1f0da376-0fcd-4071-88cc-d7dc6ac40243.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014416",
+        "player_name": "Kessler Edwards",
+        "first_name": "Kessler",
+        "last_name": "Edwards",
+        "image_url": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCbqcoI/c4e6ee39-c037-4d5e-be9f-0ddde3bc2b0e.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014157",
+        "player_name": "Boogie Ellis",
+        "first_name": "Boogie",
+        "last_name": "Ellis",
+        "image_url": "https://media-cdn.cortextech.io/b2638a60-244f-4304-9294-16a4b3ecd667.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "012593",
+        "player_name": "Quinn Ellis",
+        "first_name": "Quinn",
+        "last_name": "Ellis",
+        "image_url": "https://media-cdn.cortextech.io/52c3b65f-2faf-4727-9931-a53b8607a412.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "008811",
+        "player_name": "Moustapha Fall",
+        "first_name": "Moustapha",
+        "last_name": "Fall",
+        "image_url": "https://media-cdn.cortextech.io/bc0bef29-4444-425d-97f1-cdb9ae9acb5d.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "006568",
+        "player_name": "Youssoupha Fall",
+        "first_name": "Youssoupha",
+        "last_name": "Fall",
+        "image_url": "https://media-cdn.cortextech.io/d1ddd241-43e3-4ae0-bfd7-e382bbeb97a6.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "011284",
+        "player_name": "Kenneth Faried",
+        "first_name": "Kenneth",
+        "last_name": "Faried",
+        "image_url": "https://media-cdn.cortextech.io/fbabd4a4-b08e-456e-b82a-c31a44ca371a.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "012403",
+        "player_name": "Mouhamed Faye",
+        "first_name": "Mouhamed",
+        "last_name": "Faye",
+        "image_url": "https://media-cdn.cortextech.io/5495af48-c312-4958-a64d-f20e82c38f1e.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "011247",
+        "player_name": "Andres Feliz",
+        "first_name": "Andres",
+        "last_name": "Feliz",
+        "image_url": "https://media-cdn.cortextech.io/88b1e489-c8a9-4cd8-8137-db11145b579a.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "013422",
+        "player_name": "Ruzgar Fenemen",
+        "first_name": "Ruzgar",
+        "last_name": "Fenemen",
+        "image_url": "https://media-cdn.cortextech.io/d508fd95-92a2-4090-82f2-5709a03857dc.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "013667",
+        "player_name": "Bruno Fernando",
+        "first_name": "Bruno",
+        "last_name": "Fernando",
+        "image_url": "https://media-cdn.cortextech.io/771c73d1-4537-447b-b668-043882902961.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014219",
+        "player_name": "Francesco Ferrari",
+        "first_name": "Francesco",
+        "last_name": "Ferrari",
+        "image_url": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCaiEI5/520ad414-9a5e-429d-a2dd-79f96bfbbb10.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014129",
+        "player_name": "Diego Ferreras",
+        "first_name": "Diego",
+        "last_name": "Ferreras",
+        "image_url": "https://media-cdn.cortextech.io/8d81e4f7-7f57-43ff-a52f-dbb019d111d9.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "013579",
+        "player_name": "Kilian Fischer",
+        "first_name": "Kilian",
+        "last_name": "Fischer",
+        "image_url": "https://media-cdn.incrowdsports.com/d1c094ca-9733-43ea-87f9-c070f60a4437.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "005670",
+        "player_name": "Diego Flaccadori",
+        "first_name": "Diego",
+        "last_name": "Flaccadori",
+        "image_url": "https://media-cdn.cortextech.io/1d2df160-ebfd-4d2e-b65f-eafbcf8ccf97.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "013367",
+        "player_name": "Trent Forrest",
+        "first_name": "Trent",
+        "last_name": "Forrest",
+        "image_url": "https://media-cdn.cortextech.io/a329afc2-80e5-4cee-a08d-34c5d734cb3e.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "013380",
+        "player_name": "Evan Fournier",
+        "first_name": "Evan",
+        "last_name": "Fournier",
+        "image_url": "https://media-cdn.cortextech.io/948551c5-285e-44d1-8a50-35cd9b019e97.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "007975",
+        "player_name": "Sylvain Francisco",
+        "first_name": "Sylvain",
+        "last_name": "Francisco",
+        "image_url": "https://media-cdn.cortextech.io/bab9d21f-1fbd-401a-8b26-f9b350a4c47d.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014026",
+        "player_name": "Clement Frisch",
+        "first_name": "Clement",
+        "last_name": "Frisch",
+        "image_url": "https://media-cdn.cortextech.io/378db068-2283-4ef8-a400-e583a0f9922d.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "013383",
+        "player_name": "Wenyen Gabriel",
+        "first_name": "Wenyen",
+        "last_name": "Gabriel",
+        "image_url": "https://media-cdn.cortextech.io/b2a934ec-11e0-4328-b9e4-2fefc29b4578.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "007630",
+        "player_name": "Usman Garuba",
+        "first_name": "Usman",
+        "last_name": "Garuba",
+        "image_url": "https://media-cdn.cortextech.io/fb919f50-9e7d-4bbf-af92-3763895ba6b7.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "007513",
+        "player_name": "Dovydas Giedraitis",
+        "first_name": "Dovydas",
+        "last_name": "Giedraitis",
+        "image_url": "https://media-cdn.cortextech.io/ef636bf4-aa3b-451e-b816-00d8a94cf5f2.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "001557",
+        "player_name": "Niels Giffey",
+        "first_name": "Niels",
+        "last_name": "Giffey",
+        "image_url": "https://media-cdn.cortextech.io/4238ce12-6d72-4f5a-83dd-fc4a970e13b9.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "010550",
+        "player_name": "Tomer Ginat",
+        "first_name": "Tomer",
+        "last_name": "Ginat",
+        "image_url": "https://media-cdn.cortextech.io/64a9bf27-99df-4fde-95e8-a2e6b3281a07.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "012336",
+        "player_name": "Tamir Gold",
+        "first_name": "Tamir",
+        "last_name": "Gold",
+        "image_url": "https://media-cdn.cortextech.io/45c6e782-83e4-41af-92b0-4e9f43acac58.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "012884",
+        "player_name": "Daniel Gonzalez",
+        "first_name": "Daniel",
+        "last_name": "Gonzalez",
+        "image_url": "https://media-cdn.cortextech.io/de23499f-9a60-433f-8bfa-74b47b8bf7f6.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "011204",
+        "player_name": "Jerian Grant",
+        "first_name": "Jerian",
+        "last_name": "Grant",
+        "image_url": "https://media-cdn.cortextech.io/3ef4745b-bc65-45a0-b534-e5cea140604e.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "002328",
+        "player_name": "Marius Grigonis",
+        "first_name": "Marius",
+        "last_name": "Grigonis",
+        "image_url": "https://media-cdn.cortextech.io/d97b2774-a6c8-41bb-b3bb-4963d81f79eb.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "013555",
+        "player_name": "Gunars Grinvalds",
+        "first_name": "Gunars",
+        "last_name": "Grinvalds",
+        "image_url": "https://media-cdn.cortextech.io/68cdf052-4309-42cf-9de4-8da8bfe37dd7.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "004004",
+        "player_name": "Marko Guduric",
+        "first_name": "Marko",
+        "last_name": "Guduric",
+        "image_url": "https://media-cdn.cortextech.io/ac49a13d-0aaa-4ce6-9fda-1292739525ca.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "001844",
+        "player_name": "Daniel Hackett",
+        "first_name": "Daniel",
+        "last_name": "Hackett",
+        "image_url": "https://media-cdn.cortextech.io/923cef2e-6352-41a8-8db1-791d21db3100.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "011205",
+        "player_name": "Devon Hall",
+        "first_name": "Devon",
+        "last_name": "Hall",
+        "image_url": "https://media-cdn.cortextech.io/691073bc-264c-4124-93e8-82c09abb8d5a.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "011196",
+        "player_name": "Donta Hall",
+        "first_name": "Donta",
+        "last_name": "Hall",
+        "image_url": "https://media-cdn.cortextech.io/0d150885-9a59-4287-8f10-dfea2434ace6.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "013304",
+        "player_name": "Zachary Hankins",
+        "first_name": "Zachary",
+        "last_name": "Hankins",
+        "image_url": "https://media-cdn.cortextech.io/e6ee1582-9705-4702-a369-bc0e9c802b62.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "005460",
+        "player_name": "Elias Harris",
+        "first_name": "Elias",
+        "last_name": "Harris",
+        "image_url": "https://media-cdn.cortextech.io/214b4fa2-16fd-4ef9-b8ac-b08745e7628f.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "013371",
+        "player_name": "Shaquille Harrison",
+        "first_name": "Shaquille",
+        "last_name": "Harrison",
+        "image_url": "https://media-cdn.cortextech.io/3b994fa6-5da8-4559-ac9a-6c6400e3fd99.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "010390",
+        "player_name": "Kevarrius Hayes",
+        "first_name": "Kevarrius",
+        "last_name": "Hayes",
+        "image_url": "https://media-cdn.cortextech.io/f8b50ed9-1f5a-4e02-9046-4ec6bd379217.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "008962",
+        "player_name": "Nigel Hayes-davis",
+        "first_name": "Nigel",
+        "last_name": "Hayes-davis",
+        "image_url": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCbqcoH/2db79cc7-9c4d-4bf2-99ea-d118e1487a69.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "011201",
+        "player_name": "Sehmus Hazer",
+        "first_name": "Sehmus",
+        "last_name": "Hazer",
+        "image_url": "https://media-cdn.cortextech.io/4ddb1fa4-97c7-4e34-9d0b-eaf23f9bf632.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "012712",
+        "player_name": "Juancho Hernangomez",
+        "first_name": "Juancho",
+        "last_name": "Hernangomez",
+        "image_url": "https://media-cdn.cortextech.io/12459ba1-e2c3-4832-95de-3fbe43770024.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "003196",
+        "player_name": "Willy Hernangomez",
+        "first_name": "Willy",
+        "last_name": "Hernangomez",
+        "image_url": "https://media-cdn.cortextech.io/2b0a03c6-90ec-400a-8b01-6c4c8c234234.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "012611",
+        "player_name": "Sebastian Herrera",
+        "first_name": "Sebastian",
+        "last_name": "Herrera",
+        "image_url": "https://media-cdn.cortextech.io/554a36c3-9fe5-44af-8100-9cb7752e132a.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "003108",
+        "player_name": "Mario Hezonja",
+        "first_name": "Mario",
+        "last_name": "Hezonja",
+        "image_url": "https://media-cdn.cortextech.io/c415b3ab-6a2d-4ff4-8504-5119fca3c9f6.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "012640",
+        "player_name": "Nadir Hifi",
+        "first_name": "Nadir",
+        "last_name": "Hifi",
+        "image_url": "https://media-cdn.cortextech.io/19d44ea8-559e-4ae0-9560-af4d0d8c7fc6.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "006835",
+        "player_name": "Jaylen Hoard",
+        "first_name": "Jaylen",
+        "last_name": "Hoard",
+        "image_url": "https://media-cdn.cortextech.io/3fb1a66a-a679-4665-94d2-60192fcd7e16.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "009513",
+        "player_name": "Justus Hollatz",
+        "first_name": "Justus",
+        "last_name": "Hollatz",
+        "image_url": "https://media-cdn.cortextech.io/856be213-1e5f-4601-8d9e-0e442dae1ed5.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014011",
+        "player_name": "Richaun Holmes",
+        "first_name": "Richaun",
+        "last_name": "Holmes",
+        "image_url": "https://media-cdn.cortextech.io/96c56c5d-923f-46df-9f7d-7005e690b8df.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "011949",
+        "player_name": "Daulton Hommes",
+        "first_name": "Daulton",
+        "last_name": "Hommes",
+        "image_url": "https://media-cdn.cortextech.io/a0c586c2-a8d8-47a6-80dc-f779888633a7.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014124",
+        "player_name": "Talen Horton Tucker",
+        "first_name": "Talen",
+        "last_name": "Horton Tucker",
+        "image_url": "https://media-cdn.cortextech.io/286f23c5-49f8-4ae7-b54d-c9bbe5e3f3e0.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "011948",
+        "player_name": "Markus Howard",
+        "first_name": "Markus",
+        "last_name": "Howard",
+        "image_url": "https://media-cdn.cortextech.io/527ed926-2d87-4ba9-bed3-9bbb42b1cd49.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "012365",
+        "player_name": "Vit Hrabar",
+        "first_name": "Vit",
+        "last_name": "Hrabar",
+        "image_url": "https://media-cdn.cortextech.io/ce59f392-8eaa-4724-b610-50461f933031.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014029",
+        "player_name": "Ebuka Izundu",
+        "first_name": "Ebuka",
+        "last_name": "Izundu",
+        "image_url": "https://media-cdn.cortextech.io/34d169ce-3794-4b52-bfca-d9646efe4a24.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "000229",
+        "player_name": "Edwin Jackson",
+        "first_name": "Edwin",
+        "last_name": "Jackson",
+        "image_url": "https://media-cdn.cortextech.io/b6d8b256-85dc-407d-a292-9d54802109cf.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "005422",
+        "player_name": "Karim Jallow",
+        "first_name": "Karim",
+        "last_name": "Jallow",
+        "image_url": "https://media-cdn.cortextech.io/537c45ba-7d81-47df-aa8d-900ecf79b2b4.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "005985",
+        "player_name": "Mike James",
+        "first_name": "Mike",
+        "last_name": "James",
+        "image_url": "https://media-cdn.cortextech.io/feff360e-eb96-423c-9538-cc5845b0bdc7.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "012613",
+        "player_name": "Mikael Jantunen",
+        "first_name": "Mikael",
+        "last_name": "Jantunen",
+        "image_url": "https://media-cdn.cortextech.io/7c7134c0-946e-495e-8c01-6952b2129796.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "009733",
+        "player_name": "Tonye Jekiri",
+        "first_name": "Tonye",
+        "last_name": "Jekiri",
+        "image_url": "https://media-cdn.cortextech.io/995f6e1a-5ce1-46cf-a462-48e2ab5234e5.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "013290",
+        "player_name": "Justinian Jessup",
+        "first_name": "Justinian",
+        "last_name": "Jessup",
+        "image_url": "https://media-cdn.cortextech.io/39bd9e57-57f4-4de4-8afd-3cb14d2db192.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014107",
+        "player_name": "Stefan Joksimovic",
+        "first_name": "Stefan",
+        "last_name": "Joksimovic",
+        "image_url": "https://media-cdn.cortextech.io/1cb63245-0e0c-493b-9fcc-abcfb38a4394.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "013369",
+        "player_name": "Carlik Jones",
+        "first_name": "Carlik",
+        "last_name": "Jones",
+        "image_url": "https://media-cdn.cortextech.io/f2faab84-1d52-4418-9885-120b0abe192e.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "010568",
+        "player_name": "Chris Jones",
+        "first_name": "Chris",
+        "last_name": "Jones",
+        "image_url": "https://media-cdn.cortextech.io/62f1e81b-7c88-4cb1-9eb8-9054a68c2625.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014102",
+        "player_name": "Kai Jones",
+        "first_name": "Kai",
+        "last_name": "Jones",
+        "image_url": "https://media-cdn.cortextech.io/522b9410-d389-464c-9af6-be0e1c7e5111.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "011981",
+        "player_name": "Tyrique Jones",
+        "first_name": "Tyrique",
+        "last_name": "Jones",
+        "image_url": "https://media-cdn.cortextech.io/a4d5dc10-f5f0-432a-82b0-f92a5171bea6.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014316",
+        "player_name": "Cory Joseph",
+        "first_name": "Cory",
+        "last_name": "Joseph",
+        "image_url": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCbqcg1/2ad13ec2-c725-47bc-ae8a-4c0e366905ff.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "004863",
+        "player_name": "Stefan Jovic",
+        "first_name": "Stefan",
+        "last_name": "Jovic",
+        "image_url": "https://media-cdn.cortextech.io/8f6a1334-5d45-4d52-bd52-665090df1438.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "012796",
+        "player_name": "Mfiondu Kabengele",
+        "first_name": "Mfiondu",
+        "last_name": "Kabengele",
+        "image_url": "https://media-cdn.cortextech.io/b1711af0-81eb-4312-8f7b-606494930466.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "011209",
+        "player_name": "Panagiotis Kalaitzakis",
+        "first_name": "Panagiotis",
+        "last_name": "Kalaitzakis",
+        "image_url": "https://media-cdn.cortextech.io/370cc8f6-6da8-4a99-bf1c-d0390cf2f6fd.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "004866",
+        "player_name": "Nikola Kalinic",
+        "first_name": "Nikola",
+        "last_name": "Kalinic",
+        "image_url": "https://media-cdn.cortextech.io/8b1112da-0b01-4305-b27a-c6424ef1f54f.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "008325",
+        "player_name": "Kenan Kamenjas",
+        "first_name": "Kenan",
+        "last_name": "Kamenjas",
+        "image_url": "https://media-cdn.cortextech.io/6e525346-e12a-45a0-b922-32c7799d2b15.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "012885",
+        "player_name": "Sayon Keita",
+        "first_name": "Sayon",
+        "last_name": "Keita",
+        "image_url": "https://media-cdn.cortextech.io/ca2a28d2-16dd-4553-a63b-7a43aee03c4a.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014168",
+        "player_name": "Braxton Key",
+        "first_name": "Braxton",
+        "last_name": "Key",
+        "image_url": "https://media-cdn.cortextech.io/88b953f4-530b-4ccb-8032-d25471bdc2b4.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014106",
+        "player_name": "Mate Khatiashvili",
+        "first_name": "Mate",
+        "last_name": "Khatiashvili",
+        "image_url": "https://media-cdn.cortextech.io/4b4419aa-6cf3-4248-9192-11b8f3e37b4b.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014330",
+        "player_name": "Nicolas Kodjoe",
+        "first_name": "Nicolas",
+        "last_name": "Kodjoe",
+        "image_url": "https://media-cdn.incrowdsports.com/d1c094ca-9733-43ea-87f9-c070f60a4437.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014031",
+        "player_name": "Kosta Kondic",
+        "first_name": "Kosta",
+        "last_name": "Kondic",
+        "image_url": "https://media-cdn.cortextech.io/5ba1b4f9-3015-45de-9359-a8f70d63822f.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "006482",
+        "player_name": "David Kramer",
+        "first_name": "David",
+        "last_name": "Kramer",
+        "image_url": "https://media-cdn.cortextech.io/b6d2f733-3fda-4c65-a49b-aeee571c65c7.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "004512",
+        "player_name": "Leon Kratzer",
+        "first_name": "Leon",
+        "last_name": "Kratzer",
+        "image_url": "https://media-cdn.cortextech.io/cc0faa1e-389e-4a0a-b03a-20dfdde91bf1.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "005713",
+        "player_name": "Rodions Kurucs",
+        "first_name": "Rodions",
+        "last_name": "Kurucs",
+        "image_url": "https://media-cdn.cortextech.io/6ca0b78a-ccb0-45b3-ad2f-e10aff32f0fc.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014128",
+        "player_name": "Nikola Kusturica",
+        "first_name": "Nikola",
+        "last_name": "Kusturica",
+        "image_url": "https://media-cdn.cortextech.io/8cae0db7-8eed-4146-adef-1fd4ab8b4d32.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "007736",
+        "player_name": "Arijan Lakic",
+        "first_name": "Arijan",
+        "last_name": "Lakic",
+        "image_url": "https://media-cdn.cortextech.io/42ea5b6d-9d14-430c-b13e-e22074acb664.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "006435",
+        "player_name": "Nicolas Laprovittola",
+        "first_name": "Nicolas",
+        "last_name": "Laprovittola",
+        "image_url": "https://media-cdn.cortextech.io/d7e43b16-3a21-4087-b04f-89cdaedb7158.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "010392",
+        "player_name": "Giannoulis Larentzakis",
+        "first_name": "Giannoulis",
+        "last_name": "Larentzakis",
+        "image_url": "https://media-cdn.cortextech.io/2737aa5a-4f3e-475f-b590-9d4a8aa3e069.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "007200",
+        "player_name": "Shane Larkin",
+        "first_name": "Shane",
+        "last_name": "Larkin",
+        "image_url": "https://media-cdn.cortextech.io/8ad5b8f2-3bf2-4ae4-9a49-91160d75f3bb.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014120",
+        "player_name": "Gur Lavi",
+        "first_name": "Gur",
+        "last_name": "Lavi",
+        "image_url": "https://media-cdn.cortextech.io/df3007c8-3a72-4d3a-b364-ee529eb07476.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014012",
+        "player_name": "Tj Leaf",
+        "first_name": "Tj",
+        "last_name": "Leaf",
+        "image_url": "https://media-cdn.cortextech.io/22442c98-f16f-4f19-ba82-b09e8aa7b367.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "008987",
+        "player_name": "Zach Leday",
+        "first_name": "Zach",
+        "last_name": "Leday",
+        "image_url": "https://media-cdn.cortextech.io/2ba1fc70-da04-4497-83bc-7ff3bc0f3c08.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "013389",
+        "player_name": "Saben Lee",
+        "first_name": "Saben",
+        "last_name": "Lee",
+        "image_url": "https://media-cdn.cortextech.io/d016faea-5855-43c3-9ee3-0377a97cf60b.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014169",
+        "player_name": "Alex Len",
+        "first_name": "Alex",
+        "last_name": "Len",
+        "image_url": "https://media-cdn.cortextech.io/4f3880c6-6b3b-4af7-bc52-2d721c68372e.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "003842",
+        "player_name": "Mathias Lessort",
+        "first_name": "Mathias",
+        "last_name": "Lessort",
+        "image_url": "https://media-cdn.cortextech.io/6c2a56e1-1c47-4771-9b90-bbcc97becc70.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "003526",
+        "player_name": "David Lighty",
+        "first_name": "David",
+        "last_name": "Lighty",
+        "image_url": "https://media-cdn.cortextech.io/6eb519a5-da37-4b4b-bc03-467432aa3c8b.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "007032",
+        "player_name": "Maodo Lo",
+        "first_name": "Maodo",
+        "last_name": "Lo",
+        "image_url": "https://media-cdn.cortextech.io/4f56a0f9-4aaa-4477-aebc-68205cdbb245.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "005356",
+        "player_name": "Xabi Lopez-arostegui",
+        "first_name": "Xabi",
+        "last_name": "Lopez-arostegui",
+        "image_url": "https://media-cdn.cortextech.io/995a25af-8a5d-4deb-acb2-26f28d87ed18.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "009754",
+        "player_name": "Jordan Loyd",
+        "first_name": "Jordan",
+        "last_name": "Loyd",
+        "image_url": "https://media-cdn.cortextech.io/f21f9f12-b440-41a3-87d7-aa3bbe6a36f3.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "001288",
+        "player_name": "Vladimir Lucic",
+        "first_name": "Vladimir",
+        "last_name": "Lucic",
+        "image_url": "https://media-cdn.cortextech.io/c1901dfd-8e25-4833-a576-ac4ab82d75a6.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "010781",
+        "player_name": "Iffe Lundberg",
+        "first_name": "Iffe",
+        "last_name": "Lundberg",
+        "image_url": "https://media-cdn.cortextech.io/f0599430-9879-413d-962e-8c7aed154fa2.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "012080",
+        "player_name": "Timothe Luwawu-cabarrot",
+        "first_name": "Timothe",
+        "last_name": "Luwawu-cabarrot",
+        "image_url": "https://media-cdn.cortextech.io/96750db7-50f9-49bb-9fcc-56ed731ccce3.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014117",
+        "player_name": "Trey Lyles",
+        "first_name": "Trey",
+        "last_name": "Lyles",
+        "image_url": "https://media-cdn.cortextech.io/934e8573-ed4a-4319-872f-e2975479c9f7.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "011052",
+        "player_name": "Yam Madar",
+        "first_name": "Yam",
+        "last_name": "Madar",
+        "image_url": "https://media-cdn.cortextech.io/5b639f39-81be-45fe-bf5e-2428814980fd.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "002969",
+        "player_name": "Melih Mahmutoglu",
+        "first_name": "Melih",
+        "last_name": "Mahmutoglu",
+        "image_url": "https://media-cdn.cortextech.io/f3c95ee0-c4ac-4f3a-ae7a-fb6dfd3723b9.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "012609",
+        "player_name": "Collin Malcolm",
+        "first_name": "Collin",
+        "last_name": "Malcolm",
+        "image_url": "https://media-cdn.cortextech.io/936958b4-089b-4ba9-a797-8b0d1a117b7d.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "007027",
+        "player_name": "Theo Maledon",
+        "first_name": "Theo",
+        "last_name": "Maledon",
+        "image_url": "https://media-cdn.cortextech.io/3a8b14b1-12d8-4d17-a3f2-ad7db16f6822.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "011064",
+        "player_name": "Niccolo Mannion",
+        "first_name": "Niccolo",
+        "last_name": "Mannion",
+        "image_url": "https://media-cdn.cortextech.io/048cb7be-4aed-42bc-8d85-ad6b8ad271da.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "009948",
+        "player_name": "Juani Marcos",
+        "first_name": "Juani",
+        "last_name": "Marcos",
+        "image_url": "https://media-cdn.cortextech.io/4f6fd77e-968f-4eed-aefe-0e9828fafbd5.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "004761",
+        "player_name": "Vanja Marinkovic",
+        "first_name": "Vanja",
+        "last_name": "Marinkovic",
+        "image_url": "https://media-cdn.cortextech.io/ac54fafe-cc49-4d7d-b908-d18b7ddc38b3.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014035",
+        "player_name": "Nate Mason",
+        "first_name": "Nate",
+        "last_name": "Mason",
+        "image_url": "https://media-cdn.cortextech.io/931fcbfa-74c9-454d-bbe8-e3c3d90c1624.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "012618",
+        "player_name": "Bodian Massa",
+        "first_name": "Bodian",
+        "last_name": "Massa",
+        "image_url": "https://media-cdn.cortextech.io/29043d63-a741-4970-a849-8f2b865bd4ea.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "007993",
+        "player_name": "Amath M'baye",
+        "first_name": "Amath",
+        "last_name": "M'baye",
+        "image_url": "https://media-cdn.cortextech.io/29eebe44-7b24-44c5-8dd5-b085a3d056d5.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "013386",
+        "player_name": "David Mccormack",
+        "first_name": "David",
+        "last_name": "Mccormack",
+        "image_url": "https://media-cdn.cortextech.io/e6d83e1c-82df-4d7b-8d94-6a7f0a037e60.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "007853",
+        "player_name": "Shaquielle Mckissic",
+        "first_name": "Shaquielle",
+        "last_name": "Mckissic",
+        "image_url": "https://media-cdn.cortextech.io/3e6e2015-538f-45f9-ab34-03ee341681df.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "002849",
+        "player_name": "Nicolo Melli",
+        "first_name": "Nicolo",
+        "last_name": "Melli",
+        "image_url": "https://media-cdn.cortextech.io/101176a1-0695-40e3-a635-b6ed80d17e6e.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "002580",
+        "player_name": "Vasilije Micic",
+        "first_name": "Vasilije",
+        "last_name": "Micic",
+        "image_url": "https://media-cdn.cortextech.io/2ae4c8f2-6d43-4c69-afe2-e5fb7b9d79f8.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "012943",
+        "player_name": "Uros Mijailovic",
+        "first_name": "Uros",
+        "last_name": "Mijailovic",
+        "image_url": "https://media-cdn.cortextech.io/60ac3650-bcab-4b20-9736-10a7ce5d5237.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "012977",
+        "player_name": "Kajus Mikalauskas",
+        "first_name": "Kajus",
+        "last_name": "Mikalauskas",
+        "image_url": "https://media-cdn.cortextech.io/2081580a-4c3b-4c90-8fee-027d7a5f492f.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "011836",
+        "player_name": "Isiaha Mike",
+        "first_name": "Isiaha",
+        "last_name": "Mike",
+        "image_url": "https://media-cdn.cortextech.io/ecbfbe3b-017a-4082-b76b-5ad895a1b047.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014094",
+        "player_name": "Stefan Miljenovic",
+        "first_name": "Stefan",
+        "last_name": "Miljenovic",
+        "image_url": "https://media-cdn.cortextech.io/552273d0-5538-41cb-96a2-9d52cca3a831.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "009048",
+        "player_name": "Codi Miller-mcintyre",
+        "first_name": "Codi",
+        "last_name": "Miller-mcintyre",
+        "image_url": "https://media-cdn.cortextech.io/be4091ef-8325-4cc1-b7f9-d8e71b0f732d.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014007",
+        "player_name": "Shake Milton",
+        "first_name": "Shake",
+        "last_name": "Milton",
+        "image_url": "https://media-cdn.cortextech.io/913386b0-4099-4b7c-9b5f-40d18c8c023a.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "003941",
+        "player_name": "Nikola Milutinov",
+        "first_name": "Nikola",
+        "last_name": "Milutinov",
+        "image_url": "https://media-cdn.cortextech.io/eaac00b9-51c3-4824-83b3-5d1c9ce00881.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "000796",
+        "player_name": "Nikola Mirotic",
+        "first_name": "Nikola",
+        "last_name": "Mirotic",
+        "image_url": "https://media-cdn.cortextech.io/14a40cc3-7032-4b61-937f-fe2d2cd2001b.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "007866",
+        "player_name": "Konstantinos Mitoglou",
+        "first_name": "Konstantinos",
+        "last_name": "Mitoglou",
+        "image_url": "https://media-cdn.cortextech.io/786a3466-8cef-47d3-86c6-487cc42cab85.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "012201",
+        "player_name": "Chima Moneke",
+        "first_name": "Chima",
+        "last_name": "Moneke",
+        "image_url": "https://media-cdn.cortextech.io/aa0efbb3-86a1-48df-8206-0aacbba5e0b4.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "010042",
+        "player_name": "Jean Montero",
+        "first_name": "Jean",
+        "last_name": "Montero",
+        "image_url": "https://media-cdn.cortextech.io/1f77a5c9-ccef-4bda-b0e8-11e4f1a8d9d8.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014115",
+        "player_name": "Omari Moore",
+        "first_name": "Omari",
+        "last_name": "Moore",
+        "image_url": "https://media-cdn.cortextech.io/e7047eb4-0342-47e6-9f1b-4b7584864d1f.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "010431",
+        "player_name": "Jeremy Morgan",
+        "first_name": "Jeremy",
+        "last_name": "Morgan",
+        "image_url": "https://media-cdn.cortextech.io/20d0ed00-5f36-4168-8dca-e058f2835458.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "012585",
+        "player_name": "Matthew Morgan",
+        "first_name": "Matthew",
+        "last_name": "Morgan",
+        "image_url": "https://media-cdn.cortextech.io/0f6439c0-63e8-4e10-b141-3c464a1fd4cd.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014212",
+        "player_name": "Monte Morris",
+        "first_name": "Monte",
+        "last_name": "Morris",
+        "image_url": "https://media-cdn.cortextech.io/60d224bb-40ab-4e0c-846f-9766a990146f.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "011157",
+        "player_name": "Johnathan Motley",
+        "first_name": "Johnathan",
+        "last_name": "Motley",
+        "image_url": "https://media-cdn.cortextech.io/0a172ed5-656d-4894-811a-8794788bf5f2.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "006540",
+        "player_name": "Dzanan Musa",
+        "first_name": "Dzanan",
+        "last_name": "Musa",
+        "image_url": "https://media-cdn.cortextech.io/1201877a-e1b6-4687-8720-0288b59018f5.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "008176",
+        "player_name": "David Mutaf",
+        "first_name": "David",
+        "last_name": "Mutaf",
+        "image_url": "https://media-cdn.cortextech.io/b65e611b-63ea-4448-9c87-6bc97a0510ee.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "012997",
+        "player_name": "Miikka Muurinen",
+        "first_name": "Miikka",
+        "last_name": "Muurinen",
+        "image_url": "https://media-cdn.cortextech.io/536cabb5-2899-4ae3-88ae-920227449430.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "007632",
+        "player_name": "Mario Nakic",
+        "first_name": "Mario",
+        "last_name": "Nakic",
+        "image_url": "https://media-cdn.cortextech.io/563b828a-7a01-4e27-8696-7d783540873f.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "012731",
+        "player_name": "Mbaye Ndiaye",
+        "first_name": "Mbaye",
+        "last_name": "Ndiaye",
+        "image_url": "https://media-cdn.cortextech.io/f5a73145-a679-43f2-992b-3caaeb9ac9cc.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "011199",
+        "player_name": "Josh Nebo",
+        "first_name": "Josh",
+        "last_name": "Nebo",
+        "image_url": "https://media-cdn.cortextech.io/2d5f84ef-ad28-4415-96b2-685be51d4a2f.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "012948",
+        "player_name": "Aleksej Nedeljkovic",
+        "first_name": "Aleksej",
+        "last_name": "Nedeljkovic",
+        "image_url": "https://media-cdn.cortextech.io/e5c63506-d3ff-42ea-b31e-0374be1c0eaf.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "000848",
+        "player_name": "Nemanja Nedovic",
+        "first_name": "Nemanja",
+        "last_name": "Nedovic",
+        "image_url": "https://media-cdn.cortextech.io/664a91ef-82db-43d9-81c7-30bcbb9d8139.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014122",
+        "player_name": "Omiros Netzipoglou",
+        "first_name": "Omiros",
+        "last_name": "Netzipoglou",
+        "image_url": "https://media-cdn.cortextech.io/d78458ea-937a-4296-83b5-8a3a0fba9751.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "012687",
+        "player_name": "Saliou Niang",
+        "first_name": "Saliou",
+        "last_name": "Niang",
+        "image_url": "https://media-cdn.cortextech.io/47b8b387-3dc3-4bd2-8df8-fc983bb1ea94.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "010162",
+        "player_name": "Isaac Nogues",
+        "first_name": "Isaac",
+        "last_name": "Nogues",
+        "image_url": "https://media-cdn.cortextech.io/579222f0-9353-43d5-b566-eb52c723a701.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014134",
+        "player_name": "Miles Norris",
+        "first_name": "Miles",
+        "last_name": "Norris",
+        "image_url": "https://media-cdn.cortextech.io/c38aeb22-ae60-4685-a8a4-65462937f136.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014119",
+        "player_name": "Markquis Nowell",
+        "first_name": "Markquis",
+        "last_name": "Nowell",
+        "image_url": "https://media-cdn.cortextech.io/02c8c710-f160-471e-b241-e0c0e3a976a8.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "006591",
+        "player_name": "Frank Ntilikina",
+        "first_name": "Frank",
+        "last_name": "Ntilikina",
+        "image_url": "https://media-cdn.cortextech.io/fc66f2ff-ec65-46a3-9321-f451825c4990.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "010106",
+        "player_name": "Juan Nunez",
+        "first_name": "Juan",
+        "last_name": "Nunez",
+        "image_url": "https://media-cdn.cortextech.io/d990406b-fe36-45c0-9561-61f93c4ced9b.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "012774",
+        "player_name": "Kendrick Nunn",
+        "first_name": "Kendrick",
+        "last_name": "Nunn",
+        "image_url": "https://media-cdn.cortextech.io/6a45d41a-03f4-482a-b7ed-40adc56d5af8.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "013363",
+        "player_name": "Jordan Nwora",
+        "first_name": "Jordan",
+        "last_name": "Nwora",
+        "image_url": "https://media-cdn.cortextech.io/07e28b94-3ed7-4077-bfea-0272d3bdea67.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "004508",
+        "player_name": "Andreas Obst",
+        "first_name": "Andreas",
+        "last_name": "Obst",
+        "image_url": "https://media-cdn.cortextech.io/d3d714e5-0b66-497b-afbd-2587ac9e856c.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "011823",
+        "player_name": "Tai Odiase",
+        "first_name": "Tai",
+        "last_name": "Odiase",
+        "image_url": "https://media-cdn.cortextech.io/1dbd2b81-9620-4bf4-97ff-0a51c5322a30.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "011982",
+        "player_name": "Semi Ojeleye",
+        "first_name": "Semi",
+        "last_name": "Ojeleye",
+        "image_url": "https://media-cdn.cortextech.io/e54b9baf-ae85-4aed-9ef7-da71859be0c3.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014006",
+        "player_name": "Chuma Okeke",
+        "first_name": "Chuma",
+        "last_name": "Okeke",
+        "image_url": "https://media-cdn.cortextech.io/53f31f48-9fb0-4721-8f48-8bd48c2ca323.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "011212",
+        "player_name": "Elie Okobo",
+        "first_name": "Elie",
+        "last_name": "Okobo",
+        "image_url": "https://media-cdn.cortextech.io/945e4816-92ca-4aa8-a1bc-cae52d78eb78.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014207",
+        "player_name": "Eugene Omoruyi",
+        "first_name": "Eugene",
+        "last_name": "Omoruyi",
+        "image_url": "https://media-cdn.cortextech.io/22e77d9a-90d9-49f1-9121-a7063fa9c19d.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "010581",
+        "player_name": "Dylan Osetkowski",
+        "first_name": "Dylan",
+        "last_name": "Osetkowski",
+        "image_url": "https://media-cdn.cortextech.io/d5277fb5-a978-453b-bfcb-731c5704609c.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "004088",
+        "player_name": "Cedi Osman",
+        "first_name": "Cedi",
+        "last_name": "Osman",
+        "image_url": "https://media-cdn.cortextech.io/dd9f197a-73d3-4d91-a3d5-63b9d7fe0bcc.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "012710",
+        "player_name": "Ercan Osmani",
+        "first_name": "Ercan",
+        "last_name": "Osmani",
+        "image_url": "https://media-cdn.cortextech.io/dee92a82-6870-48dc-8b39-9f8250620951.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "012788",
+        "player_name": "Dan Oturu",
+        "first_name": "Dan",
+        "last_name": "Oturu",
+        "image_url": "https://media-cdn.cortextech.io/3bdc3cf1-638b-4095-8b2b-099d31ce686b.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "004197",
+        "player_name": "Yakuba Ouattara",
+        "first_name": "Yakuba",
+        "last_name": "Ouattara",
+        "image_url": "https://media-cdn.cortextech.io/7a130397-0f2a-47a2-adc3-eed775bcbf37.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "006739",
+        "player_name": "Alessandro Pajola",
+        "first_name": "Alessandro",
+        "last_name": "Pajola",
+        "image_url": "https://media-cdn.cortextech.io/ccc6aac9-c905-4988-a055-0a0bc8b13010.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "013283",
+        "player_name": "Guy Palatin",
+        "first_name": "Guy",
+        "last_name": "Palatin",
+        "image_url": "https://media-cdn.cortextech.io/259ecf62-d78e-412f-a32c-aabc255ca567.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "005844",
+        "player_name": "Georgios Papagiannis",
+        "first_name": "Georgios",
+        "last_name": "Papagiannis",
+        "image_url": "https://media-cdn.cortextech.io/7410bb12-8f97-491b-96e4-264f048acc27.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "001255",
+        "player_name": "Kostas Papanikolaou",
+        "first_name": "Kostas",
+        "last_name": "Papanikolaou",
+        "image_url": "https://media-cdn.cortextech.io/92915bcc-f8c5-44d0-87c0-6fed89e69b69.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "007464",
+        "player_name": "Joel Parra",
+        "first_name": "Joel",
+        "last_name": "Parra",
+        "image_url": "https://media-cdn.cortextech.io/f7ed6b45-8416-4bfc-8d40-51b9635dae75.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "012934",
+        "player_name": "Novak Pavlovic",
+        "first_name": "Novak",
+        "last_name": "Pavlovic",
+        "image_url": "https://media-cdn.incrowdsports.com/d1c094ca-9733-43ea-87f9-c070f60a4437.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "008829",
+        "player_name": "Alec Peters",
+        "first_name": "Alec",
+        "last_name": "Peters",
+        "image_url": "https://media-cdn.cortextech.io/8feddbf2-03c1-4130-95fe-246f938a74d6.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "011194",
+        "player_name": "Filip Petrusev",
+        "first_name": "Filip",
+        "last_name": "Petrusev",
+        "image_url": "https://media-cdn.cortextech.io/e51a295f-bae6-49d2-b0a9-083e0e32666c.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "006240",
+        "player_name": "Uros Plavsic",
+        "first_name": "Uros",
+        "last_name": "Plavsic",
+        "image_url": "https://media-cdn.cortextech.io/0537e3d7-d4e8-415c-9a69-8811e5e4b682.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "004887",
+        "player_name": "Vincent Poirier",
+        "first_name": "Vincent",
+        "last_name": "Poirier",
+        "image_url": "https://media-cdn.cortextech.io/bce92ebe-03e1-4588-9235-65b7e965b4e4.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "008232",
+        "player_name": "Aleksej Pokusevski",
+        "first_name": "Aleksej",
+        "last_name": "Pokusevski",
+        "image_url": "https://media-cdn.cortextech.io/48c507e4-5d3d-45fa-8178-80cfacc0fdcc.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "010393",
+        "player_name": "Jaime Pradilla",
+        "first_name": "Jaime",
+        "last_name": "Pradilla",
+        "image_url": "https://media-cdn.cortextech.io/8030bf2e-bd4a-4d04-9cb4-44d44653b5c7.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "002661",
+        "player_name": "Klemen Prepelic",
+        "first_name": "Klemen",
+        "last_name": "Prepelic",
+        "image_url": "https://media-cdn.cortextech.io/71f285f4-996e-4f5c-b2e7-0b0a871e660b.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "008384",
+        "player_name": "Gabriele Procida",
+        "first_name": "Gabriele",
+        "last_name": "Procida",
+        "image_url": "https://media-cdn.cortextech.io/747e84d4-a75e-4ef1-9775-3ea717b3d7f2.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "006643",
+        "player_name": "Josep Puerto",
+        "first_name": "Josep",
+        "last_name": "Puerto",
+        "image_url": "https://media-cdn.cortextech.io/748f72b2-0ab2-4703-8592-d8d5566e1721.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "009862",
+        "player_name": "Kevin Punter",
+        "first_name": "Kevin",
+        "last_name": "Punter",
+        "image_url": "https://media-cdn.cortextech.io/139997de-48ae-4035-9c35-75b504c82992.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "005683",
+        "player_name": "Aleksa Radanov",
+        "first_name": "Aleksa",
+        "last_name": "Radanov",
+        "image_url": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCaiEM5/ff4b35be-9078-489c-932b-f9d7e853d96d.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "011686",
+        "player_name": "Ognjen Radosic",
+        "first_name": "Ognjen",
+        "last_name": "Radosic",
+        "image_url": "https://media-cdn.cortextech.io/116bd643-3f15-4f6e-b4a8-aa1934648604.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014190",
+        "player_name": "Gytis Radzevicius",
+        "first_name": "Gytis",
+        "last_name": "Radzevicius",
+        "image_url": "https://media-cdn.cortextech.io/7745b1f2-e6a5-462d-8d7c-54ae6f3bbc8b.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "013382",
+        "player_name": "Levi Randolph",
+        "first_name": "Levi",
+        "last_name": "Randolph",
+        "image_url": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCbqcoI/16190676-90cb-4922-a4bd-1902762ce308.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "013378",
+        "player_name": "Xavier Rathan-mayes",
+        "first_name": "Xavier",
+        "last_name": "Rathan-mayes",
+        "image_url": "https://media-cdn.cortextech.io/be33c25c-a375-46b0-8fa6-b978b93ac5f0.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "013381",
+        "player_name": "William Rayman",
+        "first_name": "William",
+        "last_name": "Rayman",
+        "image_url": "https://media-cdn.cortextech.io/ba0729de-ec3b-4e13-9479-f176f0c893fd.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "012738",
+        "player_name": "Nathan Reuvers",
+        "first_name": "Nathan",
+        "last_name": "Reuvers",
+        "image_url": "https://media-cdn.cortextech.io/cdf75307-79da-4e91-943a-74b02e44b8e8.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014178",
+        "player_name": "Jared Rhoden",
+        "first_name": "Jared",
+        "last_name": "Rhoden",
+        "image_url": "https://media-cdn.cortextech.io/eddf4c2e-afca-47e3-93e4-a37966c1bd24.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "001518",
+        "player_name": "Giampaolo Ricci",
+        "first_name": "Giampaolo",
+        "last_name": "Ricci",
+        "image_url": "https://media-cdn.cortextech.io/f5767f49-5fc2-4639-95ef-06246240ca9b.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "011214",
+        "player_name": "Jasiel Rivero",
+        "first_name": "Jasiel",
+        "last_name": "Rivero",
+        "image_url": "https://media-cdn.cortextech.io/c001336b-1258-48de-a38e-6bf07fd88b0b.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014008",
+        "player_name": "Justin Robinson",
+        "first_name": "Justin",
+        "last_name": "Robinson",
+        "image_url": "https://media-cdn.cortextech.io/37224ff3-e0d3-48a2-b1a0-fb72065b24f8.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "011085",
+        "player_name": "Nikolaos Rogkavopoulos",
+        "first_name": "Nikolaos",
+        "last_name": "Rogkavopoulos",
+        "image_url": "https://media-cdn.cortextech.io/bed3d164-4b15-4bcf-a8b3-4a10ab5b3872.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "009299",
+        "player_name": "Mantas Rubstavicius",
+        "first_name": "Mantas",
+        "last_name": "Rubstavicius",
+        "image_url": "https://media-cdn.cortextech.io/a93cf565-afb7-4791-8314-3c1e4b5b2cd8.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014177",
+        "player_name": "Matt Ryan",
+        "first_name": "Matt",
+        "last_name": "Ryan",
+        "image_url": "https://media-cdn.cortextech.io/65a24105-fb31-48cd-829f-8a6f3526d91e.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "010545",
+        "player_name": "Neal Sako",
+        "first_name": "Neal",
+        "last_name": "Sako",
+        "image_url": "https://media-cdn.cortextech.io/78789f26-e267-40eb-94ad-d646e026f6f9.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "011442",
+        "player_name": "Alexandros Samodurov",
+        "first_name": "Alexandros",
+        "last_name": "Samodurov",
+        "image_url": "https://media-cdn.cortextech.io/b923f1c4-5405-4e82-a423-44e91f783edc.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "013289",
+        "player_name": "Marcio Santos",
+        "first_name": "Marcio",
+        "last_name": "Santos",
+        "image_url": "https://media-cdn.cortextech.io/5388e430-a3af-404e-9b40-90f755cbcb77.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "002939",
+        "player_name": "Tomas Satoransky",
+        "first_name": "Tomas",
+        "last_name": "Satoransky",
+        "image_url": "https://media-cdn.cortextech.io/8bc8bebe-90c0-4d43-8340-2210a16a5d1f.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "007230",
+        "player_name": "Tadas Sedekerskis",
+        "first_name": "Tadas",
+        "last_name": "Sedekerskis",
+        "image_url": "https://media-cdn.cortextech.io/06b5ca08-62cf-4401-96f6-1b8aca1750e5.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "004161",
+        "player_name": "Itay Segev",
+        "first_name": "Itay",
+        "last_name": "Segev",
+        "image_url": "https://media-cdn.cortextech.io/fbc4d2d8-b540-4b0a-aec2-0bd3c1333ea8.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014088",
+        "player_name": "Zachary Seljaas",
+        "first_name": "Zachary",
+        "last_name": "Seljaas",
+        "image_url": "https://media-cdn.cortextech.io/dc020bbc-568f-482c-8e1a-070df69a0b83.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "012840",
+        "player_name": "Nikolas Sermpezis",
+        "first_name": "Nikolas",
+        "last_name": "Sermpezis",
+        "image_url": "https://media-cdn.incrowdsports.com/d1c094ca-9733-43ea-87f9-c070f60a4437.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "011980",
+        "player_name": "Nathan Sestina",
+        "first_name": "Nathan",
+        "last_name": "Sestina",
+        "image_url": "https://media-cdn.cortextech.io/f2592ecc-20e4-4c3a-932d-a8be75854127.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "012612",
+        "player_name": "Enzo Shahrvin",
+        "first_name": "Enzo",
+        "last_name": "Shahrvin",
+        "image_url": "https://media-cdn.cortextech.io/2f3bd2f7-96b6-470c-83e8-dd5bbb5d32ff.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "001133",
+        "player_name": "Tornike Shengelia",
+        "first_name": "Tornike",
+        "last_name": "Shengelia",
+        "image_url": "https://media-cdn.cortextech.io/45cc5a88-23f5-4a53-9139-22ebee644841.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "007831",
+        "player_name": "Shavon Shields",
+        "first_name": "Shavon",
+        "last_name": "Shields",
+        "image_url": "https://media-cdn.cortextech.io/fb96bfde-ab98-4253-9fd6-d3ea23b536fa.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "012608",
+        "player_name": "Tj Shorts",
+        "first_name": "Tj",
+        "last_name": "Shorts",
+        "image_url": "https://media-cdn.cortextech.io/c0323c00-43ae-41c3-ba0a-cffbb4e3854b.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014220",
+        "player_name": "Chris Silva",
+        "first_name": "Chris",
+        "last_name": "Silva",
+        "image_url": "https://media-cdn.cortextech.io/282b162d-60f8-401c-a735-7bd7fc990efc.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "005596",
+        "player_name": "Yankuba Sima",
+        "first_name": "Yankuba",
+        "last_name": "Sima",
+        "image_url": "https://media-cdn.cortextech.io/a89a94a3-10ea-4492-9290-8fa5e73b65b4.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014196",
+        "player_name": "Ognjen Simjanovski",
+        "first_name": "Ognjen",
+        "last_name": "Simjanovski",
+        "image_url": "https://media-cdn.incrowdsports.com/d1c094ca-9733-43ea-87f9-c070f60a4437.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014152",
+        "player_name": "Kobi Simmons",
+        "first_name": "Kobi",
+        "last_name": "Simmons",
+        "image_url": "https://media-cdn.cortextech.io/61bf398e-c801-4969-b965-7f0d3eba8c63.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "007029",
+        "player_name": "Deividas Sirvydis",
+        "first_name": "Deividas",
+        "last_name": "Sirvydis",
+        "image_url": "https://media-cdn.cortextech.io/8541a521-e186-49b5-b66a-1a9af61829c8.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "011927",
+        "player_name": "Dustin Sleva",
+        "first_name": "Dustin",
+        "last_name": "Sleva",
+        "image_url": "https://media-cdn.cortextech.io/eb0f304c-0299-4013-bbf4-481b25db175b.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "001926",
+        "player_name": "Kostas Sloukas",
+        "first_name": "Kostas",
+        "last_name": "Sloukas",
+        "image_url": "https://media-cdn.cortextech.io/0a26c0f0-41a7-4ffc-8de1-e7cecbcc8338.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "011051",
+        "player_name": "Alen Smailagic",
+        "first_name": "Alen",
+        "last_name": "Smailagic",
+        "image_url": "https://media-cdn.cortextech.io/ae9cae56-3e7e-4f67-ad21-e0926b9f159b.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "007109",
+        "player_name": "Rolands Smits",
+        "first_name": "Rolands",
+        "last_name": "Smits",
+        "image_url": "https://media-cdn.cortextech.io/d4e2115d-e8a8-497e-9522-f11f7d7d0336.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "011219",
+        "player_name": "Roman Sorkin",
+        "first_name": "Roman",
+        "last_name": "Sorkin",
+        "image_url": "https://media-cdn.cortextech.io/3b33706b-7e4e-4914-a4ff-074e7ffb43e1.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014103",
+        "player_name": "Pedro Souza",
+        "first_name": "Pedro",
+        "last_name": "Souza",
+        "image_url": "https://media-cdn.cortextech.io/5ccb154e-0f4c-4df3-8376-784b27a05971.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "008173",
+        "player_name": "Matteo Spagnolo",
+        "first_name": "Matteo",
+        "last_name": "Spagnolo",
+        "image_url": "https://media-cdn.cortextech.io/560b3be0-7457-4a49-8a49-d45cb6e16996.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014009",
+        "player_name": "Lamar Stevens",
+        "first_name": "Lamar",
+        "last_name": "Stevens",
+        "image_url": "https://media-cdn.cortextech.io/0556266b-a9d6-4504-95d9-777c3a069690.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "013013",
+        "player_name": "Lazar Stojkovic",
+        "first_name": "Lazar",
+        "last_name": "Stojkovic",
+        "image_url": "https://media-cdn.cortextech.io/8e5e8983-8238-47bd-be7e-499b37768c8f.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "012981",
+        "player_name": "Ignas Stombergas",
+        "first_name": "Ignas",
+        "last_name": "Stombergas",
+        "image_url": "https://media-cdn.cortextech.io/a89fefea-e8de-4f5d-9edb-3a0edeb163ad.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "008099",
+        "player_name": "Matthew Strazel",
+        "first_name": "Matthew",
+        "last_name": "Strazel",
+        "image_url": "https://media-cdn.cortextech.io/62264af8-6ced-4c06-9917-b872092fe532.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014025",
+        "player_name": "Cole Swider",
+        "first_name": "Cole",
+        "last_name": "Swider",
+        "image_url": "https://media-cdn.cortextech.io/56eccbef-38b7-4f73-be3d-d85cd69b5074.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "013530",
+        "player_name": "Tomas Talcis",
+        "first_name": "Tomas",
+        "last_name": "Talcis",
+        "image_url": "https://media-cdn.cortextech.io/b85f5618-440b-476d-9213-e61ed7e1d810.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "012515",
+        "player_name": "Terry Tarpey",
+        "first_name": "Terry",
+        "last_name": "Tarpey",
+        "image_url": "https://media-cdn.cortextech.io/fe28df16-a99d-4da3-b71b-26bfa79b80eb.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "005791",
+        "player_name": "Walter Tavares",
+        "first_name": "Walter",
+        "last_name": "Tavares",
+        "image_url": "https://media-cdn.cortextech.io/90f9344a-3a6f-406e-bd33-8218abd2e8f6.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "011217",
+        "player_name": "Kameron Taylor",
+        "first_name": "Kameron",
+        "last_name": "Taylor",
+        "image_url": "https://media-cdn.cortextech.io/ada7d8f8-abd5-4d14-9565-f537659a98f6.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "004132",
+        "player_name": "Daniel Theis",
+        "first_name": "Daniel",
+        "last_name": "Theis",
+        "image_url": "https://media-cdn.cortextech.io/b5d71c9e-747c-45b6-9543-ac4fa79b35e2.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "011078",
+        "player_name": "Darius Thompson",
+        "first_name": "Darius",
+        "last_name": "Thompson",
+        "image_url": "https://media-cdn.cortextech.io/881d7dbd-8ffa-4eef-ba14-e0ea68c1be29.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "004846",
+        "player_name": "Bar Timor",
+        "first_name": "Bar",
+        "last_name": "Timor",
+        "image_url": "https://media-cdn.cortextech.io/2a45b1ff-2027-467b-af40-560a7d406750.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "004292",
+        "player_name": "Vassilis Toliopoulos",
+        "first_name": "Vassilis",
+        "last_name": "Toliopoulos",
+        "image_url": "https://media-cdn.cortextech.io/9912b4e4-434f-46b2-8335-9e7250a8e3e6.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "006509",
+        "player_name": "Stefano Tonut",
+        "first_name": "Stefano",
+        "last_name": "Tonut",
+        "image_url": "https://media-cdn.cortextech.io/b7367896-700a-4f7e-9a0b-a1425632b23b.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "010319",
+        "player_name": "Armel Traore",
+        "first_name": "Armel",
+        "last_name": "Traore",
+        "image_url": "https://media-cdn.cortextech.io/e9db529b-bdba-4c4f-8248-c52e6bf7c438.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "008192",
+        "player_name": "Azuolas Tubelis",
+        "first_name": "Azuolas",
+        "last_name": "Tubelis",
+        "image_url": "https://media-cdn.cortextech.io/c7627328-e2bd-4989-9dd1-2abcaddf021d.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "002329",
+        "player_name": "Edgaras Ulanovas",
+        "first_name": "Edgaras",
+        "last_name": "Ulanovas",
+        "image_url": "https://media-cdn.cortextech.io/c37e8132-0498-4172-8e32-4c7044bd4370.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014014",
+        "player_name": "Bastien Vautier",
+        "first_name": "Bastien",
+        "last_name": "Vautier",
+        "image_url": "https://media-cdn.cortextech.io/b33e8226-0dfc-4169-b7db-4e5c81590d55.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "000925",
+        "player_name": "Jan Vesely",
+        "first_name": "Jan",
+        "last_name": "Vesely",
+        "image_url": "https://media-cdn.cortextech.io/7dff7151-19e6-44b3-ab0c-214861899ad0.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "003469",
+        "player_name": "Sasha Vezenkov",
+        "first_name": "Sasha",
+        "last_name": "Vezenkov",
+        "image_url": "https://media-cdn.cortextech.io/9e32629d-7b41-4a3e-8506-2c7e4b92859d.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "007947",
+        "player_name": "Luca Vildoza",
+        "first_name": "Luca",
+        "last_name": "Vildoza",
+        "image_url": "https://media-cdn.cortextech.io/45cd50c3-c3b7-4cf6-92ee-f7955216e2da.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "010035",
+        "player_name": "Rafa Villar",
+        "first_name": "Rafa",
+        "last_name": "Villar",
+        "image_url": "https://media-cdn.cortextech.io/9da0749d-0abb-42d9-8d0e-b9f7afc59f10.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014209",
+        "player_name": "Jacopo Vogogna",
+        "first_name": "Jacopo",
+        "last_name": "Vogogna",
+        "image_url": "https://media-cdn.incrowdsports.com/d1c094ca-9733-43ea-87f9-c070f60a4437.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "007201",
+        "player_name": "Johannes Voigtmann",
+        "first_name": "Johannes",
+        "last_name": "Voigtmann",
+        "image_url": "https://media-cdn.cortextech.io/f25b3c46-64c0-4108-8168-c0ac3aa4a6bb.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "013541",
+        "player_name": "Caspar Vossenberg",
+        "first_name": "Caspar",
+        "last_name": "Vossenberg",
+        "image_url": "https://media-cdn.incrowdsports.com/d1c094ca-9733-43ea-87f9-c070f60a4437.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "013016",
+        "player_name": "Marvyn Wade",
+        "first_name": "Marvyn",
+        "last_name": "Wade",
+        "image_url": "https://media-cdn.cortextech.io/4bd9fdff-c4a4-4f3b-a9e5-0e14cfb38eb6.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "013284",
+        "player_name": "Ish Wainright",
+        "first_name": "Ish",
+        "last_name": "Wainright",
+        "image_url": "https://media-cdn.cortextech.io/ea9bc969-944b-4ba3-bfc9-e337bf5db497.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "013403",
+        "player_name": "Lonnie Walker Iv",
+        "first_name": "Lonnie",
+        "last_name": "Walker Iv",
+        "image_url": "https://media-cdn.cortextech.io/596dc864-a996-4d21-8131-ea85deb006b7.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "008855",
+        "player_name": "Thomas Walkup",
+        "first_name": "Thomas",
+        "last_name": "Walkup",
+        "image_url": "https://media-cdn.cortextech.io/5a798730-2697-4550-b3b3-df119a860b18.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "012610",
+        "player_name": "Tyson Ward",
+        "first_name": "Tyson",
+        "last_name": "Ward",
+        "image_url": "https://media-cdn.cortextech.io/c05273c5-2d14-410e-9bd6-f65f78da6d7c.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "013370",
+        "player_name": "Duane Washington",
+        "first_name": "Duane",
+        "last_name": "Washington",
+        "image_url": "https://media-cdn.cortextech.io/0a809d60-836f-43a3-b73e-646935e87e78.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "014013",
+        "player_name": "Glynn Watson",
+        "first_name": "Glynn",
+        "last_name": "Watson",
+        "image_url": "https://media-cdn.cortextech.io/8b123b47-d7a0-47ea-b91d-1514ef1e87b0.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "010391",
+        "player_name": "Nick Weiler-babb",
+        "first_name": "Nick",
+        "last_name": "Weiler-babb",
+        "image_url": "https://media-cdn.cortextech.io/e23682a9-5374-4706-b343-36f49f61236d.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "006661",
+        "player_name": "Scottie Wilbekin",
+        "first_name": "Scottie",
+        "last_name": "Wilbekin",
+        "image_url": "https://media-cdn.cortextech.io/cded951a-8867-4298-b0f2-38bbff80dbd6.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "007982",
+        "player_name": "Nigel Williams-goss",
+        "first_name": "Nigel",
+        "last_name": "Williams-goss",
+        "image_url": "https://media-cdn.cortextech.io/657693b6-df7a-4f83-b8d6-10c2ed158dce.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "009664",
+        "player_name": "Derek Willis",
+        "first_name": "Derek",
+        "last_name": "Willis",
+        "image_url": "https://media-cdn.cortextech.io/82d66d17-bc9a-4994-8a8f-c59b5db9df70.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "012606",
+        "player_name": "Mckinley Wright Iv",
+        "first_name": "Mckinley",
+        "last_name": "Wright Iv",
+        "image_url": "https://media-cdn.cortextech.io/fe4b23d9-6151-4758-a15f-0339607df198.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "012878",
+        "player_name": "Moses Wright",
+        "first_name": "Moses",
+        "last_name": "Wright",
+        "image_url": "https://media-cdn.cortextech.io/9c4e7b10-e94e-4335-bec1-99979d42f096.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "004093",
+        "player_name": "Burakcan Yildizli",
+        "first_name": "Burakcan",
+        "last_name": "Yildizli",
+        "image_url": "https://media-cdn.cortextech.io/b63152ad-12f4-415d-9487-d049e95a2828.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "006372",
+        "player_name": "Erkan Yilmaz",
+        "first_name": "Erkan",
+        "last_name": "Yilmaz",
+        "image_url": "https://media-cdn.cortextech.io/e977e837-fa39-4c82-bc35-7053d75b6c18.png?width=90&resizeType=fill&format=webp"
+    },
+    {
+        "player_id": "008104",
+        "player_name": "Arturs Zagars",
+        "first_name": "Arturs",
+        "last_name": "Zagars",
+        "image_url": "https://media-cdn.cortextech.io/b730ece6-d4b7-409a-84d6-398b9bc1315c.png?width=90&resizeType=fill&format=webp"
+    }
+]
