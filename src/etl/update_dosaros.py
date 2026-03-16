@@ -1,56 +1,44 @@
 """
 update_dosaros.py
 =================
-Orquestador de actualización de dosaros_local.db.
-Descarga los JSONs necesarios y actualiza la BD.
+Actualiza dosaros_local.db usando la API oficial de EuroLeague.
+Sin buildId, sin scraping, sin bloqueos.
 
-Modos de uso:
-  python update_dosaros.py              # Actualización estándar (jornada actual + equipos)
-  python update_dosaros.py --full       # Descarga todo desde cero (todas las jornadas + todos los jugadores)
-  python update_dosaros.py --teams      # Solo equipos
-  python update_dosaros.py --players    # Solo jugadores (solo los nuevos)
-  python update_dosaros.py --games      # Solo jornada actual del game-center
-  python update_dosaros.py --dry-run    # Descarga JSONs pero no actualiza la BD
+Uso:
+  python update_dosaros.py              # jornada actual + standings
+  python update_dosaros.py --full       # todas las jornadas de la temporada
+  python update_dosaros.py --standings  # solo clasificación
+  python update_dosaros.py --round 31   # jornada concreta
 
-Cron sugerido (todos los días de partido a las 23:30):
-  30 23 * * 1,2,4,5 cd /home/pi/dosaros-data-project && \
-    /home/pi/dosaros-data-project/venv/bin/python src/etl/update_dosaros.py >> logs/update.log 2>&1
+Cron sugerido:
+  # Días de partido (L,M,J,V) a las 23:30
+  30 23 * * 1,2,4,5 cd /home/pi/dosaros-data-project && venv/bin/python src/etl/update_dosaros.py >> logs/update.log 2>&1
 
-Cron semanal completo (cada lunes a las 06:00 para actualizar jugadores):
-  0 6 * * 1 cd /home/pi/dosaros-data-project && \
-    /home/pi/dosaros-data-project/venv/bin/python src/etl/update_dosaros.py --players >> logs/update.log 2>&1
+  # Lunes a las 06:00 para actualizar standings semanales
+  0 6 * * 1 cd /home/pi/dosaros-data-project && venv/bin/python src/etl/update_dosaros.py --standings >> logs/update.log 2>&1
 """
 
 import sys
-import json
 import sqlite3
-import re
-import time
-import random
 import argparse
 import logging
-import requests
 from datetime import datetime
 from pathlib import Path
 
-# ── RUTAS ─────────────────────────────────────────────────────────────────────
+from euroleague_api.game_stats import GameStats
+from euroleague_api.standings import Standings
+
+# ── CONFIGURACIÓN ─────────────────────────────────────────────────────────────
 SCRIPT_DIR  = Path(__file__).parent
 PROJECT_DIR = SCRIPT_DIR / ".." / ".."
-DATA_DIR    = PROJECT_DIR / "data" / "raw"
 DB_PATH     = Path("/mnt/nba_data/dosaros_local.db")
 LOG_DIR     = PROJECT_DIR / "logs"
 LOG_DIR.mkdir(parents=True, exist_ok=True)
 
-TEAMS_JSON      = DATA_DIR / "teams" / "teams.json"
-TEAMS_DIR       = DATA_DIR / "teams"
-PLAYERS_REF     = DATA_DIR / "players_manual.json"
-PLAYERS_DIR     = DATA_DIR / "players"
-GAME_CENTER_DIR = DATA_DIR / "game-center"
+COMP        = "E"       # Euroleague
+SEASON      = 2025      # E2025 → año 2025
+# ─────────────────────────────────────────────────────────────────────────────
 
-for d in [TEAMS_DIR, PLAYERS_DIR, GAME_CENTER_DIR]:
-    d.mkdir(parents=True, exist_ok=True)
-
-# ── LOGGING ───────────────────────────────────────────────────────────────────
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s  %(levelname)-7s  %(message)s",
@@ -62,181 +50,25 @@ logging.basicConfig(
 )
 log = logging.getLogger("dosaros")
 
-# ── CONSTANTES ────────────────────────────────────────────────────────────────
-# Headers que imitan Chrome real — clave para pasar Vercel bot detection
-HEADERS = {
-    "User-Agent":                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
-    "Accept":                    "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
-    "Accept-Language":           "en-US,en;q=0.9,es;q=0.8",
-    "Accept-Encoding":           "gzip, deflate, br",
-    "Connection":                "keep-alive",
-    "Upgrade-Insecure-Requests": "1",
-    "Sec-Fetch-Dest":            "document",
-    "Sec-Fetch-Mode":            "navigate",
-    "Sec-Fetch-Site":            "none",
-    "Sec-Fetch-User":            "?1",
-    "Cache-Control":             "max-age=0",
-}
-
-HEADERS_JSON = {
-    **HEADERS,
-    "Accept":       "application/json, text/plain, */*",
-    "Sec-Fetch-Dest": "empty",
-    "Sec-Fetch-Mode": "cors",
-    "Sec-Fetch-Site": "same-origin",
-    "Referer":      "https://www.euroleaguebasketball.net/euroleague/",
-}
-
-# Fichero local para cachear el buildId entre ejecuciones
-BUILD_ID_CACHE = DATA_DIR / ".buildid_cache"
-SEASON_CODE    = "E2025"
-PHASE_CODE     = "RS"
-SLEEP_STD      = 1.5
-SLEEP_RATE     = 6.0
-
 
 # ══════════════════════════════════════════════════════════════════════════════
-# HELPERS COMPARTIDOS
+# HELPERS
 # ══════════════════════════════════════════════════════════════════════════════
-
-def _session():
-    """Crea una sesión requests con cookies persistentes."""
-    s = requests.Session()
-    s.headers.update(HEADERS)
-    return s
-
-
-def get_build_id():
-    """
-    Obtiene el buildId de Next.js con técnica anti-bot:
-    1. Usa caché local para evitar peticiones innecesarias
-    2. Primera petición establece cookies de sesión (Vercel challenge)
-    3. Segunda petición con esas cookies ya pasa el checkpoint
-    4. Busca el buildId en el HTML o en los paths _next/static
-    """
-    # Intentar desde caché primero
-    if BUILD_ID_CACHE.exists():
-        cached = BUILD_ID_CACHE.read_text().strip()
-        if cached:
-            log.info(f"BuildId desde caché: {cached}")
-            return cached
-
-    url = "https://www.euroleaguebasketball.net/euroleague/"
-    session = _session()
-
-    for attempt in range(4):
-        try:
-            # Delay con jitter aleatorio — evita detección por patrón temporal
-            delay = 3 + random.uniform(1, 3) + attempt * 4
-            if attempt > 0:
-                log.info(f"  Reintento {attempt} — esperando {delay:.1f}s...")
-            time.sleep(delay)
-
-            r = session.get(url)
-            log.info(f"  GET home → HTTP {r.status_code} ({len(r.text)} chars)")
-
-            if r.status_code == 429:
-                # Vercel challenge: la sesión ya guardó las cookies,
-                # el siguiente intento debería pasar
-                log.warning(f"  429 recibido — cookies guardadas, reintentando...")
-                continue
-
-            if r.status_code != 200:
-                log.warning(f"  HTTP {r.status_code} inesperado")
-                continue
-
-            # Buscar buildId con varios patrones
-            for pat in [
-                r'"buildId":"(.*?)"',
-                r"/_next/static/([A-Za-z0-9_\-]{20,})/",
-                r'"buildId": "(.*?)"',
-            ]:
-                m = re.search(pat, r.text)
-                if m:
-                    build_id = m.group(1)
-                    log.info(f"  BuildId encontrado: {build_id}")
-                    # Guardar en caché
-                    BUILD_ID_CACHE.write_text(build_id)
-                    return build_id
-
-            log.warning(f"  buildId no encontrado en el HTML (intento {attempt+1})")
-
-        except Exception as e:
-            log.warning(f"  Error en intento {attempt+1}: {e}")
-
-    log.error("❌ No se pudo obtener el buildId tras 4 intentos.")
-    return None
-
-
-def invalidate_build_id_cache():
-    """Borra la caché del buildId — llamar si las URLs devuelven 404."""
-    if BUILD_ID_CACHE.exists():
-        BUILD_ID_CACHE.unlink()
-        log.info("  Caché de buildId invalidada.")
-
-
-# Sesión compartida para reutilizar cookies durante toda la ejecución
-_shared_session = None
-
-def get_session():
-    global _shared_session
-    if _shared_session is None:
-        _shared_session = requests.Session()
-        _shared_session.headers.update(HEADERS_JSON)
-    return _shared_session
-
-
-def fetch_json(url):
-    """
-    GET JSON con sesión compartida, reintentos y backoff exponencial.
-    Retorna (data_dict, status_code).
-    Si recibe 404 dos veces seguidas, invalida la caché del buildId.
-    """
-    session    = get_session()
-    not_found  = 0
-
-    for attempt in range(4):
-        try:
-            # Jitter aleatorio entre peticiones
-            if attempt > 0:
-                delay = SLEEP_RATE * attempt + random.uniform(0.5, 2)
-                log.info(f"  Reintento {attempt} en {delay:.1f}s...")
-                time.sleep(delay)
-            else:
-                time.sleep(random.uniform(0.8, SLEEP_STD))
-
-            r = session.get(url)
-
-            if r.status_code == 200:
-                return r.json(), 200
-
-            elif r.status_code == 429:
-                log.warning(f"  Rate limit — esperando {SLEEP_RATE * 2}s (intento {attempt+1})")
-                time.sleep(SLEEP_RATE * 2)
-
-            elif r.status_code == 404:
-                not_found += 1
-                if not_found >= 2:
-                    # buildId probablemente caducado
-                    log.warning("  404 repetido — invalidando caché de buildId")
-                    invalidate_build_id_cache()
-                return None, r.status_code
-
-            else:
-                log.warning(f"  HTTP {r.status_code} en {url}")
-                return None, r.status_code
-
-        except Exception as e:
-            log.warning(f"  Request error (intento {attempt+1}): {e}")
-
-    return None, 0
-
 
 def safe_int(v):
-    if v is None or v == "":
+    if v is None:
         return None
     try:
-        return int(float(str(v).replace(",", "")))
+        return int(float(str(v)))
+    except Exception:
+        return None
+
+
+def safe_float(v):
+    if v is None:
+        return None
+    try:
+        return float(str(v).replace("%", ""))
     except Exception:
         return None
 
@@ -245,21 +77,22 @@ def safe_str(v):
     if v is None:
         return None
     s = str(v).strip()
-    return s if s and s.lower() != "none" else None
+    return s if s and s.lower() not in ("none", "nan", "") else None
 
 
-def upsert(conn, table, data, pk_name="id"):
+def upsert(conn, table, data, pk):
     keys         = list(data.keys())
     values       = list(data.values())
     placeholders = ",".join(["?"] * len(keys))
-    set_clause   = ",".join([f"{k}=excluded.{k}" for k in keys if k != pk_name])
+    set_clause   = ",".join([f"{k}=excluded.{k}" for k in keys if k != pk])
     sql = (
         f"INSERT INTO {table} ({','.join(keys)}) VALUES ({placeholders})"
-        f" ON CONFLICT({pk_name}) DO UPDATE SET {set_clause}"
+        f" ON CONFLICT({pk}) DO UPDATE SET {set_clause}"
     )
     try:
         conn.execute(sql, values)
-    except sqlite3.Error:
+    except sqlite3.Error as e:
+        log.debug(f"  upsert error en {table}: {e}")
         try:
             conn.execute(
                 f"INSERT OR IGNORE INTO {table} ({','.join(keys)}) VALUES ({placeholders})",
@@ -269,457 +102,211 @@ def upsert(conn, table, data, pk_name="id"):
             pass
 
 
-# ══════════════════════════════════════════════════════════════════════════════
-# DESCARGA
-# ══════════════════════════════════════════════════════════════════════════════
-
-def download_teams(build_id):
-    """Descarga JSONs de los 20 equipos. Siempre sobreescribe (datos volátiles)."""
-    log.info("▶ Descargando equipos...")
-    if not TEAMS_JSON.exists():
-        log.error(f"  No se encontró {TEAMS_JSON}")
-        return 0
-
-    with open(TEAMS_JSON, encoding="utf-8") as f:
-        master = json.load(f)
-
-    clubs = master.get("headerData", {}).get("euroleague", {}).get("clubs", {}).get("clubs", [])
-    ok = 0
-    for club in clubs:
-        url_path = club.get("url", "")
-        parts    = [p for p in url_path.split("/") if p]
-        if len(parts) < 5:
-            continue
-        slug = parts[2]
-        code = parts[4]
-        name = club.get("name", code)
-
-        url = (
-            f"https://www.euroleaguebasketball.net/_next/data/{build_id}"
-            f"/en/euroleague/teams/{slug}/{code}.json"
-        )
-        data, status = fetch_json(url)
-        if data:
-            out = TEAMS_DIR / f"{code.lower()}.json"
-            with open(out, "w", encoding="utf-8") as f:
-                json.dump(data, f, indent=2, ensure_ascii=False)
-            ok += 1
-            log.info(f"  ✅ {name}")
-        else:
-            log.warning(f"  ❌ {name} → HTTP {status}")
-        time.sleep(SLEEP_STD)
-
-    log.info(f"  Equipos descargados: {ok}/{len(clubs)}")
-    return ok
-
-
-def download_players(build_id, force=False):
-    """Descarga JSONs de jugadores. Por defecto solo los que no existen."""
-    log.info("▶ Descargando jugadores...")
-    if not PLAYERS_REF.exists():
-        log.error(f"  No se encontró {PLAYERS_REF}")
-        return 0
-
-    with open(PLAYERS_REF, encoding="utf-8") as f:
-        players = json.load(f)
-
-    ok = skipped = errors = 0
-    for p in players:
-        pid  = str(p.get("player_id", "")).strip()
-        name = p.get("player_name", pid)
-        if not pid:
-            continue
-
-        out = PLAYERS_DIR / f"{pid}.json"
-        if out.exists() and not force:
-            skipped += 1
-            continue
-
-        url = (
-            f"https://www.euroleaguebasketball.net/_next/data/{build_id}"
-            f"/en/euroleague/players/{pid}.json"
-        )
-        data, status = fetch_json(url)
-        if data:
-            with open(out, "w", encoding="utf-8") as f:
-                json.dump(data, f, indent=2, ensure_ascii=False)
-            ok += 1
-        else:
-            log.warning(f"  ❌ {name} ({pid}) → HTTP {status}")
-            errors += 1
-        time.sleep(SLEEP_STD)
-
-    log.info(f"  Jugadores → descargados: {ok}  omitidos: {skipped}  errores: {errors}")
-    return ok
-
-
-def download_game_center(build_id, download_all=False, force=False):
-    """Descarga el game-center. Por defecto solo la jornada actual."""
-    log.info("▶ Descargando game-center...")
-
-    # Obtener jornada actual
-    base_url = (
-        f"https://www.euroleaguebasketball.net/_next/data/{build_id}"
-        f"/en/euroleague/game-center.json"
-    )
-    data, _ = fetch_json(base_url)
-    if not data:
-        log.error("  ❌ No se pudo obtener el game-center base.")
-        return 0
-
-    pp            = data.get("pageProps", {})
-    current_round = pp.get("currentRound")
-    season_code   = pp.get("currentSeasonCode", SEASON_CODE)
-
-    if not current_round:
-        log.error("  ❌ No se encontró currentRound.")
-        return 0
-
-    rounds = range(1, current_round + 1) if download_all else [current_round]
-    ok = 0
-
-    for rnd in rounds:
-        out = GAME_CENTER_DIR / f"{season_code}_round_{rnd:02d}.json"
-        if out.exists() and not force and rnd != current_round:
-            continue  # no re-descargar jornadas pasadas ya guardadas
-
-        url = f"{base_url}?seasonCode={season_code}&phaseTypeCode={PHASE_CODE}&round={rnd}"
-        rdata, status = fetch_json(url)
-
-        if rdata:
-            games = rdata.get("pageProps", {}).get("games", [])
-            if games:
-                with open(out, "w", encoding="utf-8") as f:
-                    json.dump(rdata, f, indent=2, ensure_ascii=False)
-                ok += 1
-                log.info(f"  ✅ Jornada {rnd:02d} ({len(games)} partidos)")
-            else:
-                log.info(f"  ⚪ Jornada {rnd:02d} — sin partidos")
-        else:
-            log.warning(f"  ❌ Jornada {rnd:02d} → HTTP {status}")
-
-        time.sleep(SLEEP_STD)
-
-    log.info(f"  Jornadas descargadas: {ok}")
-    return ok
+def get_current_round(gs: GameStats) -> int:
+    """Obtiene la jornada más reciente con partidos jugados."""
+    try:
+        df = gs.get_gamecodes_season(SEASON)
+        # La última jornada con partidos jugados
+        if "Round" in df.columns:
+            return int(df["Round"].max())
+        elif "round" in df.columns:
+            return int(df["round"].max())
+    except Exception as e:
+        log.warning(f"  No se pudo obtener la jornada actual: {e}")
+    return 31  # fallback
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# ACTUALIZACIÓN DE BD
+# ACTUALIZAR PARTIDOS Y STATS DE UNA JORNADA
 # ══════════════════════════════════════════════════════════════════════════════
 
-def extract_section_values(sections, row_index):
-    result = {}
-    for sec in sections:
-        headings  = sec.get("headings", [])
-        stats     = sec.get("stats", [])
-        group     = sec.get("groupStatsName", "")
-        if row_index >= len(stats):
-            continue
-        stat_sets = stats[row_index].get("statSets", [])
-        for j, heading in enumerate(headings):
-            if j < len(stat_sets):
-                key = f"{group}_{heading}" if group else heading
-                result[key] = stat_sets[j].get("value")
-    return result
+def update_round(conn, gs: GameStats, round_number: int):
+    """
+    Actualiza euro_games, euro_players_games y euro_players
+    para todos los partidos de una jornada.
+    """
+    log.info(f"  Procesando jornada {round_number}...")
 
+    try:
+        # Obtener game_codes de la jornada
+        gamecodes_df = gs.get_gamecodes_round(SEASON, round_number)
+        if gamecodes_df.empty:
+            log.info(f"  Jornada {round_number} — sin partidos")
+            return 0
 
-def update_from_team_json(conn, data):
-    pp        = data.get("pageProps", {})
-    team_info = pp.get("hero", {}).get("teamInfo", {})
-    club      = pp.get("club", {}) if isinstance(pp.get("club"), dict) else {}
-    bottom    = club.get("bottomBlock", {}) or {}
-    team_stat = pp.get("hero", {}).get("teamStat", {})
+        game_codes = gamecodes_df["Gamecode"].tolist() if "Gamecode" in gamecodes_df.columns else []
+        if not game_codes:
+            log.warning(f"  No se encontraron game codes para jornada {round_number}")
+            return 0
 
-    team_code = safe_str(pp.get("clubCode", "")).upper() or safe_str(team_info.get("teamCode"))
-    if not team_code:
-        return
+        log.info(f"  {len(game_codes)} partidos en jornada {round_number}")
 
-    team_name = safe_str(team_info.get("name") or pp.get("clubName"))
-    crest_url = safe_str(team_info.get("teamCrestUrl"))
+    except Exception as e:
+        log.warning(f"  Error obteniendo game codes jornada {round_number}: {e}")
+        return 0
 
-    upsert(conn, "teams", {
-        "code": team_code, "name": team_name,
-        "logo_url": crest_url, "is_active": 1,
-    }, pk_name="code")
-
-    upsert(conn, "euro_teams", {
-        "team_code":     team_code,
-        "team_name":     team_name,
-        "tv_code":       safe_str(team_info.get("abbreviatedName")),
-        "logo_url":      crest_url,
-        "primary_color": safe_str(team_info.get("primaryColour")),
-        "arena":         safe_str(bottom.get("arena")),
-    }, pk_name="team_code")
-
-    wins   = safe_int(team_stat.get("wins"))
-    losses = safe_int(team_stat.get("losses"))
-    rank   = safe_int(team_stat.get("position"))
-    if rank is not None:
-        upsert(conn, "euro_standings", {
-            "team_code":    team_code,
-            "rank":         rank,
-            "wins":         wins,
-            "losses":       losses,
-            "points_diff":  None,
-            "last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        }, pk_name="team_code")
-
-    # Fixture del equipo → euro_games
-    fixture = club.get("fixture", {})
-    if isinstance(fixture, dict) and "id" in fixture:
-        update_game(conn, fixture)
-
-
-def update_game(conn, g):
-    game_id   = safe_str(g.get("id"))
-    if not game_id:
-        return
-
-    season_d = g.get("season") or {}
-    phase_d  = g.get("phaseType") or {}
-    round_d  = g.get("round") or {}
-    home_d   = g.get("home") or {}
-    away_d   = g.get("away") or {}
-    venue_d  = g.get("venue") or {}
-
-    home_code  = safe_str(home_d.get("code"))
-    away_code  = safe_str(away_d.get("code"))
-    game_date  = safe_str(g.get("date", ""))[:10] if g.get("date") else None
-
-    for td in [home_d, away_d]:
-        tc = safe_str(td.get("code"))
-        if tc:
-            upsert(conn, "teams", {
-                "code":     tc,
-                "name":     safe_str(td.get("name")),
-                "logo_url": (td.get("imageUrls") or {}).get("crest"),
-                "is_active": 1,
-            }, pk_name="code")
-            upsert(conn, "euro_teams", {
-                "team_code": tc,
-                "team_name": safe_str(td.get("name")),
-                "tv_code":   safe_str(td.get("tla")),
-                "logo_url":  (td.get("imageUrls") or {}).get("crest"),
-            }, pk_name="team_code")
-
-    v_code = safe_str(venue_d.get("code"))
-    if v_code:
-        address = safe_str(venue_d.get("address") or "")
-        city    = address.split(",")[-1].strip() if address and "," in address else address
-        upsert(conn, "venues", {
-            "id": v_code, "name": safe_str(venue_d.get("name")),
-            "capacity": safe_int(venue_d.get("capacity")), "city": city or None,
-        })
-
-    upsert(conn, "euro_games", {
-        "game_id":    game_id,
-        "date":       game_date,
-        "home_team":  home_code,
-        "away_team":  away_code,
-        "score_home": safe_int(home_d.get("score")),
-        "score_away": safe_int(away_d.get("score")),
-    }, pk_name="game_id")
-
-    hq   = home_d.get("quarters") or {}
-    aq   = away_d.get("quarters") or {}
-    refs = g.get("referees") or []
-    rnames = [safe_str((r or {}).get("name")) for r in refs[:3]]
-    while len(rnames) < 3:
-        rnames.append(None)
-
-    upsert(conn, "euro_games_extended", {
-        "game_id":      game_id,
-        "identifier":   safe_str(g.get("identifier")),
-        "season_code":  safe_str(season_d.get("code")),
-        "comp_code":    safe_str((g.get("competition") or {}).get("code")),
-        "phase_code":   safe_str(phase_d.get("code")),
-        "round_number": safe_int(round_d.get("round")) if isinstance(round_d, dict) else None,
-        "home_coach":   safe_str((home_d.get("coach") or {}).get("name")),
-        "away_coach":   safe_str((away_d.get("coach") or {}).get("name")),
-        "home_q1": safe_int(hq.get("q1")), "home_q2": safe_int(hq.get("q2")),
-        "home_q3": safe_int(hq.get("q3")), "home_q4": safe_int(hq.get("q4")),
-        "home_ot1": safe_int(hq.get("ot1")),
-        "away_q1": safe_int(aq.get("q1")), "away_q2": safe_int(aq.get("q2")),
-        "away_q3": safe_int(aq.get("q3")), "away_q4": safe_int(aq.get("q4")),
-        "away_ot1": safe_int(aq.get("ot1")),
-        "venue_id":  v_code,
-        "audience":  safe_int(g.get("audience")),
-        "referee_1": rnames[0], "referee_2": rnames[1], "referee_3": rnames[2],
-    }, pk_name="game_id")
-
-
-def update_from_game_center(conn, data):
-    pp       = data.get("pageProps", {})
-    s_code   = safe_str(pp.get("currentSeasonCode"))
-
-    for g in pp.get("games", []):
-        update_game(conn, g)
-
-    for rd in pp.get("allAvailableRounds", []):
-        rd_id = f"{rd.get('seasonCode')}_{rd.get('round')}"
-        upsert(conn, "euro_rounds", {
-            "id":             rd_id,
-            "season_code":    safe_str(rd.get("seasonCode")),
-            "phase_code":     safe_str(rd.get("phaseTypeCode")),
-            "round_number":   safe_int(rd.get("round")),
-            "name":           safe_str(rd.get("name")),
-            "date_start":     safe_str(rd.get("minGameStartDate")),
-            "date_end":       safe_str(rd.get("maxGameStartDate")),
-            "dates_formatted": safe_str(rd.get("datesFormmated")),
-        })
-
-    standings = pp.get("teamStandingsTable", {})
-    if isinstance(standings, dict):
-        now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        for team_code, position in standings.items():
-            upsert(conn, "euro_standings", {
-                "team_code":    team_code,
-                "rank":         safe_int(position),
-                "last_updated": now,
-            }, pk_name="team_code")
-
-
-def update_from_player_json(conn, data):
-    p_data = data.get("pageProps", {}).get("data", {})
-    hero   = p_data.get("hero", {})
-    if not hero:
-        return
-
-    player_id = safe_str(str(hero.get("id", "")))
-    if not player_id:
-        return
-
-    team_code = safe_str(hero.get("clubCode"))
-    full_name = f"{hero.get('firstName', '')} {hero.get('lastName', '')}".strip()
-
-    if team_code:
-        upsert(conn, "teams", {
-            "code": team_code, "name": safe_str(hero.get("clubName")),
-            "logo_url": safe_str(hero.get("clubCrest")), "is_active": 1,
-        }, pk_name="code")
-
-    upsert(conn, "players", {
-        "id": player_id, "name": full_name,
-        "position":    safe_str(hero.get("position")),
-        "height":      str(hero.get("height")) if hero.get("height") else None,
-        "nationality": safe_str(hero.get("nationality")),
-        "image_url":   safe_str(hero.get("photo")),
-        "current_team_code": team_code,
-    })
-
-    upsert(conn, "euro_players", {
-        "player_id":   player_id, "player_name": full_name,
-        "position":    safe_str(hero.get("position")),
-        "height":      safe_int(hero.get("height")),
-        "club_name":   safe_str(hero.get("clubName")),
-        "nationality": safe_str(hero.get("nationality")),
-        "image_url":   safe_str(hero.get("photo")),
-    }, pk_name="player_id")
-
-    # Stats por temporada
-    alltime     = p_data.get("stats", {}).get("alltime", {})
-    for st_block in alltime.get("statTables", []):
-        competition = safe_str(st_block.get("comp", "Euroleague"))
-        is_euro     = 1 if competition and "euroleague" in competition.lower() else 0
-        tables      = st_block.get("tables", {})
-        if not tables:
-            continue
-
-        head_stats = tables.get("headSection", {}).get("stats", [])
-        sections   = tables.get("sections", [])
-        data_rows  = max(0, len(head_stats) - 2)
-
-        for row_idx in range(data_rows):
-            stat_sets = head_stats[row_idx].get("statSets", [])
-            if len(stat_sets) < 2:
-                continue
-            s_code = safe_str(stat_sets[0].get("seasonCode") or stat_sets[0].get("value"))
-            t_code = safe_str(stat_sets[1].get("value"))
-            if not s_code or not t_code:
+    games_ok = 0
+    for game_code in game_codes:
+        try:
+            df = gs.get_game_stats(SEASON, int(game_code))
+            if df.empty:
                 continue
 
-            vals = extract_section_values(sections, row_idx)
-            g    = safe_int(vals.get("G"))
-            pts  = safe_int(vals.get("TimeAndPoints_Pts") or vals.get("Pts"))
-            reb  = safe_int(vals.get("T"))
-            ast  = safe_int(vals.get("As"))
-            pir  = safe_int(vals.get("PIR"))
+            row = df.iloc[0]
 
-            upsert(conn, "player_season_stats", {
-                "id":             f"{player_id}_{s_code}_{t_code}",
-                "player_id":      player_id, "season_code": s_code,
-                "team_code":      t_code, "competition": competition,
-                "total_games":    g, "total_points": pts,
-                "total_rebounds": reb, "total_assists": ast, "total_pir": pir,
-            })
+            # IDs
+            game_id     = f"E{SEASON}_{int(game_code)}"
+            season_code = f"E{SEASON}"
 
-            row_team  = conn.execute("SELECT name FROM teams WHERE code=?", [t_code]).fetchone()
-            team_name = row_team[0] if row_team else t_code
+            # Equipos local y visitante
+            home_code = safe_str(row.get("local.team.code") or row.get("local.coach.code", "")[:3])
+            away_code = safe_str(row.get("road.team.code")  or row.get("road.coach.code", "")[:3])
+
+            # Buscar códigos de equipo dentro de los players si no están directamente
+            local_players = row.get("local.players", [])
+            road_players  = row.get("road.players", [])
+
+            if local_players and isinstance(local_players, list) and local_players:
+                home_code = safe_str(local_players[0].get("player", {}).get("club", {}).get("code"))
+            if road_players and isinstance(road_players, list) and road_players:
+                away_code = safe_str(road_players[0].get("player", {}).get("club", {}).get("code"))
+
+            home_score = safe_int(row.get("local.team.points"))
+            away_score = safe_int(row.get("road.team.points"))
+
+            # euro_games
+            upsert(conn, "euro_games", {
+                "game_id":    game_id,
+                "date":       None,
+                "home_team":  home_code,
+                "away_team":  away_code,
+                "score_home": home_score,
+                "score_away": away_score,
+            }, pk="game_id")
+
+            # euro_games_extended (si existe la tabla)
             try:
-                conn.execute("""
-                    INSERT INTO euro_stats_career
-                        (player_id, season_code, team_name, games_played, pts, reb, ast, pir, is_euroleague)
-                    VALUES (?,?,?,?,?,?,?,?,?)
-                    ON CONFLICT(player_id, season_code, team_name) DO UPDATE SET
-                        games_played=excluded.games_played, pts=excluded.pts,
-                        reb=excluded.reb, ast=excluded.ast, pir=excluded.pir,
-                        is_euroleague=excluded.is_euroleague
-                """, [player_id, s_code, team_name, g, pts, reb, ast, pir, is_euro])
-            except sqlite3.Error:
+                upsert(conn, "euro_games_extended", {
+                    "game_id":      game_id,
+                    "identifier":   f"E{SEASON}_{int(game_code)}",
+                    "season_code":  season_code,
+                    "comp_code":    COMP,
+                    "round_number": round_number,
+                    "home_coach":   safe_str(row.get("local.coach.name")),
+                    "away_coach":   safe_str(row.get("road.coach.name")),
+                    "home_q1": None, "home_q2": None, "home_q3": None, "home_q4": None, "home_ot1": None,
+                    "away_q1": None, "away_q2": None, "away_q3": None, "away_q4": None, "away_ot1": None,
+                    "venue_id": None, "audience": None,
+                    "referee_1": None, "referee_2": None, "referee_3": None,
+                }, pk="game_id")
+            except Exception:
                 pass
 
+            # Stats de jugadores del partido
+            players_updated = 0
+            for side, players_list in [("home", local_players), ("away", road_players)]:
+                team_code = home_code if side == "home" else away_code
+                for entry in (players_list or []):
+                    if not isinstance(entry, dict):
+                        continue
+                    person = entry.get("player", {}).get("person", {})
+                    stats  = entry.get("stats", {})
+                    player_code = safe_str(person.get("code"))
+                    if not player_code:
+                        continue
 
-def update_db(do_teams=True, do_players=True, do_games=True):
-    log.info("▶ Actualizando base de datos...")
-    conn = sqlite3.connect(DB_PATH)
-    conn.execute("PRAGMA journal_mode=WAL")
-    conn.execute("PRAGMA foreign_keys=OFF")
+                    # euro_players
+                    upsert(conn, "euro_players", {
+                        "player_id":   player_code,
+                        "player_name": safe_str(person.get("name")),
+                        "position":    safe_str(entry.get("player", {}).get("positionName")),
+                        "height":      safe_int(person.get("height")),
+                        "club_name":   safe_str(entry.get("player", {}).get("club", {}).get("name")),
+                        "nationality": safe_str((person.get("country") or {}).get("name")),
+                        "image_url":   safe_str((entry.get("player", {}).get("images") or {}).get("headshot")),
+                    }, pk="player_id")
 
-    n_teams = n_players = n_games = 0
+                    # players
+                    upsert(conn, "players", {
+                        "id":                player_code,
+                        "name":              safe_str(person.get("name")),
+                        "position":          safe_str(entry.get("player", {}).get("positionName")),
+                        "height":            safe_str(person.get("height")),
+                        "nationality":       safe_str((person.get("country") or {}).get("name")),
+                        "image_url":         safe_str((entry.get("player", {}).get("images") or {}).get("headshot")),
+                        "current_team_code": team_code,
+                    }, pk="id")
 
-    if do_teams:
-        for f in sorted(TEAMS_DIR.glob("*.json")):
-            if f.name == "teams.json":
+                    # euro_players_games
+                    upsert(conn, "euro_players_games", {
+                        "game_id":   game_id,
+                        "player_id": player_code,
+                        "team_id":   team_code,
+                        "pts":       safe_int(stats.get("points")),
+                        "reb":       safe_int(stats.get("totalRebounds")),
+                        "ast":       safe_int(stats.get("assistances")),
+                    }, pk="game_id")
+
+                    players_updated += 1
+
+            games_ok += 1
+            log.info(f"    ✅ Partido {game_id} ({home_code} {home_score}-{away_score} {away_code}) — {players_updated} jugadores")
+
+        except Exception as e:
+            log.warning(f"    ❌ Error en game_code {game_code}: {e}")
+
+    return games_ok
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# ACTUALIZAR CLASIFICACIÓN
+# ══════════════════════════════════════════════════════════════════════════════
+
+def update_standings(conn, round_number: int):
+    log.info(f"  Actualizando clasificación (jornada {round_number})...")
+    try:
+        st  = Standings(COMP)
+        df  = st.get_standings(SEASON, round_number)
+        now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        for _, row in df.iterrows():
+            team_code = safe_str(row.get("club.code"))
+            if not team_code:
                 continue
-            try:
-                with open(f, encoding="utf-8") as fh:
-                    data = json.load(fh)
-                update_from_team_json(conn, data)
-                n_teams += 1
-            except Exception as e:
-                log.warning(f"  Error en {f.name}: {e}")
-        conn.commit()
-        log.info(f"  Equipos actualizados: {n_teams}")
 
-    if do_games:
-        for f in sorted(GAME_CENTER_DIR.glob("*.json")):
-            try:
-                with open(f, encoding="utf-8") as fh:
-                    data = json.load(fh)
-                update_from_game_center(conn, data)
-                n_games += 1
-            except Exception as e:
-                log.warning(f"  Error en {f.name}: {e}")
-        conn.commit()
-        log.info(f"  Jornadas actualizadas: {n_games}")
+            # euro_standings
+            upsert(conn, "euro_standings", {
+                "team_code":    team_code,
+                "rank":         safe_int(row.get("position")),
+                "wins":         safe_int(row.get("gamesWon")),
+                "losses":       safe_int(row.get("gamesLost")),
+                "points_diff":  safe_int(str(row.get("pointsDifference", "0")).replace("+", "")),
+                "last_updated": now,
+            }, pk="team_code")
 
-    if do_players:
-        for f in sorted(PLAYERS_DIR.glob("*.json")):
-            try:
-                with open(f, encoding="utf-8") as fh:
-                    data = json.load(fh)
-                update_from_player_json(conn, data)
-                n_players += 1
-            except Exception as e:
-                log.warning(f"  Error en {f.name}: {e}")
-            if n_players % 50 == 0:
-                conn.commit()
-        conn.commit()
-        log.info(f"  Jugadores actualizados: {n_players}")
+            # euro_teams
+            upsert(conn, "euro_teams", {
+                "team_code": team_code,
+                "team_name": safe_str(row.get("club.name")),
+                "tv_code":   safe_str(row.get("club.tvCode")),
+                "logo_url":  safe_str(row.get("club.images.crest")),
+            }, pk="team_code")
 
-    conn.execute("PRAGMA foreign_keys=ON")
-    conn.close()
+            # teams
+            upsert(conn, "teams", {
+                "code":      team_code,
+                "name":      safe_str(row.get("club.name")),
+                "logo_url":  safe_str(row.get("club.images.crest")),
+                "is_active": 1,
+            }, pk="code")
+
+        conn.commit()
+        log.info(f"  ✅ Clasificación actualizada — {len(df)} equipos")
+        return len(df)
+
+    except Exception as e:
+        log.error(f"  ❌ Error actualizando clasificación: {e}")
+        return 0
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -727,51 +314,73 @@ def update_db(do_teams=True, do_players=True, do_games=True):
 # ══════════════════════════════════════════════════════════════════════════════
 
 def main():
-    parser = argparse.ArgumentParser(description="Actualiza dosaros_local.db con datos de EuroLeague")
-    parser.add_argument("--full",     action="store_true", help="Descarga completa (todas las jornadas + todos los jugadores)")
-    parser.add_argument("--teams",    action="store_true", help="Solo actualiza equipos")
-    parser.add_argument("--players",  action="store_true", help="Solo actualiza jugadores (nuevos)")
-    parser.add_argument("--games",    action="store_true", help="Solo actualiza jornada actual")
-    parser.add_argument("--dry-run",  action="store_true", help="Solo descarga JSONs, no actualiza BD")
-    parser.add_argument("--force",    action="store_true", help="Re-descarga aunque los ficheros existan")
+    parser = argparse.ArgumentParser(description="Actualiza dosaros_local.db con la API de EuroLeague")
+    parser.add_argument("--full",      action="store_true", help="Actualiza todas las jornadas de la temporada")
+    parser.add_argument("--standings", action="store_true", help="Solo actualiza clasificación")
+    parser.add_argument("--round",     type=int,            help="Actualiza una jornada concreta (ej: --round 31)")
     args = parser.parse_args()
-
-    # Si no se especifica nada, modo estándar (equipos + jornada actual)
-    mode_default = not any([args.full, args.teams, args.players, args.games])
-    do_teams   = args.full or args.teams  or mode_default
-    do_players = args.full or args.players
-    do_games   = args.full or args.games  or mode_default
 
     start = datetime.now()
     log.info("=" * 60)
-    log.info(f"INICIO actualización — {start.strftime('%Y-%m-%d %H:%M:%S')}")
-    log.info(f"Modo: {'FULL' if args.full else 'ESTÁNDAR' if mode_default else 'PARCIAL'}")
+    log.info(f"INICIO — {start.strftime('%Y-%m-%d %H:%M:%S')}")
+    if args.full:
+        log.info("Modo: FULL (todas las jornadas)")
+    elif args.standings:
+        log.info("Modo: STANDINGS")
+    elif args.round:
+        log.info(f"Modo: JORNADA {args.round}")
+    else:
+        log.info("Modo: ESTÁNDAR (jornada actual + standings)")
     log.info("=" * 60)
 
-    build_id = get_build_id()
-    if not build_id:
-        log.error("❌ No se pudo obtener el buildId. Abortando.")
-        sys.exit(1)
-    log.info(f"BuildId: {build_id}")
+    conn = sqlite3.connect(DB_PATH)
+    conn.execute("PRAGMA journal_mode=WAL")
+    conn.execute("PRAGMA foreign_keys=OFF")
 
-    # ── Descarga ──
-    if do_teams:
-        download_teams(build_id)
+    gs = GameStats(COMP)
+    current_round = get_current_round(gs)
+    log.info(f"Jornada más reciente: {current_round}")
 
-    if do_players:
-        download_players(build_id, force=args.force)
+    total_games = 0
 
-    if do_games:
-        download_game_center(build_id, download_all=args.full, force=args.force)
+    if args.standings:
+        update_standings(conn, current_round)
 
-    # ── Actualización BD ──
-    if not args.dry_run:
-        update_db(do_teams=do_teams, do_players=do_players, do_games=do_games)
+    elif args.round:
+        update_standings(conn, args.round)
+        total_games = update_round(conn, gs, args.round)
+        conn.commit()
+
+    elif args.full:
+        # Todas las jornadas desde 1 hasta la actual
+        log.info(f"Actualizando jornadas 1 a {current_round}...")
+        for rnd in range(1, current_round + 1):
+            n = update_round(conn, gs, rnd)
+            total_games += n
+            conn.commit()
+        update_standings(conn, current_round)
+
     else:
-        log.info("▶ --dry-run: BD no modificada.")
+        # Modo estándar: jornada actual + standings
+        update_standings(conn, current_round)
+        total_games = update_round(conn, gs, current_round)
+        conn.commit()
+
+    conn.execute("PRAGMA foreign_keys=ON")
+
+    # Resumen de la BD
+    log.info("\n--- RESUMEN BD ---")
+    for t in ["euro_games", "euro_players_games", "euro_players", "euro_standings", "euro_teams"]:
+        try:
+            n = conn.execute(f"SELECT COUNT(*) FROM {t}").fetchone()[0]
+            log.info(f"  {t:<25} {n:>8,} registros")
+        except Exception:
+            pass
+
+    conn.close()
 
     elapsed = (datetime.now() - start).seconds
-    log.info(f"✅ Actualización completada en {elapsed}s")
+    log.info(f"\n✅ Completado en {elapsed}s — {total_games} partidos procesados")
     log.info("=" * 60)
 
 
