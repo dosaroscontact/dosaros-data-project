@@ -32,8 +32,7 @@ def get_build_id():
     try:
         r = requests.get(
             "https://www.euroleaguebasketball.net/euroleague/",
-            headers=HEADERS, timeout=15
-        )
+            headers=HEADERS)
         m = re.search(r'"buildId":"(.*?)"', r.text)
         return m.group(1) if m else None
     except Exception as e:
@@ -84,7 +83,7 @@ def download_players(force=False):
         )
 
         try:
-            res = requests.get(url, headers=HEADERS, timeout=15)
+            res = requests.get(url, headers=HEADERS)
 
             if res.status_code == 200:
                 with open(out_file, "w", encoding="utf-8") as f:

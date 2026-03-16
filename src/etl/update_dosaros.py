@@ -77,13 +77,15 @@ SLEEP_RATE     = 6.0
 # ══════════════════════════════════════════════════════════════════════════════
 
 def get_build_id():
+    """Obtiene el buildId de Next.js — mismo método que download_teams.py."""
+    url = "https://www.euroleaguebasketball.net/euroleague/"
     try:
-        r = requests.get(
-            "https://www.euroleaguebasketball.net/euroleague/",
-            headers=HEADERS, timeout=15
-        )
-        m = re.search(r'"buildId":"(.*?)"', r.text)
-        return m.group(1) if m else None
+        response = requests.get(url, headers=HEADERS)
+        match = re.search(r'"buildId":"(.*?)"', response.text)
+        if match:
+            return match.group(1)
+        log.error("buildId no encontrado en el HTML de la home.")
+        return None
     except Exception as e:
         log.error(f"Error obteniendo buildId: {e}")
         return None
@@ -93,7 +95,7 @@ def fetch_json(url):
     """GET con reintentos básicos. Retorna (data_dict, status_code)."""
     for attempt in range(3):
         try:
-            r = requests.get(url, headers=HEADERS, timeout=20)
+            r = requests.get(url, headers=HEADERS)
             if r.status_code == 200:
                 return r.json(), 200
             elif r.status_code == 429:

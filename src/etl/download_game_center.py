@@ -35,8 +35,8 @@ SLEEP_ON_ERROR = 6.0
 def get_build_id():
     try:
         r = requests.get(
-            "https://www.euroleaguebasketball.net/euroleague/",
-            headers=HEADERS, timeout=15
+        "https://www.euroleaguebasketball.net/euroleague/",
+        headers=HEADERS
         )
         m = re.search(r'"buildId":"(.*?)"', r.text)
         return m.group(1) if m else None
@@ -52,7 +52,7 @@ def get_current_round(build_id):
         f"/en/euroleague/game-center.json"
     )
     try:
-        r = requests.get(url, headers=HEADERS, timeout=15)
+        r = requests.get(url, headers=HEADERS)
         if r.status_code == 200:
             data = r.json()
             pp = data.get("pageProps", {})
@@ -76,7 +76,7 @@ def download_round(build_id, season_code, phase_code, round_num, force=False):
     )
 
     try:
-        res = requests.get(url, headers=HEADERS, timeout=15)
+        res = requests.get(url, headers=HEADERS)
 
         if res.status_code == 200:
             data = res.json()
