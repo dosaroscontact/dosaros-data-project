@@ -3,42 +3,44 @@ import sys
 import logging
 from datetime import datetime
 
-# Añadimos las rutas para que Python encuentre tus scripts
-sys.path.append(os.path.join(os.path.dirname(__file__), 'src/etl'))
+# Configuración de rutas
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+if BASE_DIR not in sys.path:
+    sys.path.append(BASE_DIR)
 
-# Importamos las funciones de tus archivos actuales
-from pbp_extractor import descargar_pbp_por_temporada
-from jugadores_extractor import descargar_boxscores_jugadores
-# Para la Euroliga, llamaremos al proceso que ya tienes en update_dosaros.py
-
-logging.basicConfig(
-    filename='/home/pi/dosaros-data-project/logs/daily_sync.log',
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s'
-)
+try:
+    from src.etl.pbp_extractor import descargar_pbp_por_temporada
+    from src.etl.jugadores_extractor import descargar_boxscores_jugadores
+    from src.automation.bot_manager import enviar_mensaje
+    from src.processors.insight_generator import buscar_perlas_nba
+except ImportError as e:
+    print(f"❌ Error importando módulos: {e}")
+    sys.exit(1)
 
 def run_sync():
-    print(f"🚀 Iniciando carga diaria: {datetime.now().strftime('%Y-%m-%d %H:%M')}")
-    logging.info("Iniciando sincronización diaria.")
+    inicio = datetime.now()
+    print(f"🚀 Iniciando carga diaria: {inicio.strftime('%H:%M:%S')}")
 
     try:
-        # --- BLOQUE EUROLEAGUE ---
-        # Usamos tu script update_dosaros.py que ya es muy sólido
+        # 1. Euroliga
         print("🏀 Procesando Euroliga...")
-        os.system("/home/pi/dosaros-data-project/venv/bin/python /home/pi/dosaros-data-project/src/etl/update_dosaros.py")
+        os.system(f"{BASE_DIR}/venv/bin/python {BASE_DIR}/src/etl/update_dosaros.py")
         
-        # --- BLOQUE NBA ---
-        print("🏀 Procesando NBA (PBP y Jugadores)...")
-        # Temporada actual 2024-25 (ID 224 para NBA API)
+        # 2. NBA
+        print("🏀 Procesando NBA...")
         descargar_pbp_por_temporada("224") 
         descargar_boxscores_jugadores(2024, 2025)
 
-        print("✅ Proceso completado con éxito.")
-        logging.info("Sincronización finalizada correctamente.")
+        # 3. Insights y Notificación
+        print("💡 Buscando datos de valor...")
+        buscar_perlas_nba()
+        
+        fin = datetime.now()
+        duracion = str(fin - inicio).split('.')[0]
+        enviar_mensaje(f"✅ *Carga Dos Aros Completada*\n• Duración: {duracion}\n• Estado: Base de Datos al día.")
 
     except Exception as e:
-        print(f"❌ Error durante la carga: {e}")
-        logging.error(f"Error en master_sync: {e}")
+        enviar_mensaje(f"⚠️ *ERROR EN CARGA DOS AROS*\n{str(e)}")
 
 if __name__ == "__main__":
     run_sync()
