@@ -11,8 +11,8 @@ if BASE_DIR not in sys.path:
 try:
     from src.etl.pbp_extractor import descargar_pbp_por_temporada
     from src.etl.jugadores_extractor import descargar_boxscores_jugadores
-    from src.automation.bot_manager import enviar_mensaje
-    from src.processors.insight_generator import buscar_perlas_nba
+    from automation.bot_manager import enviar_mensaje
+    from processors.insight_generator import buscar_perlas_nba
 except ImportError as e:
     print(f"❌ Error importando módulos: {e}")
     sys.exit(1)
