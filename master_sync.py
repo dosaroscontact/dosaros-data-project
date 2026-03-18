@@ -14,7 +14,7 @@ try:
     from src.processors.insight_generator import buscar_perlas_nba
     from src.etl.pbp_extractor import descargar_pbp_por_temporada
     from src.etl.jugadores_extractor import descargar_boxscores_jugadores
-    from automation.bot_manager import escuchar_confirmacion, enviar_grafico
+    from src.automation.bot_manager import escuchar_confirmacion, enviar_grafico
     from src.app.image_generator import generar_post_triples
 except ImportError as e:
     print(f"❌ Error de importación: {e}")
@@ -39,8 +39,8 @@ def run_sync():
         
         # --- BLOQUE NBA ---
         print("🏀 Procesando NBA (PBP y Jugadores)...")
-        descargar_pbp_por_temporada("224") 
-        descargar_boxscores_jugadores(2024, 2025)
+        descargar_pbp_por_temporada("226") 
+        descargar_boxscores_jugadores(2025, 2026)
 
         # --- BLOQUE INSIGHTS ---
         print("💡 Buscando perlas para Telegram...")
