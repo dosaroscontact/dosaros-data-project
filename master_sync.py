@@ -9,13 +9,10 @@ if BASE_DIR not in sys.path:
     sys.path.append(BASE_DIR)
 
 # 2. Importaciones
-try:
-    from processors.insight_generator import buscar_perlas_nba
-    from src.etl.pbp_extractor import descargar_pbp_por_temporada
-    from src.etl.jugadores_extractor import descargar_boxscores_jugadores
-except ImportError as e:
-    print(f"❌ Error de importación: {e}")
-    sys.exit(1)
+
+from processors.insight_generator import buscar_perlas_nba
+from src.etl.pbp_extractor import descargar_pbp_por_temporada
+from src.etl.jugadores_extractor import descargar_boxscores_jugadores
 
 # 3. Configuración de Logs
 logging.basicConfig(
