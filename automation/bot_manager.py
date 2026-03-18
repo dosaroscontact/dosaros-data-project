@@ -1,7 +1,7 @@
 import requests
 import logging
 
-# Intentamos importar la configuración de forma robusta
+# Intentamos importar la configuración de forma robusta y duradera
 try:
     from .config import TELEGRAM_TOKEN, TELEGRAM_CHAT_ID
 except (ImportError, ValueError):
