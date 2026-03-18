@@ -14,7 +14,7 @@ try:
     from src.processors.insight_generator import buscar_perlas_nba
     from src.etl.pbp_extractor import descargar_pbp_por_temporada
     from src.etl.jugadores_extractor import descargar_boxscores_jugadores
-    from src.automation.bot_manager import escuchar_confirmacion, enviar_grafico
+    from src.automation.bot_manager import escuchar_confirmacion, enviar_grafico, enviar_mensaje
     from src.app.image_generator import generar_post_triples
 except ImportError as e:
     print(f"❌ Error de importación: {e}")
