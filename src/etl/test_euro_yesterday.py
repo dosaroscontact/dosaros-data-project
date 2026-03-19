@@ -2,58 +2,55 @@ import pandas as pd
 from euroleague_api.game_stats import GameStats
 from src.database.db_utils import get_db_connection
 
-def test_extraction(target_date="2025-03-14"): # Cambia esta fecha a una con partidos recientes
+def test_extraction(target_date="2026-03-19"):
     print(f"--- Iniciando Test de Euroliga para la fecha: {target_date} ---")
-    season = 2025 # Temporada actual 2024-25 (se define por el año de inicio)
+    season = 2025 # Temporada 2025-26
     
     try:
         gs = GameStats("E")
-        print("Consultando calendario de la temporada...")
         df_games = gs.get_gamecodes_season(season)
         
         if df_games.empty:
-            print("Error: No se han recuperado partidos. Revisa la conexión o la temporada.")
+            print("Error: No se han recuperado partidos.")
             return
 
-        # Limpieza y filtrado
-        df_games['date_clean'] = pd.to_datetime(df_games['date']).dt.strftime('%Y-%m-%d')
+        # DEBUG: Imprimimos las columnas para ver qué nos da la API realmente
+        print(f"Columnas detectadas en la API: {df_games.columns.tolist()}")
+
+        # Limpieza de fecha
+        # La columna suele llamarse 'date' o 'Date'
+        date_col = 'date' if 'date' in df_games.columns else 'Date'
+        df_games['date_clean'] = pd.to_datetime(df_games[date_col]).dt.strftime('%Y-%m-%d')
+        
         filtered_games = df_games[df_games['date_clean'] == target_date].copy()
 
         if filtered_games.empty:
-            print(f"Aviso: No hubo partidos en la fecha {target_date}. Prueba con otra.")
+            print(f"Aviso: No hubo partidos el {target_date}. Mostrando fechas disponibles:")
+            print(df_games['date_clean'].unique()[:5]) # Muestra las 5 primeras fechas
             return
-
-        print(f"Se han encontrado {len(filtered_games)} partidos. Procesando...")
 
         results = []
         for _, row in filtered_games.iterrows():
-            # Usamos tu formato de ID: E2024_123
+            # Mapeo flexible de columnas
             results.append({
-                'game_id': f"E{season}_{row['gamecode']}",
+                'game_id': f"E{season}_{row.get('gamecode', row.get('game_code'))}",
                 'date': target_date,
-                'home_team': row['home'],
-                'away_team': row['away'],
-                'score_home': row['score_home'],
-                'score_away': row['score_away']
+                'home_team': row.get('home', row.get('home_team')),
+                'away_team': row.get('away', row.get('away_team')),
+                'score_home': row.get('score_home', 0),
+                'score_away': row.get('score_away', 0)
             })
 
         df_results = pd.DataFrame(results)
-        print("\nDatos a insertar:")
-        print(df_results)
-
-        # Prueba de inserción en la base de datos local del HDD
         conn = get_db_connection()
         df_results.to_sql('euro_games', conn, if_exists='append', index=False)
         conn.close()
         
-        print(f"\n✅ Test completado. {len(df_results)} partidos guardados en euro_games.")
+        print(f"✅ Éxito: {len(df_results)} partidos guardados.")
 
     except Exception as e:
-        if "UNIQUE constraint failed" in str(e):
-            print("\nAviso: Los partidos ya existen en la base de datos (Test OK).")
-        else:
-            print(f"\n❌ Error durante el test: {e}")
+        print(f"❌ Error durante el test: {e}")
 
 if __name__ == "__main__":
-    # Pon aquí una fecha reciente en la que sepas que hubo Euroliga
+    # Asegúrate de usar una fecha que ya haya pasado y tenga partidos
     test_extraction("2026-03-19")
