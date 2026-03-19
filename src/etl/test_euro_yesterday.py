@@ -4,7 +4,7 @@ from src.database.db_utils import get_db_connection
 
 def test_extraction(target_date="2025-03-14"): # Cambia esta fecha a una con partidos recientes
     print(f"--- Iniciando Test de Euroliga para la fecha: {target_date} ---")
-    season = 2026 # Temporada actual 2024-25 (se define por el año de inicio)
+    season = 2025 # Temporada actual 2024-25 (se define por el año de inicio)
     
     try:
         gs = GameStats("E")
