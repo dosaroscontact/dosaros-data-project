@@ -1,65 +1,39 @@
-import os
 import sys
-import logging
+import os
 from datetime import datetime
 
-# 1. Configuración de rutas
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-if BASE_DIR not in sys.path:
-    sys.path.append(BASE_DIR)
+# Añadimos la raíz al path para que funcionen los imports de src
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-# 2. Importaciones unificadas
-try:
-    # Usamos la ruta completa src. para evitar errores de módulos
-    from src.processors.insight_generator import buscar_perlas_nba
-    from src.etl.pbp_extractor import descargar_pbp_por_temporada
-    from src.etl.jugadores_extractor import descargar_boxscores_jugadores
-    from src.automation.bot_manager import escuchar_confirmacion, enviar_grafico, enviar_mensaje
-    from src.app.image_generator import generar_post_triples
-except ImportError as e:
-    print(f"❌ Error de importación: {e}")
-    sys.exit(1)
+from src.etl.extract_yesterday_results import get_nba_results_yesterday
+from src.etl.extract_yesterday_euro import extract_euro_results_yesterday
+from src.automation.bot_manager import enviar_mensaje
+from src.processors.insight_generator import buscar_perlas_nba
 
-# 3. Configuración de Logs
-os.makedirs(os.path.join(BASE_DIR, 'logs'), exist_ok=True)
-logging.basicConfig(
-    filename=os.path.join(BASE_DIR, 'logs/daily_sync.log'),
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s'
-)
-
-def run_sync():
-    print(f"🚀 Iniciando carga diaria: {datetime.now().strftime('%Y-%m-%d %H:%M')}")
-    logging.info("Iniciando sincronización diaria.")
-
+def main():
+    print(f"--- Iniciando Sincronización {datetime.now()} ---")
+    
+    # 1. Ejecutar extractores y obtener los resultados formateados
+    reporte_nba = get_nba_results_yesterday()
+    reporte_euro = extract_euro_results_yesterday()
+    
+    # 2. Obtener las perlas (tu lógica actual)
     try:
-        # --- BLOQUE EUROLEAGUE ---
-        print("🏀 Procesando Euroliga...")
-        os.system(f"{BASE_DIR}/venv/bin/python {BASE_DIR}/src/etl/update_dosaros.py")
-        
-        # --- BLOQUE NBA ---
-        print("🏀 Procesando NBA (PBP y Jugadores)...")
-        descargar_pbp_por_temporada("226") 
-        descargar_boxscores_jugadores(2025, 2026)
+        # Asumiendo que esta función ya devuelve un string o lista
+        perlas = buscar_perlas_nba() 
+    except:
+        perlas = "No se han podido procesar las perlas hoy."
 
-        # --- BLOQUE INSIGHTS ---
-        print("💡 Buscando perlas para Telegram...")
-        # IMPORTANTE: buscar_perlas_nba() debe retornar la lista de jugadores
-        perlas_encontradas = buscar_perlas_nba() 
+    # 3. Construir el mensaje final
+    fecha_str = datetime.now().strftime('%d/%m/%Y')
+    mensaje_final = f"📌 *Resultados Dos Aros - {fecha_str}*\n\n"
+    mensaje_final += f"{reporte_nba}\n"
+    mensaje_final += f"{reporte_euro}\n"
+    mensaje_final += f"✨ *Perlas de la noche:*\n{perlas}"
 
-        # --- BLOQUE INTERACCIÓN ---
-        # Solo si hay datos y confirmas por Telegram
-        if perlas_encontradas and escuchar_confirmacion():
-            print("🎨 Generando gráfico según Guía de Estilo...")
-            path_imagen = generar_post_triples(perlas_encontradas)
-            enviar_grafico(path_imagen, "Aquí tienes el post listo para Instagram. 🏀🔥")
-
-        print("✅ Proceso completado con éxito.")
-        logging.info("Sincronización finalizada correctamente.")
-
-    except Exception as e:
-        print(f"❌ Error durante la carga: {e}")
-        logging.error(f"Error en master_sync: {e}")
+    # 4. Envío único a Telegram
+    enviar_mensaje(mensaje_final)
+    print("✅ Reporte enviado con éxito.")
 
 if __name__ == "__main__":
-    run_sync()
+    main()

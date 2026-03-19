@@ -46,9 +46,12 @@ def extract_euro_results_yesterday():
         # Guardado incremental
         df_to_save.to_sql('euro_games', conn, if_exists='append', index=False)
         conn.close()
+        # ... (después de df_to_save.to_sql)
+        resumen = "🇪🇺 *Euroliga:*\n"
+        for _, row in df_to_save.iterrows():
+            resumen += f"• {row['home_team']} {row['score_home']} - {row['score_away']} {row['away_team']}\n"
         
-        return f"Éxito: {len(df_to_save)} partidos de Euroliga guardados."
-
+        return resumen
     except Exception as e:
         if "UNIQUE constraint failed" in str(e):
             return "Aviso: Los partidos de Euroliga de ayer ya estaban registrados."

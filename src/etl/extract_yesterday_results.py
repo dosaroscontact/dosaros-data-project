@@ -41,9 +41,17 @@ def get_nba_results_yesterday():
         # Al usar if_exists='append', respetamos tu lógica de almacenamiento incremental
         df_to_save.to_sql('nba_games', conn, if_exists='append', index=False)
         conn.close()
+        # ... (después de df_to_save.to_sql)
+        resumen = "🏀 *NBA:*\n"
+        # Agrupamos por GAME_ID para no repetir el partido por cada equipo
+        for gid in df_to_save['GAME_ID'].unique():
+            partido = df_to_save[df_to_save['GAME_ID'] == gid]
+            home = partido.iloc[0] # Simplificación: la API V3 trae ambos en el dict
+            # Si usas el bucle de mi respuesta anterior:
+            visitante = partido.iloc[1]
+            resumen += f"• {visitante['TEAM_ABBREVIATION']} {visitante['PTS']} - {home['PTS']} {home['TEAM_ABBREVIATION']}\n"
         
-        return f"Éxito: {len(df_to_save)} registros guardados en la base de datos local."
-
+        return resumen
     except Exception as e:
         if "UNIQUE constraint failed" in str(e):
             return "Aviso: Los resultados de ayer ya estaban en la base de datos."
