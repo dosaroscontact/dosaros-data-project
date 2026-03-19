@@ -26,7 +26,6 @@ def get_nba_results_yesterday():
                 'TEAM_NAME': row['homeTeamName'],
                 'GAME_DATE': yesterday,
                 'PTS': row['homeScore'],
-                # Añadimos campos básicos para no dejar la fila vacía
                 'WL': 'W' if row['homeScore'] > row['awayScore'] else 'L'
             })
             # Registro Equipo Visitante
@@ -39,7 +38,6 @@ def get_nba_results_yesterday():
                 'PTS': row['awayScore'],
                 'WL': 'W' if row['awayScore'] > row['homeScore'] else 'L'
             })
-        
         df_to_save = pd.DataFrame(results)
         conn = get_db_connection()
         
