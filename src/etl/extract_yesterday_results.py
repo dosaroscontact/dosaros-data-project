@@ -1,46 +1,58 @@
 import pandas as pd
 from datetime import datetime, timedelta
-from nba_api.stats.endpoints import scoreboardv2
-# Corregimos la importación para usar tu db_utils
-from src.database.db_utils import get_db_connection 
+from nba_api.stats.endpoints import scoreboardv3 # Cambiado a V3
+from src.database.db_utils import get_db_connection
 
 def get_nba_results_yesterday():
-    # Ayer en formato NBA API
     yesterday = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
     
     try:
-        # Traemos el Scoreboard
-        board = scoreboardv2.ScoreboardV2(game_date=yesterday)
-        # El dataset [1] (LineScore) contiene las estadísticas por equipo de cada partido
-        line_score = board.get_data_frames()[1] 
+        # ScoreboardV3 es la recomendada para la temporada actual
+        board = scoreboardv3.ScoreboardV3(game_date=yesterday)
+        df_games = board.get_data_frames()[0] 
         
-        if line_score.empty:
+        if df_games.empty:
             return f"No hubo partidos de NBA el {yesterday}."
 
-        # Renombramos columnas para que coincidan con tu tabla 'nba_games'
-        # La tabla nba_games espera campos como TEAM_ID, PTS, etc.
-        df_to_save = line_score[[
-            'TEAM_ID', 'TEAM_ABBREVIATION', 'TEAM_NAME', 'GAME_ID', 
-            'GAME_DATE_EST', 'PTS', 'FG_PCT', 'FT_PCT', 'FG3_PCT', 'AST', 'REB', 'TOV'
-        ]].copy()
+        # En V3, la información de ambos equipos viene en la misma fila o estructurada diferente
+        # Vamos a preparar los datos para tu tabla nba_games
+        results = []
+        for _, row in df_games.iterrows():
+            # Registro Equipo Local
+            results.append({
+                'GAME_ID': row['gameId'],
+                'TEAM_ID': row['homeTeamId'],
+                'TEAM_ABBREVIATION': row['homeTeamTriCode'],
+                'TEAM_NAME': row['homeTeamName'],
+                'GAME_DATE': yesterday,
+                'PTS': row['homeScore'],
+                # Añadimos campos básicos para no dejar la fila vacía
+                'WL': 'W' if row['homeScore'] > row['awayScore'] else 'L'
+            })
+            # Registro Equipo Visitante
+            results.append({
+                'GAME_ID': row['gameId'],
+                'TEAM_ID': row['awayTeamId'],
+                'TEAM_ABBREVIATION': row['awayTeamTriCode'],
+                'TEAM_NAME': row['awayTeamName'],
+                'GAME_DATE': yesterday,
+                'PTS': row['awayScore'],
+                'WL': 'W' if row['awayScore'] > row['homeScore'] else 'L'
+            })
         
-        df_to_save.rename(columns={'GAME_DATE_EST': 'GAME_DATE'}, inplace=True)
-        
-        # Conexión usando tu db_utils
+        df_to_save = pd.DataFrame(results)
         conn = get_db_connection()
         
-        # Guardado incremental: if_exists='append'
-        # Nota: Si el partido ya existe, fallará por la PRIMARY KEY (GAME_ID, TEAM_ID)
-        # Esto es bueno para evitar duplicados.
+        # Guardado incremental
         df_to_save.to_sql('nba_games', conn, if_exists='append', index=False)
         conn.close()
         
-        return f"Éxito: Se han guardado {len(df_to_save)} registros de equipo en nba_games."
+        return f"Éxito: {len(df_to_save)} registros guardados en nba_games usando V3."
 
     except Exception as e:
         if "UNIQUE constraint failed" in str(e):
-            return "Aviso: Los resultados de ayer ya estaban en la base de datos."
-        return f"Error en la extracción: {e}"
+            return "Aviso: Los resultados ya estaban registrados."
+        return f"Error: {e}"
 
 if __name__ == "__main__":
     print(get_nba_results_yesterday())
