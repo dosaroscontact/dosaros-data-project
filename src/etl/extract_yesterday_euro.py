@@ -8,7 +8,7 @@ def extract_euro_results_yesterday():
     # Nota: La API de Euroliga a veces usa formatos variables, 
     # ajustamos a la comparación más común.
     yesterday = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
-    season = 2024  # Temporada 2024-25
+    season = 2025  # Temporada 2024-25
     
     try:
         gs = GameStats("E")
