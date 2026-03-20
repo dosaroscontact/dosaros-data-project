@@ -12,7 +12,7 @@ try:
     print("Enviando petición a Gemini 1.5 Flash...")
     # Usamos 1.5 Flash que es el estándar de oro para estabilidad en Free Tier
     response = client.models.generate_content(
-        model="gemini-1.5-flash", 
+        model="gemini-2.5-flash-lite", 
         contents="Dame una frase corta sobre baloncesto."
     )
     print(f"\nRespuesta: {response.text}")
