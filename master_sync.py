@@ -1,6 +1,8 @@
 import sys
 import os
 from datetime import datetime
+# En master_sync.py, añade la importación:
+from src.processors.gemini_social import generar_hilo_resultados
 
 # Añadimos la raíz al path para que funcionen los imports de src
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
@@ -33,6 +35,9 @@ def main():
 
     # 4. Envío único a Telegram
     enviar_mensaje(mensaje_final)
+    # Y en la función main(), después de mensaje_final:
+    hilo_x = generar_hilo_resultados()
+    enviar_mensaje(f"🐦 *Propuesta de Hilo para X:*\n\n{hilo_x}")
     print("✅ Reporte enviado con éxito.")
 
 if __name__ == "__main__":
