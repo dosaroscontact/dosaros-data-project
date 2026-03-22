@@ -248,7 +248,7 @@ FORMATO DE SALIDA: Solo los tweets, numerados, separados por línea en blanco.
 def enviar_hilo_a_telegram(hilo: str):
     """Envía el hilo generado a Telegram para revisión."""
     try:
-        from automation.bot_manager import enviar_mensaje
+        from src.automation.bot_manager import enviar_mensaje
         
         fecha_display = (datetime.now() - timedelta(days=1)).strftime('%d/%m/%Y')
         
