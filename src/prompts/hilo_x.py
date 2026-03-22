@@ -57,6 +57,9 @@ Si hubo partidos: el más relevante con el dato clave.
 Si no hubo partidos y la próxima jornada es en más de 2 días: omite este tweet.
 Si no hubo partidos pero se juega pronto: menciona los partidos más atractivos con fecha.
 NO repitas "no hubo partidos" si ya está implícito.
+Si no hubo partidos Euroliga ayer pero se juega en menos de 3 días,
+menciona 2-3 partidos atractivos con fecha. Ejemplo: 
+"El 24/03 vuelve la Euroliga. BAR-IST y PAM-OLY. Apunta."
 
 TWEET 4 — La perla del día
 La actuación más llamativa con el dato exacto.
@@ -76,4 +79,7 @@ REGLAS DE FORMATO:
 - Máximo 1 emoji por tweet, solo si aporta
 - Separa cada tweet con una línea en blanco
 - SOLO los tweets. Sin explicaciones ni comentarios extra.
+- OBLIGATORIO: cuenta los caracteres. Ningún tweet puede superar 250 caracteres.
+  Si es largo, córtalo. El ritmo importa más que la información completa.
+
 """
