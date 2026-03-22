@@ -113,6 +113,40 @@ PYTHONPATH=.
 
 ---
 
+## FASE 2.5: INSTALAR LIBRERÍAS (5 min) 
+
+### ⚡ RECOMENDADO: Usar instalador interactivo
+
+```bash
+# Windows:
+python setup_dependencies.py
+
+# Menú:
+#   all  → Instala TODAS las librerías (recomendado)
+#   llms → Instala solo LLMs
+#   from-req → Instala desde requirements.txt
+```
+
+### Alternativa: Instalar vía pip
+
+```bash
+# Opción 1: Todo desde requirements.txt
+pip install -r requirements.txt
+
+# Opción 2: Solo lo esencial
+pip install google-generativeai anthropic openai groq python-dotenv requests
+
+# Opción 3: Instalar un proveedor específico
+pip install google-generativeai    # Para Gemini
+pip install anthropic              # Para Claude
+pip install openai                 # Para OpenAI (+ DeepSeek, Kimi, Grok)
+pip install groq                   # Para Groq
+```
+
+**Nota:** Las librerías se importan con `try/except`, así que si faltan algunas, el script te lo indicará claramente.
+
+---
+
 ## FASE 3: VERIFICAR QUE FUNCIONA (10 min)
 
 ### Test 1: Carga de variables básicas
@@ -151,14 +185,33 @@ python examples_api_manager.py
 # - Opción 9: Caso real NBA (análisis completo)
 ```
 
-### Test 4: Script de modelos Gemini
+### Test 4: Test Multi-API (NUEVO - RECOMENDADO)
 ```bash
 python src/app/test_models.py
 
-# Debe mostrar lista de modelos disponibles:
-# - models/gemini-2.0-flash-lite-latest
-# - models/gemini-1.5-flash-latest
-# - etc.
+# Menú interactivo para testear:
+# - Opción 1-7:  Prueba cada LLM individual (Gemini, Claude, OpenAI, etc.)
+# - Opción llms: Prueba TODOS los LLMs
+# - Opción all:  Prueba TODO (LLMs + imagen + audio)
+# - Opción q:    Salir
+
+# Ejemplo: Prueba Gemini
+#   Opción: 1
+#   Resultado: ✅ GEMINI: Hola...
+```
+
+### Test 4.5: Instalar dependencias (si faltan librerías)
+```bash
+# Si Test 4 falla diciendo "Librería X no instalada":
+python setup_dependencies.py
+
+# Menú:
+#   Opción 'all':  Instala TODO
+#   Opción 'llms': Instala solo LLMs
+#   Opción 'from-req': Instala desde requirements.txt
+
+# O directamente:
+pip install -r requirements.txt
 ```
 
 ### Test 5: Streamlit (opcional)

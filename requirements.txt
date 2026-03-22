@@ -1,13 +1,55 @@
-# Tu archivo requirements.txt actualizado:
-certifi==2026.1.4
-charset-normalizer==3.4.4
-idna==3.11
+# ============================================================================
+# PROYECTO DOS AROS - Dependencias Python
+# ============================================================================
+
+# Base de Datos
 nba_api==1.11.4
 numpy==2.4.2
 pandas==3.0.1
+psycopg2-binary>=2.9.9
+sqlite3-python==1.0  # SQLite3
+
+# Utilidades Generales
+certifi==2026.1.4
+charset-normalizer==3.4.4
+idna==3.11
 python-dateutil==2.9.0.post0
-requests==2.32.5
 six==1.17.0
 tzdata==2025.3
 urllib3==2.6.3
-psycopg2-binary  # <--- Agrega esto para soporte de base de datos
+
+# HTTP & Web
+requests==2.32.5
+
+# Configuración
+python-dotenv>=1.0.0
+
+# ============================================================================
+# APIs DE INTELIGENCIA ARTIFICIAL (IA)
+# ============================================================================
+
+# LLMs - Generators
+google-genai>=1.0.0                   # Google Gemini (NUEVA - recomendada)
+google-generativeai>=0.15.0           # Google Gemini (ANTIGUA - fallback)
+anthropic>=0.28.0                     # Anthropic Claude
+openai>=1.59.0                        # OpenAI ChatGPT + compatible (DeepSeek, Kimi, Grok)
+groq>=0.10.0                          # Groq (Llama/Mixtral)
+
+# Image Generation
+pillow>=11.0.0                        # Para procesar y generar imágenes
+Pillow-SIMD>=9.4.0                    # Aceleración SIMD para Pillow (opcional)
+
+# ============================================================================
+# WEB UI & VISUALIZACIÓN
+# ============================================================================
+
+streamlit>=1.47.0
+plotly>=5.17.0
+altair>=5.0.0
+
+# ============================================================================
+# UTILIDADES DE DESARROLLO (Opcional)
+# ============================================================================
+
+sqlalchemy>=2.0.0                     # ORM (si se usa)
+
