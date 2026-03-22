@@ -27,7 +27,7 @@ from dotenv import load_dotenv
 
 # Importar clientes de APIs
 try:
-    import google.generativeai as genai
+    from google import genai  # Nueva librería google-genai
 except ImportError:
     genai = None
 
@@ -111,7 +111,7 @@ class APIManager:
         config = {
             # LLMs
             'gemini_api_key': os.getenv('GEMINI_API_KEY'),
-            'gemini_model': os.getenv('GEMINI_MODEL', 'gemini-1.5-flash'),
+            'gemini_model': os.getenv('GEMINI_MODEL', 'gemini-2.0-flash'),
             
             'openai_api_key': os.getenv('OPENAI_API_KEY'),
             'openai_model': os.getenv('OPENAI_MODEL', 'gpt-4o-mini'),
@@ -158,12 +158,16 @@ class APIManager:
     
     def _init_clients(self):
         """Inicializa clientes de APIs configuradas."""
-        # Google Gemini
+        # Google Gemini (nueva librería google-genai)
         if self.config.get('gemini_api_key'):
             try:
-                genai.configure(api_key=self.config['gemini_api_key'])
-                self.clients['gemini'] = genai.GenerativeModel(self.config['gemini_model'])
-                logger.info("✅ Gemini cliente inicializado")
+                if genai:
+                    self.clients['gemini'] = genai.Client(
+                        api_key=self.config['gemini_api_key']
+                    )
+                    logger.info("✅ Gemini cliente inicializado")
+                else:
+                    logger.warning("⚠️ google-genai no instalado. Ejecuta: pip install google-genai")
             except Exception as e:
                 logger.warning(f"⚠️ Error inicializando Gemini: {e}")
         
@@ -225,7 +229,10 @@ class APIManager:
         
         try:
             full_prompt = f"{system_prompt}\n\n{prompt}" if system_prompt else prompt
-            response = self.clients['gemini'].generate_content(full_prompt)
+            response = self.clients['gemini'].models.generate_content(
+                model=self.config['gemini_model'],
+                contents=full_prompt
+            )
             logger.debug(f"✅ Gemini: {len(response.text)} caracteres generados")
             return response.text
         except Exception as e:
