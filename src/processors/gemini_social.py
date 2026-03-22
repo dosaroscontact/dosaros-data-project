@@ -168,8 +168,10 @@ def obtener_proximos_euro_para_hilo():
     try:
         conn = sqlite3.connect(DB_PATH)
         query = """
+            SELECT date, time, home_team, away_team
+            FROM euro_games
             WHERE date > date('now')
-            AND (score_home IS NULL OR score_home = 0)
+                AND (score_home IS NULL OR score_home = 0)
             ORDER BY date ASC
             LIMIT 6
         """
