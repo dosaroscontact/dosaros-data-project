@@ -20,6 +20,7 @@ import sqlite3
 import pandas as pd
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
+from src.prompts.hilo_x import get_prompt_hilo
 
 load_dotenv()
 
@@ -195,39 +196,14 @@ def generar_hilo_x():
     top_data = perlas_top.to_dict(orient='records') if not perlas_top.empty else []
     historico_data = historico_df.to_dict(orient='records') if not historico_df.empty else []
     
-    prompt = f"""
-Eres el analista de datos de Dos Aros, cuenta de baloncesto en X (Twitter).
-Fecha de referencia: {fecha_display}
-
-DATOS DISPONIBLES:
-- Resultados NBA: {nba_data}
-- Resultados Euroliga: {euro_data}
-- Cazadores de triples NBA: {perlas_data}
-- Mejores actuaciones NBA: {top_data}
-- Dato histórico de la DB: {historico_data}
-
-GENERA UN HILO DE 5 TWEETS con este esquema exacto:
-
-TWEET 1 - Apertura impactante con el resultado más llamativo de la noche (NBA o Euro).
-TWEET 2 - Resultados NBA: los 2-3 partidos más relevantes con marcadores.
-TWEET 3 - Resultados Euroliga: los partidos más destacados con marcadores.
-TWEET 4 - Perla de datos: el cazador de triples más destacado o mejor actuación individual.
-TWEET 5 - Dato histórico curioso sacado de la base de datos. Algo que sorprenda.
-TWEET 6 (opcional) - Cierre con pregunta al seguidor para generar debate.
-
-REGLAS ESTRICTAS:
-- Máximo 250 caracteres por tweet (cuenta el número 1/, 2/, etc.)
-- Empieza cada tweet con su número: 1/, 2/, 3/, etc.
-- Sin hashtags
-- Sin emojis excesivos (máximo 1 por tweet si aporta)
-- Tono directo, periodístico, con datos concretos
-- Prohibido usar: además, crucial, fundamental, intrincado, profundizar, subrayar, cabe destacar
-- Los números son protagonistas: marcadores, porcentajes, récords
-- Separa cada tweet con una línea en blanco
-
-FORMATO DE SALIDA: Solo los tweets, numerados, separados por línea en blanco.
-"""
-    
+    prompt = get_prompt_hilo(
+        fecha_display=fecha_display,
+        nba_data=nba_data,
+        euro_data=euro_data,
+        perlas_data=perlas_data,
+        top_data=top_data,
+        historico_data=historico_data
+    )    
     print("🤖 Generando hilo con IA...")
     
     try:
