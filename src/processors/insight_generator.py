@@ -433,7 +433,7 @@ def buscar_perlas(fecha=None, enviar_telegram=True):
     # ── ENVIAR A TELEGRAM ────────────────────────────────────────────────────
     if enviar_telegram and (perlas_nba or perlas_euro or not proximos_euro.empty):
         try:
-            from automation.bot_manager import enviar_mensaje
+            from src.automation.bot_manager import enviar_mensaje
             enviar_mensaje(mensaje)
             print("✅ Perlas enviadas a Telegram")
         except Exception as e:
