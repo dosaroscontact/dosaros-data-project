@@ -40,6 +40,7 @@ def extract_euro_results_yesterday():
             results.append({
                 'game_id': g_id,
                 'date': yesterday_str,
+                'time': row.get('time', None),
                 'home_team': row['hometeam'],
                 'away_team': row['awayteam'],
                 'score_home': row['homescore'],
