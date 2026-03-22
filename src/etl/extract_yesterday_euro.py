@@ -34,8 +34,9 @@ def extract_euro_results_yesterday():
         results = []
         resumen = "🇪🇺 *Euroliga - Resultados:* \n"
         
-        for _, row in yesterday_games.iterrows():
-            g_id = f"E{season}_{row['gamecode']}"
+        for _, row in yesterday_games.iterrows():            
+            gamecode = str(row['gamecode'])
+            g_id = gamecode if gamecode.startswith(f'E{season}_') else f"E{season}_{gamecode}"
             results.append({
                 'game_id': g_id,
                 'date': yesterday_str,
