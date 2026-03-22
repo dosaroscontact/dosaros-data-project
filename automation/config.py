@@ -1,3 +1,9 @@
-# Credenciales de Dos Aros - NO COMPARTIR
-TELEGRAM_TOKEN = "8742540551:AAGXzgk5b-7MACxAoVbD6J4akGnLgm3ek3Q"
-TELEGRAM_CHAT_ID = "546297096"
+import os
+from dotenv import load_dotenv
+
+# Cargar variables de entorno desde .env
+load_dotenv()
+
+# Credenciales - leer desde variables de entorno
+TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
+TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
