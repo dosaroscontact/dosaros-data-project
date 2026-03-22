@@ -22,6 +22,7 @@ from datetime import datetime, timedelta
 from dotenv import load_dotenv
 from src.prompts.hilo_x import get_prompt_hilo
 
+
 load_dotenv()
 
 # Usar API Manager para fallback automático
@@ -161,6 +162,26 @@ def obtener_dato_historico():
         return pd.DataFrame()
 
 
+# Próximos partidos Euroliga (para que la IA no invente fechas)
+def obtener_proximos_euro_para_hilo():
+    """Obtiene próximos partidos Euroliga con fechas reales para el prompt."""
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        query = """
+            WHERE date > date('now')
+            AND (score_home IS NULL OR score_home = 0)
+            ORDER BY date ASC
+            LIMIT 6
+        """
+        df = pd.read_sql_query(query, conn)
+        conn.close()
+        return df
+    except Exception as e:
+        print(f"⚠️ Error próximos Euro: {e}")
+        return pd.DataFrame()
+
+
+
 # ============================================================================
 # GENERAR HILO
 # ============================================================================
@@ -178,6 +199,9 @@ def generar_hilo_x():
     # Recoger todos los datos
     nba_df = obtener_resultados_nba(fecha_ayer)
     euro_df = obtener_resultados_euro(fecha_ayer)
+
+
+
     perlas_triples, perlas_top = obtener_perlas_nba(fecha_ayer)
     historico_df = obtener_dato_historico()
     
@@ -192,6 +216,9 @@ def generar_hilo_x():
     # Preparar datos para el prompt
     nba_data = nba_df.to_dict(orient='records') if hay_nba else "Sin partidos NBA ayer"
     euro_data = euro_df.to_dict(orient='records') if hay_euro else "Sin partidos Euroliga ayer"
+
+    proximos_euro_df = obtener_proximos_euro_para_hilo()
+    proximos_euro_data = proximos_euro_df.to_dict(orient='records') if not proximos_euro_df.empty else []
     perlas_data = perlas_triples.to_dict(orient='records') if not perlas_triples.empty else []
     top_data = perlas_top.to_dict(orient='records') if not perlas_top.empty else []
     historico_data = historico_df.to_dict(orient='records') if not historico_df.empty else []
@@ -200,10 +227,11 @@ def generar_hilo_x():
         fecha_display=fecha_display,
         nba_data=nba_data,
         euro_data=euro_data,
+        proximos_euro_data=proximos_euro_data,  # ← añadir esta línea
         perlas_data=perlas_data,
         top_data=top_data,
         historico_data=historico_data
-    )    
+    )
     print("🤖 Generando hilo con IA...")
     
     try:
@@ -215,6 +243,7 @@ def generar_hilo_x():
         return hilo
     except Exception as e:
         return f"❌ Error generando hilo: {e}"
+
 
 
 # ============================================================================

@@ -9,8 +9,7 @@ Futura evolución: cargar estructura desde DB (tabla: prompts, id: hilo_x_v1)
 
 from src.prompts.system_persona import get_persona_completa
 
-
-def get_prompt_hilo(fecha_display, nba_data, euro_data, perlas_data, top_data, historico_data):
+def get_prompt_hilo(fecha_display, nba_data, euro_data, proximos_euro_data, perlas_data, top_data, historico_data):
     """
     Genera el prompt completo para el hilo de X.
 
@@ -53,13 +52,15 @@ Los resultados más relevantes. Contados, no listados.
 Máximo 2-3 partidos. El dato que importa, no el acta notarial.
 
 TWEET 3 — Euroliga
-Si hubo partidos: el más relevante con el dato clave.
-Si no hubo partidos y la próxima jornada es en más de 2 días: omite este tweet.
-Si no hubo partidos pero se juega pronto: menciona los partidos más atractivos con fecha.
+
+Si la próxima jornada es en más de 2 días desde {fecha_display}: omite este tweet.
 NO repitas "no hubo partidos" si ya está implícito.
-Si no hubo partidos Euroliga ayer pero se juega en menos de 3 días,
+Si hubo partidos ayer: el más relevante con el dato clave.
+Si no hubo partidos pero se juega pronto, usa EXACTAMENTE estas fechas y equipos (no inventes):
+Próximos partidos: {proximos_euro_data}
 menciona 2-3 partidos atractivos con fecha. Ejemplo: 
 "El 24/03 vuelve la Euroliga. BAR-IST y PAM-OLY. Apunta."
+
 
 TWEET 4 — La perla del día
 La actuación más llamativa con el dato exacto.
@@ -82,4 +83,9 @@ REGLAS DE FORMATO:
 - OBLIGATORIO: cuenta los caracteres. Ningún tweet puede superar 250 caracteres.
   Si es largo, córtalo. El ritmo importa más que la información completa.
 
+CRÍTICO — LÍMITE DE CARACTERES:
+    Antes de escribir cada tweet, cuenta los caracteres.
+    Máximo 280 caracteres por tweet (límite real de X).
+    Si supera 280, recorta. El ritmo importa más que la información completa.
+    Una frase buena y corta vale más que dos frases mediocres.
 """
