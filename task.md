@@ -1,10 +1,47 @@
-# Lista de Tareas - Proyecto Dos Aros
+# Dos Aros — Daily Briefing
 
-- [x] Configuración de entorno local (Python, VS Code, Git)
+_Actualizar este archivo al inicio o fin de cada jornada._
+
+---
+
+## Estado general del proyecto
+<!-- Una línea: en qué fase estamos y cuál es el foco actual -->
+Fase: Ingesta masiva EuroLeague + análisis comparativo NBA vs Euro
+
+## Última sesión
+<!-- Fecha y resumen de lo que se hizo -->
+- **Fecha:** 2026-03-23
+- **Hecho:** Creado CLAUDE.md con arquitectura y reglas del proyecto
+
+## En progreso ahora
+<!-- Máx. 3 cosas activas -->
+- [ ] ETL: Carga masiva hasta 300 partidos Euroliga
+- [ ] Análisis: Comparativa mapas de tiro NBA vs EuroLeague
+
+## Bloqueantes / Problemas abiertos
+<!-- Cosas que impiden avanzar o requieren decisión -->
+- (ninguno)
+
+## Próximos pasos (ordenados por prioridad)
+<!-- Lo que toca hacer en las próximas 1-3 sesiones -->
+1. Completar ingesta hasta 300 partidos Euro
+2. Primer análisis comparativo de shot charts
+3. Consolidar extractores ETL duplicados en `src/etl/`
+
+## Decisiones tomadas (log)
+<!-- Registro de decisiones de diseño para no repetir debates -->
+| Fecha | Decisión |
+|---|---|
+| 2026-03-23 | CLAUDE.md como fuente de contexto para Claude Code |
+| — | Coordenadas Euro normalizadas a 0-100 via `mapper.py` antes de guardar |
+| — | SQLite en Raspberry Pi es la fuente de verdad (no Supabase) |
+| — | SQL usa `SEASON_ID LIKE` en vez de `YEAR()` |
+
+## Completado
+- [x] Configuración entorno local (Python, VS Code, Git)
 - [x] Conexión base de datos (Supabase + .env)
-- [x] Primer ETL: Sincronización de equipos NBA
-- [x] ETL EuroLeague: Extractor funcional con normalización de coordenadas
-- [x] Ingesta Masiva: Primer bloque de 100 partidos (54k eventos)
-- [x] Frontend: Dashboard Streamlit v1.0 (Light & Flat con Shot Charts)
-- [ ] ETL: Carga masiva hasta 300 partidos Euroliga (En progreso)
-- [ ] Análisis: Comparativa de mapas de tiro NBA vs EuroLeague
+- [x] ETL: Sincronización equipos NBA
+- [x] ETL EuroLeague: Extractor con normalización de coordenadas
+- [x] Ingesta: Primer bloque 100 partidos (54k eventos)
+- [x] Dashboard Streamlit v1.0 (Light & Flat, Shot Charts)
+- [x] CLAUDE.md con arquitectura y guía de desarrollo
