@@ -1,258 +1,142 @@
 # Guía de Generación de Avatares — Dos Aros
 
-Referencia para crear nuevos avatares consistentes con el personaje del proyecto
-usando **Google ImageFX** (https://labs.google/fx/tools/image-fx).
+## Herramienta: Google ImageFX
+URL: https://labs.google/fx/tools/image-fx
 
----
+## Paso a paso para cada avatar
 
-## 1. Cómo usar Google ImageFX con imagen de referencia
+1. Abre Google ImageFX
+2. Haz clic en el icono de imagen/referencia para subir foto
+3. Sube assets/avatars/nba_LAL.PNG como imagen de referencia del personaje
+4. Copia el prompt correspondiente al equipo
+5. Genera la imagen
+6. Si la cara ha cambiado, regenera añadiendo al inicio: "IMPORTANT: Keep exact same face, bald head, short gray beard, same person"
+7. Descarga la imagen generada
+8. Renómbrala según el naming convention
+9. Cópiala a assets/avatars/
+10. Haz git add, commit y push
 
-1. Ve a https://labs.google/fx/tools/image-fx
-2. Haz clic en el icono de imagen (📎) o en **"Add image"** en la barra de prompt
-3. Sube `assets/avatars/nba_LAL.PNG` como imagen de referencia del personaje
-4. Pega el prompt en el campo de texto
-5. Selecciona **ratio 9:16** (vertical, story)
-6. Genera 4 variantes y selecciona la más consistente con el personaje base
-7. Descarga en resolución máxima
+## PROMPT BASE (incluir siempre al inicio)
 
-> **Importante:** ImageFX no siempre respeta 100% la referencia. Si el resultado
-> cambia demasiado la cara, vuelve a subir la imagen de referencia y regenera.
+3D cartoon character, bald man with short gray beard, dark sunglasses, same face and body proportions as reference image. Do NOT change facial features, head shape or body type. Green screen background #00B140. Pixar/Disney 3D style. Full body visible. Sharp clean edges for chroma key removal.
 
----
+## Naming Convention
+- NBA: nba_CODIGO.PNG (ejemplo: nba_GSW.PNG)
+- Euroliga: euro_CODIGO.PNG (ejemplo: euro_MAD.PNG)
+- Presentador: presenter_DESCRIPCION.PNG
 
-## 2. Prompt Base (copiar siempre como base)
+## Estado actual de avatares
 
-```
-3D cartoon character, bald man with short salt-and-pepper beard, wearing round glasses,
-medium build, friendly smile, standing full body pose on a solid bright green background
-(#00C800) for chroma key removal. Pixar/Disney animation style, soft studio lighting,
-sharp details, photorealistic 3D render. The character wears a [JERSEY] basketball jersey
-with number [NUMBER]. Vertical composition, full body visible from head to toe,
-slight 3/4 angle. NO watermarks, NO logos on background, NO text overlays.
-```
-
-Sustituir `[JERSEY]` y `[NUMBER]` con los valores de la tabla de equipos.
-
----
-
-## 3. Tabla de Equipos NBA
-
-| Código | Equipo | Color primario | Jersey prompt | Número sugerido |
-|--------|--------|---------------|---------------|-----------------|
-| ATL | Atlanta Hawks | Rojo `#C8102E` | `red and white Atlanta Hawks` | 11 |
-| BKN | Brooklyn Nets | Negro `#000000` | `black and white Brooklyn Nets` | 7 |
-| BOS | Boston Celtics | Verde `#007A33` | `green and white Boston Celtics` | 7 |
-| CHA | Charlotte Hornets | Teal `#1D1160` | `teal and purple Charlotte Hornets` | 1 |
-| CHI | Chicago Bulls | Rojo `#CE1141` | `red and black Chicago Bulls` | 23 |
-| CLE | Cleveland Cavaliers | Granate `#860038` | `wine and gold Cleveland Cavaliers` | 7 |
-| DAL | Dallas Mavericks | Azul `#00538C` | `blue and silver Dallas Mavericks` | 77 |
-| DEN | Denver Nuggets | Azul marino `#0D2240` | `navy blue and gold Denver Nuggets` | 15 |
-| DET | Detroit Pistons | Azul `#002D62` | `blue and red Detroit Pistons` | 3 |
-| GSW | Golden State Warriors | Azul/Dorado `#1D428A` | `royal blue and gold Golden State Warriors` | 30 |
-| HOU | Houston Rockets | Rojo `#CE1141` | `red and silver Houston Rockets` | 3 |
-| IND | Indiana Pacers | Azul marino `#002D62` | `navy blue and gold Indiana Pacers` | 11 |
-| LAC | LA Clippers | Rojo/Azul `#C8102E` | `red and blue LA Clippers` | 13 |
-| LAL | Los Angeles Lakers | Púrpura `#552583` | `purple and gold Los Angeles Lakers` | 7 |
-| MEM | Memphis Grizzlies | Azul `#5D76A9` | `light blue and navy Memphis Grizzlies` | 12 |
-| MIA | Miami Heat | Rojo oscuro `#98002E` | `black and red Miami Heat` | 3 |
-| MIL | Milwaukee Bucks | Verde `#00471B` | `dark green and cream Milwaukee Bucks` | 34 |
-| MIN | Minnesota Timberwolves | Azul `#0C2340` | `navy blue and green Minnesota Timberwolves` | 7 |
-| NOP | New Orleans Pelicans | Marino `#0C2340` | `navy blue and gold New Orleans Pelicans` | 1 |
-| NYK | New York Knicks | Azul/Naranja `#006BB6` | `blue and orange New York Knicks` | 7 |
-| OKC | Oklahoma City Thunder | Azul `#007AC1` | `blue and orange Oklahoma City Thunder` | 2 |
-| ORL | Orlando Magic | Azul `#0077C0` | `blue and black Orlando Magic` | 1 |
-| PHI | Philadelphia 76ers | Azul `#006BB6` | `blue and red Philadelphia 76ers` | 21 |
-| PHX | Phoenix Suns | Morado `#1D1160` | `purple and orange Phoenix Suns` | 13 |
-| POR | Portland Trail Blazers | Rojo `#E03A3E` | `red and black Portland Trail Blazers` | 0 |
-| SAC | Sacramento Kings | Morado `#5B2B82` | `purple and silver Sacramento Kings` | 7 |
-| SAS | San Antonio Spurs | Negro `#C4CED4` | `black and silver San Antonio Spurs` | 21 |
-| TOR | Toronto Raptors | Rojo `#CE1141` | `red and black Toronto Raptors` | 7 |
-| UTA | Utah Jazz | Azul marino `#002B5C` | `navy blue and yellow Utah Jazz` | 45 |
-| WAS | Washington Wizards | Azul/Rojo `#002B5C` | `navy blue and red Washington Wizards` | 5 |
-
----
-
-## 4. Tabla de Equipos Euroliga
-
-| Código | Equipo | Color primario | Jersey prompt | Número sugerido |
-|--------|--------|---------------|---------------|-----------------|
-| BAR | FC Barcelona | Azul/Grana `#004D98` | `blue and dark red FC Barcelona basketball` | 7 |
-| RMA | Real Madrid | Blanco `#FFFFFF` | `white and gold Real Madrid basketball` | 7 |
-| FEN | Fenerbahçe | Amarillo/Azul `#003087` | `yellow and navy Fenerbahce basketball` | 7 |
-| OLY | Olympiacos | Rojo/Blanco `#CC0000` | `red and white Olympiacos basketball` | 7 |
-| PAO | Panathinaikos | Verde `#006633` | `green and white Panathinaikos basketball` | 7 |
-| CSK | CSKA Moscow | Rojo/Azul `#CC0000` | `red and blue CSKA Moscow basketball` | 7 |
-| EFS | Anadolu Efes | Azul `#003087` | `blue and white Anadolu Efes basketball` | 7 |
-| ZAL | Žalgiris | Verde/Blanco `#007A33` | `green and white Zalgiris basketball` | 7 |
-| BAS | Baskonia | Azul/Rojo `#003087` | `blue and red Baskonia basketball` | 7 |
-| MIL | AS Monaco | Rojo/Blanco `#CC0000` | `red and white AS Monaco basketball` | 7 |
-| VIR | Virtus Bologna | Negro/Blanco `#000000` | `black and white Virtus Bologna basketball` | 7 |
-| PAR | Partizan | Negro/Blanco `#000000` | `black and white Partizan basketball` | 7 |
-| UNI | Valencia Basket | Naranja/Negro `#FF6B00` | `orange and black Valencia Basket` | 7 |
-| BER | Alba Berlin | Rojo/Amarillo `#CC0000` | `red and yellow Alba Berlin basketball` | 7 |
-| MCO | Bayern Munich | Rojo `#DC052D` | `red and white Bayern Munich basketball` | 7 |
-
----
-
-## 5. Poses Especiales
-
-Para variantes del personaje fuera del green screen estándar, usar estos prompts adicionales:
-
-### Pizarra táctica
-```
-[PROMPT BASE sin jersey específico, con camiseta negra Dos Aros]
-The character stands next to a large blackboard with basketball play diagrams (X's and O's),
-pointing at the board with one hand, looking at the viewer with a knowing smile.
-Dark studio background.
-```
-
-### Presentador TV
-```
-[PROMPT BASE]
-The character stands in a modern sports TV studio, wearing a navy blazer over the jersey,
-pointing to a large screen showing basketball statistics. Professional lighting,
-orange and blue color scheme in the background.
-```
-
-### Marco de estadísticas
-```
-[PROMPT BASE]
-The character holds up a large transparent data card/frame showing statistics,
-facing the camera with an excited expression. Dark background with subtle basketball court lines.
-```
-
-### Efecto neón
-```
-[PROMPT BASE]
-The character raises both hands with energy, surrounded by glowing neon light trails
-in pink and purple colors. Dark indoor basketball arena background, dramatic lighting.
-```
-
-### Salto con balón
-```
-[PROMPT BASE]
-The character jumps dynamically holding a basketball above their head in a shooting motion,
-high energy pose, slight upward angle, green screen background.
-```
-
----
-
-## 6. Consejos para Consistencia del Personaje
-
-### Cara
-- Siempre incluir: **"bald man with short salt-and-pepper beard, wearing round glasses"**
-- Si la cara cambia demasiado: subir `nba_LAL.PNG` como referencia visual en cada generación
-- Usar la misma imagen de referencia siempre — no mezclar referencias de distintas generaciones
-
-### Estilo 3D
-- Mantener siempre: **"Pixar/Disney animation style, soft studio lighting, photorealistic 3D render"**
-- No usar "illustration", "cartoon drawing" ni "anime" — el estilo es 3D render específicamente
-
-### Green Screen
-- El fondo SIEMPRE debe ser verde sólido: **"solid bright green background (#00C800) for chroma key removal"**
-- Evitar sombras verdes en el personaje — si aparecen, ajustar el chroma key con `tolerancia` en `image_generator.py`
-
-### Número de camiseta
-- El número **7** es el estándar del personaje para la mayoría de equipos
-- Excepción: CHI usa 23 (Jordan), GSW usa 30 (Curry), MIL usa 34 (Giannis) para contexto
-
----
-
-## 7. Checklist de Avatares
-
-### NBA — Avatares disponibles ✅ / Pendientes ⬜
-
-| Código | Equipo | Estado | Archivo |
-|--------|--------|--------|---------|
-| ATL | Atlanta Hawks | ⬜ | — |
-| BKN | Brooklyn Nets | ⬜ | — |
-| BOS | Boston Celtics | ✅ | `nba_BOS.PNG` |
-| CHA | Charlotte Hornets | ⬜ | — |
-| CHI | Chicago Bulls | ✅ | `nba_CHI.PNG`, `nba_CHI_gorro.PNG` |
-| CLE | Cleveland Cavaliers | ✅ | `nba_CLE.PNG` |
-| DAL | Dallas Mavericks | ⬜ | — |
-| DEN | Denver Nuggets | ✅ | `nba_DEN.PNG`, `nba_DEN_bucket.PNG` |
-| DET | Detroit Pistons | ✅ | `nba_DET.PNG`, `nba_DET_notas.png` |
-| GSW | Golden State Warriors | ⬜ | — |
-| HOU | Houston Rockets | ⬜ | — |
-| IND | Indiana Pacers | ⬜ | — |
-| LAC | LA Clippers | ⬜ | — |
-| LAL | Los Angeles Lakers | ✅ | `nba_LAL.PNG`, `nba_LAL_presentacion.JPG` |
-| MEM | Memphis Grizzlies | ⬜ | — |
-| MIA | Miami Heat | ✅ | `nba_MIA.PNG` |
-| MIL | Milwaukee Bucks | ⬜ | — |
-| MIN | Minnesota Timberwolves | ⬜ | — |
-| NOP | New Orleans Pelicans | ⬜ | — |
-| NYK | New York Knicks | ⬜ | — |
-| OKC | Oklahoma City Thunder | ⬜ | — |
-| ORL | Orlando Magic | ⬜ | — |
-| PHI | Philadelphia 76ers | ⬜ | — |
-| PHX | Phoenix Suns | ⬜ | — |
-| POR | Portland Trail Blazers | ⬜ | — |
-| SAC | Sacramento Kings | ✅ | `nba_SAC.PNG` |
-| SAS | San Antonio Spurs | ⬜ | — |
-| TOR | Toronto Raptors | ⬜ | — |
-| UTA | Utah Jazz | ✅ | `nba_UTA.PNG` |
-| WAS | Washington Wizards | ⬜ | — |
-
-**NBA: 9 equipos ✅ / 21 pendientes ⬜**
-
-### Euroliga — Avatares disponibles ✅ / Pendientes ⬜
-
-| Código | Equipo | Estado | Archivo |
-|--------|--------|--------|---------|
-| BAR | FC Barcelona | ⬜ | — |
-| RMA | Real Madrid | ⬜ | — |
-| FEN | Fenerbahçe | ⬜ | — |
-| OLY | Olympiacos | ⬜ | — |
-| PAO | Panathinaikos | ⬜ | — |
-| CSK | CSKA Moscow | ⬜ | — |
-| EFS | Anadolu Efes | ⬜ | — |
-| ZAL | Žalgiris | ⬜ | — |
-| BAS | Baskonia | ⬜ | — |
-| MIL | AS Monaco | ⬜ | — |
-| VIR | Virtus Bologna | ⬜ | — |
-| PAR | Partizan | ⬜ | — |
-| UNI | Valencia Basket | ⬜ | — |
-| BER | Alba Berlin | ⬜ | — |
-| MCO | Bayern Munich | ⬜ | — |
-| DEFAULT | Genérico verde | ✅ | `euro_DEFAULT_verde.PNG` |
-| RED | Genérico rojo | ✅ | `euro_RED.PNG` |
-
-**Euroliga: 2 genéricos ✅ / 15 equipos específicos pendientes ⬜**
-
-### Poses especiales
-
-| Nombre | Estado | Archivo |
+### NBA — Completados ✅
+| Código | Equipo | Archivo |
 |--------|--------|---------|
-| Pizarra táctica | ✅ | `presenter/presenter_pizarra.jpg` |
-| Presentador TV | ✅ | `presenter/presenter_tv.jpg` |
-| Presentador deportes | ✅ | `presenter/presenter_deportes.jpg` |
-| Presentador Nuggets | ✅ | `presenter/presenter_nuggets.jpg` |
-| Efecto neón v1 | ✅ | `presenter/presenter_neon_v1.PNG` |
-| Efecto neón v2 | ✅ | `presenter/presenter_neon_v2.PNG` |
-| Playoffs | ✅ | `presenter/presenter_playoffs.PNG` |
-| Salto con balón | ⬜ | — |
-| Marco estadísticas | ⬜ | — |
+| LAL | Los Angeles Lakers | nba_LAL.PNG |
+| BOS | Boston Celtics | nba_BOS.PNG |
+| CHI | Chicago Bulls | nba_CHI.PNG |
+| CHI | Chicago Bulls (gorro) | nba_CHI_gorro.PNG |
+| CLE | Cleveland Cavaliers | nba_CLE.PNG |
+| DEN | Denver Nuggets | nba_DEN.PNG |
+| DEN | Denver Nuggets (bucket) | nba_DEN_bucket.PNG |
+| DET | Detroit Pistons | nba_DET.PNG |
+| MIA | Miami Heat | nba_MIA.PNG |
+| SAC | Sacramento Kings | nba_SAC.PNG |
+| UTA | Utah Jazz | nba_UTA.PNG |
 
----
+### NBA — Pendientes ❌ (generar por orden de prioridad)
+| Código | Equipo | Colores | Prompt camiseta |
+|--------|--------|---------|-----------------|
+| GSW | Golden State Warriors | azul/dorado | "Wearing Golden State Warriors blue and gold NBA jersey number 7, jeans, white sneakers. Pointing up with one finger. Confident champion pose." |
+| OKC | Oklahoma City Thunder | azul/naranja | "Wearing OKC Thunder blue and orange NBA jersey number 7, jeans. Dynamic energetic pose, arms wide." |
+| SAS | San Antonio Spurs | negro/plata | "Wearing San Antonio Spurs black and silver NBA jersey number 7, jeans. Calm composed pose, arms crossed." |
+| NYK | New York Knicks | azul/naranja | "Wearing New York Knicks blue and orange NBA jersey number 7, jeans. New York street energy, cool lean pose." |
+| PHX | Phoenix Suns | morado/naranja | "Wearing Phoenix Suns purple and orange NBA jersey number 7, jeans. Shooting motion, one hand raised." |
+| MIL | Milwaukee Bucks | verde/crema | "Wearing Milwaukee Bucks green and cream NBA jersey number 7, jeans. Proud stance, hands on hips." |
+| BKN | Brooklyn Nets | negro/blanco | "Wearing Brooklyn Nets black and white NBA jersey number 7, jeans. Cool NYC streetball pose, slight lean." |
+| MIN | Minnesota Timberwolves | azul/verde | "Wearing Minnesota Timberwolves blue and green NBA jersey number 7, jeans. Surprised excited pose." |
+| DAL | Dallas Mavericks | azul/plata | "Wearing Dallas Mavericks blue and silver NBA jersey number 7, jeans. Confident dribbling motion pose." |
+| HOU | Houston Rockets | rojo/plata | "Wearing Houston Rockets red and silver NBA jersey number 7, jeans. Rocket launch energy, pointing up." |
+| ATL | Atlanta Hawks | rojo/dorado | "Wearing Atlanta Hawks red and gold NBA jersey number 7, jeans. Passionate celebratory pose." |
+| TOR | Toronto Raptors | rojo/negro | "Wearing Toronto Raptors red and black NBA jersey number 7, jeans. Fierce competitive pose." |
+| POR | Portland Trail Blazers | rojo/negro | "Wearing Portland Trail Blazers red and black NBA jersey number 7, jeans. Pacific Northwest chill energy." |
+| MEM | Memphis Grizzlies | azul/dorado | "Wearing Memphis Grizzlies blue and gold NBA jersey number 7, jeans. Gritty determined pose." |
+| NOP | New Orleans Pelicans | azul/dorado | "Wearing New Orleans Pelicans blue and gold NBA jersey number 7, jeans. Bayou swagger pose." |
+| IND | Indiana Pacers | azul/dorado | "Wearing Indiana Pacers blue and gold NBA jersey number 7, jeans. Midwest hardworking pose." |
+| ORL | Orlando Magic | azul/negro | "Wearing Orlando Magic blue and black NBA jersey number 7, jeans. Magical surprised pose." |
+| WAS | Washington Wizards | azul/rojo | "Wearing Washington Wizards blue and red NBA jersey number 7, jeans. Capitol city confident pose." |
+| CHA | Charlotte Hornets | morado/teal | "Wearing Charlotte Hornets purple and teal NBA jersey number 7, jeans. Buzzing energy pose." |
+| UTA | Utah Jazz alt | azul/dorado | "Wearing Utah Jazz navy blue and gold alternate NBA jersey number 7, jeans. Jazz musician cool pose." |
 
-## 8. Naming Convention
+### Euroliga — Completados ✅
+| Código | Equipo | Archivo |
+|--------|--------|---------|
+| RED | Crvena Zvezda Belgrade | euro_RED.PNG |
 
-```
-assets/avatars/
-├── nba_CODIGO.PNG          # Avatar estándar NBA (green screen, pose neutral)
-├── nba_CODIGO_variante.PNG # Variante del mismo equipo (bucket, gorro, etc.)
-├── euro_CODIGO.PNG         # Avatar estándar Euroliga
-├── presenter/
-│   └── presenter_NOMBRE.jpg  # Poses especiales sin contexto de equipo
-└── posts/
-    └── post_DESCRIPCION.PNG  # Imágenes ya compuestas con texto (no reutilizables)
-```
+### Euroliga — Pendientes ❌ (generar por orden de prioridad)
+| Código | Equipo | Colores | Prompt camiseta |
+|--------|--------|---------|-----------------|
+| MAD | Real Madrid | blanco/dorado | "Wearing Real Madrid EuroLeague white and gold jersey number 7, jeans. Royal confident pose, arms crossed." |
+| BAR | FC Barcelona | azul/rojo | "Wearing FC Barcelona EuroLeague blue and red jersey number 7, jeans. Pointing upward, energetic pose." |
+| OLY | Olympiacos Piraeus | rojo/blanco | "Wearing Olympiacos red and white EuroLeague jersey number 7, jeans. Passionate fist pump pose." |
+| PAN | Panathinaikos | verde/negro | "Wearing Panathinaikos green and black EuroLeague jersey number 7, jeans. Thinking analytical pose." |
+| ULK | Fenerbahce Istanbul | amarillo/marino | "Wearing Fenerbahce yellow and navy EuroLeague jersey number 7, jeans. Dynamic running pose." |
+| IST | Anadolu Efes | azul/blanco | "Wearing Anadolu Efes light blue and white EuroLeague jersey number 7, jeans. Shooting motion pose." |
+| ZAL | Zalgiris Kaunas | verde/blanco | "Wearing Zalgiris green and white EuroLeague jersey number 7, jeans. Proud hands on hips pose." |
+| PAR | Partizan Belgrade | negro/blanco | "Wearing Partizan black and white EuroLeague jersey number 7, jeans. Cool relaxed pose." |
+| MCO | AS Monaco | rojo/blanco | "Wearing AS Monaco red and white EuroLeague jersey number 7, jeans. Elegant one hand in pocket pose." |
+| MIL | EA7 Milan | blanco/rojo | "Wearing EA7 Milan white and red EuroLeague jersey number 7, jeans. Italian stylish sideways look pose." |
+| TEL | Maccabi Tel Aviv | amarillo/azul | "Wearing Maccabi Tel Aviv yellow and blue EuroLeague jersey number 7, jeans. Intense fists clenched pose." |
+| HTA | Hapoel Tel Aviv | rojo/negro | "Wearing Hapoel IBI Tel Aviv red and black EuroLeague jersey number 7, jeans. Underdog victory arms raised." |
+| BAS | Baskonia Vitoria | azul/rojo | "Wearing Baskonia blue and red EuroLeague jersey number 7, jeans. Defensive low stance pose." |
+| PRS | Paris Basketball | azul/rojo | "Wearing Paris Basketball blue and red EuroLeague jersey number 7, jeans. Cool Parisian lean pose." |
+| MUN | Bayern Munich | rojo/blanco | "Wearing Bayern Munich red and white EuroLeague jersey number 7, jeans. Power arms crossed pose." |
+| VIR | Virtus Bologna | negro/blanco | "Wearing Virtus Bologna black and white EuroLeague jersey number 7, jeans. Classic pointing pose." |
+| DUB | Dubai Basketball | negro/dorado | "Wearing Dubai Basketball black and gold EuroLeague jersey number 7, jeans. Luxury confident smile pose." |
+| ASV | LDLC ASVEL | azul/amarillo | "Wearing LDLC ASVEL blue and yellow EuroLeague jersey number 7, jeans. Analytical hand on chin pose." |
+| PAM | Valencia Basket | negro/naranja | "Wearing Valencia Basket black and orange EuroLeague jersey number 7, jeans. Energetic jumping pose." |
 
-**Reglas:**
-- Siempre mayúsculas para el código: `nba_LAL.PNG`, no `nba_lal.png`
-- Extensión `.PNG` para imágenes con transparencia/green screen
-- Extensión `.jpg` para imágenes compuestas sin necesidad de transparencia
-- El código sigue la abreviatura oficial NBA de 3 letras
-- Para Euroliga usar el código de 3 letras más reconocible internacionalmente
+### Presentador — Completados ✅
+| Descripción | Archivo |
+|-------------|---------|
+| Pizarra táctica | presenter_pizarra.jpg |
+| Presentador TV | presenter_tv.jpg |
+| Presentador deportes | presenter_deportes.jpg |
+| Presentador Nuggets | presenter_nuggets.jpg |
+| Neón v1 | presenter_neon_v1.PNG |
+| Neón v2 | presenter_neon_v2.PNG |
+| Playoffs | presenter_playoffs.PNG |
+
+### Presentador — Pendientes ❌
+| Descripción | Nombre archivo | Prompt |
+|-------------|----------------|--------|
+| Breaking news | presenter_breaking.PNG | "[BASE PRESENTADOR] Wearing Dos Aros jersey with blazer. Holding papers urgently. Breaking news energy. Red blank banner at bottom." |
+| Con tablet | presenter_tablet.PNG | "[BASE PRESENTADOR] Wearing Dos Aros jersey. Holding iPad with blank screen. Tapping screen analytically." |
+| Debate | presenter_debate.PNG | "[BASE PRESENTADOR] Wearing Dos Aros jersey with blazer. Sitting on desk edge, arms open debating. Two blank screens behind." |
+| Reacción viral | presenter_reaction.PNG | "[BASE PRESENTADOR] Wearing Dos Aros jersey. Jaw dropped pointing off-screen left. Pure reaction meme pose." |
+| Récord histórico | presenter_record.PNG | "[BASE PRESENTADOR] Wearing Dos Aros jersey. Holding large blank golden trophy with both hands presenting to camera." |
+| Predicción | presenter_prediction.PNG | "[BASE PRESENTADOR] Wearing Dos Aros jersey. Finger pointing up, holding glowing blank crystal ball." |
+| Cierre reel | presenter_closing.PNG | "[BASE PRESENTADOR] Wearing Dos Aros jersey with blazer. Thumbs up, big smile, slight bow. Sign-off pose." |
+
+## Orden de generación recomendado
+
+### Sesión 1 — NBA prioritarios (equipos que más aparecen en datos)
+GSW → OKC → SAS → NYK → PHX → MIL
+
+### Sesión 2 — NBA resto
+BKN → MIN → DAL → HOU → ATL → TOR → POR → MEM → NOP → IND → ORL → WAS → CHA
+
+### Sesión 3 — Euroliga prioritarios
+MAD → BAR → OLY → PAN → ULK → ZAL
+
+### Sesión 4 — Euroliga resto
+IST → PAR → MCO → MIL → TEL → HTA → BAS → PRS → MUN → VIR → DUB → ASV → PAM
+
+### Sesión 5 — Presentador
+presenter_breaking → presenter_tablet → presenter_debate → presenter_reaction → presenter_record → presenter_prediction → presenter_closing
+
+## Notas importantes
+
+- Siempre usar nba_LAL.PNG como imagen de referencia del personaje
+- Si la cara cambia regenerar añadiendo: "IMPORTANT: Keep exact same face, bald head, short gray beard, same person as reference"
+- Fondo siempre #00B140 para chroma key automático
+- Guardar en assets/avatars/ con naming convention exacto
+- Hacer git push después de cada sesión
