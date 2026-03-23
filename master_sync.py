@@ -7,8 +7,10 @@ Orquestador principal. Se ejecuta via cron cada día a las 9:00.
 Flujo:
   1. Extrae resultados NBA de ayer (API → DB)
   2. Extrae resultados Euroliga de ayer (API → DB)
-  3. Detecta perlas (actuaciones destacadas) y las envía a Telegram
-  4. Genera hilo X y lo envía a Telegram para revisión
+  3. Envía resumen de resultados a Telegram
+  4. Detecta perlas (actuaciones destacadas) y las envía a Telegram
+  5. Genera hilo X y lo envía a Telegram para revisión
+  6. Genera story 1080x1920 con la perla top del día y la envía a Telegram
 
 Cron actual:
   0 9 * * * /home/pi/dosaros-data-project/venv/bin/python
@@ -27,9 +29,10 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from src.etl.extract_yesterday_results import get_nba_results_yesterday
 from src.etl.extract_yesterday_euro import extract_euro_results_yesterday
-from src.automation.bot_manager import enviar_mensaje
+from src.automation.bot_manager import enviar_mensaje, enviar_grafico
 from src.processors.insight_generator import buscar_perlas
 from src.processors.gemini_social import ejecutar_generacion_hilo
+from src.processors.image_generator import generar_imagen_perla
 
 # Logging
 logging.basicConfig(
@@ -80,9 +83,10 @@ def main():
 
     # ── PASO 4: Perlas ────────────────────────────────────────────────────────
     print("💎 Detectando perlas...")
+    resultado_perlas = {"nba": [], "euroliga": []}
     try:
         # buscar_perlas() envía a Telegram internamente y devuelve dict
-        buscar_perlas(enviar_telegram=True)
+        resultado_perlas = buscar_perlas(enviar_telegram=True) or resultado_perlas
         logging.info("Perlas procesadas y enviadas")
     except Exception as e:
         logging.error(f"Error en perlas: {e}")
@@ -97,6 +101,36 @@ def main():
     except Exception as e:
         logging.error(f"Error generando hilo X: {e}")
         enviar_mensaje(f"⚠️ Error generando hilo X: {e}")
+
+    # ── PASO 6: Story del día ─────────────────────────────────────────────────
+    print("📸 Generando story del día...")
+    try:
+        # Seleccionar la perla más destacada: primero NBA, si no Euro
+        perlas_nba  = resultado_perlas.get("nba", [])
+        perlas_euro = resultado_perlas.get("euroliga", [])
+        perla_top   = (perlas_nba or perlas_euro or [None])[0]
+
+        if perla_top:
+            perla_imagen = {
+                "equipo":          perla_top.get("equipo", "DEFAULT"),
+                "dato_principal":  perla_top.get("detalle", ""),
+                "subtitulo":       f"{perla_top.get('jugador', '')} — {perla_top.get('tipo', '')}",
+                "contexto":        perla_top.get("partido", ""),
+                "fecha":           fecha_str,
+                "fuente":          "@dos_aros",
+            }
+            path_imagen = generar_imagen_perla(perla_imagen)
+            enviar_grafico(
+                path_imagen,
+                caption="📸 Story del día — lista para publicar en Instagram"
+            )
+            logging.info(f"Story del día generada y enviada: {path_imagen}")
+        else:
+            print("  Sin perlas disponibles para generar story.")
+            logging.info("Story del día omitida: sin perlas")
+    except Exception as e:
+        logging.error(f"Error generando story del día: {e}")
+        print(f"  ⚠️ Error en story del día: {e} — continuando.")
 
     # ── FIN ───────────────────────────────────────────────────────────────────
     duracion = (datetime.now() - inicio).seconds

@@ -11,7 +11,7 @@ Fase: Ingesta masiva EuroLeague + análisis comparativo NBA vs Euro
 ## Última sesión
 <!-- Fecha y resumen de lo que se hizo -->
 - **Fecha:** 2026-03-23
-- **Hecho:** Mejorado `src/processors/image_generator.py` — logo blanco izq, dato 160px, bloque fecha/fuente, recorte watermark avatar
+- **Hecho:** `master_sync.py` PASO 6 — genera story del día con perla top y la envía a Telegram; guía de avatares ImageFX creada
 
 ## En progreso ahora
 <!-- Máx. 3 cosas activas -->
@@ -24,9 +24,9 @@ Fase: Ingesta masiva EuroLeague + análisis comparativo NBA vs Euro
 
 ## Próximos pasos (ordenados por prioridad)
 <!-- Lo que toca hacer en las próximas 1-3 sesiones -->
-1. Lanzar `historic_pbp_loader.py --liga ambas --bloque 2023-2025` en la Raspberry Pi
-2. Primer análisis comparativo de shot charts
-3. Consolidar extractores ETL duplicados en `src/etl/`
+1. Generar avatares pendientes con Google ImageFX (ver `assets/avatar_generation_guide.md`) — 21 NBA + 15 Euro pendientes
+2. Lanzar `historic_pbp_loader.py --liga ambas --bloque 2023-2025` en la Raspberry Pi
+3. Primer análisis comparativo de shot charts
 
 ## Decisiones tomadas (log)
 <!-- Registro de decisiones de diseño para no repetir debates -->
@@ -48,3 +48,5 @@ Fase: Ingesta masiva EuroLeague + análisis comparativo NBA vs Euro
 - [x] ETL: `historic_pbp_loader.py` — carga histórica masiva PBP NBA + Euroliga (args `--liga`, `--bloque`)
 - [x] Assets: 27 avatars renombrados con esquema final (código equipo NBA/Euro) y organizados en `avatars/`, `avatars/posts/`, `avatars/presenter/`
 - [x] Processors: `image_generator.py` v2 — logo blanco (invertido) izq, dato 160px, fecha/fuente, recorte watermark, marco 60% alto
+- [x] Automation: `master_sync.py` PASO 6 — story del día automática con perla top enviada a Telegram
+- [x] Assets: `avatar_generation_guide.md` — guía completa ImageFX con prompts, tabla equipos y checklist
