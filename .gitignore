@@ -79,3 +79,4 @@ htmlcov/
 
 # Streamlit
 .streamlit/secrets.toml
+assets/generated/
