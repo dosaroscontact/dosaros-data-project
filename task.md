@@ -11,7 +11,7 @@ Fase: Ingesta masiva EuroLeague + análisis comparativo NBA vs Euro
 ## Última sesión
 <!-- Fecha y resumen de lo que se hizo -->
 - **Fecha:** 2026-03-23
-- **Hecho:** Creado `src/processors/image_generator.py` — genera stories 1080x1920 con avatar chroma key, fondo por equipo y texto estructurado
+- **Hecho:** Mejorado `src/processors/image_generator.py` — logo blanco izq, dato 160px, bloque fecha/fuente, recorte watermark avatar
 
 ## En progreso ahora
 <!-- Máx. 3 cosas activas -->
@@ -47,4 +47,4 @@ Fase: Ingesta masiva EuroLeague + análisis comparativo NBA vs Euro
 - [x] CLAUDE.md con arquitectura y guía de desarrollo
 - [x] ETL: `historic_pbp_loader.py` — carga histórica masiva PBP NBA + Euroliga (args `--liga`, `--bloque`)
 - [x] Assets: 27 avatars renombrados con esquema final (código equipo NBA/Euro) y organizados en `avatars/`, `avatars/posts/`, `avatars/presenter/`
-- [x] Processors: `image_generator.py` — story 1080x1920 con avatar chroma key (numpy), fondo por equipo, marco de texto, logo
+- [x] Processors: `image_generator.py` v2 — logo blanco (invertido) izq, dato 160px, fecha/fuente, recorte watermark, marco 60% alto
