@@ -11,7 +11,7 @@ Fase: Ingesta masiva EuroLeague + análisis comparativo NBA vs Euro
 ## Última sesión
 <!-- Fecha y resumen de lo que se hizo -->
 - **Fecha:** 2026-03-23
-- **Hecho:** Renombrados 27 avatars en `assets/avatars/` con nombres descriptivos (equipo, acción, contexto)
+- **Hecho:** Renombrado final de avatars con esquema por código de equipo y reorganización en subdirectorios `posts/` y `presenter/`
 
 ## En progreso ahora
 <!-- Máx. 3 cosas activas -->
@@ -46,4 +46,4 @@ Fase: Ingesta masiva EuroLeague + análisis comparativo NBA vs Euro
 - [x] Dashboard Streamlit v1.0 (Light & Flat, Shot Charts)
 - [x] CLAUDE.md con arquitectura y guía de desarrollo
 - [x] ETL: `historic_pbp_loader.py` — carga histórica masiva PBP NBA + Euroliga (args `--liga`, `--bloque`)
-- [x] Assets: 27 avatars renombrados con nombres descriptivos en `assets/avatars/`
+- [x] Assets: 27 avatars renombrados con esquema final (código equipo NBA/Euro) y organizados en `avatars/`, `avatars/posts/`, `avatars/presenter/`
