@@ -11,11 +11,11 @@ Fase: Ingesta masiva EuroLeague + análisis comparativo NBA vs Euro
 ## Última sesión
 <!-- Fecha y resumen de lo que se hizo -->
 - **Fecha:** 2026-03-23
-- **Hecho:** Creado CLAUDE.md con arquitectura y reglas del proyecto
+- **Hecho:** Creado `src/etl/historic_pbp_loader.py` — carga histórica masiva de PBP para NBA y Euroliga con args `--liga` y `--bloque`
 
 ## En progreso ahora
 <!-- Máx. 3 cosas activas -->
-- [ ] ETL: Carga masiva hasta 300 partidos Euroliga
+- [ ] Ejecutar primera carga histórica: `python src/etl/historic_pbp_loader.py --liga ambas --bloque 2023-2025`
 - [ ] Análisis: Comparativa mapas de tiro NBA vs EuroLeague
 
 ## Bloqueantes / Problemas abiertos
@@ -24,7 +24,7 @@ Fase: Ingesta masiva EuroLeague + análisis comparativo NBA vs Euro
 
 ## Próximos pasos (ordenados por prioridad)
 <!-- Lo que toca hacer en las próximas 1-3 sesiones -->
-1. Completar ingesta hasta 300 partidos Euro
+1. Lanzar `historic_pbp_loader.py --liga ambas --bloque 2023-2025` en la Raspberry Pi
 2. Primer análisis comparativo de shot charts
 3. Consolidar extractores ETL duplicados en `src/etl/`
 
@@ -45,3 +45,4 @@ Fase: Ingesta masiva EuroLeague + análisis comparativo NBA vs Euro
 - [x] Ingesta: Primer bloque 100 partidos (54k eventos)
 - [x] Dashboard Streamlit v1.0 (Light & Flat, Shot Charts)
 - [x] CLAUDE.md con arquitectura y guía de desarrollo
+- [x] ETL: `historic_pbp_loader.py` — carga histórica masiva PBP NBA + Euroliga (args `--liga`, `--bloque`)
