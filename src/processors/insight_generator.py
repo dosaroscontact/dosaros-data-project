@@ -1040,8 +1040,16 @@ def buscar_perlas(fecha=None, enviar_telegram=True):
     perlas_nba += detectar_equipo_imparable_nba(fecha)
     perlas_nba += detectar_remontada_epica_nba(fecha)
 
-    # Ordenar por peso (importancia) y eliminar duplicados de jugador
+    # Ordenar por peso y deduplicar: un jugador solo aparece en su categoría de mayor peso
     perlas_nba = sorted(perlas_nba, key=lambda x: x["peso"], reverse=True)
+    _vistos = {}
+    _dedup = []
+    for p in perlas_nba:
+        clave = p["jugador"] if p["jugador"] else f"__equipo__{p['equipo']}__{p['partido']}"
+        if clave not in _vistos:
+            _vistos[clave] = True
+            _dedup.append(p)
+    perlas_nba = _dedup
 
     # ── EUROLIGA ─────────────────────────────────────────────────────────────
     perlas_euro = []
