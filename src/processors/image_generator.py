@@ -49,19 +49,67 @@ COLORES_EQUIPO = {
 
 # ──────────────────────────────────────────────
 # Descripciones de camiseta para Google ImageFX
+# Cubre los 30 equipos NBA + 20 Euroliga
 # ──────────────────────────────────────────────
-JERSEYS_IMAGEFX = {
-    "LAL":     "purple and gold Lakers jersey",
-    "BOS":     "green and white Celtics jersey",
-    "MIA":     "black and red Heat jersey",
-    "CHI":     "red and black Bulls jersey",
-    "DEN":     "navy and gold Nuggets jersey",
-    "CLE":     "wine and gold Cavaliers jersey",
-    "DET":     "blue and red Pistons jersey",
-    "SAC":     "purple and black Kings jersey",
-    "UTA":     "navy and yellow Jazz jersey",
-    "DEFAULT": "navy blue Dos Aros jersey number 26",
+TEAM_JERSEY_COLORS = {
+    # ── NBA ──────────────────────────────────
+    "ATL": "red and gold Atlanta Hawks jersey, number 7",
+    "BOS": "green and white Boston Celtics jersey, number 7",
+    "BKN": "black and white Brooklyn Nets jersey, number 7",
+    "CHA": "purple and teal Charlotte Hornets jersey, number 7",
+    "CHI": "red and black Chicago Bulls jersey, number 7",
+    "CLE": "wine and gold Cleveland Cavaliers jersey, number 7",
+    "DAL": "blue and silver Dallas Mavericks jersey, number 7",
+    "DEN": "navy and gold Denver Nuggets jersey, number 7",
+    "DET": "blue and red Detroit Pistons jersey, number 7",
+    "GSW": "royal blue and gold Golden State Warriors jersey, number 7",
+    "HOU": "red and silver Houston Rockets jersey, number 7",
+    "IND": "blue and gold Indiana Pacers jersey, number 7",
+    "LAC": "red and blue LA Clippers jersey, number 7",
+    "LAL": "purple and gold Los Angeles Lakers jersey, number 7",
+    "MEM": "navy and gold Memphis Grizzlies jersey, number 7",
+    "MIA": "black and red Miami Heat jersey, number 7",
+    "MIL": "green and cream Milwaukee Bucks jersey, number 7",
+    "MIN": "blue and green Minnesota Timberwolves jersey, number 7",
+    "NOP": "navy and gold New Orleans Pelicans jersey, number 7",
+    "NYK": "blue and orange New York Knicks jersey, number 7",
+    "OKC": "blue and orange Oklahoma City Thunder jersey, number 7",
+    "ORL": "blue and black Orlando Magic jersey, number 7",
+    "PHI": "blue and red Philadelphia 76ers jersey, number 7",
+    "PHX": "purple and orange Phoenix Suns jersey, number 7",
+    "POR": "red and black Portland Trail Blazers jersey, number 7",
+    "SAC": "purple and silver Sacramento Kings jersey, number 7",
+    "SAS": "black and silver San Antonio Spurs jersey, number 7",
+    "TOR": "red and black Toronto Raptors jersey, number 7",
+    "UTA": "navy and gold Utah Jazz jersey, number 7",
+    "WAS": "blue and red Washington Wizards jersey, number 7",
+    # ── Euroliga ─────────────────────────────
+    "ASV": "blue and yellow LDLC ASVEL jersey, number 7",
+    "BAR": "blue and red FC Barcelona jersey, number 7",
+    "BAS": "blue and red Baskonia jersey, number 7",
+    "DUB": "black and gold Dubai Basketball jersey, number 7",
+    "HTA": "red and black Hapoel Tel Aviv jersey, number 7",
+    "IST": "blue and white Anadolu Efes jersey, number 7",
+    "MAD": "white and gold Real Madrid jersey, number 7",
+    "MCO": "red and white AS Monaco jersey, number 7",
+    "MIL_EURO": "white and red EA7 Milan jersey, number 7",  # evita colisión con MIL (Bucks)
+    "MUN": "red and white Bayern Munich jersey, number 7",
+    "OLY": "red and white Olympiacos jersey, number 7",
+    "PAM": "black and orange Valencia Basket jersey, number 7",
+    "PAN": "green and black Panathinaikos jersey, number 7",
+    "PAR": "black and white Partizan Belgrade jersey, number 7",
+    "PRS": "blue and red Paris Basketball jersey, number 7",
+    "RED": "red and white Crvena Zvezda Belgrade jersey, number 7",
+    "TEL": "yellow and blue Maccabi Tel Aviv jersey, number 7",
+    "ULK": "yellow and navy Fenerbahce Beko jersey, number 7",
+    "VIR": "black and white Virtus Bologna jersey, number 7",
+    "ZAL": "green and white Zalgiris Kaunas jersey, number 7",
+    # ── Default ──────────────────────────────
+    "DEFAULT": "black t-shirt with bold red number 7, diagonal red-white-red stripe, Dos Aros brand",
 }
+
+# Alias para compatibilidad con código previo
+JERSEYS_IMAGEFX = TEAM_JERSEY_COLORS
 
 # ──────────────────────────────────────────────
 # Posturas recomendadas por tipo de perla
@@ -379,8 +427,8 @@ def generar_prompt_imagefx(perla: dict, imagen_pillow_path: str) -> str:
     tipo    = str(perla.get("tipo", "DEFAULT")).lower()
     postura = POSTURAS_IMAGEFX.get(tipo, "standing at a basketball analytics whiteboard, pointer in hand")
 
-    # Camiseta
-    jersey = JERSEYS_IMAGEFX.get(equipo, JERSEYS_IMAGEFX["DEFAULT"])
+    # Camiseta (prueba código directo; para Euroliga Milan usa MIL_EURO)
+    jersey = TEAM_JERSEY_COLORS.get(equipo, TEAM_JERSEY_COLORS["DEFAULT"])
 
     # Avatar de referencia
     avatar_path = str(AVATARS_DIR / f"nba_{equipo}.PNG")
