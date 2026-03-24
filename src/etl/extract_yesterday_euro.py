@@ -3,11 +3,12 @@ from datetime import datetime, timedelta
 from euroleague_api.game_stats import GameStats
 from src.database.db_utils import get_db_connection
 
-def extract_euro_results_yesterday():
-    # 1. Forzamos la fecha de ayer (2026-03-20 si hoy es 21)
-    yesterday_dt = datetime.now() - timedelta(days=1)
-    yesterday_str = yesterday_dt.strftime('%Y-%m-%d')
-    season = 2025 # Temporada correcta para marzo 2026
+def extract_euro_results_yesterday(fecha=None):
+    # 1. Fecha indicada o ayer por defecto
+    yesterday_str = fecha if fecha else (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
+    # Temporada EuroLeague: oct-sep. Si mes >= 10, la temporada empieza ese año; si no, el año anterior
+    _dt = datetime.strptime(yesterday_str, '%Y-%m-%d')
+    season = _dt.year if _dt.month >= 10 else _dt.year - 1
     
     try:
         gs = GameStats("E")

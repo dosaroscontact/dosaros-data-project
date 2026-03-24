@@ -3,9 +3,9 @@ from datetime import datetime, timedelta
 from nba_api.stats.endpoints import scoreboardv3
 from src.database.db_utils import get_db_connection
 
-def get_nba_results_yesterday():
-    # Fecha de ayer
-    yesterday = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
+def get_nba_results_yesterday(fecha=None):
+    # Fecha de ayer o la fecha indicada
+    yesterday = fecha if fecha else (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
     
     try:
         board = scoreboardv3.ScoreboardV3(game_date=yesterday)
