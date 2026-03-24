@@ -32,7 +32,7 @@ DEFAULT_AVATAR = AVATARS_DIR / "presenter" / "presenter_pizarra.jpg"
 W, H = 1080, 1920
 
 # ──────────────────────────────────────────────
-# Diccionario de colores por equipo
+# Diccionario de colores por equipo (RGB)
 # ──────────────────────────────────────────────
 COLORES_EQUIPO = {
     "LAL": (85,  37, 130),   # púrpura Lakers
@@ -45,6 +45,35 @@ COLORES_EQUIPO = {
     "SAC": (91,  43, 130),   # púrpura Kings
     "UTA": (0,   43,  92),   # azul marino Jazz
     "DEFAULT": (20, 20, 30), # negro azulado
+}
+
+# ──────────────────────────────────────────────
+# Descripciones de camiseta para Google ImageFX
+# ──────────────────────────────────────────────
+JERSEYS_IMAGEFX = {
+    "LAL":     "purple and gold Lakers jersey",
+    "BOS":     "green and white Celtics jersey",
+    "MIA":     "black and red Heat jersey",
+    "CHI":     "red and black Bulls jersey",
+    "DEN":     "navy and gold Nuggets jersey",
+    "CLE":     "wine and gold Cavaliers jersey",
+    "DET":     "blue and red Pistons jersey",
+    "SAC":     "purple and black Kings jersey",
+    "UTA":     "navy and yellow Jazz jersey",
+    "DEFAULT": "navy blue Dos Aros jersey number 26",
+}
+
+# ──────────────────────────────────────────────
+# Posturas recomendadas por tipo de perla
+# ──────────────────────────────────────────────
+POSTURAS_IMAGEFX = {
+    "explosion_anotadora": "celebrating with both arms raised high, triumphant expression",
+    "rebotes":             "athletic crouching stance, arms outstretched ready to grab a rebound",
+    "defensa":             "athletic crouching defensive stance, low center of gravity, intense focus",
+    "triple_doble":        "surprised reaction pose, hands on head, wide eyes, amazed expression",
+    "record":              "presenter pointing to a stats board with one hand, confident smile",
+    "record_personal":     "presenter pointing to a stats board with one hand, confident smile",
+    "equipo":              "arms spread wide celebrating, team pride gesture",
 }
 
 # ──────────────────────────────────────────────
@@ -318,6 +347,57 @@ def generar_imagen_perla(perla: dict) -> str:
     imagen_final.save(str(path_out), "PNG", quality=95)
     print(f"  Imagen generada: {path_out}")
     return str(path_out)
+
+
+# ──────────────────────────────────────────────
+# Prompt para Google ImageFX
+# ──────────────────────────────────────────────
+
+def generar_prompt_imagefx(perla: dict, imagen_pillow_path: str) -> str:
+    """
+    Genera un prompt listo para pegar en Google ImageFX.
+
+    Args:
+        perla             : dict de la perla (claves: equipo, tipo, jugador,
+                            dato_principal o stat_clave+valor, razon)
+        imagen_pillow_path: path de la imagen Pillow generada (referencia visual)
+
+    Returns:
+        str con el prompt completo para Google ImageFX
+    """
+    equipo = str(perla.get("equipo", "DEFAULT")).upper()
+
+    # Dato que aparece en la imagen Pillow
+    if perla.get("dato_principal"):
+        dato = perla["dato_principal"]
+    else:
+        stat  = perla.get("stat_clave", "")
+        valor = perla.get("valor", "")
+        dato  = f"{valor} {stat}".strip() if (stat or valor) else perla.get("razon", "")
+
+    # Tipo → postura
+    tipo    = str(perla.get("tipo", "DEFAULT")).lower()
+    postura = POSTURAS_IMAGEFX.get(tipo, "standing at a basketball analytics whiteboard, pointer in hand")
+
+    # Camiseta
+    jersey = JERSEYS_IMAGEFX.get(equipo, JERSEYS_IMAGEFX["DEFAULT"])
+
+    # Avatar de referencia
+    avatar_path = str(AVATARS_DIR / f"nba_{equipo}.PNG")
+
+    prompt = (
+        f"Basketball analytics presenter character based on the reference avatar attached. "
+        f"The character is wearing a {jersey}. "
+        f"The Dos Aros logo is clearly visible on the left chest of the jersey. "
+        f"The character is {postura}. "
+        f"A large screen or holographic display behind the character shows the stat: \"{dato}\". "
+        f"Professional NBA arena background with dramatic spotlights. "
+        f"Photorealistic, cinematic quality, vibrant colors, 9:16 vertical format."
+    )
+
+    print(f"  Avatar referencia: {avatar_path}")
+    print(f"  Imagen Pillow    : {imagen_pillow_path}")
+    return prompt
 
 
 # ──────────────────────────────────────────────

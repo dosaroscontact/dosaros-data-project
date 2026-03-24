@@ -32,7 +32,7 @@ from src.etl.extract_yesterday_euro import extract_euro_results_yesterday
 from src.automation.bot_manager import enviar_mensaje, enviar_grafico
 from src.processors.insight_generator import buscar_perlas
 from src.processors.gemini_social import ejecutar_generacion_hilo
-from src.processors.image_generator import generar_imagen_perla
+from src.processors.image_generator import generar_imagen_perla, generar_prompt_imagefx
 
 # Logging
 logging.basicConfig(
@@ -125,6 +125,21 @@ def main():
                 caption="📸 Story del día — lista para publicar en Instagram"
             )
             logging.info(f"Story del día generada y enviada: {path_imagen}")
+
+            # Prompt para Google ImageFX (usa perla_top para tener el campo 'tipo')
+            try:
+                equipo_code  = perla_top.get("equipo", "DEFAULT").upper()
+                avatar_ref   = f"assets/avatars/nba_{equipo_code}.PNG"
+                prompt_ifx   = generar_prompt_imagefx(perla_top, path_imagen)
+                enviar_mensaje(
+                    f"🎨 *Prompt para Google ImageFX*\n"
+                    f"📎 Adjunta: {avatar_ref} como referencia\n\n"
+                    f"{prompt_ifx}"
+                )
+                logging.info("Prompt ImageFX enviado a Telegram")
+            except Exception as e:
+                logging.error(f"Error generando prompt ImageFX: {e}")
+                print(f"  Aviso: no se pudo generar prompt ImageFX: {e}")
         else:
             print("  Sin perlas disponibles para generar story.")
             logging.info("Story del día omitida: sin perlas")
