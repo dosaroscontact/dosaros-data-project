@@ -72,11 +72,11 @@ def cargar_games_euro(anos):
         for _, row in df.iterrows():
             try:
                 gamecode = str(row.get("gamecode", "")).strip()
+                # Extraer solo el número si viene con metadata de pandas
+                if '\n' in gamecode:
+                    gamecode = gamecode.split('\n')[0].strip()
                 # Construir game_id: si ya tiene prefijo E{season}_ lo respetamos
-                if gamecode.startswith(f"E{season}_"):
-                    game_id = gamecode
-                else:
-                    game_id = f"E{season}_{gamecode}"
+                game_id = gamecode if gamecode.startswith(f"E{season}_") else f"E{season}_{gamecode}"
 
                 fecha_raw = row.get("date", None)
                 fecha = _parsear_fecha(fecha_raw)
