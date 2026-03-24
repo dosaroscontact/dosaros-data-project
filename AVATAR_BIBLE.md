@@ -58,7 +58,7 @@ Full body visible. Sharp clean edges for chroma key removal.
 
 ## Euroliga — 20 equipos
 
-> Nota: EA7 Milan usa código `MIL_EURO` en el código Python para evitar colisión con Milwaukee Bucks (`MIL`).
+> Nota: EA7 Milan usa código `MIL` (igual que el código de la API Euroliga). En Python se resuelve con dos dicts separados: `TEAM_JERSEY_COLORS` (NBA) y `EURO_JERSEY_COLORS` (Euroliga), donde `MIL` apunta al equipo correcto en cada liga.
 
 | Código | Equipo | Estado | Archivo | Prompt camiseta |
 |--------|--------|--------|---------|-----------------|
@@ -70,7 +70,7 @@ Full body visible. Sharp clean edges for chroma key removal.
 | IST | Anadolu Efes | ❌ | euro_IST.PNG | `blue and white Anadolu Efes jersey, number 7` |
 | MAD | Real Madrid | ❌ | euro_MAD.PNG | `white and gold Real Madrid jersey, number 7` |
 | MCO | AS Monaco | ❌ | euro_MCO.PNG | `red and white AS Monaco jersey, number 7` |
-| MIL_EURO | EA7 Milan | ❌ | euro_MIL.PNG | `white and red EA7 Milan jersey, number 7` |
+| MIL | EA7 Milan | ❌ | euro_MIL.PNG | `white and red EA7 Milan jersey, number 7` |
 | MUN | Bayern Munich | ❌ | euro_MUN.PNG | `red and white Bayern Munich jersey, number 7` |
 | OLY | Olympiacos | ❌ | euro_OLY.PNG | `red and white Olympiacos jersey, number 7` |
 | PAM | Valencia Basket | ❌ | euro_PAM.PNG | `black and orange Valencia Basket jersey, number 7` |

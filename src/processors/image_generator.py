@@ -51,8 +51,8 @@ COLORES_EQUIPO = {
 # Descripciones de camiseta para Google ImageFX
 # Cubre los 30 equipos NBA + 20 Euroliga
 # ──────────────────────────────────────────────
+# NBA: 30 equipos (clave = código oficial NBA)
 TEAM_JERSEY_COLORS = {
-    # ── NBA ──────────────────────────────────
     "ATL": "red and gold Atlanta Hawks jersey, number 7",
     "BOS": "green and white Boston Celtics jersey, number 7",
     "BKN": "black and white Brooklyn Nets jersey, number 7",
@@ -83,7 +83,12 @@ TEAM_JERSEY_COLORS = {
     "TOR": "red and black Toronto Raptors jersey, number 7",
     "UTA": "navy and gold Utah Jazz jersey, number 7",
     "WAS": "blue and red Washington Wizards jersey, number 7",
-    # ── Euroliga ─────────────────────────────
+    "DEFAULT": "black t-shirt with bold red number 7, diagonal red-white-red stripe, Dos Aros brand",
+}
+
+# Euroliga: 20 equipos (clave = código oficial Euroliga API)
+# MIL aquí es EA7 Milan — distinto al MIL de NBA (Milwaukee Bucks)
+EURO_JERSEY_COLORS = {
     "ASV": "blue and yellow LDLC ASVEL jersey, number 7",
     "BAR": "blue and red FC Barcelona jersey, number 7",
     "BAS": "blue and red Baskonia jersey, number 7",
@@ -92,7 +97,7 @@ TEAM_JERSEY_COLORS = {
     "IST": "blue and white Anadolu Efes jersey, number 7",
     "MAD": "white and gold Real Madrid jersey, number 7",
     "MCO": "red and white AS Monaco jersey, number 7",
-    "MIL_EURO": "white and red EA7 Milan jersey, number 7",  # evita colisión con MIL (Bucks)
+    "MIL": "white and red EA7 Milan jersey, number 7",
     "MUN": "red and white Bayern Munich jersey, number 7",
     "OLY": "red and white Olympiacos jersey, number 7",
     "PAM": "black and orange Valencia Basket jersey, number 7",
@@ -104,7 +109,6 @@ TEAM_JERSEY_COLORS = {
     "ULK": "yellow and navy Fenerbahce Beko jersey, number 7",
     "VIR": "black and white Virtus Bologna jersey, number 7",
     "ZAL": "green and white Zalgiris Kaunas jersey, number 7",
-    # ── Default ──────────────────────────────
     "DEFAULT": "black t-shirt with bold red number 7, diagonal red-white-red stripe, Dos Aros brand",
 }
 
@@ -427,8 +431,10 @@ def generar_prompt_imagefx(perla: dict, imagen_pillow_path: str) -> str:
     tipo    = str(perla.get("tipo", "DEFAULT")).lower()
     postura = POSTURAS_IMAGEFX.get(tipo, "standing at a basketball analytics whiteboard, pointer in hand")
 
-    # Camiseta (prueba código directo; para Euroliga Milan usa MIL_EURO)
-    jersey = TEAM_JERSEY_COLORS.get(equipo, TEAM_JERSEY_COLORS["DEFAULT"])
+    # Camiseta: usa EURO_JERSEY_COLORS si la liga es Euroliga, si no NBA
+    liga = str(perla.get("liga", "")).upper()
+    color_dict = EURO_JERSEY_COLORS if liga == "EUROLIGA" else TEAM_JERSEY_COLORS
+    jersey = color_dict.get(equipo, TEAM_JERSEY_COLORS["DEFAULT"])
 
     # Avatar de referencia
     avatar_path = str(AVATARS_DIR / f"nba_{equipo}.PNG")
