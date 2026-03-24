@@ -6,6 +6,7 @@ Uso:
 """
 
 import argparse
+import re
 import sqlite3
 import time
 import pandas as pd
@@ -18,9 +19,14 @@ COMPETITION = "E"
 
 
 def _parsear_bloque(bloque):
-    """Convierte '2007-2024' en [2007, 2008, ..., 2024]."""
-    partes = bloque.split("-")
-    inicio, fin = int(partes[0]), int(partes[1])
+    """Convierte '2007-2024' en [2007, 2008, ..., 2024].
+    Usa regex para extraer los años, inmune a variantes del separador."""
+    anos = re.findall(r'\d{4}', bloque)
+    if len(anos) < 2:
+        raise ValueError(f"Formato inválido para --bloque: '{bloque}'. Usa ej: 2007-2024")
+    inicio, fin = int(anos[0]), int(anos[1])
+    if inicio > fin:
+        raise ValueError(f"El año de inicio ({inicio}) no puede ser mayor que el final ({fin})")
     return list(range(inicio, fin + 1))
 
 
@@ -132,8 +138,11 @@ def main():
     args = parser.parse_args()
 
     anos = _parsear_bloque(args.bloque)
+
     print(f"\nInicio: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    print(f"Años: {anos}")
+    print(f"Bloque recibido : '{args.bloque}'")
+    print(f"Años a procesar : {anos[0]} → {anos[-1]} ({len(anos)} temporadas)")
+    print(f"Lista completa  : {anos}")
 
     cargar_games_euro(anos)
 
