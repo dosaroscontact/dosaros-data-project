@@ -144,10 +144,11 @@ def detectar_plus_minus_extremo_nba(fecha, umbral=25):
     try:
         conn = get_connection()
         query = """
-            SELECT PLAYER_NAME, TEAM_ABBREVIATION, PLUS_MINUS, PTS, MIN, MATCHUP
+            SELECT PLAYER_NAME, TEAM_ABBREVIATION,
+                   CAST(PLUS_MINUS AS INTEGER) as PLUS_MINUS, PTS, MIN, MATCHUP
             FROM nba_players_games
-            WHERE GAME_DATE = ? AND (PLUS_MINUS >= ? OR PLUS_MINUS <= -?)
-            ORDER BY ABS(PLUS_MINUS) DESC
+            WHERE GAME_DATE = ? AND (CAST(PLUS_MINUS AS INTEGER) >= ? OR CAST(PLUS_MINUS AS INTEGER) <= -?)
+            ORDER BY ABS(CAST(PLUS_MINUS AS INTEGER)) DESC
             LIMIT 3
         """
         df = pd.read_sql_query(query, conn, params=[fecha, umbral, umbral])
