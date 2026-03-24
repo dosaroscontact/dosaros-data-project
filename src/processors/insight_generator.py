@@ -10,11 +10,23 @@ NBA:
   - +/- extremo (+25 o mejor, -25 o peor)
   - Remontadas (diferencia de cuartos vs resultado final)
   - Récords de temporada o históricos
+  - Explosión anotadora 50+, dominio reboteador 20+, asistidor élite 15+
+  - Partido perfecto (FG 100% con 10+ intentos)
+  - Récord personal en pts/reb/ast
+  - Partido histórico combinado (pts+reb+ast >= 60)
+  - Defensa élite (5+ robos o 5+ tapones)
+  - Equipo imparable (150+ puntos)
+  - Remontada épica (diferencia 20+ superada)
 
 Euroliga:
   - Mejores actuaciones individuales (pts, reb, ast)
   - Partidos con remontada (usando parciales de euro_games_extended)
   - Próximos partidos si no hubo acción ayer
+  - Explosión anotadora 30+, dominio reboteador 15+, asistidor élite 10+
+  - Récord personal en pts/reb/ast
+  - Partido histórico combinado (pts+reb+ast >= 40)
+  - Equipo imparable (100+ puntos)
+  - Remontada épica (diferencia 15+ superada)
 
 Diseño multiidioma: preparado para ES/EN/CAT en futuras versiones.
 ================================================================================
@@ -44,6 +56,16 @@ TEXTOS = {
         "record_hist": "Récord histórico",
         "perla_euro": "Actuación destacada Euroliga",
         "proximos_euro": "Próximos partidos Euroliga",
+        # Nuevas categorías
+        "explosion_50": "Explosión anotadora 50+",
+        "dominio_reboteador": "Dominio reboteador",
+        "asistidor_elite": "Asistidor élite",
+        "partido_perfecto": "Partido perfecto",
+        "record_personal": "Récord personal",
+        "historico_combinado": "Partido histórico combinado",
+        "defensa_elite": "Defensa élite",
+        "equipo_imparable": "Equipo imparable",
+        "remontada_epica": "Remontada épica",
     }
 }
 
@@ -53,7 +75,7 @@ def get_connection():
 
 
 # ============================================================================
-# PERLAS NBA
+# PERLAS NBA — CATEGORÍAS ORIGINALES
 # ============================================================================
 
 def detectar_triple_dobles_nba(fecha):
@@ -79,7 +101,7 @@ def detectar_triple_dobles_nba(fecha):
                 "equipo": r["TEAM_ABBREVIATION"],
                 "detalle": f"{int(r['PTS'])} pts / {int(r['REB'])} reb / {int(r['AST'])} ast",
                 "partido": r["MATCHUP"],
-                "peso": 10  # para ordenar por importancia
+                "peso": 10
             })
         return perlas
     except Exception as e:
@@ -169,7 +191,6 @@ def detectar_remontadas_nba(fecha, diferencia_min=15):
         for _, r in df.iterrows():
             diff = abs(int(r["home_score"]) - int(r["away_score"]))
             ganador = r["winner"]
-            perdedor = r["away_team"] if ganador == r["home_team"] else r["home_team"]
             perlas.append({
                 "tipo": TEXTOS[IDIOMA]["remontada_nba"],
                 "liga": "NBA",
@@ -196,7 +217,7 @@ def detectar_records_nba(fecha):
 
         # Récord de puntos en un partido (histórico en DB)
         query_record_pts = """
-            SELECT 
+            SELECT
                 hoy.PLAYER_NAME, hoy.TEAM_ABBREVIATION, hoy.PTS, hoy.MATCHUP,
                 hist.max_pts
             FROM nba_players_games hoy
@@ -223,7 +244,7 @@ def detectar_records_nba(fecha):
 
         # Récord de triples en un partido
         query_record_3p = """
-            SELECT 
+            SELECT
                 hoy.PLAYER_NAME, hoy.TEAM_ABBREVIATION, hoy.FG3M, hoy.MATCHUP,
                 hist.max_3pm
             FROM nba_players_games hoy
@@ -256,7 +277,307 @@ def detectar_records_nba(fecha):
 
 
 # ============================================================================
-# PERLAS EUROLIGA
+# PERLAS NBA — NUEVAS CATEGORÍAS
+# ============================================================================
+
+def detectar_explosion_50_nba(fecha):
+    """Detecta jugadores con 50+ puntos (actuación histórica)."""
+    try:
+        conn = get_connection()
+        query = """
+            SELECT PLAYER_NAME, TEAM_ABBREVIATION, PTS, FGM, FGA, FG3M, MATCHUP
+            FROM nba_players_games
+            WHERE GAME_DATE = ? AND PTS >= 50
+            ORDER BY PTS DESC
+        """
+        df = pd.read_sql_query(query, conn, params=[fecha])
+        conn.close()
+
+        perlas = []
+        for _, r in df.iterrows():
+            perlas.append({
+                "tipo": TEXTOS[IDIOMA]["explosion_50"],
+                "liga": "NBA",
+                "jugador": r["PLAYER_NAME"],
+                "equipo": r["TEAM_ABBREVIATION"],
+                "detalle": f"{int(r['PTS'])} pts ({int(r['FGM'])}/{int(r['FGA'])} en campo, {int(r['FG3M'])} triples)",
+                "partido": r["MATCHUP"],
+                "peso": 12
+            })
+        return perlas
+    except Exception as e:
+        print(f"⚠️ Error explosión 50+ NBA: {e}")
+        return []
+
+
+def detectar_dominio_reboteador_nba(fecha, umbral=20):
+    """Detecta jugadores con 20+ rebotes en un partido."""
+    try:
+        conn = get_connection()
+        query = """
+            SELECT PLAYER_NAME, TEAM_ABBREVIATION, REB, OREB, DREB, PTS, MATCHUP
+            FROM nba_players_games
+            WHERE GAME_DATE = ? AND REB >= ?
+            ORDER BY REB DESC
+        """
+        df = pd.read_sql_query(query, conn, params=[fecha, umbral])
+        conn.close()
+
+        perlas = []
+        for _, r in df.iterrows():
+            perlas.append({
+                "tipo": TEXTOS[IDIOMA]["dominio_reboteador"],
+                "liga": "NBA",
+                "jugador": r["PLAYER_NAME"],
+                "equipo": r["TEAM_ABBREVIATION"],
+                "detalle": f"{int(r['REB'])} reb ({int(r['OREB'])} of / {int(r['DREB'])} def) — {int(r['PTS'])} pts",
+                "partido": r["MATCHUP"],
+                "peso": 10
+            })
+        return perlas
+    except Exception as e:
+        print(f"⚠️ Error dominio reboteador NBA: {e}")
+        return []
+
+
+def detectar_asistidor_elite_nba(fecha, umbral=15):
+    """Detecta jugadores con 15+ asistencias en un partido."""
+    try:
+        conn = get_connection()
+        query = """
+            SELECT PLAYER_NAME, TEAM_ABBREVIATION, AST, PTS, TOV, MATCHUP
+            FROM nba_players_games
+            WHERE GAME_DATE = ? AND AST >= ?
+            ORDER BY AST DESC
+        """
+        df = pd.read_sql_query(query, conn, params=[fecha, umbral])
+        conn.close()
+
+        perlas = []
+        for _, r in df.iterrows():
+            perlas.append({
+                "tipo": TEXTOS[IDIOMA]["asistidor_elite"],
+                "liga": "NBA",
+                "jugador": r["PLAYER_NAME"],
+                "equipo": r["TEAM_ABBREVIATION"],
+                "detalle": f"{int(r['AST'])} ast / {int(r['PTS'])} pts / {int(r['TOV'])} pér",
+                "partido": r["MATCHUP"],
+                "peso": 10
+            })
+        return perlas
+    except Exception as e:
+        print(f"⚠️ Error asistidor élite NBA: {e}")
+        return []
+
+
+def detectar_partido_perfecto_nba(fecha, min_intentos=10):
+    """Detecta tiro de campo perfecto (FG% = 100% con mínimo 10 intentos)."""
+    try:
+        conn = get_connection()
+        query = """
+            SELECT PLAYER_NAME, TEAM_ABBREVIATION, PTS, FGM, FGA, FG_PCT, MATCHUP
+            FROM nba_players_games
+            WHERE GAME_DATE = ?
+              AND FG_PCT >= 1.0
+              AND FGA >= ?
+            ORDER BY FGA DESC
+        """
+        df = pd.read_sql_query(query, conn, params=[fecha, min_intentos])
+        conn.close()
+
+        perlas = []
+        for _, r in df.iterrows():
+            perlas.append({
+                "tipo": TEXTOS[IDIOMA]["partido_perfecto"],
+                "liga": "NBA",
+                "jugador": r["PLAYER_NAME"],
+                "equipo": r["TEAM_ABBREVIATION"],
+                "detalle": f"{int(r['FGM'])}/{int(r['FGA'])} en campo (100%) — {int(r['PTS'])} pts",
+                "partido": r["MATCHUP"],
+                "peso": 11
+            })
+        return perlas
+    except Exception as e:
+        print(f"⚠️ Error partido perfecto NBA: {e}")
+        return []
+
+
+def detectar_record_personal_nba(fecha):
+    """Detecta récords personales en pts (30+), reb (12+) y ast (10+)."""
+    perlas = []
+    try:
+        conn = get_connection()
+
+        for stat, col_hist, umbral in [
+            ("pts", "PTS", 30),
+            ("reb", "REB", 12),
+            ("ast", "AST", 10),
+        ]:
+            query = f"""
+                SELECT
+                    hoy.PLAYER_NAME, hoy.TEAM_ABBREVIATION,
+                    hoy.{col_hist} as valor_hoy, hoy.PTS, hoy.REB, hoy.AST, hoy.MATCHUP,
+                    hist.max_val
+                FROM nba_players_games hoy
+                JOIN (
+                    SELECT PLAYER_NAME, MAX({col_hist}) as max_val
+                    FROM nba_players_games
+                    GROUP BY PLAYER_NAME
+                ) hist ON hoy.PLAYER_NAME = hist.PLAYER_NAME
+                WHERE hoy.GAME_DATE = ?
+                  AND hoy.{col_hist} >= hist.max_val
+                  AND hoy.{col_hist} >= ?
+            """
+            df = pd.read_sql_query(query, conn, params=[fecha, umbral])
+            for _, r in df.iterrows():
+                perlas.append({
+                    "tipo": TEXTOS[IDIOMA]["record_personal"],
+                    "liga": "NBA",
+                    "jugador": r["PLAYER_NAME"],
+                    "equipo": r["TEAM_ABBREVIATION"],
+                    "detalle": f"Récord personal en {stat.upper()}: {int(r['valor_hoy'])} "
+                               f"({int(r['PTS'])} pts / {int(r['REB'])} reb / {int(r['AST'])} ast)",
+                    "partido": r["MATCHUP"],
+                    "peso": 10
+                })
+
+        conn.close()
+    except Exception as e:
+        print(f"⚠️ Error récord personal NBA: {e}")
+
+    return perlas
+
+
+def detectar_historico_combinado_nba(fecha, umbral=60):
+    """Detecta partidos con pts+reb+ast >= 60."""
+    try:
+        conn = get_connection()
+        query = """
+            SELECT PLAYER_NAME, TEAM_ABBREVIATION, PTS, REB, AST,
+                   (PTS + REB + AST) as combinado, MATCHUP
+            FROM nba_players_games
+            WHERE GAME_DATE = ? AND (PTS + REB + AST) >= ?
+            ORDER BY combinado DESC
+        """
+        df = pd.read_sql_query(query, conn, params=[fecha, umbral])
+        conn.close()
+
+        perlas = []
+        for _, r in df.iterrows():
+            perlas.append({
+                "tipo": TEXTOS[IDIOMA]["historico_combinado"],
+                "liga": "NBA",
+                "jugador": r["PLAYER_NAME"],
+                "equipo": r["TEAM_ABBREVIATION"],
+                "detalle": f"{int(r['combinado'])} combinado — {int(r['PTS'])} pts / {int(r['REB'])} reb / {int(r['AST'])} ast",
+                "partido": r["MATCHUP"],
+                "peso": 11
+            })
+        return perlas
+    except Exception as e:
+        print(f"⚠️ Error histórico combinado NBA: {e}")
+        return []
+
+
+def detectar_defensa_elite_nba(fecha, umbral=5):
+    """Detecta 5+ robos o 5+ tapones en un partido."""
+    try:
+        conn = get_connection()
+        query = """
+            SELECT PLAYER_NAME, TEAM_ABBREVIATION, STL, BLK, PTS, MATCHUP
+            FROM nba_players_games
+            WHERE GAME_DATE = ? AND (STL >= ? OR BLK >= ?)
+            ORDER BY (STL + BLK) DESC
+        """
+        df = pd.read_sql_query(query, conn, params=[fecha, umbral, umbral])
+        conn.close()
+
+        perlas = []
+        for _, r in df.iterrows():
+            partes = []
+            if r["STL"] >= umbral:
+                partes.append(f"{int(r['STL'])} robos")
+            if r["BLK"] >= umbral:
+                partes.append(f"{int(r['BLK'])} tapones")
+            perlas.append({
+                "tipo": TEXTOS[IDIOMA]["defensa_elite"],
+                "liga": "NBA",
+                "jugador": r["PLAYER_NAME"],
+                "equipo": r["TEAM_ABBREVIATION"],
+                "detalle": " / ".join(partes) + f" — {int(r['PTS'])} pts",
+                "partido": r["MATCHUP"],
+                "peso": 9
+            })
+        return perlas
+    except Exception as e:
+        print(f"⚠️ Error defensa élite NBA: {e}")
+        return []
+
+
+def detectar_equipo_imparable_nba(fecha, umbral=150):
+    """Detecta equipos que anotaron 150+ puntos."""
+    try:
+        conn = get_connection()
+        query = """
+            SELECT TEAM_NAME, TEAM_ABBREVIATION, PTS, MATCHUP
+            FROM nba_games
+            WHERE GAME_DATE = ? AND PTS >= ?
+            ORDER BY PTS DESC
+        """
+        df = pd.read_sql_query(query, conn, params=[fecha, umbral])
+        conn.close()
+
+        perlas = []
+        for _, r in df.iterrows():
+            perlas.append({
+                "tipo": TEXTOS[IDIOMA]["equipo_imparable"],
+                "liga": "NBA",
+                "jugador": None,
+                "equipo": r["TEAM_ABBREVIATION"],
+                "detalle": f"{r['TEAM_NAME']} anotó {int(r['PTS'])} puntos",
+                "partido": r["MATCHUP"],
+                "peso": 9
+            })
+        return perlas
+    except Exception as e:
+        print(f"⚠️ Error equipo imparable NBA: {e}")
+        return []
+
+
+def detectar_remontada_epica_nba(fecha, diferencia_min=20):
+    """Detecta victorias con diferencia de 20+ puntos (remontada épica)."""
+    try:
+        conn = get_connection()
+        query = """
+            SELECT home_team, away_team, home_score, away_score, winner
+            FROM nba_daily_results
+            WHERE game_date = ?
+              AND ABS(home_score - away_score) >= ?
+        """
+        df = pd.read_sql_query(query, conn, params=[fecha, diferencia_min])
+        conn.close()
+
+        perlas = []
+        for _, r in df.iterrows():
+            diff = abs(int(r["home_score"]) - int(r["away_score"]))
+            ganador = r["winner"]
+            perlas.append({
+                "tipo": TEXTOS[IDIOMA]["remontada_epica"],
+                "liga": "NBA",
+                "jugador": None,
+                "equipo": ganador,
+                "detalle": f"{r['home_team']} {int(r['home_score'])} - {int(r['away_score'])} {r['away_team']} (diferencia: {diff} pts)",
+                "partido": f"{r['home_team']} vs {r['away_team']}",
+                "peso": 8
+            })
+        return perlas
+    except Exception as e:
+        print(f"⚠️ Error remontada épica NBA: {e}")
+        return []
+
+
+# ============================================================================
+# PERLAS EUROLIGA — CATEGORÍAS ORIGINALES
 # ============================================================================
 
 def detectar_perlas_euroliga(fecha):
@@ -266,7 +587,7 @@ def detectar_perlas_euroliga(fecha):
 
         # Mejores anotadores con nombre de jugador
         query = """
-            SELECT 
+            SELECT
                 ep.player_name, epg.team_id, epg.pts, epg.reb, epg.ast,
                 eg.home_team, eg.away_team, eg.score_home, eg.score_away
             FROM euro_players_games epg
@@ -311,7 +632,7 @@ def detectar_remontadas_euroliga(fecha):
     try:
         conn = get_connection()
         query = """
-            SELECT 
+            SELECT
                 eg.home_team, eg.away_team, eg.score_home, eg.score_away,
                 ege.home_q1, ege.home_q2, ege.away_q1, ege.away_q2
             FROM euro_games eg
@@ -382,17 +703,315 @@ def obtener_proximos_partidos_euroliga(n=5):
 
 
 # ============================================================================
+# PERLAS EUROLIGA — NUEVAS CATEGORÍAS
+# ============================================================================
+
+def _nombre_jugador_euro(conn, player_id):
+    """Devuelve el nombre del jugador o player_id como fallback."""
+    try:
+        df = pd.read_sql_query(
+            "SELECT player_name FROM euro_players WHERE player_id = ? LIMIT 1",
+            conn, params=[player_id]
+        )
+        if not df.empty:
+            return df.iloc[0]["player_name"]
+    except Exception:
+        pass
+    return str(player_id)
+
+
+def detectar_explosion_euro(fecha, umbral=30):
+    """Detecta jugadores con 30+ puntos en Euroliga."""
+    try:
+        conn = get_connection()
+        query = """
+            SELECT epg.player_id, epg.team_id, epg.pts, epg.reb, epg.ast,
+                   eg.home_team, eg.away_team
+            FROM euro_players_games epg
+            JOIN euro_games eg ON epg.game_id = eg.game_id
+            WHERE eg.date = ? AND epg.pts >= ?
+            ORDER BY epg.pts DESC
+        """
+        df = pd.read_sql_query(query, conn, params=[fecha, umbral])
+
+        perlas = []
+        for _, r in df.iterrows():
+            nombre = _nombre_jugador_euro(conn, r["player_id"])
+            perlas.append({
+                "tipo": TEXTOS[IDIOMA]["explosion_50"],
+                "liga": "Euroliga",
+                "jugador": nombre,
+                "equipo": r["team_id"],
+                "detalle": f"{int(r['pts'])} pts / {int(r['reb'])} reb / {int(r['ast'])} ast",
+                "partido": f"{r['home_team']} vs {r['away_team']}",
+                "peso": 11
+            })
+        conn.close()
+        return perlas
+    except Exception as e:
+        print(f"⚠️ Error explosión anotadora Euroliga: {e}")
+        return []
+
+
+def detectar_dominio_reboteador_euro(fecha, umbral=15):
+    """Detecta jugadores con 15+ rebotes en Euroliga."""
+    try:
+        conn = get_connection()
+        query = """
+            SELECT epg.player_id, epg.team_id, epg.pts, epg.reb, epg.ast,
+                   eg.home_team, eg.away_team
+            FROM euro_players_games epg
+            JOIN euro_games eg ON epg.game_id = eg.game_id
+            WHERE eg.date = ? AND epg.reb >= ?
+            ORDER BY epg.reb DESC
+        """
+        df = pd.read_sql_query(query, conn, params=[fecha, umbral])
+
+        perlas = []
+        for _, r in df.iterrows():
+            nombre = _nombre_jugador_euro(conn, r["player_id"])
+            perlas.append({
+                "tipo": TEXTOS[IDIOMA]["dominio_reboteador"],
+                "liga": "Euroliga",
+                "jugador": nombre,
+                "equipo": r["team_id"],
+                "detalle": f"{int(r['reb'])} reb / {int(r['pts'])} pts / {int(r['ast'])} ast",
+                "partido": f"{r['home_team']} vs {r['away_team']}",
+                "peso": 10
+            })
+        conn.close()
+        return perlas
+    except Exception as e:
+        print(f"⚠️ Error dominio reboteador Euroliga: {e}")
+        return []
+
+
+def detectar_asistidor_elite_euro(fecha, umbral=10):
+    """Detecta jugadores con 10+ asistencias en Euroliga."""
+    try:
+        conn = get_connection()
+        query = """
+            SELECT epg.player_id, epg.team_id, epg.pts, epg.reb, epg.ast,
+                   eg.home_team, eg.away_team
+            FROM euro_players_games epg
+            JOIN euro_games eg ON epg.game_id = eg.game_id
+            WHERE eg.date = ? AND epg.ast >= ?
+            ORDER BY epg.ast DESC
+        """
+        df = pd.read_sql_query(query, conn, params=[fecha, umbral])
+
+        perlas = []
+        for _, r in df.iterrows():
+            nombre = _nombre_jugador_euro(conn, r["player_id"])
+            perlas.append({
+                "tipo": TEXTOS[IDIOMA]["asistidor_elite"],
+                "liga": "Euroliga",
+                "jugador": nombre,
+                "equipo": r["team_id"],
+                "detalle": f"{int(r['ast'])} ast / {int(r['pts'])} pts / {int(r['reb'])} reb",
+                "partido": f"{r['home_team']} vs {r['away_team']}",
+                "peso": 10
+            })
+        conn.close()
+        return perlas
+    except Exception as e:
+        print(f"⚠️ Error asistidor élite Euroliga: {e}")
+        return []
+
+
+def detectar_record_personal_euro(fecha):
+    """Detecta récords personales en pts (20+), reb (10+) y ast (8+) en Euroliga."""
+    perlas = []
+    try:
+        conn = get_connection()
+
+        for stat, col, umbral in [("pts", "pts", 20), ("reb", "reb", 10), ("ast", "ast", 8)]:
+            query = f"""
+                SELECT
+                    hoy.player_id, hoy.team_id,
+                    hoy.{col} as valor_hoy, hoy.pts, hoy.reb, hoy.ast,
+                    eg.home_team, eg.away_team,
+                    hist.max_val
+                FROM euro_players_games hoy
+                JOIN euro_games eg ON hoy.game_id = eg.game_id
+                JOIN (
+                    SELECT player_id, MAX({col}) as max_val
+                    FROM euro_players_games
+                    GROUP BY player_id
+                ) hist ON hoy.player_id = hist.player_id
+                WHERE eg.date = ?
+                  AND hoy.{col} >= hist.max_val
+                  AND hoy.{col} >= ?
+            """
+            df = pd.read_sql_query(query, conn, params=[fecha, umbral])
+            for _, r in df.iterrows():
+                nombre = _nombre_jugador_euro(conn, r["player_id"])
+                perlas.append({
+                    "tipo": TEXTOS[IDIOMA]["record_personal"],
+                    "liga": "Euroliga",
+                    "jugador": nombre,
+                    "equipo": r["team_id"],
+                    "detalle": f"Récord personal en {stat.upper()}: {int(r['valor_hoy'])} "
+                               f"({int(r['pts'])} pts / {int(r['reb'])} reb / {int(r['ast'])} ast)",
+                    "partido": f"{r['home_team']} vs {r['away_team']}",
+                    "peso": 10
+                })
+
+        conn.close()
+    except Exception as e:
+        print(f"⚠️ Error récord personal Euroliga: {e}")
+
+    return perlas
+
+
+def detectar_historico_combinado_euro(fecha, umbral=40):
+    """Detecta pts+reb+ast >= 40 en Euroliga."""
+    try:
+        conn = get_connection()
+        query = """
+            SELECT epg.player_id, epg.team_id, epg.pts, epg.reb, epg.ast,
+                   (epg.pts + epg.reb + epg.ast) as combinado,
+                   eg.home_team, eg.away_team
+            FROM euro_players_games epg
+            JOIN euro_games eg ON epg.game_id = eg.game_id
+            WHERE eg.date = ? AND (epg.pts + epg.reb + epg.ast) >= ?
+            ORDER BY combinado DESC
+        """
+        df = pd.read_sql_query(query, conn, params=[fecha, umbral])
+
+        perlas = []
+        for _, r in df.iterrows():
+            nombre = _nombre_jugador_euro(conn, r["player_id"])
+            perlas.append({
+                "tipo": TEXTOS[IDIOMA]["historico_combinado"],
+                "liga": "Euroliga",
+                "jugador": nombre,
+                "equipo": r["team_id"],
+                "detalle": f"{int(r['combinado'])} combinado — {int(r['pts'])} pts / {int(r['reb'])} reb / {int(r['ast'])} ast",
+                "partido": f"{r['home_team']} vs {r['away_team']}",
+                "peso": 11
+            })
+        conn.close()
+        return perlas
+    except Exception as e:
+        print(f"⚠️ Error histórico combinado Euroliga: {e}")
+        return []
+
+
+def detectar_equipo_imparable_euro(fecha, umbral=100):
+    """Detecta equipos que anotaron 100+ puntos en Euroliga."""
+    try:
+        conn = get_connection()
+        query = """
+            SELECT home_team, away_team, score_home, score_away
+            FROM euro_games
+            WHERE date = ?
+              AND (score_home >= ? OR score_away >= ?)
+              AND score_home IS NOT NULL
+              AND score_away IS NOT NULL
+            ORDER BY MAX(score_home, score_away) DESC
+        """
+        df = pd.read_sql_query(query, conn, params=[fecha, umbral, umbral])
+        conn.close()
+
+        perlas = []
+        for _, r in df.iterrows():
+            if r["score_home"] and int(r["score_home"]) >= umbral:
+                perlas.append({
+                    "tipo": TEXTOS[IDIOMA]["equipo_imparable"],
+                    "liga": "Euroliga",
+                    "jugador": None,
+                    "equipo": r["home_team"],
+                    "detalle": f"{r['home_team']} anotó {int(r['score_home'])} puntos — resultado: {int(r['score_home'])}-{int(r['score_away'])}",
+                    "partido": f"{r['home_team']} vs {r['away_team']}",
+                    "peso": 9
+                })
+            if r["score_away"] and int(r["score_away"]) >= umbral:
+                perlas.append({
+                    "tipo": TEXTOS[IDIOMA]["equipo_imparable"],
+                    "liga": "Euroliga",
+                    "jugador": None,
+                    "equipo": r["away_team"],
+                    "detalle": f"{r['away_team']} anotó {int(r['score_away'])} puntos — resultado: {int(r['score_home'])}-{int(r['score_away'])}",
+                    "partido": f"{r['home_team']} vs {r['away_team']}",
+                    "peso": 9
+                })
+        return perlas
+    except Exception as e:
+        print(f"⚠️ Error equipo imparable Euroliga: {e}")
+        return []
+
+
+def detectar_remontada_epica_euro(fecha, diferencia_min=15):
+    """Detecta remontadas épicas en Euroliga (diferencia 15+ al descanso superada)."""
+    try:
+        conn = get_connection()
+        query = """
+            SELECT
+                eg.home_team, eg.away_team, eg.score_home, eg.score_away,
+                ege.home_q1, ege.home_q2, ege.away_q1, ege.away_q2
+            FROM euro_games eg
+            JOIN euro_games_extended ege ON eg.game_id = ege.game_id
+            WHERE eg.date = ?
+              AND eg.score_home IS NOT NULL
+              AND eg.score_away IS NOT NULL
+        """
+        df = pd.read_sql_query(query, conn, params=[fecha])
+        conn.close()
+
+        perlas = []
+        for _, r in df.iterrows():
+            try:
+                home_medio = (r["home_q1"] or 0) + (r["home_q2"] or 0)
+                away_medio = (r["away_q1"] or 0) + (r["away_q2"] or 0)
+                home_final = int(r["score_home"] or 0)
+                away_final = int(r["score_away"] or 0)
+                diff_descanso = abs(home_medio - away_medio)
+
+                if diff_descanso < diferencia_min:
+                    continue
+
+                if home_medio < away_medio and home_final > away_final:
+                    perlas.append({
+                        "tipo": TEXTOS[IDIOMA]["remontada_epica"],
+                        "liga": "Euroliga",
+                        "jugador": None,
+                        "equipo": r["home_team"],
+                        "detalle": f"{r['home_team']} remontó {diff_descanso} puntos ({away_medio}-{home_medio} al descanso) y ganó {home_final}-{away_final}",
+                        "partido": f"{r['home_team']} vs {r['away_team']}",
+                        "peso": 10
+                    })
+                elif away_medio < home_medio and away_final > home_final:
+                    perlas.append({
+                        "tipo": TEXTOS[IDIOMA]["remontada_epica"],
+                        "liga": "Euroliga",
+                        "jugador": None,
+                        "equipo": r["away_team"],
+                        "detalle": f"{r['away_team']} remontó {diff_descanso} puntos ({home_medio}-{away_medio} al descanso) y ganó {away_final}-{home_final}",
+                        "partido": f"{r['home_team']} vs {r['away_team']}",
+                        "peso": 10
+                    })
+            except Exception:
+                continue
+
+        return perlas
+    except Exception as e:
+        print(f"⚠️ Error remontada épica Euroliga: {e}")
+        return []
+
+
+# ============================================================================
 # FUNCIÓN PRINCIPAL
 # ============================================================================
 
 def buscar_perlas(fecha=None, enviar_telegram=True):
     """
     Función principal. Detecta todas las perlas del día.
-    
+
     Args:
         fecha: string 'YYYY-MM-DD', por defecto ayer
         enviar_telegram: si True, envía resultado a Telegram
-    
+
     Returns:
         dict con perlas NBA, perlas Euroliga, próximos Euro si no hubo partidos
     """
@@ -409,6 +1028,16 @@ def buscar_perlas(fecha=None, enviar_telegram=True):
     perlas_nba += detectar_plus_minus_extremo_nba(fecha)
     perlas_nba += detectar_remontadas_nba(fecha)
     perlas_nba += detectar_records_nba(fecha)
+    # Nuevas categorías NBA
+    perlas_nba += detectar_explosion_50_nba(fecha)
+    perlas_nba += detectar_dominio_reboteador_nba(fecha)
+    perlas_nba += detectar_asistidor_elite_nba(fecha)
+    perlas_nba += detectar_partido_perfecto_nba(fecha)
+    perlas_nba += detectar_record_personal_nba(fecha)
+    perlas_nba += detectar_historico_combinado_nba(fecha)
+    perlas_nba += detectar_defensa_elite_nba(fecha)
+    perlas_nba += detectar_equipo_imparable_nba(fecha)
+    perlas_nba += detectar_remontada_epica_nba(fecha)
 
     # Ordenar por peso (importancia) y eliminar duplicados de jugador
     perlas_nba = sorted(perlas_nba, key=lambda x: x["peso"], reverse=True)
@@ -417,6 +1046,15 @@ def buscar_perlas(fecha=None, enviar_telegram=True):
     perlas_euro = []
     perlas_euro += detectar_perlas_euroliga(fecha)
     perlas_euro += detectar_remontadas_euroliga(fecha)
+    # Nuevas categorías Euroliga
+    perlas_euro += detectar_explosion_euro(fecha)
+    perlas_euro += detectar_dominio_reboteador_euro(fecha)
+    perlas_euro += detectar_asistidor_elite_euro(fecha)
+    perlas_euro += detectar_record_personal_euro(fecha)
+    perlas_euro += detectar_historico_combinado_euro(fecha)
+    perlas_euro += detectar_equipo_imparable_euro(fecha)
+    perlas_euro += detectar_remontada_epica_euro(fecha)
+
     perlas_euro = sorted(perlas_euro, key=lambda x: x["peso"], reverse=True)
 
     # Si no hubo partidos Euro ayer → próximos partidos
