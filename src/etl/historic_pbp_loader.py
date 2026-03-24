@@ -143,12 +143,21 @@ def _partidos_euro_pendientes(conn, season):
             SELECT game_id FROM euro_games
             WHERE game_id LIKE 'E{season}_%'
             AND game_id NOT IN (SELECT DISTINCT game_id FROM euro_pbp)
+            AND game_id NOT LIKE '%gamecode%'
+            AND LENGTH(game_id) <= 20
+            AND game_id LIKE 'E%'
         """
         game_ids = pd.read_sql_query(query, conn)['game_id'].tolist()
     except Exception:
         # Si euro_pbp no existe, descargamos todos
         try:
-            query = f"SELECT game_id FROM euro_games WHERE game_id LIKE 'E{season}_%'"
+            query = f"""
+                SELECT game_id FROM euro_games
+                WHERE game_id LIKE 'E{season}_%'
+                AND game_id NOT LIKE '%gamecode%'
+                AND LENGTH(game_id) <= 20
+                AND game_id LIKE 'E%'
+            """
             game_ids = pd.read_sql_query(query, conn)['game_id'].tolist()
         except Exception as e:
             print(f"  Error consultando euro_games para {season}: {e}")
