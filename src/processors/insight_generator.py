@@ -72,14 +72,36 @@ def _extraer_stats_euro(fecha, conn):
 
 
 def _extraer_resultados_nba(fecha, conn):
-    """Extrae resultados de equipos NBA del día."""
+    """Extrae resultados NBA del día desde nba_games, construyendo home/away por GAME_ID."""
     try:
         query = """
-            SELECT home_team, away_team, home_score, away_score, winner
-            FROM nba_daily_results
-            WHERE game_date = ?
+            SELECT GAME_ID, TEAM_ABBREVIATION, MATCHUP, WL, PTS
+            FROM nba_games
+            WHERE GAME_DATE = ?
         """
-        return pd.read_sql_query(query, conn, params=[fecha])
+        df = pd.read_sql_query(query, conn, params=[fecha])
+        if df.empty:
+            return pd.DataFrame()
+
+        resultados = []
+        for game_id, grupo in df.groupby('GAME_ID'):
+            if len(grupo) != 2:
+                continue
+            home = grupo[grupo['MATCHUP'].str.contains('vs\\.', na=False)]
+            away = grupo[grupo['MATCHUP'].str.contains('@', na=False)]
+            if home.empty or away.empty:
+                continue
+            home = home.iloc[0]
+            away = away.iloc[0]
+            winner = home['TEAM_ABBREVIATION'] if home['WL'] == 'W' else away['TEAM_ABBREVIATION']
+            resultados.append({
+                'home_team':  home['TEAM_ABBREVIATION'],
+                'away_team':  away['TEAM_ABBREVIATION'],
+                'home_score': home['PTS'],
+                'away_score': away['PTS'],
+                'winner':     winner,
+            })
+        return pd.DataFrame(resultados)
     except Exception as e:
         print(f"Error extrayendo resultados NBA: {e}")
         return pd.DataFrame()
