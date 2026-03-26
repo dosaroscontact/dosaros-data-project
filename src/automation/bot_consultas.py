@@ -175,6 +175,7 @@ def _construir_perla_imagen(columnas, filas, ia_json, pregunta):
         tipo_legible = tipo_perla.replace('_', ' ').title()
         nombre_jugador = primera.get('PLAYER_NAME') or primera.get('player_name')
         subtitulo = f"{nombre_jugador} — {tipo_legible}" if nombre_jugador else tipo_legible
+        subtitulo = subtitulo[:40]
         # Buscar columna de equipo: exacta primero, luego cualquier col con "team"
         for col in ('TEAM_ABBREVIATION', 'team_id', 'equipo'):
             if col in primera and primera[col]:
@@ -205,7 +206,7 @@ def _construir_perla_imagen(columnas, filas, ia_json, pregunta):
         "equipo":         equipo,
         "dato_principal": dato_principal,
         "subtitulo":      subtitulo,
-        "contexto":       pregunta[:60],
+        "contexto":       "",
         "fecha":          datetime.now().strftime('%d/%m/%Y'),
         "fuente":         "@dos_aros",
     }
