@@ -53,7 +53,12 @@ Cuando el usuario hace una pregunta, devuelves SIEMPRE un JSON con:
   "stat_clave": "PTS/REB/AST/etc",
   "tipo_perla": "descripcion corta del hallazgo"
 }
-Solo devuelves JSON, sin texto adicional ni bloques markdown."""
+Solo devuelves JSON, sin texto adicional ni bloques markdown.
+
+IMPORTANTE: Siempre incluye TEAM_ABBREVIATION en el SELECT aunque sea una consulta
+agregada con GROUP BY. Ejemplo correcto: SELECT PLAYER_NAME, TEAM_ABBREVIATION,
+SUM(REB) as total FROM nba_players_games GROUP BY PLAYER_NAME, TEAM_ABBREVIATION
+ORDER BY total DESC LIMIT 1"""
 
 
 # ============================================================================
@@ -166,6 +171,10 @@ def _construir_perla_imagen(columnas, filas, ia_json, pregunta):
 
     if filas:
         primera = dict(zip(columnas, filas[0]))
+        # Subtítulo: "Nombre Jugador — Tipo Perla Legible"
+        tipo_legible = tipo_perla.replace('_', ' ').title()
+        nombre_jugador = primera.get('PLAYER_NAME') or primera.get('player_name')
+        subtitulo = f"{nombre_jugador} — {tipo_legible}" if nombre_jugador else tipo_legible
         # Buscar columna de equipo: exacta primero, luego cualquier col con "team"
         for col in ('TEAM_ABBREVIATION', 'team_id', 'equipo'):
             if col in primera and primera[col]:
@@ -195,7 +204,7 @@ def _construir_perla_imagen(columnas, filas, ia_json, pregunta):
     return {
         "equipo":         equipo,
         "dato_principal": dato_principal,
-        "subtitulo":      tipo_perla,
+        "subtitulo":      subtitulo,
         "contexto":       pregunta[:60],
         "fecha":          datetime.now().strftime('%d/%m/%Y'),
         "fuente":         "@dos_aros",
