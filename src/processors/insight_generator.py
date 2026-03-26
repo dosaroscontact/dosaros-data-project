@@ -269,11 +269,11 @@ def obtener_proximos_partidos_euroliga(n=5):
 
 
 def formatear_perlas(fecha_display, perlas_nba, perlas_euro, proximos_euro):
-    """Formatea las perlas en mensaje legible para Telegram."""
-    lineas = [f"💎 *Perlas Dos Aros — {fecha_display}*\n"]
+    """Formatea las perlas en mensaje legible para Telegram (HTML)."""
+    lineas = [f"💎 <b>Perlas Dos Aros — {fecha_display}</b>\n"]
 
     if perlas_nba:
-        lineas.append("🏀 *NBA*")
+        lineas.append("🏀 <b>NBA</b>")
         for p in perlas_nba[:5]:
             jugador = p.get('jugador') or p.get('equipo', '')
             equipo = p.get('equipo', '')
@@ -283,13 +283,13 @@ def formatear_perlas(fecha_display, perlas_nba, perlas_euro, proximos_euro):
             tipo = str(p.get('tipo', 'perla')).replace('_', ' ').title()
             detalle = f"{stat} {valor} — {razon}" if stat and valor else razon
             if jugador and jugador != equipo:
-                lineas.append(f"• *{tipo}* — {jugador} ({equipo}): {detalle}")
+                lineas.append(f"• <b>{tipo}</b> — {jugador} ({equipo}): {detalle}")
             else:
-                lineas.append(f"• *{tipo}* — {equipo}: {detalle}")
+                lineas.append(f"• <b>{tipo}</b> — {equipo}: {detalle}")
         lineas.append("")
 
     if perlas_euro:
-        lineas.append("🌍 *Euroliga*")
+        lineas.append("🌍 <b>Euroliga</b>")
         for p in perlas_euro[:5]:
             jugador = p.get('jugador') or p.get('equipo', '')
             equipo = p.get('equipo', '')
@@ -299,13 +299,13 @@ def formatear_perlas(fecha_display, perlas_nba, perlas_euro, proximos_euro):
             tipo = str(p.get('tipo', 'perla')).replace('_', ' ').title()
             detalle = f"{stat} {valor} — {razon}" if stat and valor else razon
             if jugador and jugador != equipo:
-                lineas.append(f"• *{tipo}* — {jugador} ({equipo}): {detalle}")
+                lineas.append(f"• <b>{tipo}</b> — {jugador} ({equipo}): {detalle}")
             else:
-                lineas.append(f"• *{tipo}* — {equipo}: {detalle}")
+                lineas.append(f"• <b>{tipo}</b> — {equipo}: {detalle}")
         lineas.append("")
 
     if not proximos_euro.empty:
-        lineas.append("📅 *Próximos partidos Euroliga*")
+        lineas.append("📅 <b>Próximos partidos Euroliga</b>")
         for _, r in proximos_euro.iterrows():
             try:
                 fecha_partido = datetime.strptime(r["date"], '%Y-%m-%d').strftime('%d/%m')
@@ -391,7 +391,7 @@ def buscar_perlas(fecha=None, enviar_telegram=True):
     if enviar_telegram and (perlas_nba or perlas_euro or not proximos_euro.empty):
         try:
             from src.automation.bot_manager import enviar_mensaje
-            enviar_mensaje(mensaje)
+            enviar_mensaje(mensaje, parse_mode="HTML")
             print("Perlas enviadas a Telegram")
         except Exception as e:
             print(f"No se pudo enviar a Telegram: {e}")
