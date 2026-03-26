@@ -318,7 +318,9 @@ def _procesar_mensaje(texto_usuario, ultimo_id):
 
         perla_dict = _construir_perla_imagen(columnas, filas, ia_json, texto_usuario)
         path_imagen = generar_imagen_perla(perla_dict)
-        enviar_grafico(path_imagen, caption=tweet[:200] if tweet else tipo_perla)
+        caption_raw = tweet[:200] if tweet else tipo_perla
+        caption_limpio = re.sub(r'[*_`~]', '', caption_raw)
+        enviar_grafico(path_imagen, caption=caption_limpio)
         print("  Imagen enviada.")
     except Exception as e:
         print(f"  Error generando imagen: {e}")
