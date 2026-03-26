@@ -113,7 +113,7 @@ def main():
         if perla_top:
             perla_imagen = {
                 "equipo":          perla_top.get("equipo", "DEFAULT"),
-                "dato_principal":  perla_top.get("detalle", ""),
+                "dato_principal":  f"{perla_top.get('stat_clave', '')} {perla_top.get('valor', '')}",
                 "subtitulo":       f"{perla_top.get('jugador', '')} — {perla_top.get('tipo', '')}",
                 "contexto":        perla_top.get("partido", ""),
                 "fecha":           fecha_str,
