@@ -52,8 +52,12 @@ def extract_euro_results_yesterday(fecha=None):
         # 5. Guardado en DB
         df_to_save = pd.DataFrame(results)
         conn = get_db_connection()
-        # Usamos INSERT OR IGNORE vía SQL manual para evitar que el script muera por duplicados
-        df_to_save.to_sql('euro_games', conn, if_exists='append', index=False, method=None)
+        for _, row in df_to_save.iterrows():
+            conn.execute(
+                "INSERT OR IGNORE INTO euro_games VALUES ({})".format(','.join(['?' for _ in row])),
+                tuple(row)
+            )
+        conn.commit()
         conn.close()
         
         return resumen
