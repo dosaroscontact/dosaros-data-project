@@ -146,28 +146,48 @@ def _construir_perla_imagen(columnas, filas, ia_json, pregunta):
     stat_clave = ia_json.get('stat_clave', '')
     tipo_perla = ia_json.get('tipo_perla', pregunta[:40])
 
+    def _normalizar_stat(nombre):
+        n = nombre.lower()
+        if 'point' in n or 'pts' in n:   return 'PTS'
+        if 'rebound' in n or 'reb' in n: return 'REB'
+        if 'assist' in n or 'ast' in n:  return 'AST'
+        return nombre[:6].upper()
+
+    def _fmt(val):
+        try:
+            f = float(val)
+            return int(f) if f == int(f) else round(f, 2)
+        except (TypeError, ValueError):
+            return val
+
     # Intentar extraer equipo y dato principal de la primera fila
     equipo = "DEFAULT"
     dato_principal = ""
 
     if filas:
         primera = dict(zip(columnas, filas[0]))
-        # Buscar columna de equipo
+        # Buscar columna de equipo: exacta primero, luego cualquier col con "team"
         for col in ('TEAM_ABBREVIATION', 'team_id', 'equipo'):
             if col in primera and primera[col]:
                 equipo = str(primera[col]).upper()
                 break
+        if equipo == "DEFAULT":
+            for col in columnas:
+                if 'team' in col.lower() and primera.get(col):
+                    equipo = str(primera[col]).upper()
+                    break
         # Buscar valor de la stat clave
         for col in columnas:
             if col.upper() == stat_clave.upper() and primera[col] is not None:
-                dato_principal = f"{primera[col]} {stat_clave}"
+                etiqueta = _normalizar_stat(stat_clave)
+                dato_principal = f"{_fmt(primera[col])} {etiqueta}"
                 break
         if not dato_principal and filas:
-            # Usar el segundo valor numérico que encontremos
             for col, val in primera.items():
                 try:
                     float(val)
-                    dato_principal = f"{val} {col}"
+                    etiqueta = _normalizar_stat(col)
+                    dato_principal = f"{_fmt(val)} {etiqueta}"
                     break
                 except (TypeError, ValueError):
                     continue
