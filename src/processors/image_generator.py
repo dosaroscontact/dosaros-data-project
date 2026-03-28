@@ -22,6 +22,7 @@ BASE_DIR      = Path(__file__).resolve().parent.parent.parent
 AVATARS_DIR   = BASE_DIR / "assets" / "avatars"
 LOGOS_DIR     = BASE_DIR / "assets" / "logos"
 GENERATED_DIR = BASE_DIR / "assets" / "generated"
+FONTS_DIR     = BASE_DIR / "assets" / "static"
 
 LOGO_PATH    = LOGOS_DIR / "logo_fondo_transparente_grande.png"
 DEFAULT_AVATAR = AVATARS_DIR / "presenter" / "presenter_pizarra.jpg"
@@ -188,26 +189,78 @@ def _eliminar_fondo_verde(img: Image.Image,
 
 
 def _fuente(size: int, bold: bool = False) -> ImageFont.FreeTypeFont | ImageFont.ImageFont:
-    """Carga fuente del sistema. Fallback a la fuente por defecto de Pillow."""
+    """
+    Carga fuente del sistema con fallback progresivo.
+    Prioriza Raspberry Pi (DejaVu/Liberation/FreeSans) antes que Windows/Mac.
+    """
     candidatos_bold = [
+        # Bundled en el repo (funciona en cualquier SO sin instalación)
+        str(FONTS_DIR / "SpaceGrotesk-Bold.ttf"),
+        str(FONTS_DIR / "Inter_28pt-Bold.ttf"),
+        str(FONTS_DIR / "Inter_18pt-Bold.ttf"),
+        # Raspberry Pi / Debian / Ubuntu
         "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+        "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf",
+        "/usr/share/fonts/truetype/freefont/FreeSansBold.ttf",
+        "/usr/share/fonts/truetype/ttf-bitstream-vera/VeraBd.ttf",
+        # macOS
         "/System/Library/Fonts/Helvetica.ttc",
+        "/Library/Fonts/Arial Bold.ttf",
+        # Windows
         "C:/Windows/Fonts/arialbd.ttf",
         "C:/Windows/Fonts/Arial_Bold.ttf",
     ]
     candidatos_regular = [
+        # Bundled en el repo
+        str(FONTS_DIR / "SpaceGrotesk-Regular.ttf"),
+        str(FONTS_DIR / "Inter_28pt-Regular.ttf"),
+        str(FONTS_DIR / "Inter_18pt-Regular.ttf"),
+        # Raspberry Pi / Debian / Ubuntu
         "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+        "/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf",
+        "/usr/share/fonts/truetype/freefont/FreeSans.ttf",
+        "/usr/share/fonts/truetype/ttf-bitstream-vera/Vera.ttf",
+        # macOS
         "/System/Library/Fonts/Helvetica.ttc",
+        # Windows
         "C:/Windows/Fonts/arial.ttf",
     ]
     lista = candidatos_bold if bold else candidatos_regular
     for path in lista:
         if os.path.exists(path):
             try:
-                return ImageFont.truetype(path, size)
-            except Exception:
+                font = ImageFont.truetype(path, size)
+                print(f"  [fuente] Cargada: {path} size={size}")
+                return font
+            except Exception as e:
+                print(f"  [fuente] Fallo {path}: {e}")
                 continue
-    return ImageFont.load_default()
+
+    # Fallback: load_default con size si Pillow >= 10, si no sin size
+    print(f"  [fuente] FALLBACK load_default size={size} (texto puede ser pequeño)")
+    try:
+        return ImageFont.load_default(size=size)
+    except TypeError:
+        return ImageFont.load_default()
+
+
+def _ancho_texto(draw: ImageDraw.Draw, texto: str, fuente) -> int:
+    """Devuelve el ancho en px del texto con la fuente dada. Robusto ante bitmap fonts."""
+    try:
+        bbox = draw.textbbox((0, 0), texto, font=fuente)
+        return bbox[2] - bbox[0]
+    except Exception:
+        # Bitmap font: estimación aproximada (10px por carácter)
+        return len(texto) * 10
+
+
+def _alto_texto(draw: ImageDraw.Draw, texto: str, fuente) -> int:
+    """Devuelve el alto en px del texto con la fuente dada."""
+    try:
+        bbox = draw.textbbox((0, 0), texto, font=fuente)
+        return bbox[3] - bbox[1]
+    except Exception:
+        return 16
 
 
 def _texto_envuelto(draw: ImageDraw.Draw, texto: str, fuente, ancho_max: int) -> list[str]:
@@ -217,8 +270,7 @@ def _texto_envuelto(draw: ImageDraw.Draw, texto: str, fuente, ancho_max: int) ->
     linea_actual = ""
     for palabra in palabras:
         prueba = f"{linea_actual} {palabra}".strip()
-        bbox = draw.textbbox((0, 0), prueba, font=fuente)
-        if bbox[2] - bbox[0] <= ancho_max:
+        if _ancho_texto(draw, prueba, fuente) <= ancho_max:
             linea_actual = prueba
         else:
             if linea_actual:
@@ -309,26 +361,29 @@ def generar_imagen_perla(perla: dict) -> str:
     draw   = ImageDraw.Draw(imagen)
 
     # ── 4. Texto ──────────────────────────────────────────────────────────
-    padding_texto = marco_x + 35
+    padding_texto = marco_x + 35      # coordenada X absoluta dentro del lienzo
     ancho_texto   = marco_w - 70
+    print(f"  [texto] marco: x={marco_x} y={marco_y} w={marco_w} h={marco_h}")
+    print(f"  [texto] padding_x={padding_texto} ancho_max={ancho_texto}")
 
     # Código de equipo (pequeño, arriba del marco)
     f_equipo = _fuente(52, bold=True)
-    draw.text(
-        (padding_texto, marco_y - 70),
-        equipo,
-        font=f_equipo,
-        fill=(255, 255, 255, 200)
-    )
+    x_eq, y_eq = padding_texto, marco_y - 70
+    print(f"  [texto] DEBUG: dibujando equipo '{equipo}' en ({x_eq}, {y_eq})")
+    draw.text((x_eq, y_eq), equipo, font=f_equipo, fill=(255, 255, 255, 200))
+    print(f"  [texto] Texto dibujado: '{equipo}' en {x_eq},{y_eq}")
 
     # Dato principal (grande)
-    f_dato = _fuente(160, bold=True)
-    lineas_dato = _texto_envuelto(draw, dato, f_dato, ancho_texto)
+    f_dato  = _fuente(160, bold=True)
     y_cursor = marco_y + 35
+    lineas_dato = _texto_envuelto(draw, dato, f_dato, ancho_texto)
+    print(f"  [texto] dato_principal='{dato}' -> {len(lineas_dato)} lineas")
     for linea in lineas_dato:
+        print(f"  [texto] DEBUG: dibujando dato '{linea}' en ({padding_texto}, {y_cursor})")
         draw.text((padding_texto, y_cursor), linea, font=f_dato, fill=(255, 255, 255, 255))
-        bbox = draw.textbbox((0, 0), linea, font=f_dato)
-        y_cursor += (bbox[3] - bbox[1]) + 10
+        alto = _alto_texto(draw, linea, f_dato)
+        print(f"  [texto] Texto dibujado: '{linea}' en {padding_texto},{y_cursor} alto={alto}")
+        y_cursor += alto + 10
 
     # Línea separadora
     y_cursor += 15
@@ -339,30 +394,38 @@ def generar_imagen_perla(perla: dict) -> str:
     # Subtítulo (mediano)
     f_sub = _fuente(55, bold=False)
     lineas_sub = _texto_envuelto(draw, subtitulo, f_sub, ancho_texto)
+    print(f"  [texto] subtitulo='{subtitulo}' -> {len(lineas_sub)} lineas")
     for linea in lineas_sub:
+        print(f"  [texto] DEBUG: dibujando subtitulo '{linea}' en ({padding_texto}, {y_cursor})")
         draw.text((padding_texto, y_cursor), linea, font=f_sub, fill=(220, 220, 220, 230))
-        bbox = draw.textbbox((0, 0), linea, font=f_sub)
-        y_cursor += (bbox[3] - bbox[1]) + 8
+        alto = _alto_texto(draw, linea, f_sub)
+        print(f"  [texto] Texto dibujado: '{linea}' en {padding_texto},{y_cursor} alto={alto}")
+        y_cursor += alto + 8
 
     # Contexto (pequeño, opcional)
     if contexto:
         y_cursor += 10
         f_ctx = _fuente(38, bold=False)
         lineas_ctx = _texto_envuelto(draw, contexto, f_ctx, ancho_texto)
+        print(f"  [texto] contexto='{contexto}' -> {len(lineas_ctx)} lineas")
         for linea in lineas_ctx:
+            print(f"  [texto] DEBUG: dibujando contexto '{linea}' en ({padding_texto}, {y_cursor})")
             draw.text((padding_texto, y_cursor), linea, font=f_ctx, fill=(180, 180, 180, 200))
-            bbox = draw.textbbox((0, 0), linea, font=f_ctx)
-            y_cursor += (bbox[3] - bbox[1]) + 6
+            alto = _alto_texto(draw, linea, f_ctx)
+            print(f"  [texto] Texto dibujado: '{linea}' en {padding_texto},{y_cursor} alto={alto}")
+            y_cursor += alto + 6
 
-    # Fecha y fuente (tercer bloque, abajo del marco)
+    # Fecha y fuente (pie, abajo del marco)
     if fecha or fuente:
         y_cursor += 18
         draw.line([(padding_texto, y_cursor), (padding_texto + ancho_texto - 40, y_cursor)],
                   fill=(255, 255, 255, 60), width=1)
         y_cursor += 14
-        f_pie = _fuente(36, bold=False)
+        f_pie     = _fuente(36, bold=False)
         pie_texto = " · ".join(filter(None, [fecha, fuente]))
+        print(f"  [texto] DEBUG: dibujando pie '{pie_texto}' en ({padding_texto}, {y_cursor})")
         draw.text((padding_texto, y_cursor), pie_texto, font=f_pie, fill=(160, 160, 160, 200))
+        print(f"  [texto] Texto dibujado: '{pie_texto}' en {padding_texto},{y_cursor}")
 
     # ── 5. Logo en esquina inferior izquierda (invertido a blanco) ───────────
     if LOGO_PATH.exists():
