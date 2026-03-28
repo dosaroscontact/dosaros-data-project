@@ -5,6 +5,15 @@
 Stack: Raspberry Pi 4 · Python · SQLite · Telegram bot · Gemini/Groq API.
 → Guía de marca y avatar completa: `assets/docs/BRAND.md`
 
+## Pi (producción)
+```
+IP: 192.168.1.136  |  user: pi  |  venv: /home/pi/dosaros-data-project/venv/bin/python
+PYTHONPATH=/home/pi/dosaros-data-project  (requerido para imports src.*)
+Proyecto: /home/pi/dosaros-data-project
+Logs cron: /home/pi/dosaros-data-project/logs/cron_output.log
+```
+Sesiones tmux activas: `bot_consultas` (bot polling), `nba_hist` / `euro_hist` (ETL histórico)
+
 ## Comandos
 ```bash
 streamlit run src/app/main.py
@@ -14,6 +23,11 @@ python src/database/populate_avatars.py        # seed dimensiones avatar
 python src/etl/seed_avatar_teams.py            # seed variaciones detalladas
 python src/processors/avatar_prompt_generator.py --equipo LAL
 python src/processors/avatar_prompt_generator.py --liga NBA
+# ETL histórico (en Pi):
+python src/etl/historic_pbp_loader.py --liga nba --bloque 2015-2019
+python src/etl/historic_pbp_loader.py --liga euro --bloque 2007-2022
+# Cron manual:
+python master_sync.py
 ```
 
 ## Arquitectura
@@ -29,8 +43,13 @@ APIs (nba_api, euroleague_api) → ETL (src/etl/) → SQLite Pi → Supabase →
 ### Módulos clave
 | Módulo | Función |
 |--------|---------|
+| `master_sync.py` | Orquestador cron 9:00 — extrae, analiza y envía a Telegram |
 | `src/app/main.py` | Streamlit — tabs análisis + NL SQL |
 | `src/utils/api_manager.py` | Interfaz unificada 10+ APIs LLM/imagen/audio con fallback |
+| `src/etl/extract_yesterday_results.py` | Extrae resultados NBA de ayer → BD |
+| `src/etl/extract_yesterday_euro.py` | Extrae resultados Euroliga de ayer → BD |
+| `src/etl/nba_sync.py` | Sincronización diaria NBA (partidos + PBP + jugadores) |
+| `src/etl/euro_sync.py` | Sincronización diaria Euroliga (partidos + standings) |
 | `src/etl/historic_pbp_loader.py` | Carga histórica PBP NBA+Euro (`--liga`, `--bloque`) |
 | `src/etl/seed_avatar_teams.py` | Seed `avatar_teams` con 68 variaciones |
 | `src/etl/euro_historic_games_loader.py` | Carga partidos Euro históricos |
@@ -38,7 +57,11 @@ APIs (nba_api, euroleague_api) → ETL (src/etl/) → SQLite Pi → Supabase →
 | `src/database/populate_avatars.py` | Crea y puebla tablas dimensionales avatar |
 | `src/processors/image_generator.py` | Story 1080×1920 con fuentes bundled (`assets/static/`) |
 | `src/processors/avatar_prompt_generator.py` | Genera prompts Midjourney/ImageFX por equipo |
-| `src/processors/insight_generator.py` | Insights AI sobre datos |
+| `src/processors/insight_generator.py` | Detecta perlas (actuaciones destacadas) con IA |
+| `src/processors/gemini_social.py` | Genera hilo X/Twitter diario (5-6 tweets) |
+| `src/automation/bot_consultas.py` | Bot Telegram: NL→SQL + imagen + /video |
+| `src/automation/bot_manager.py` | Envío a Telegram: `enviar_mensaje`, `enviar_grafico`, `enviar_video` |
+| `src/integrations/video_generator/` | Genera MP4 vía Editor Pro Max + Remotion + IA |
 | `src/prompts/` | Personas y contenido redes sociales |
 | `src/app/analista_ia.py` | SQL generation para consultas baloncesto |
 
@@ -80,6 +103,31 @@ teams_metadata × dim_posturas × dim_vestimentas × dim_decorados × dim_tipos_
 → avatar_prompt_generator.py → prompt Midjourney/ImageFX
 → imagen generada → chroma key → image_generator.py → story Telegram
 ```
+
+## Automatización diaria
+
+### Cron 9:00 — `master_sync.py`
+```
+0 9 * * * /home/pi/dosaros-data-project/venv/bin/python master_sync.py >> logs/cron_output.log 2>&1
+```
+**Flujo (6 pasos):**
+1. Extrae resultados NBA de ayer → BD
+2. Extrae resultados Euroliga de ayer → BD
+3. Envía resumen de resultados a Telegram
+4. Detecta perlas (actuaciones destacadas) con IA → Telegram
+5. Genera hilo X/Twitter (5-6 tweets) → Telegram para revisión manual
+6. Genera story 1080×1920 con la perla top → Telegram
+
+### Bot Telegram (`src/automation/bot_consultas.py`)
+Siempre activo en tmux `bot_consultas`. Acepta:
+
+| Input | Respuesta |
+|-------|-----------|
+| Pregunta en español | SQL automático → tabla de resultados |
+| `sí` tras resultado | Tweet redactado + story imagen 1080×1920 |
+| `no` tras resultado | Nada, descarta |
+| `/video <texto>` | Genera MP4 con Remotion y lo envía |
+| `/v <texto>` | Alias de /video |
 
 ## Reglas críticas
 

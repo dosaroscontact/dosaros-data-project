@@ -199,6 +199,47 @@ def escuchar_confirmacion(timeout_minutos=5):
 
 
 # ============================================================================
+# ENVIAR VIDEO
+# ============================================================================
+
+def enviar_video(path: str, caption: str = "", chat_id: str = None):
+    """
+    Envía un archivo de video MP4 a Telegram.
+
+    Args:
+        path:     Path local al archivo MP4
+        caption:  Texto que acompaña el video
+        chat_id:  ID del chat destino (usa TELEGRAM_CHAT_ID por defecto)
+    """
+    if not TELEGRAM_TOKEN or not TELEGRAM_CHAT_ID:
+        print("⚠️ TELEGRAM_TOKEN o TELEGRAM_CHAT_ID no configurados en .env")
+        return None
+
+    destino = chat_id or TELEGRAM_CHAT_ID
+
+    try:
+        with open(path, "rb") as f:
+            r = requests.post(
+                f"{BASE_URL}/sendVideo",
+                data={
+                    "chat_id":           destino,
+                    "caption":           caption,
+                    "parse_mode":        "HTML",
+                    "supports_streaming": "true",
+                },
+                files={"video": f},
+                timeout=120,
+            )
+        result = r.json()
+        if not result.get("ok"):
+            print(f"⚠️ Error Telegram video: {result.get('description')}")
+        return result
+    except Exception as e:
+        print(f"❌ Error enviando video Telegram: {e}")
+        return None
+
+
+# ============================================================================
 # EJECUCIÓN DIRECTA (TEST)
 # ============================================================================
 

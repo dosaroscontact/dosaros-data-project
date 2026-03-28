@@ -20,6 +20,7 @@ import sqlite3
 import os
 import time
 import requests
+from pathlib import Path
 from datetime import datetime
 from dotenv import load_dotenv
 
@@ -330,6 +331,63 @@ def _procesar_mensaje(texto_usuario, ultimo_id):
 
 
 # ============================================================================
+# COMANDO /video
+# ============================================================================
+
+def _procesar_comando_video(instruccion: str):
+    """
+    Genera un video MP4 a partir de una instrucción en lenguaje natural
+    y lo envía de vuelta al chat de Telegram.
+
+    Args:
+        instruccion: Texto tras /video (ej. "Top 3 tiradores 3P NBA esta semana")
+    """
+    print(f"\n→ Comando /video: {instruccion}")
+
+    _enviar(
+        f"⏳ <b>Generando video...</b>\n"
+        f"<b>Instrucción:</b> {instruccion[:120]}\n\n"
+        f"<i>Puede tardar 2-5 minutos.</i>"
+    )
+
+    try:
+        from src.integrations.video_generator import VideoGenerator
+        gen = VideoGenerator()
+        video_path = gen.generar_video(instruccion, usuario_id="telegram")
+    except Exception as e:
+        print(f"  Error inicializando VideoGenerator: {e}")
+        _enviar(f"❌ Error iniciando generador de video:\n<code>{str(e)[:200]}</code>")
+        return
+
+    if not video_path:
+        _enviar(
+            "❌ <b>No se pudo generar el video.</b>\n\n"
+            "<i>Posibles causas:</i>\n"
+            "• Editor Pro Max no instalado\n"
+            "• Error en APIs (Claude/Gemini)\n"
+            "• Base de datos sin datos para ese periodo\n\n"
+            "Intenta reformular la instrucción."
+        )
+        return
+
+    try:
+        from src.automation.bot_manager import enviar_video
+        size_mb = Path(video_path).stat().st_size / 1_048_576
+        enviar_video(
+            path=video_path,
+            caption=(
+                f"✅ <b>Video generado</b>\n"
+                f"<b>Instrucción:</b> {instruccion[:100]}\n"
+                f"<b>Tamaño:</b> {size_mb:.1f} MB"
+            ),
+        )
+        print(f"  Video enviado: {video_path} ({size_mb:.1f} MB)")
+    except Exception as e:
+        print(f"  Error enviando video: {e}")
+        _enviar(f"✅ Video generado pero no se pudo enviar:\n<code>{str(e)[:200]}</code>")
+
+
+# ============================================================================
 # BUCLE PRINCIPAL
 # ============================================================================
 
@@ -364,8 +422,19 @@ def escuchar_y_procesar():
                 mensaje = upd.get("message", {})
                 texto = mensaje.get("text", "").strip()
 
-                if not texto or texto.startswith("/"):
-                    continue  # ignorar comandos y mensajes vacíos
+                if not texto:
+                    continue
+
+                # Comando /video o /v
+                lower = texto.lower()
+                if lower.startswith("/video ") or lower.startswith("/v "):
+                    instruccion = texto.split(" ", 1)[1].strip()
+                    if instruccion:
+                        _procesar_comando_video(instruccion)
+                    continue
+
+                if texto.startswith("/"):
+                    continue  # ignorar otros comandos
 
                 ultimo_id = _procesar_mensaje(texto, ultimo_id)
 
