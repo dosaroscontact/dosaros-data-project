@@ -86,11 +86,13 @@ def _generar_together(prompt: str) -> bytes:
 
 def _generar_pollinations(prompt: str) -> bytes:
     """Genera imagen con Pollinations (gratis, sin clave) y retorna bytes."""
-    # Pollinations acepta prompts en la URL directamente
-    encoded = quote(prompt[:800])   # limitar longitud
+    # Limpiar el prompt: sustituir '/' para que no rompa la URL path,
+    # y limitar longitud para evitar URLs demasiado largas.
+    prompt_limpio = prompt[:600].replace("/", "-").replace("\\", "-")
+    encoded = quote(prompt_limpio, safe="")
     url = (
         f"https://image.pollinations.ai/prompt/{encoded}"
-        f"?width=768&height=1152&model=flux&nologo=true&seed={hash(prompt) % 99999}"
+        f"?width=768&height=1152&model=flux&nologo=true&seed={abs(hash(prompt)) % 99999}"
     )
     resp = requests.get(url, timeout=90)
     resp.raise_for_status()
