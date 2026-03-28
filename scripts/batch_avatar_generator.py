@@ -89,36 +89,31 @@ def _generar_together(prompt: str) -> bytes:
 
 
 def _generar_huggingface(prompt: str) -> bytes:
-    """Genera imagen con HuggingFace Inference API (Flux.1-schnell, gratis hasta 1000/día)."""
-    api_key = os.getenv("HF_API_KEY")
+    """
+    Genera imagen con HuggingFace InferenceClient (Flux.1-dev).
+    Requiere: pip install huggingface_hub pillow
+    Variable de entorno: HF_TOKEN  (huggingface.co/settings/tokens)
+    """
+    api_key = os.getenv("HF_TOKEN")
     if not api_key:
-        raise ValueError("HF_API_KEY no configurada en .env (huggingface.co/settings/tokens)")
+        raise ValueError("HF_TOKEN no configurada en .env (huggingface.co/settings/tokens)")
 
-    model = os.getenv("HF_IMAGE_MODEL", "black-forest-labs/FLUX.1-schnell")
-    headers = {"Authorization": f"Bearer {api_key}"}
-    payload = {
-        "inputs":      prompt[:500],
-        "parameters": {"width": 768, "height": 1152},
-    }
-    resp = requests.post(
-        f"https://api-inference.huggingface.co/models/{model}",
-        headers=headers,
-        json=payload,
-        timeout=120,
-    )
-    # Si el modelo está cargando, HF devuelve 503 con estimated_time
-    if resp.status_code == 503:
-        espera = resp.json().get("estimated_time", 20)
-        print(f"    (modelo cargando, esperando {espera:.0f}s...)", end=" ", flush=True)
-        time.sleep(min(espera + 5, 60))
-        resp = requests.post(
-            f"https://api-inference.huggingface.co/models/{model}",
-            headers=headers,
-            json=payload,
-            timeout=120,
-        )
-    resp.raise_for_status()
-    return resp.content
+    try:
+        from huggingface_hub import InferenceClient
+    except ImportError:
+        raise ImportError("Instala: pip install huggingface_hub pillow")
+
+    import io
+    model    = os.getenv("HF_IMAGE_MODEL", "black-forest-labs/FLUX.1-dev")
+    provider = os.getenv("HF_PROVIDER", "wavespeed")   # wavespeed, fal, replicate…
+
+    client = InferenceClient(provider=provider, api_key=api_key)
+    image  = client.text_to_image(prompt[:500], model=model)
+
+    # image es PIL.Image → convertir a bytes PNG
+    buf = io.BytesIO()
+    image.save(buf, format="PNG")
+    return buf.getvalue()
 
 
 def _generar_pollinations(prompt: str) -> bytes:
