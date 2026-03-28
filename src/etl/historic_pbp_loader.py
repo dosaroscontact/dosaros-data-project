@@ -90,6 +90,7 @@ def cargar_pbp_nba(anos):
             print(f"  Partidos pendientes: {total}")
             completados = 0
             errores = 0
+            errores_consecutivos = 0
             inicio = time.time()
 
             for i, game_id in enumerate(partidos):
@@ -102,18 +103,30 @@ def cargar_pbp_nba(anos):
                     if df.empty:
                         print(f"    Aviso: sin datos PBP para {game_id}")
                         errores += 1
+                        errores_consecutivos += 1
                         time.sleep(4)
-                        continue
-
-                    conn = sqlite3.connect(DB_PATH)
-                    df.to_sql('nba_pbp', conn, if_exists='append', index=False)
-                    conn.close()
-                    completados += 1
+                    else:
+                        conn = sqlite3.connect(DB_PATH)
+                        df.to_sql('nba_pbp', conn, if_exists='append', index=False)
+                        conn.close()
+                        completados += 1
+                        errores_consecutivos = 0
 
                 except Exception as e:
                     print(f"    Error en {game_id}: {e}")
                     errores += 1
-                    time.sleep(10)
+                    errores_consecutivos += 1
+                    # Backoff exponencial: 3 errores → 60s, 6 → 120s, 9+ → 300s
+                    if errores_consecutivos >= 9:
+                        espera = 300
+                    elif errores_consecutivos >= 6:
+                        espera = 120
+                    elif errores_consecutivos >= 3:
+                        espera = 60
+                    else:
+                        espera = 10
+                    print(f"    Errores consecutivos: {errores_consecutivos} — esperando {espera}s")
+                    time.sleep(espera)
                     continue
 
                 time.sleep(4)
