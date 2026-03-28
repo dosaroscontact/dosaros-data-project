@@ -1,7 +1,6 @@
 """
 batch_avatar_generator.py — Genera imágenes del avatar Dos Aros en lote.
 
-Usa Together AI (Flux.1 Schnell) o Pollinations (gratis) según disponibilidad.
 Las imágenes se guardan en assets/avatars/generated/{liga}/{team_code}_v{N}.png
 
 Uso:
@@ -9,13 +8,18 @@ Uso:
     python scripts/batch_avatar_generator.py --liga EUROLIGA
     python scripts/batch_avatar_generator.py --equipo LAL
     python scripts/batch_avatar_generator.py --todos
-    python scripts/batch_avatar_generator.py --liga NBA --provider pollinations
+    python scripts/batch_avatar_generator.py --liga NBA --provider huggingface
     python scripts/batch_avatar_generator.py --liga NBA --pausa 8
 
 Opciones:
-    --provider   together (default) | pollinations
+    --provider   huggingface (default) | together | pollinations
     --pausa      segundos entre requests (default: 5)
     --sobreescribir  regenera aunque ya exista el archivo
+
+Variables de entorno requeridas según proveedor:
+    huggingface : HF_API_KEY  (gratis en huggingface.co/settings/tokens)
+    together    : TOGETHER_API_KEY  (gratis en api.together.ai)
+    pollinations: POLLINATIONS_TOKEN  (gratis en pollinations.ai)
 """
 
 import argparse
@@ -84,6 +88,39 @@ def _generar_together(prompt: str) -> bytes:
     raise ValueError(f"Together: respuesta inesperada: {data}")
 
 
+def _generar_huggingface(prompt: str) -> bytes:
+    """Genera imagen con HuggingFace Inference API (Flux.1-schnell, gratis hasta 1000/día)."""
+    api_key = os.getenv("HF_API_KEY")
+    if not api_key:
+        raise ValueError("HF_API_KEY no configurada en .env (huggingface.co/settings/tokens)")
+
+    model = os.getenv("HF_IMAGE_MODEL", "black-forest-labs/FLUX.1-schnell")
+    headers = {"Authorization": f"Bearer {api_key}"}
+    payload = {
+        "inputs":      prompt[:500],
+        "parameters": {"width": 768, "height": 1152},
+    }
+    resp = requests.post(
+        f"https://api-inference.huggingface.co/models/{model}",
+        headers=headers,
+        json=payload,
+        timeout=120,
+    )
+    # Si el modelo está cargando, HF devuelve 503 con estimated_time
+    if resp.status_code == 503:
+        espera = resp.json().get("estimated_time", 20)
+        print(f"    (modelo cargando, esperando {espera:.0f}s...)", end=" ", flush=True)
+        time.sleep(min(espera + 5, 60))
+        resp = requests.post(
+            f"https://api-inference.huggingface.co/models/{model}",
+            headers=headers,
+            json=payload,
+            timeout=120,
+        )
+    resp.raise_for_status()
+    return resp.content
+
+
 def _generar_pollinations(prompt: str) -> bytes:
     """Genera imagen con Pollinations (gratis, sin clave) y retorna bytes."""
     # Limpiar el prompt: sustituir '/' para que no rompa la URL path,
@@ -131,6 +168,8 @@ def generar_imagen(resultado: dict, provider: str, sobreescribir: bool, pausa: f
     try:
         if provider == "together":
             img_bytes = _generar_together(prompt)
+        elif provider == "huggingface":
+            img_bytes = _generar_huggingface(prompt)
         else:
             img_bytes = _generar_pollinations(prompt)
 
@@ -188,8 +227,8 @@ def main():
     group.add_argument("--todos",  action="store_true")
     parser.add_argument("--variacion", type=int, default=0,
                         help="Variación concreta (0 = todas)")
-    parser.add_argument("--provider", choices=["together", "pollinations"],
-                        default="pollinations",
+    parser.add_argument("--provider", choices=["huggingface", "together", "pollinations"],
+                        default="huggingface",
                         help="Proveedor de imagen (default: pollinations)")
     parser.add_argument("--pausa", type=float, default=5,
                         help="Segundos entre requests (default: 5)")
