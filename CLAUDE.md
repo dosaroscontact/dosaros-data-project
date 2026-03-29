@@ -12,7 +12,7 @@ PYTHONPATH=/home/pi/dosaros-data-project  (requerido para imports src.*)
 Proyecto: /home/pi/dosaros-data-project
 Logs cron: /home/pi/dosaros-data-project/logs/cron_output.log
 ```
-Sesiones tmux activas: `bot_consultas` (bot polling), `nba_hist` / `euro_hist` (ETL histórico)
+Sesiones tmux activas: `bot_consultas` (bot polling), `nba_hist2` (NBA 2017-2019), `euro_hist2` (Euro E2010-E2021)
 
 ## Comandos
 ```bash
@@ -87,9 +87,24 @@ avatar_teams       — team_code, liga, team_name, colores A/B/C/D, postura,
                      vestimenta, decorado, tipo_logo, variacion_idx
 ```
 
-#### Cobertura PBP actual (Pi)
-- NBA: temporadas regulares 2020-21 → 2025-26 + playoffs 2020-2025 (cargando 2015-2019)
-- EuroLeague: E2022-E2025 completas, cargando E2007-E2021
+#### Cobertura PBP actual (Pi) — verificado 2026-03-28
+**NBA `nba_pbp`** (5,015,190 registros):
+- ✅ Regular: 2015-16, 2016-17 completas
+- ⚠️ Regular: 2017-18 parcial (~25%) — proceso cortado, relanzado en `nba_hist2`
+- ❌ Regular + Playoffs: 2018-19, 2019-20 — pendientes (proceso corriendo)
+- ✅ Regular + Playoffs: 2020-21 → 2024-25 completas
+
+**NBA `nba_games`**: completo desde 1983 (todas las temporadas regular + playoffs)
+
+**EuroLeague `euro_pbp`** (1,049,283 registros):
+- ✅ E2007, E2008, E2009 cargadas
+- ⚠️ E2010 parcial (33K registros vs ~90K esperados) — relanzado en `euro_hist2`
+- ❌ E2011 → E2021 — pendientes (proceso corriendo)
+- ✅ E2022-E2025 completas
+
+**Procesos activos en Pi (lanzados 2026-03-28):**
+- `tmux nba_hist2` → `historic_pbp_loader.py --liga nba --bloque 2017-2019`
+- `tmux euro_hist2` → `historic_pbp_loader.py --liga euro --bloque 2010-2021`
 
 ## Sistema Avatar
 Ver `assets/docs/BRAND.md` para descripción completa del personaje y parámetros visuales.

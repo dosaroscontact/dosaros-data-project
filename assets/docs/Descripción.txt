@@ -1,0 +1,566 @@
+﻿Ultra-detailed Pixar-style 3D character, full-body, standing pose, slightly angled (3/4 view), hands casually inside front pockets.
+
+
+Character identity (LOCKED):
+Same exact character across generations, consistent face, same proportions and facial structure.
+
+
+Male, ~35 years old, bald with perfectly shaved head, short well-groomed dark beard and mustache, warm olive skin tone. 
+Wide natural smile showing clean white teeth.
+Wearing sleek black sunglasses fully covering the eyes (no transparency).
+
+
+Body proportions:
+Athletic build, realistic human proportions, slightly stylized Pixar anatomy (larger head, clean facial features, smooth skin).
+
+
+Outfit (IDENTICAL every time):
+- Fitted black short-sleeve crew-neck t-shirt
+- Large bold red number "7" centered on chest, thin white outline
+- Thick diagonal stripe from right shoulder to left hip (red-white-red)
+- Blue denim jeans (slim fit)
+- Black modern smartwatch on left wrist
+- Multiple thin dark beaded bracelets on right wrist
+
+
+Style:
+Pixar-quality 3D render, ultra-clean topology, smooth shading, high-end character design, vibrant but controlled colors.
+
+
+Lighting:
+Studio cinematic lighting, soft key light + subtle rim light, realistic shadows, high contrast but natural skin tones.
+
+
+Rendering:
+Ultra-realistic 3D, 8K, sharp focus, global illumination, subsurface scattering on skin, physically based rendering (PBR).
+
+
+Background:
+Solid chroma key green (#00FF00), perfectly uniform, no gradients, no shadows on background.
+
+
+Framing:
+Full body visible, centered, no cropping.
+
+
+Negative prompts:
+no extra accessories, no logo changes, no color variations, no text distortion, no background elements, no pose variation, no different clothing, no different number.
+
+
+--ar 2:3 --v 6 --style raw --q 2 --s 250
+
+
+Avatar 1
+
+
+Highly detailed Pixar-style 3D cartoon avatar, full-body standing pose, slightly angled toward the viewer, hands casually in pockets, ultra-realistic 3D render, masterpiece, best quality, 8K resolution, sharp focus, cinematic lighting, smooth professional shading, vibrant colors, exact character proportions.
+
+
+A confident 35-year-old man, bald with perfectly shaved head, short well-groomed dark beard and mustache, warm olive skin tone, broad genuine smile showing white teeth, wearing sleek black sunglasses that completely cover his eyes.
+
+
+Outfit: fitted black short-sleeve crew-neck t-shirt with a large bold red number "7" outlined in thin white centered on the chest, plus a thick diagonal stripe running from his right shoulder across the torso to his left hip in red-white-red colors. Blue denim jeans. Black modern watch on left wrist, several thin dark beaded bracelets on right wrist.
+
+
+Charismatic and confident expression, NBA social media analyst style, clean and modern character design.
+
+
+Standing isolated in front of a solid vibrant green background (#00FF00 chroma key green), no other elements, plain uniform green backdrop for easy editing, transparent edges if possible.
+
+
+the man have been slimy man and tall 
+
+
+NO shadows on background, flat uniform #00B140 or #00FF00 fill
+
+
+photorealistic 3D, ultra crisp
+
+
+Avatar 2
+
+
+Ultra-detailed Pixar-style 3D character, full-body, standing pose, slightly angled 3/4 view, dynamic confident gesture: right hand giving thumbs-up at waist level, left hand raised to shoulder height with index and middle fingers extended upward in a victory/two sign, palms facing forward.
+
+
+Character identity (LOCKED):
+Same exact character across ALL generations, identical face, proportions, and facial structure.
+
+
+Male, ~35 years old, bald with perfectly shaved head, short well-groomed dark beard and mustache, warm olive skin tone.
+Wide natural smile showing clean white teeth.
+Wearing sleek black sunglasses fully covering the eyes (no transparency, solid black lenses).
+
+
+Body proportions:
+Athletic build, realistic human proportions with subtle Pixar stylization (slightly larger head, clean facial features, smooth skin).
+
+
+Outfit (IDENTICAL every time):
+- Bright yellow short-sleeve Lakers basketball jersey with purple trim and neckline
+- Arched bold purple "LAKERS" text across the chest
+- Large bold purple number "7" centered below with thin white outline
+- Small white Nike swoosh logo on upper right chest
+- Blue slim-fit denim jeans
+- Yellow-and-purple Nike sneakers (Kobe-inspired design: yellow base, purple accents and laces, white rubber sole)
+- Black modern smartwatch on left wrist
+- Multiple thin dark beaded bracelets on right wrist
+
+
+Style:
+Pixar-quality 3D render, ultra-clean topology, flawless shading, high-end character design, vibrant controlled colors, professional NBA social-media avatar aesthetic.
+
+
+Lighting:
+Studio cinematic lighting, soft key light from front-right, subtle rim light, realistic soft shadows, high contrast with natural skin tones and fabric highlights.
+
+
+Rendering:
+Ultra-realistic 3D, 8K resolution, razor-sharp focus, global illumination, subsurface scattering on skin, physically based rendering (PBR), masterpiece, best quality.
+
+
+Background:
+Solid chroma key green (#00FF00), perfectly uniform, no gradients, no shadows, no texture, clean edges for easy editing.
+
+
+Framing:
+Full body visible from head to toes, perfectly centered, no cropping.
+
+
+Negative prompts:
+no extra accessories, no logo changes, no color variations, no text on jersey distortion, no background elements, no pose variation, no different clothing, no different number, no different sneakers, no jersey color swap, no watch or bracelet changes, no extra text, no room walls, no whiteboard.
+
+
+--ar 2:3 --v 6 --style raw --q 2 --s 250 --stylize 250
+
+
+Cómo Usar los Archivos de Referencia
+En cada una de tus peticiones a la IA, debes adjuntar siempre los mismos dos archivos de referencia:
+1. Avatar de Referencia (Sujeto): Usaré una de tus fotos (IMG_0844.JPG) para definir los rasgos del sujeto.
+2. Logo de Referencia (Estilo de Marca): Usaré tu logo "THE COLLECTOR" (logo letras azul.png) para definir el estilo de tipografía, el aire urbano/graffiti y cómo integrar el texto de tu marca.
+________________
+
+
+PARTE 1: La Fórmula Maestra de Petición (The Prompt Formula)
+Esta es la estructura exacta que debes copiar y pegar en la IA. He creado marcadores de posición entre corchetes, como [POSTURA], que luego rellenarás con los datos de la Parte 2.
+Copia este texto base:
+Petición Principal de Imagen:
+"A cinematic, ultra-realistic, photorealistic full-body photograph of the specific man from [IMG_0844.JPG] (reference avatar), wearing glasses and with his beard, in a [POSTURA] position. He is wearing [VESTIMENTA]. All clothing, accessories, and environmental elements are strictly colored with the official colors of the [NOMBRE DEL EQUIPO] (reference the exact team colors for primary, secondary, and tertiary). The primary color is applied to the main clothes, secondary to details and trim, and tertiary for accents. He is located in [DECORADO]. Integrate the text 'THE COLLECTOR' as a [TIPO DE LOGO], using the bold, graffiti-inspired style from [logo letras azul.png], but recolored in the [NOMBRE DEL EQUIPO] colors (e.g., primary color for outline, secondary for fill)."
+Cómo Rellenar los Marcadores:
+* [POSTURA]: Sacado de la lista de variaciones (p.ej., standing, sitting).
+* [VESTIMENTA]: Sacado de la lista de variaciones (p.ej., a basketball jersey, a stylish bomber jacket).
+* [DECORADO]: Sacado de la lista de variaciones (p.ej., a modern locker room, a dark urban street).
+* [NOMBRE DEL EQUIPO]: El equipo específico de la lista.
+* [TIPO DE LOGO]: Sacado de la lista de variaciones (p.ej., large patch on the chest, subtle back print).
+________________
+
+
+PARTE 2: El Directorio de Variaciones por Equipo
+Aquí tienes la lista detallada de cómo configurar cada petición para obtener la máxima variedad. He alternado posturas, tipos de ropa y entornos, y he extraído los colores oficiales.
+Equipos de la NBA
+Equipo
+	Colores Principales (A, B, C)
+	Pose y Decorado Únicos para rellenar la Fórmula
+	1. Boston Celtics
+	A: Verde Trébol
+
+
+B: Blanco
+
+
+C: Oro (Acento)
+	[POSTURA]: De pie, cruzado de brazos.
+
+
+[VESTIMENTA]: Camiseta de baloncesto de juego.
+
+
+[DECORADO]: Un vestuario moderno con las taquillas de madera.
+
+
+[TIPO DE LOGO]: Parche grande en el pecho.
+	2. Los Angeles Lakers
+	A: Púrpura
+
+
+B: Oro
+
+
+C: Blanco (Acento)
+	[POSTURA]: Sentado en el suelo de una pista interior, sujetando un balón con una mano.
+
+
+[VESTIMENTA]: Chaqueta de chándal retro.
+
+
+[DECORADO]: Pista de baloncesto interior de lujo con iluminación de neón.
+
+
+[TIPO DE LOGO]: Serigrafía de graffiti en la espalda.
+	3. Golden State Warriors
+	A: Azul Real
+
+
+B: Amarillo California
+
+
+C: Blanco (Acento)
+	[POSTURA]: De pie, mirando hacia un lado, con un pie apoyado en una caja.
+
+
+[VESTIMENTA]: Sudadera con capucha estilizada (hoodie).
+
+
+[DECORADO]: Un tejado urbano con vistas a un puente.
+
+
+[TIPO DE LOGO]: Texto sutil bordado en el lateral de la capucha.
+	4. Chicago Bulls
+	A: Rojo Toro
+
+
+B: Negro
+
+
+C: Blanco (Acento)
+	[POSTURA]: Caminando hacia la cámara en un túnel de estadio.
+
+
+[VESTIMENTA]: Pantalones de chándal y camiseta técnica ajustada.
+
+
+[DECORADO]: Un túnel de estadio de hormigón con luces rojas.
+
+
+[TIPO DE LOGO]: Logotipo de graffiti grande impreso en el pantalón.
+	5. New York Knicks
+	A: Azul Knicks
+
+
+B: Naranja Knicks
+
+
+C: Plata (Acento)
+	[POSTURA]: De pie, con las manos en los bolsillos de la chaqueta.
+
+
+[VESTIMENTA]: Chaqueta bomber elegante y moderna.
+
+
+[DECORADO]: Una calle de la ciudad de noche, con rascacielos de fondo.
+
+
+[TIPO DE LOGO]: Pin metálico estilizado en la solapa de la chaqueta.
+	6. Miami Heat
+	A: Rojo Fuego
+
+
+B: Negro
+
+
+C: Blanco
+
+
++ Rosa/Cyan (Acento Vice)
+	[POSTURA]: De pie, de espaldas, mirando por una ventana grande.
+
+
+[VESTIMENTA]: Camiseta de baloncesto edición 'Vice'.
+
+
+[DECORADO]: Un ático de lujo con vistas a la playa al amanecer.
+
+
+[TIPO DE LOGO]: Parche sutil de estilo neón en el lateral.
+	7. San Antonio Spurs
+	A: Plata Metálico
+
+
+B: Negro
+
+
+C: Blanco (Acento)
+	[POSTURA]: Sentado en un banco metálico, pensativo.
+
+
+[VESTIMENTA]: Sudadera sin mangas.
+
+
+[DECORADO]: Un entorno industrial limpio y minimalista.
+
+
+[TIPO DE LOGO]: Texto de graffiti grande y audaz en el pecho.
+	8. Toronto Raptors
+	A: Rojo Raptors
+
+
+B: Negro
+
+
+C: Plata (Acento)
+	[POSTURA]: De pie, en una pose de 'hype', con los brazos abiertos.
+
+
+[VESTIMENTA]: Cortavientos técnico de estilo urbano.
+
+
+[DECORADO]: Un pasillo estrecho con paredes de metal corrugado.
+
+
+[TIPO DE LOGO]: Texto de graffiti vertical a lo largo de la cremallera.
+	9. Dallas Mavericks
+	A: Azul Mavericks
+
+
+B: Azul Marino
+
+
+C: Plata (Acento)
+	[POSTURA]: Sentado en un sofá de cuero moderno.
+
+
+[VESTIMENTA]: Polo deportivo de alta calidad.
+
+
+[DECORADO]: Una sala de estar moderna con decoración futurista.
+
+
+[TIPO DE LOGO]: Bordado de marca de lujo en la manga.
+	10. Philadelphia 76ers
+	A: Azul Real
+
+
+B: Rojo
+
+
+C: Blanco
+
+
+D: Oro (Acento)
+	[POSTURA]: De pie, con un pie sobre una silla, mirando a cámara.
+
+
+[VESTIMENTA]: Camiseta de baloncesto de manga corta estilizada.
+
+
+[DECORADO]: Una biblioteca moderna con estanterías de metal y cristal.
+
+
+[TIPO DE LOGO]: Parche bordado en el dobladillo inferior de la camiseta.
+	Indiana Pacers, A: Azul Marino, B: Oro, C: Plata (Acento), "[POSTURA]: En posición de defensa baja (sliding).", "[VESTIMENTA]: Camiseta con líneas verticales finas (pinstripes).", "[DECORADO]: Un garaje de carreras con herramientas y neones.", "[TIPO DE LOGO]: Graffiti con efecto de velocidad en la puerta del garaje."
+LA Clippers, A: Azul, B: Rojo, C: Blanco (Acento), "[POSTURA]: Saltando para un rebote con los brazos extendidos.", "[VESTIMENTA]: Equipación moderna con tipografía náutica.", "[DECORADO]: Un muelle al atardecer con el océano de fondo.", "[TIPO DE LOGO]: Graffiti estilo "Old English" en un poste del muelle."
+Memphis Grizzlies, A: Azul Grizzly, B: Azul Cielo, C: Oro (Acento), "[POSTURA]: Rugiendo tras un tapón espectacular.", "[VESTIMENTA]: Sudadera con el logo del oso en el pecho.", "[DECORADO]: Un bosque neblinoso con una cancha de madera rústica.", "[TIPO DE LOGO]: Graffiti con marcas de garras en un tronco caído."
+Milwaukee Bucks, A: Verde Bosque, B: Crema, C: Azul (Acento), "[POSTURA]: Flexionando los músculos tras un mate.", "[VESTIMENTA]: Camiseta con detalles en color crema "City Edition".", "[DECORADO]: Una cabaña de lujo moderna con chimenea encendida.", "[TIPO DE LOGO]: Graffiti elegante sobre una pared de piedra volcánica."
+Minnesota Timberwolves, A: Azul Medianoche, B: Verde Aurora, C: Gris (Acento), "[POSTURA]: Mirando fijamente a cámara con intensidad.", "[VESTIMENTA]: Chaqueta técnica reflectante de entrenamiento.", "[DECORADO]: Un paisaje helado con una aurora boreal visible.", "[TIPO DE LOGO]: Graffiti que brilla en la oscuridad sobre el hielo."
+New Orleans Pelicans, A: Azul Marino, B: Oro, C: Rojo (Acento), "[POSTURA]: Haciendo un gesto de "silencio" con el dedo en los labios.", "[VESTIMENTA]: Camiseta con detalles de carnaval y oro.", "[DECORADO]: Una calle del Barrio Francés con balcones de hierro.", "[TIPO DE LOGO]: Graffiti artístico y colorido en una pared de ladrillo visto."
+New York Knicks, A: Naranja, B: Azul, C: Blanco (Acento), "[POSTURA]: Botando el balón entre las piernas con rapidez.", "[VESTIMENTA]: Camiseta clásica con el cuello redondo.", "[DECORADO]: Una estación de metro de Nueva York con azulejos blancos.", "[TIPO DE LOGO]: Graffiti clásico de los 80 sobre los azulejos de la estación."
+Oklahoma City Thunder, A: Azul Celeste, B: Naranja, C: Amarillo (Acento), "[POSTURA]: Preparado para salir en contraataque.", "[VESTIMENTA]: Equipación con rayos laterales.", "[DECORADO]: Una llanura abierta bajo un cielo de tormenta eléctrica.", "[TIPO DE LOGO]: Graffiti eléctrico sobre una valla metálica."
+Orlando Magic, A: Azul, B: Negro, C: Plata (Acento), "[POSTURA]: Lanzando un triple desde la esquina.", "[VESTIMENTA]: Camiseta con estrellas impresas en los laterales.", "[DECORADO]: Un parque temático con fuegos artificiales de fondo.", "[TIPO DE LOGO]: Graffiti con purpurina y brillo sobre un muro negro."
+Philadelphia 76ers, A: Azul, B: Rojo, C: Blanco (Acento), "[POSTURA]: Cruzando los brazos en señal de confianza.", "[VESTIMENTA]: Camiseta de estilo histórico con estrellas.", "[DECORADO]: Un salón con la campana de la libertad y techos altos.", "[TIPO DE LOGO]: Graffiti con estilo de caligrafía colonial en una columna."
+Atlanta Hawks, A: Rojo, B: Blanco, C: Volt Green (Acento), "[POSTURA]: Saltando para un tapón.", "[VESTIMENTA]: Equipación oficial con detalles en verde neón.", "[DECORADO]: Un pabellón futurista con luces LED.", "[TIPO DE LOGO]: Texto de graffiti en los marcadores digitales."
+Boston Celtics, A: Verde, B: Blanco, C: Oro (Acento), "[POSTURA]: Lanzando un tiro libre con concentración.", "[VESTIMENTA]: Camiseta clásica de tirantes.", "[DECORADO]: Un parqué clásico con el trébol gigante.", "[TIPO DE LOGO]: Graffiti integrado en las vetas de la madera del suelo."
+Brooklyn Nets, A: Negro, B: Blanco, C: Gris (Acento), "[POSTURA]: De pie con actitud desafiante.", "[VESTIMENTA]: Sudadera sin mangas con capucha.", "[DECORADO]: Una cancha callejera en Brooklyn bajo un puente.", "[TIPO DE LOGO]: Estilo tipográfico de metro neoyorquino en la pared."
+Chicago Bulls, A: Rojo, B: Negro, C: Blanco (Acento), "[POSTURA]: En el aire realizando un mate.", "[VESTIMENTA]: Pantalones cortos anchos y zapatillas retro.", "[DECORADO]: Un túnel de vestuarios con luces rojas.", "[TIPO DE LOGO]: Graffiti agresivo y grande en la puerta del túnel."
+Cleveland Cavaliers, A: Granate, B: Oro, C: Azul Marino (Acento), "[POSTURA]: Defendiendo con brazos extendidos.", "[VESTIMENTA]: Camiseta de entrenamiento técnica.", "[DECORADO]: Una fundición de acero antigua reformada como cancha.", "[TIPO DE LOGO]: Graffiti con efecto metálico en una viga de acero."
+Dallas Mavericks, A: Azul Real, B: Plata, C: Negro (Acento), "[POSTURA]: Realizando un pase de pecho.", "[VESTIMENTA]: Camiseta de manga corta de compresión.", "[DECORADO]: Un skyline nocturno de una ciudad moderna de fondo.", "[TIPO DE LOGO]: Logo brillante en un cartel publicitario de neón."
+Denver Nuggets, A: Azul Medianoche, B: Amarillo Sol, C: Rojo Plano (Acento), "[POSTURA]: Señalando al cielo tras un triple.", "[VESTIMENTA]: Camiseta con el diseño del arcoíris retro.", "[DECORADO]: Una cima de montaña nevada con una canasta de madera.", "[TIPO DE LOGO]: Graffiti tallado en la roca de la montaña."
+Golden State Warriors, A: Azul, B: Amarillo, C: Blanco (Acento), "[POSTURA]: Celebrando con los brazos abiertos.", "[VESTIMENTA]: Chaqueta de calentamiento moderna.", "[DECORADO]: El puente Golden Gate visible a través de grandes ventanales.", "[TIPO DE LOGO]: Graffiti estilizado en el cristal del ventanal."
+Los Angeles Lakers, A: Púrpura, B: Oro, C: Blanco (Acento), "[POSTURA]: Caminando por una alfombra roja con un balón bajo el brazo.", "[VESTIMENTA]: Camiseta de tirantes con detalles dorados.", "[DECORADO]: Un set de rodaje cinematográfico con focos potentes.", "[TIPO DE LOGO]: Estilo "Hollywood" en graffiti sobre un fondo de estudio."
+Miami Heat, A: Rojo, B: Negro, C: Blanco (Acento), "[POSTURA]: Apoyado en una palmera con un balón de fuego.", "[VESTIMENTA]: Camiseta de estilo "City Edition" con degradados.", "[DECORADO]: Una playa al atardecer con luces de neón rosa y azul.", "[TIPO DE LOGO]: Graffiti de neón vibrante sobre la arena."
+Equipos de la Euroliga
+Equipo
+	Colores Principales (A, B, C)
+	Pose y Decorado Únicos para rellenar la Fórmula
+	11. Real Madrid
+	A: Blanco
+
+
+B: Púrpura Real (Acento)
+
+
+C: Oro (Acento)
+	[POSTURA]: De pie, en una pose majestuosa y elegante.
+
+
+[VESTIMENTA]: Chaqueta de traje de lino de diseño.
+
+
+[DECORADO]: Un patio histórico de piedra con arquitectura clásica.
+
+
+[TIPO DE LOGO]: Logotipo de graffiti sutil y elegante en la solapa.
+	12. FC Barcelona
+	A: Azul
+
+
+B: Grana (Maroon)
+
+
+C: Amarillo (Acento)
+	[POSTURA]: De pie, apoyado en un coche deportivo moderno.
+
+
+[VESTIMENTA]: Camiseta técnica de running de alta gama.
+
+
+[DECORADO]: Un garaje moderno con iluminación de neón azul y roja.
+
+
+[TIPO DE LOGO]: Estampado grande y audaz de estilo urbano en la espalda.
+	13. Olympiacos Piraeus
+	A: Rojo
+
+
+B: Blanco
+
+
+C: Negro (Acento)
+	[POSTURA]: Sentado en una moto tipo scooter moderna.
+
+
+[VESTIMENTA]: Chaqueta de cuero estilo 'biker' estilizada.
+
+
+[DECORADO]: Un paseo marítimo urbano con vistas al puerto.
+
+
+[TIPO DE LOGO]: Parche de graffiti en la manga.
+	14. Panathinaikos AKTOR
+	A: Verde
+
+
+B: Blanco
+
+
+C: Oro (Acento)
+	[POSTURA]: De pie, en una pose dinámica de salto sutil.
+
+
+[VESTIMENTA]: Conjunto de chándal completo moderno.
+
+
+[DECORADO]: Una estación de metro futurista con iluminación verde.
+
+
+[TIPO DE LOGO]: Texto de graffiti impreso en la pierna del chándal.
+	15. Fenerbahçe Beko
+	A: Azul Marino
+
+
+B: Amarillo
+
+
+C: Blanco (Acento)
+	[POSTURA]: De pie, con una pose de modelo, mirando a cámara.
+
+
+[VESTIMENTA]: Camisa de seda estampada de lujo.
+
+
+[DECORADO]: Un bar de cócteles sofisticado con iluminación dramática.
+
+
+[TIPO DE LOGO]: Bordado de marca sutil en el cuello de la camisa.
+	16. Anadolu Efes
+	A: Azul Efes
+
+
+B: Blanco
+
+
+C: Rojo (Acento)
+	[POSTURA]: Sentado en un sillón de diseño futurista.
+
+
+[VESTIMENTA]: Suéter de punto de alta calidad.
+
+
+[DECORADO]: Una oficina tecnológica moderna con vistas a la ciudad.
+
+
+[TIPO DE LOGO]: Logotipo de graffiti sutil bordado en el pecho.
+	17. Maccabi Playtika Tel Aviv
+	A: Amarillo
+
+
+B: Azul
+
+
+C: Oro (Acento)
+	[POSTURA]: De pie, en una pose de acción, simulando un lanzamiento.
+
+
+[VESTIMENTA]: Pantalones cortos de baloncesto y camiseta interior técnica.
+
+
+[DECORADO]: Un muro de graffiti en una calle urbana vibrante.
+
+
+[TIPO DE LOGO]: Texto de graffiti grande y audaz integrado en el muro.
+	18. Partizan Mozzart Bet
+	A: Negro
+
+
+B: Blanco
+
+
+C: Plata (Acento)
+	[POSTURA]: De pie, con una pose seria y minimalista.
+
+
+[VESTIMENTA]: Sudadera con capucha de algodón pesado (heavyweight hoodie).
+
+
+[DECORADO]: Un callejón de hormigón brutalista.
+
+
+[TIPO DE LOGO]: Texto de graffiti grande impreso en el pecho.
+	19. Virtus Segafredo Bologna
+	A: Blanco
+
+
+B: Negro
+
+
+C: Oro (Acento)
+	[POSTURA]: Sentado en una silla de diseño clásico italiano.
+[VESTIMENTA]: Chaqueta blazer desestructurada.
+
+
+[DECORADO]: Una galería de arte moderna con esculturas minimalistas.
+
+
+[TIPO DE LOGO]: Logotipo de graffiti sutil y elegante en el bolsillo interior.
+	20. Zalgiris Kaunas
+	A: Verde
+
+
+B: Blanco
+
+
+C: Negro (Acento)
+	[POSTURA]: De pie, en una pose relajada, con los brazos cruzados.
+
+
+[VESTIMENTA]: Parka técnica de estilo urbano.
+
+
+[DECORADO]: Un parque arbolado moderno con arquitectura de madera.
+
+
+[TIPO DE LOGO]: Parche de graffiti grande en la espalda de la parka.
+	Esta estructura te permite generar los 20 avatares diferentes simplemente rellenando la fórmula con los datos de la tabla, asegurando que cada uno sea único y respete los colores de cada equipo.
+Maccabi Tel Aviv, A: Amarillo, B: Azul, C: Blanco (Acento), "[POSTURA]: Sosteniendo un trofeo con ambas manos.", "[VESTIMENTA]: Equipación clásica de color amarillo brillante.", "[DECORADO]: Un pabellón lleno de banderas amarillas.", "[TIPO DE LOGO]: Graffiti en bloque sobre una lona gigante."
+CSKA Moscow, A: Rojo, B: Azul, C: Oro (Acento), "[POSTURA]: Firme, con una mirada gélida y profesional.", "[VESTIMENTA]: Chándal de entrenamiento de alta gama.", "[DECORADO]: Una plaza monumental con arquitectura imperial.", "[TIPO DE LOGO]: Graffiti de estilo constructivista ruso en un muro de piedra."
+Olympiacos Piraeus, A: Rojo, B: Blanco, C: Plata (Acento), "[POSTURA]: Remando simbólicamente con un balón.", "[VESTIMENTA]: Camiseta de rayas verticales rojas y blancas.", "[DECORADO]: Un puerto marítimo con barcos clásicos al fondo.", "[TIPO DE LOGO]: Graffiti con textura de desgaste salino en un contenedor de carga."
+Varese, A: Rojo, B: Blanco, C: Oro (Acento), "[POSTURA]: Pose vintage de los años 70 lanzando a canasta.", "[VESTIMENTA]: Equipación de baloncesto de corte retro y corto.", "[DECORADO]: Un pabellón italiano antiguo con techo abovedado.", "[TIPO DE LOGO]: Graffiti de estilo clásico "old school" en la pared de ladrillo."
+Cibona Zagreb, A: Azul, B: Blanco, C: Plata (Acento), "[POSTURA]: En posición de triple amenaza.", "[VESTIMENTA]: Camiseta técnica con detalles geométricos.", "[DECORADO]: Una plaza central europea con suelos de adoquines.", "[TIPO DE LOGO]: Graffiti minimalista en una fuente de piedra."
+
+
+Jugoplastika (Split), A: Amarillo, B: Negro, C: Blanco (Acento), "[POSTURA]: Botando el balón con elegancia y control.", "[VESTIMENTA]: Equipación retro de los años 80 con el nombre 'Jugoplastika' en el pecho.", "[DECORADO]: Una cancha costera en Split con el mar Adriático de fondo.", "[TIPO DE LOGO]: Graffiti de estilo retro en una pared de piedra caliza."
+FC Barcelona, A: Azul, B: Grana, C: Amarillo (Acento), "[POSTURA]: Entrando a canasta con una bandeja fluida.", "[VESTIMENTA]: Equipación azulgrana clásica con detalles amarillos.", "[DECORADO]: Un pabellón moderno con arquitectura vanguardista.", "[TIPO DE LOGO]: Graffiti artístico en los cristales de un palco."
+Panathinaikos, A: Verde, B: Blanco, C: Oro (Acento), "[POSTURA]: Levantando el puño en señal de victoria.", "[VESTIMENTA]: Camiseta con el trébol bordado en el lateral.", "[DECORADO]: Un estadio olímpico imponente con columnas griegas modernas.", "[TIPO DE LOGO]: Graffiti de estilo clásico sobre una superficie de mármol."
+Virtus Bologna, A: Negro, B: Blanco, C: Plata (Acento), "[POSTURA]: Defendiendo intensamente con las manos bajas.", "[VESTIMENTA]: Camiseta negra con la 'V' blanca característica.", "[DECORADO]: Una plaza histórica italiana con pórticos antiguos.", "[TIPO DE LOGO]: Graffiti minimalista y elegante en una columna de ladrillo."
+Žalgiris Kaunas, A: Verde, B: Blanco, C: Verde Oscuro (Acento), "[POSTURA]: Atrapando un rebote con fuerza.", "[VESTIMENTA]: Camiseta técnica con patrones de bosque lituano.", "[DECORADO]: Un pabellón cubierto de nieve con luces interiores cálidas.", "[TIPO DE LOGO]: Graffiti con efecto de escarcha sobre una valla de madera."
+Partizan Belgrade, A: Negro, B: Blanco, C: Gris (Acento), "[POSTURA]: Gritando de emoción tras un triple decisivo.", "[VESTIMENTA]: Camiseta negra sobria con detalles en blanco.", "[DECORADO]: Una caldera de pabellón con ambiente denso y oscuro.", "[TIPO DE LOGO]: Graffiti rebelde y rudo sobre el hormigón del túnel."
+Limoges CSP, A: Amarillo, B: Verde, C: Blanco (Acento), "[POSTURA]: Lanzando un tiro de media distancia (jump shot).", "[VESTIMENTA]: Equipación clásica de los años 90.", "[DECORADO]: Una cancha urbana en un parque europeo tradicional.", "[TIPO DE LOGO]: Graffiti colorido sobre un banco de madera del parque."
