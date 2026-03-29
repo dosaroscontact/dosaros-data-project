@@ -346,14 +346,48 @@ export const DosarosVideo = () => {{ ... }};
         match = re.search(r'export\s+const\s+(\w+)\s*=', contenido)
         nombre_comp = match.group(1) if match else "DosarosVideo"
 
-        cmd = ["npx", "remotion", "render", nombre_comp, str(output)]
+        # Registrar composición en Root.tsx de Editor Pro Max
+        root_path = self.editor_path / "src" / "Root.tsx"
+        root_original = root_path.read_text(encoding="utf-8")
+
+        rel_import = f"./compositions/{comp_path.stem}"
+        linea_import = f'import {{ {nombre_comp} }} from "{rel_import}";\n'
+        linea_comp = (
+            f'\n      <Composition\n'
+            f'        id="{nombre_comp}"\n'
+            f'        component={{{nombre_comp}}}\n'
+            f'        durationInFrames={{1350}}\n'
+            f'        fps={{30}}\n'
+            f'        width={{1080}}\n'
+            f'        height={{1920}}\n'
+            f'      />'
+        )
+
+        nuevo_root = linea_import + root_original
+        inyectado = False
+        for patron in ['</>', '</RemotionRoot>', '</React.Fragment>']:
+            if patron in nuevo_root:
+                nuevo_root = nuevo_root.replace(patron, linea_comp + '\n    ' + patron, 1)
+                inyectado = True
+                break
+
+        if not inyectado:
+            raise RuntimeError(
+                "No se pudo inyectar la composición en Root.tsx. "
+                f"Patrones buscados: </>, </RemotionRoot>, </React.Fragment>"
+            )
+
+        cmd = ["npx", "remotion", "render", nombre_comp, str(output), "--log=error"]
         print(f"  Ejecutando: {' '.join(cmd)}")
 
         original_cwd = os.getcwd()
         try:
+            root_path.write_text(nuevo_root, encoding="utf-8")
             os.chdir(self.editor_path)
             result = subprocess.run(cmd, capture_output=True, text=True, timeout=600)
         finally:
+            root_path.write_text(root_original, encoding="utf-8")
+            comp_path.unlink(missing_ok=True)
             os.chdir(original_cwd)
 
         if result.returncode != 0:
