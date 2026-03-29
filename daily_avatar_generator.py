@@ -59,11 +59,11 @@ def send_telegram_notification(success):
         from src.automation.bot_manager import enviar_mensaje
         
         if success:
-            msg = "✅ Prompts de avatares regenerados para hoy\n\nUsa /avatar_today para verlos"
+            msg = "✅ Prompts de avatares regenerados\n\nUsa /avatar_today"
         else:
-            msg = "❌ Error regenerando prompts hoy. Revisa logs en Pi."
+            msg = "❌ Error regenerando prompts hoy"
         
-        enviar_mensaje(msg)
+        enviar_mensaje(msg, parse_mode="TEXT")
         log_message("📬 Notificación enviada a Telegram")
     except Exception as e:
         log_message(f"⚠️ No se pudo enviar notificación: {e}")
