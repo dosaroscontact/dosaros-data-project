@@ -278,30 +278,30 @@ PALETA DOS AROS:
 - Coral (#FF8787): negativo / misses
 - Blanco (#FFFFFF): fondo posts
 
-TIPOGRAFÍAS: "Space Grotesk" para titulares/números · "Inter" para texto
+TIPOGRAFÍAS: usa fontFamily "system-ui" o "sans-serif" (no importes fuentes externas)
 
-COMPONENTES DISPONIBLES (importar desde ../components o ../presets):
-- AnimatedTitle, TypewriterText, CaptionOverlay, LowerThird, WordByWordCaption
-- FitImage, FitVideo, Slideshow
-- GradientBackground, ParticleField, ColorWash, GridPattern
-- ProgressBar, Watermark, CallToAction, CountdownTimer
-- SplitScreen, SafeArea
-- TransitionPresets (crossfade, slide, wipe)
-
-REGLAS:
-1. React 19 + Remotion 4 · TypeScript válido
-2. Sin imports externos (solo 'remotion' y ../components)
-3. Sin fetch/async en render · Sin console.log
-4. Usa Sequence para animar secciones
+REGLAS CRÍTICAS:
+1. SOLO imports desde 'remotion' — NO importes desde '../components', '../presets' ni ningún otro módulo local
+2. El componente debe ser 100% auto-contenido con React inline styles
+3. Sin fetch/async en render · Sin console.log · Sin imports de imágenes
+4. Usa AbsoluteFill, Sequence, interpolate, useCurrentFrame de remotion
 5. Incorpora los datos reales de la BD en el texto del video
-6. Estética: analítica y limpia, NO sensacionalista
+6. Estética: analítica y limpia, fondos sólidos con colores de la paleta
 
 FORMATO: devuelve SOLO el código entre triple backticks tsx:
 
 ```tsx
 import {{ AbsoluteFill, Sequence, interpolate, useCurrentFrame }} from 'remotion';
-// ... composición completa
-export const DosarosVideo = () => {{ ... }};
+
+export const DosarosVideo = () => {{
+  const frame = useCurrentFrame();
+  // ... composición completa con datos reales incrustados
+  return (
+    <AbsoluteFill style={{{{ backgroundColor: '#0D1321' }}}}>
+      ...
+    </AbsoluteFill>
+  );
+}};
 ```
 """
 
