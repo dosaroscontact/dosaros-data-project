@@ -95,30 +95,28 @@ if __name__ == "__main__":
     conn = sqlite3.connect('/mnt/nba_data/dosaros_local.db')
     cursor = conn.cursor()
     
-    # Limpiar tabla para test
+    # Limpiar tabla
     cursor.execute('DELETE FROM avatar_prompts')
     conn.commit()
     
-    # Obtener 3 equipos random con colores
+    # Obtener TODOS los equipos con colores
     teams = cursor.execute('''
         SELECT a.id, a.team_name, a.scene_type, a.postura, a.vestimenta, a.decorado
         FROM avatar_teams a
         WHERE a.team_name IN (SELECT team_name FROM team_colors)
-        LIMIT 3
+        ORDER BY a.team_name
     ''').fetchall()
     
     conn.close()
     
+    generated = 0
     for team_id, team_name, scene_type, postura, vestimenta, decorado in teams:
-        print(f"\n{'='*60}")
-        print(f"🎯 {team_name} ({scene_type})")
-        print(f"{'='*60}")
         prompt = generate_prompt(team_id, team_name, scene_type, postura, vestimenta, decorado)
         if prompt:
-            print(prompt[:200] + "...")
+            generated += 1
     
     # Verificar
     conn = sqlite3.connect('/mnt/nba_data/dosaros_local.db')
     count = conn.execute('SELECT COUNT(*) FROM avatar_prompts').fetchone()[0]
     conn.close()
-    print(f"\n✅ {count} prompts generados")
+    print(f"\n✅ {count} prompts generados en total")
