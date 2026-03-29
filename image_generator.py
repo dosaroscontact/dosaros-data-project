@@ -1,17 +1,19 @@
 import sqlite3
 import os
 from datetime import datetime
+from dotenv import load_dotenv
 from google.cloud import aiplatform
 from google.oauth2 import service_account
+
+# Cargar .env
+load_dotenv()
 
 # Configurar Google Cloud
 PROJECT_ID = os.getenv('GOOGLE_CLOUD_PROJECT')
 CREDENTIALS_PATH = os.getenv('GOOGLE_APPLICATION_CREDENTIALS')
 
-# Inicializar Vertex AI
-credentials = service_account.Credentials.from_service_account_file(CREDENTIALS_PATH)
-aiplatform.init(project=PROJECT_ID, credentials=credentials, location='us-central1')
-
+print(f"📍 Project: {PROJECT_ID}")
+print(f"📍 Credentials: {CREDENTIALS_PATH}\n")
 def generate_image(prompt, output_filename):
     """Genera imagen usando Vertex AI Image Generation"""
     try:
