@@ -315,7 +315,7 @@ export const DosarosVideo = () => {{ ... }};
         resp = self.api.generate_text(
             prompt=prompt,
             system_prompt=system,
-            providers=['claude', 'gemini'],
+            providers=['claude', 'gemini', 'groq', 'openai'],
         )
         # Extraer código de markdown
         for delim in ["```tsx", "```typescript", "```"]:
