@@ -184,12 +184,28 @@ class VideoGenerator:
         return contexto
 
     def _consultar_datos(self, contexto: Dict) -> Dict:
-        """Ejecuta SQL sobre la BD local según el contexto extraído."""
-        liga       = contexto.get("liga", "nba")
-        tipo       = contexto.get("tipo", "analisis")
-        stat       = contexto.get("estadistica", "PTS").upper()
-        periodo    = contexto.get("periodo", "semana")
+        """Usa VideoDataExtractor para obtener datos precisos desde BD."""
+        from src.integrations.video_generator.video_data_extractor import (
+            extraer_jugador_desde_instruccion,
+            obtener_datos_jugador,
+        )
 
+        instruccion = contexto.get("instruccion_original", "")
+
+        # Intentar extraer jugador y obtener sus datos
+        extraccion = extraer_jugador_desde_instruccion(instruccion)
+        if extraccion:
+            nombre_mapped = extraccion["nombre_mapped"]
+            stat = extraccion["stat"]
+            datos = obtener_datos_jugador(nombre_mapped, stat, num_partidos=20)
+            if datos.get("count", 0) > 0:
+                return datos
+
+        # Fallback: usar la lógica anterior (genérica)
+        liga = contexto.get("liga", "nba")
+        tipo = contexto.get("tipo", "analisis")
+        stat = contexto.get("estadistica", "PTS").upper()
+        periodo = contexto.get("periodo", "semana")
         dias = {"hoy": 1, "semana": 7, "mes": 30, "temporada": 365}.get(periodo, 7)
 
         if liga == "nba":
@@ -205,14 +221,6 @@ class VideoGenerator:
                     ORDER BY valor DESC
                     LIMIT 5
                 """
-            elif tipo == "resultado":
-                sql = """
-                    SELECT GAME_DATE, MATCHUP, PTS, WL
-                    FROM nba_games
-                    WHERE GAME_DATE >= date('now', '-2 days')
-                    ORDER BY GAME_DATE DESC
-                    LIMIT 6
-                """
             else:
                 sql = f"""
                     SELECT PLAYER_NAME, TEAM_ABBREVIATION,
@@ -224,7 +232,7 @@ class VideoGenerator:
                     ORDER BY valor DESC
                     LIMIT 5
                 """
-        else:  # euro o ambas
+        else:
             stat_euro = stat.lower()
             if stat_euro not in ("pts", "reb", "ast"):
                 stat_euro = "pts"
