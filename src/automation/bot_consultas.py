@@ -364,6 +364,109 @@ def _procesar_mensaje(texto_usuario, ultimo_id):
 
 
 # ============================================================================
+# AVATAR — BD Y FORMATEO
+# ============================================================================
+
+def get_avatar_prompt(team_name=None):
+    """Obtiene prompt de avatar por equipo o aleatorio desde avatar_prompts."""
+    conn = get_connection()
+    cursor = conn.cursor()
+    if team_name:
+        result = cursor.execute(
+            """SELECT team_name, scene_type, prompt_text, avatar_url, logo_url
+               FROM avatar_prompts
+               WHERE LOWER(team_name) LIKE LOWER(?)
+               LIMIT 1""",
+            (f"%{team_name}%",),
+        ).fetchone()
+    else:
+        result = cursor.execute(
+            """SELECT team_name, scene_type, prompt_text, avatar_url, logo_url
+               FROM avatar_prompts
+               ORDER BY RANDOM()
+               LIMIT 1"""
+        ).fetchone()
+    conn.close()
+    return result
+
+
+def get_today_avatars(limit=5):
+    """Obtiene N prompts aleatorios."""
+    conn = get_connection()
+    cursor = conn.cursor()
+    results = cursor.execute(
+        """SELECT team_name, scene_type, prompt_text, avatar_url, logo_url
+           FROM avatar_prompts
+           ORDER BY RANDOM()
+           LIMIT ?""",
+        (limit,),
+    ).fetchall()
+    conn.close()
+    return results
+
+
+def _format_avatar_message(team_name, scene_type, prompt_text, avatar_url, logo_url):
+    """Formatea mensaje de avatar para Telegram (HTML)."""
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M")
+    return (
+        f"<b>🎨 DOS AROS - AVATAR GENERATOR</b>\n\n"
+        f"<b>📍 Equipo:</b> {team_name}\n"
+        f"<b>📊 Tipo:</b> {scene_type}\n"
+        f"<b>⏱️ Generado:</b> {timestamp}\n\n"
+        f"<b>🖼️ AVATAR REFERENCE:</b>\n{avatar_url}\n\n"
+        f"<b>📌 LOGO:</b>\n{logo_url}\n\n"
+        f"<b>📝 PROMPT PARA GOOGLE IMAGEFX:</b>\n\n"
+        f"<code>{prompt_text}</code>\n\n"
+        f"<b>✅ INSTRUCCIONES:</b>\n"
+        f"1. Copia el prompt completo\n"
+        f"2. Abre Google ImageFX (imagegeneration.dev)\n"
+        f"3. Pega el prompt + adjunta avatar URL como imagen de referencia\n"
+        f"4. Genera imagen\n"
+        f"5. Descarga y publica en redes"
+    )
+
+
+# ============================================================================
+# AVATAR — PROCESADORES DE COMANDOS
+# ============================================================================
+
+def _procesar_comando_avatar_prompt(team_name: str):
+    """Procesa /avatar_prompt [equipo]"""
+    if not team_name:
+        _enviar("❌ Uso: /avatar_prompt [equipo]\nEj: /avatar_prompt Lakers")
+        return
+    print(f"\n→ Avatar prompt: {team_name}")
+    result = get_avatar_prompt(team_name)
+    if result:
+        _enviar(_format_avatar_message(*result))
+    else:
+        _enviar(f"❌ Equipo '{team_name}' no encontrado.\nIntenta con el nombre completo (ej: Los Angeles Lakers)")
+
+
+def _procesar_comando_avatar_random():
+    """Procesa /avatar_random"""
+    print("\n→ Avatar random")
+    result = get_avatar_prompt()
+    if result:
+        _enviar(_format_avatar_message(*result))
+    else:
+        _enviar("❌ No hay prompts disponibles")
+
+
+def _procesar_comando_avatar_today():
+    """Procesa /avatar_today — envía 5 prompts aleatorios"""
+    print("\n→ Avatar today (5 prompts)")
+    results = get_today_avatars(5)
+    if not results:
+        _enviar("❌ No hay prompts disponibles")
+        return
+    _enviar(f"📋 <b>5 Avatares del día:</b>\n{len(results)} prompts listos. Enviando...")
+    for i, result in enumerate(results, 1):
+        _enviar(f"<b>Avatar {i}/5:</b>\n\n" + _format_avatar_message(*result))
+        time.sleep(0.5)
+
+
+# ============================================================================
 # COMANDO /video
 # ============================================================================
 
@@ -458,12 +561,27 @@ def escuchar_y_procesar():
                 if not texto:
                     continue
 
-                # Comando /video o /v
                 lower = texto.lower()
+
+                # Comando /video o /v
                 if lower.startswith("/video ") or lower.startswith("/v "):
                     instruccion = texto.split(" ", 1)[1].strip()
                     if instruccion:
                         _procesar_comando_video(instruccion)
+                    continue
+
+                # Comandos avatar
+                if lower.startswith("/avatar_prompt"):
+                    team_name = texto[len("/avatar_prompt"):].strip()
+                    _procesar_comando_avatar_prompt(team_name)
+                    continue
+
+                if lower in ("/avatar_random", "/avatar"):
+                    _procesar_comando_avatar_random()
+                    continue
+
+                if lower in ("/avatar_today", "/avatars"):
+                    _procesar_comando_avatar_today()
                     continue
 
                 if texto.startswith("/"):
