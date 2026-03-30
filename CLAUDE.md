@@ -59,9 +59,11 @@ APIs (nba_api, euroleague_api) → ETL (src/etl/) → SQLite Pi → Supabase →
 | `src/processors/avatar_prompt_generator.py` | Genera prompts Midjourney/ImageFX por equipo |
 | `src/processors/insight_generator.py` | Detecta perlas (actuaciones destacadas) con IA |
 | `src/processors/gemini_social.py` | Genera hilo X/Twitter diario (5-6 tweets) |
-| `src/automation/bot_consultas.py` | Bot Telegram: NL→SQL + imagen + /video |
+| `src/automation/bot_consultas.py` | Bot Telegram: NL→SQL + imagen + /video + /avatar_* |
 | `src/automation/bot_manager.py` | Envío a Telegram: `enviar_mensaje`, `enviar_grafico`, `enviar_video` |
 | `src/integrations/video_generator/` | Genera MP4 vía Editor Pro Max + Remotion + IA |
+| `src/integrations/video_generator/video_data_extractor.py` | Extrae datos precisos de BD con mapeo de apodos |
+| `assets/player_aliases.json` | Mapeo apodos → nombres reales (Shai → Gilgeous-Alexander, etc.) |
 | `src/prompts/` | Personas y contenido redes sociales |
 | `src/app/analista_ia.py` | SQL generation para consultas baloncesto |
 
@@ -143,6 +145,9 @@ Siempre activo en tmux `bot_consultas`. Acepta:
 | `no` tras resultado | Nada, descarta |
 | `/video <texto>` | Genera MP4 con Remotion y lo envía |
 | `/v <texto>` | Alias de /video |
+| `/avatar_prompt <equipo>` | Prompt Midjourney/ImageFX para ese equipo |
+| `/avatar_random` · `/avatar` | Prompt aleatorio |
+| `/avatar_today` · `/avatars` | 5 prompts aleatorios del día |
 
 ## Reglas críticas
 

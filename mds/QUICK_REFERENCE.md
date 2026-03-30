@@ -117,11 +117,13 @@ git pull origin main
 Desde el chat de Telegram:
 
 ```
-/avatar_prompt Lakers
-/avatar_random
-/avatar_today
+/avatar_prompt Lakers          → prompt específico por equipo
+/avatar_random                 → prompt aleatorio  (alias: /avatar)
+/avatar_today                  → 5 prompts del día (alias: /avatars)
 /video Top 5 anotadores NBA esta semana
+/v Top 5 anotadores NBA esta semana  → alias de /video
 ¿Quién fue el máximo anotador NBA?
+Cuántos triples metió Luka esta temporada
 ```
 
 ---

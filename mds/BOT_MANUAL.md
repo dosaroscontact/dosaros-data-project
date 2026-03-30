@@ -1,7 +1,7 @@
 # 📖 Manual de Uso - Bot Telegram Dos Aros
 
-**Versión:** 1.0  
-**Fecha:** Marzo 29, 2026  
+**Versión:** 1.1
+**Fecha:** Marzo 30, 2026
 **Estado:** En Vivo
 
 ---
@@ -33,7 +33,7 @@ El **Bot Telegram de Dos Aros** es un asistente que:
 
 ## 🎮 Comandos Disponibles
 
-### 1. **Avatar Commands** (NUEVO)
+### 1. **Avatar Commands**
 
 #### `/avatar_prompt [equipo]`
 Obtiene el prompt dinámico para generar avatar de un equipo específico.
@@ -52,12 +52,11 @@ Uso: /avatar_prompt Real Madrid
 
 ---
 
-#### `/avatar_random` (o `/avatar`)
+#### `/avatar_random` (alias: `/avatar`)
 Obtiene un prompt de avatar aleatorio.
 
 ```
 Uso: /avatar_random
-o
 Uso: /avatar
 ```
 
@@ -69,12 +68,11 @@ Uso: /avatar
 
 ---
 
-#### `/avatar_today` (o `/avatars`)
+#### `/avatar_today` (alias: `/avatars`)
 Obtiene 5 prompts de avatares del día (aleatorios).
 
 ```
 Uso: /avatar_today
-o
 Uso: /avatars
 ```
 
@@ -597,14 +595,15 @@ Resultado: Solo fondo sin avatar visible
 ### Comandos Avatar
 ```
 /avatar_prompt Lakers          → Prompt de Lakers
-/avatar_random                 → Prompt aleatorio
-/avatar_today                  → 5 prompts
+/avatar_random  o  /avatar     → Prompt aleatorio
+/avatar_today   o  /avatars    → 5 prompts
 ```
 
 ### Comandos Otros
 ```
 /video [instrucción]           → Generar video
-[pregunta natural]             → Consultar datos
+/v [instrucción]               → Alias de /video
+[pregunta natural]             → Consultar datos → imagen + tweet opcional
 ```
 
 ### Equipos NBA Comunes
