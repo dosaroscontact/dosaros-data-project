@@ -512,10 +512,23 @@ Envías mensaje → Sin respuesta después de 1 min
 ps aux | grep bot_consultas.py
 
 # Si no hay proceso:
-tmux new-session -d -s bot_consultas \
-  "cd /home/pi/dosaros-data-project && \
-   source venv/bin/activate && \
-   python src/automation/bot_consultas.py"
+tmux new-session -d -s bot_consultas "cd /home/pi/dosaros-data-project && PYTHONPATH=/home/pi/dosaros-data-project python src/automation/bot_consultas.py"
+```
+
+---
+
+### Problema 4b: Bot no arranca aunque el proceso existe
+
+**Síntoma:**
+```
+Proceso visible en `ps aux` pero el bot no responde
+```
+
+**Causa:** `PYTHONPATH` no configurado — los imports `src.*` fallan silenciosamente.
+
+**Solución:** Asegúrate de que `PYTHONPATH` está configurado correctamente al lanzar el bot:
+```bash
+PYTHONPATH=/home/pi/dosaros-data-project python src/automation/bot_consultas.py
 ```
 
 ---
