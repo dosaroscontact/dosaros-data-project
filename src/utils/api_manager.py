@@ -221,6 +221,30 @@ class APIManager:
             except Exception as e:
                 logger.warning(f"⚠️ Error inicializando Venice: {e}")
 
+        # DeepSeek
+        if self.config.get('deepseek_api_key'):
+            try:
+                if openai:
+                    self.clients['deepseek'] = openai.OpenAI(
+                        api_key=self.config['deepseek_api_key'],
+                        base_url='https://api.deepseek.com/v1'
+                    )
+                    logger.info("✅ DeepSeek cliente inicializado")
+            except Exception as e:
+                logger.warning(f"⚠️ Error inicializando DeepSeek: {e}")
+
+        # Kimi (Moonshot)
+        if self.config.get('kimi_api_key'):
+            try:
+                if openai:
+                    self.clients['kimi'] = openai.OpenAI(
+                        api_key=self.config['kimi_api_key'],
+                        base_url='https://api.moonshot.cn/v1'
+                    )
+                    logger.info("✅ Kimi cliente inicializado")
+            except Exception as e:
+                logger.warning(f"⚠️ Error inicializando Kimi: {e}")
+
 
     # ========================================================================
     # MÉTODOS: LLMs - ANÁLISIS Y GENERACIÓN DE TEXTO
@@ -413,6 +437,48 @@ class APIManager:
             raise
 
 
+    def deepseek(self, prompt: str, system_prompt: str = None) -> str:
+        """Usa DeepSeek para generar respuesta (API compatible con OpenAI)."""
+        if 'deepseek' not in self.clients:
+            raise ValueError("DeepSeek no está configurado. Verifica DEEPSEEK_API_KEY en .env")
+
+        try:
+            response = self.clients['deepseek'].chat.completions.create(
+                model=self.config['deepseek_model'],
+                messages=[
+                    {"role": "system", "content": system_prompt or "Eres un asistente experto en análisis de datos deportivos."},
+                    {"role": "user", "content": prompt}
+                ]
+            )
+            result = response.choices[0].message.content
+            logger.debug(f"✅ DeepSeek: {len(result)} caracteres generados")
+            return result
+        except Exception as e:
+            logger.error(f"❌ Error en DeepSeek: {e}")
+            raise
+
+
+    def kimi(self, prompt: str, system_prompt: str = None) -> str:
+        """Usa Kimi (Moonshot) para generar respuesta (API compatible con OpenAI)."""
+        if 'kimi' not in self.clients:
+            raise ValueError("Kimi no está configurado. Verifica KIMI_API_KEY en .env")
+
+        try:
+            response = self.clients['kimi'].chat.completions.create(
+                model=self.config['kimi_model'],
+                messages=[
+                    {"role": "system", "content": system_prompt or "Eres un asistente experto en análisis de datos deportivos."},
+                    {"role": "user", "content": prompt}
+                ]
+            )
+            result = response.choices[0].message.content
+            logger.debug(f"✅ Kimi: {len(result)} caracteres generados")
+            return result
+        except Exception as e:
+            logger.error(f"❌ Error en Kimi: {e}")
+            raise
+
+
     def generate_text(
         self,
         prompt: str,
@@ -438,7 +504,7 @@ class APIManager:
                 providers=['gemini', 'claude', 'groq']
             )
         """
-        providers = providers or ["gemini", "groq", "venice", "claude", "openai"]
+        providers = providers or ["gemini", "groq", "deepseek", "kimi", "venice", "claude", "openai"]
 
         for provider in providers:
             try:
@@ -448,6 +514,10 @@ class APIManager:
                     return self.gemini(prompt, system_prompt)
                 elif provider == "groq":
                     return self.groq(prompt, system_prompt)
+                elif provider == "deepseek":
+                    return self.deepseek(prompt, system_prompt)
+                elif provider == "kimi":
+                    return self.kimi(prompt, system_prompt)
                 elif provider == "venice":
                     return self.venice(prompt, system_prompt)
                 elif provider == "claude":

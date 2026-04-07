@@ -477,7 +477,7 @@ def _procesar_comando_status():
     _enviar("🔍 Verificando APIs...")
 
     api = APIManager()
-    proveedores = ["gemini", "groq", "venice", "claude", "openai"]
+    proveedores = ["gemini", "groq", "deepseek", "kimi", "venice", "claude", "openai"]
     ping = "Di OK en una sola palabra."
 
     lineas = ["<b>📡 Estado de APIs — Dos Aros</b>\n"]
