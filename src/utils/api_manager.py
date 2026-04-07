@@ -130,6 +130,9 @@ class APIManager:
             
             'grok_api_key': os.getenv('GROK_API_KEY'),
             'grok_model': os.getenv('GROK_MODEL', 'grok-beta'),
+
+            'venice_api_key': os.getenv('VENICE_API_KEY'),
+            'venice_model': os.getenv('VENICE_MODEL', 'venice-uncensored'),
             
             # Imágenes
             'together_api_key': os.getenv('TOGETHER_API_KEY'),
@@ -204,8 +207,21 @@ class APIManager:
                     logger.info("✅ Groq cliente inicializado")
             except Exception as e:
                 logger.warning(f"⚠️ Error inicializando Groq: {e}")
-    
-    
+
+        # Venice AI
+        if self.config.get('venice_api_key'):
+            try:
+                import requests
+                self.clients['venice'] = {
+                    'api_key': self.config['venice_api_key'],
+                    'model': self.config.get('venice_model', 'venice-uncensored'),
+                    'base_url': 'https://api.venice.ai/api/v1'
+                }
+                logger.info("✅ Venice cliente inicializado")
+            except Exception as e:
+                logger.warning(f"⚠️ Error inicializando Venice: {e}")
+
+
     # ========================================================================
     # MÉTODOS: LLMs - ANÁLISIS Y GENERACIÓN DE TEXTO
     # ========================================================================
@@ -341,6 +357,62 @@ class APIManager:
             raise
     
     
+    def venice(self, prompt: str, system_prompt: str = None) -> str:
+        """
+        Usa Venice AI para generar respuesta.
+
+        Args:
+            prompt: Pregunta o instrucción
+            system_prompt: Contexto adicional (opcional)
+
+        Returns:
+            Respuesta de Venice como string
+
+        Raises:
+            ValueError: Si Venice no está configurado
+        """
+        if 'venice' not in self.clients:
+            raise ValueError("Venice no está configurado. Verifica VENICE_API_KEY en .env")
+
+        try:
+            import requests
+
+            venice_config = self.clients['venice']
+            headers = {
+                "Authorization": f"Bearer {venice_config['api_key']}",
+                "Content-Type": "application/json"
+            }
+
+            messages = []
+            if system_prompt:
+                messages.append({"role": "system", "content": system_prompt})
+            messages.append({"role": "user", "content": prompt})
+
+            payload = {
+                "model": venice_config['model'],
+                "messages": messages
+            }
+
+            response = requests.post(
+                f"{venice_config['base_url']}/chat/completions",
+                headers=headers,
+                json=payload,
+                timeout=30
+            )
+
+            if response.status_code == 200:
+                result = response.json()
+                text = result['choices'][0]['message']['content']
+                logger.debug(f"✅ Venice: {len(text)} caracteres generados")
+                return text
+            else:
+                logger.error(f"❌ Error en Venice: {response.status_code} - {response.text}")
+                raise Exception(f"Venice API error: {response.status_code}")
+        except Exception as e:
+            logger.error(f"❌ Error en Venice: {e}")
+            raise
+
+
     def generate_text(
         self,
         prompt: str,
@@ -366,22 +438,28 @@ class APIManager:
                 providers=['gemini', 'claude', 'groq']
             )
         """
-        providers = providers or ['gemini', 'claude', 'groq', 'openai']
-        
+        providers = providers or ["gemini", "groq", "venice", "claude", "openai"]
+
         for provider in providers:
             try:
-                if provider == 'gemini':
+                logger.info(f"Intentando {provider}...")
+
+                if provider == "gemini":
                     return self.gemini(prompt, system_prompt)
-                elif provider == 'claude':
-                    return self.claude(prompt, system_prompt)
-                elif provider == 'openai':
-                    return self.openai(prompt, system_prompt)
-                elif provider == 'groq':
+                elif provider == "groq":
                     return self.groq(prompt, system_prompt)
+                elif provider == "venice":
+                    return self.venice(prompt, system_prompt)
+                elif provider == "claude":
+                    return self.claude(prompt, system_prompt)
+                elif provider == "openai":
+                    return self.openai(prompt, system_prompt)
+
             except Exception as e:
                 logger.warning(f"⚠️ {provider} falló: {e}, intentando siguiente...")
-        
-        raise ValueError(f"Ningún proveedor disponible de {providers}")
+                continue
+
+        raise ValueError(f"❌ Ningún proveedor disponible de {providers}")
     
     
     # ========================================================================
