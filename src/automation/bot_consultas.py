@@ -467,6 +467,39 @@ def _procesar_comando_avatar_today():
 
 
 # ============================================================================
+# COMANDO /status
+# ============================================================================
+
+def _procesar_comando_status():
+    """Verifica el estado real de cada proveedor LLM enviando un ping mínimo."""
+    from src.utils.api_manager import APIManager
+
+    _enviar("🔍 Verificando APIs...")
+
+    api = APIManager()
+    proveedores = ["gemini", "groq", "venice", "claude", "openai"]
+    ping = "Di OK en una sola palabra."
+
+    lineas = ["<b>📡 Estado de APIs — Dos Aros</b>\n"]
+    for proveedor in proveedores:
+        try:
+            metodo = getattr(api, proveedor, None)
+            if metodo is None:
+                lineas.append(f"❓ <b>{proveedor.upper()}</b> — sin método")
+                continue
+            metodo(ping)
+            lineas.append(f"✅ <b>{proveedor.upper()}</b> — OK")
+        except ValueError as e:
+            # No configurado (sin API key)
+            lineas.append(f"⚪ <b>{proveedor.upper()}</b> — no configurado")
+        except Exception as e:
+            lineas.append(f"❌ <b>{proveedor.upper()}</b> — error: {str(e)[:60]}")
+
+    lineas.append(f"\n<i>{datetime.now().strftime('%d/%m/%Y %H:%M:%S')}</i>")
+    _enviar("\n".join(lineas))
+
+
+# ============================================================================
 # COMANDO /video
 # ============================================================================
 
@@ -562,6 +595,11 @@ def escuchar_y_procesar():
                     continue
 
                 lower = texto.lower()
+
+                # Comando /status
+                if lower in ("/status", "/api_status"):
+                    _procesar_comando_status()
+                    continue
 
                 # Comando /video o /v
                 if lower.startswith("/video ") or lower.startswith("/v "):
