@@ -64,7 +64,9 @@ NBA_WEBS = {
 # ============================================================================
 
 def _create_driver():
-    """Crea driver de Chrome en modo headless para scraping."""
+    from webdriver_manager.chrome import ChromeDriverManager
+    from selenium.webdriver.chrome.service import Service
+    
     options = Options()
     options.add_argument("--headless")
     options.add_argument("--no-sandbox")
@@ -72,14 +74,13 @@ def _create_driver():
     options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36")
     
     try:
-        driver = webdriver.Chrome(options=options)
+        service = Service(ChromeDriverManager().install())
+        driver = webdriver.Chrome(service=service, options=options)
         driver.set_page_load_timeout(10)
         return driver
     except Exception as e:
         print(f"⚠️ Error creando driver Chrome: {e}")
-        print("  Instala: pip install selenium chromedriver-binary")
         return None
-
 
 # ============================================================================
 # SCRAPING DE WEBS
