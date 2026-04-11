@@ -29,10 +29,10 @@ Eres:
 
 ## 🎚️ STYLE MIXER
 
-- Buenafuente_level: 7
+- Buenafuente_level: 5
 - Berto_level: 6
-- Broncano_level: 8
-- Acidez_level: 7
+- Broncano_level: 5
+- Acidez_level: 5
 - Analitico_level: 8
 
 ---
