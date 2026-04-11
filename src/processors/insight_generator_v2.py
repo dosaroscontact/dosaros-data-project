@@ -69,31 +69,40 @@ def get_connection():
 
 
 def _init_published_insights_table(conn):
-    """Asegura que la tabla existe con esquema correcto."""
+    """Asegura que la tabla existe (usa schema existente en Pi)."""
+    # Tabla ya existe en Pi con columnas: id, category, insight_text, published_date, league
+    # No necesitamos crear, solo verificar que existe
     cursor = conn.cursor()
-    cursor.execute("""
-        CREATE TABLE IF NOT EXISTS published_insights (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            insight_category TEXT NOT NULL,
-            date_published DATE NOT NULL,
-            next_available_date DATE NOT NULL,
-            UNIQUE(insight_category, date_published)
-        )
-    """)
-    conn.commit()
+    try:
+        cursor.execute("SELECT COUNT(*) FROM published_insights LIMIT 1")
+        cursor.fetchone()
+    except sqlite3.OperationalError:
+        # Si no existe, crearla
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS published_insights (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                category TEXT NOT NULL,
+                insight_text TEXT,
+                published_date DATE DEFAULT CURRENT_DATE,
+                league TEXT,
+                UNIQUE(category, published_date)
+            )
+        """)
+        conn.commit()
 
 
 def _puede_generar_categoria(conn, categoria):
     """
     Verifica si una categoría está disponible (fuera de cooldown 21 días).
+    Usa schema actual: category, published_date
     Retorna (puede_generar, proxima_fecha_disponible)
     """
     cursor = conn.cursor()
     cursor.execute("""
-        SELECT next_available_date
+        SELECT published_date
         FROM published_insights
-        WHERE insight_category = ?
-        ORDER BY date_published DESC
+        WHERE category = ?
+        ORDER BY published_date DESC
         LIMIT 1
     """, (categoria,))
     resultado = cursor.fetchone()
@@ -102,7 +111,8 @@ def _puede_generar_categoria(conn, categoria):
         # Nunca se ha generado
         return (True, None)
 
-    proxima_disponible = datetime.strptime(resultado[0], '%Y-%m-%d').date()
+    ultima_pub = datetime.strptime(resultado[0], '%Y-%m-%d').date()
+    proxima_disponible = ultima_pub + timedelta(days=21)
     hoy = datetime.now().date()
 
     if hoy >= proxima_disponible:
@@ -111,20 +121,19 @@ def _puede_generar_categoria(conn, categoria):
         return (False, proxima_disponible)
 
 
-def _registrar_perla_publicada(conn, categoria, fecha_publicacion):
+def _registrar_perla_publicada(conn, categoria, fecha_publicacion, insight_text="", league=""):
     """
     Registra que una categoría fue publicada.
-    Cálcula next_available = fecha_publicacion + 21 días
+    Usa schema actual: category, insight_text, published_date, league
     """
     cursor = conn.cursor()
     fecha_pub = datetime.strptime(fecha_publicacion, '%Y-%m-%d').date()
-    fecha_proxima = fecha_pub + timedelta(days=21)
 
     cursor.execute("""
         INSERT OR IGNORE INTO published_insights
-        (insight_category, date_published, next_available_date)
-        VALUES (?, ?, ?)
-    """, (categoria, fecha_pub.isoformat(), fecha_proxima.isoformat()))
+        (category, insight_text, published_date, league)
+        VALUES (?, ?, ?, ?)
+    """, (categoria, insight_text, fecha_pub.isoformat(), league))
     conn.commit()
 
 
@@ -531,7 +540,9 @@ def buscar_perlas(fecha=None, enviar_telegram=True):
     for p in perlas_verificadas:
         cat = p.get('categoria')
         if cat and cat not in categorias_usadas:
-            _registrar_perla_publicada(conn, cat, fecha)
+            liga = p.get('liga', '')
+            razon = p.get('razon', '')
+            _registrar_perla_publicada(conn, cat, fecha, razon, liga)
             categorias_usadas.add(cat)
             print(f"  ✓ Categoría '{cat}' registrada (próxima: {(datetime.strptime(fecha, '%Y-%m-%d') + timedelta(days=21)).strftime('%d/%m')})")
 
