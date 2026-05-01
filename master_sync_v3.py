@@ -50,36 +50,62 @@ inicio = time.time()
 # ============================================================================
 
 print("PASO 1: Intentando extraer resultados NBA + EuroLeague...")
-nba_results = []
-euro_results = []
+nba_results = []   # lista de dicts: {home, away, score_home, score_away, winner}
+euro_results = []  # lista de dicts: {home, away, score_home, score_away}
+fecha_ayer = (datetime.now() - __import__('datetime').timedelta(days=1)).strftime('%Y-%m-%d')
 
 try:
-    # Importar las funciones reales que existen
     import sqlite3
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
-    
-    # Obtener últimos resultados NBA
+
+    # NBA: una fila por equipo → reconstruimos partidos agrupando por GAME_ID
+    # Usamos solo el lado "vs." (local) para obtener cada partido una sola vez
     cursor.execute("""
-        SELECT TEAM_NAME, TEAM_ABBREVIATION, PTS, WL, GAME_DATE
+        SELECT GAME_ID, TEAM_ABBREVIATION, MATCHUP, PTS, WL
         FROM nba_games
-        ORDER BY GAME_DATE DESC
-        LIMIT 5
-    """)
-    nba_results = cursor.fetchall()
-    
-    # Obtener últimos resultados Euro
+        WHERE GAME_DATE = ?
+        ORDER BY GAME_ID
+    """, (fecha_ayer,))
+    filas_nba = cursor.fetchall()
+
+    # Agrupar por GAME_ID → par home/away
+    juegos = {}
+    for game_id, abrev, matchup, pts, wl in filas_nba:
+        if game_id not in juegos:
+            juegos[game_id] = []
+        juegos[game_id].append((abrev, matchup, pts, wl))
+
+    for game_id, equipos in juegos.items():
+        if len(equipos) == 2:
+            # El que tiene "vs." en MATCHUP es el local
+            local = next((e for e in equipos if 'vs.' in e[1]), equipos[0])
+            visitante = next((e for e in equipos if e != local), equipos[1])
+            ganador = local[0] if local[3] == 'W' else visitante[0]
+            nba_results.append({
+                'home': local[0], 'away': visitante[0],
+                'score_home': local[2], 'score_away': visitante[2],
+                'winner': ganador
+            })
+
+    # EuroLeague: ya viene por partido
     cursor.execute("""
-        SELECT home_team, away_team, score_home, score_away, date
+        SELECT home_team, away_team, score_home, score_away
         FROM euro_games
-        ORDER BY date DESC
-        LIMIT 5
-    """)
-    euro_results = cursor.fetchall()
-    
+        WHERE date = ?
+        ORDER BY score_home + score_away DESC
+    """, (fecha_ayer,))
+    for row in cursor.fetchall():
+        ganador = row[0] if row[2] > row[3] else row[1]
+        euro_results.append({
+            'home': row[0], 'away': row[1],
+            'score_home': row[2], 'score_away': row[3],
+            'winner': ganador
+        })
+
     conn.close()
-    print(f"  ✅ NBA: {len(nba_results)} resultados")
-    print(f"  ✅ Euro: {len(euro_results)} resultados")
+    print(f"  ✅ NBA: {len(nba_results)} partidos ({fecha_ayer})")
+    print(f"  ✅ Euro: {len(euro_results)} partidos ({fecha_ayer})")
 except Exception as e:
     print(f"  ⚠️ No se pudieron extraer resultados: {e} (continuando)")
 
@@ -115,19 +141,42 @@ print("\nPASO 3: Enviando contenido a Telegram...")
 try:
     from src.automation.bot_manager import enviar_mensaje
     
-    # Encabezado
-    header = f"""
-📊 *MASTER SYNC V3 EXECUTED*
+    # Formatear resultados NBA
+    def _fmt_nba(partidos):
+        if not partidos:
+            return "_Sin partidos NBA ayer_"
+        lineas = []
+        for p in partidos:
+            marcador = f"{p['away']} {p['score_away']} — {p['score_home']} {p['home']}"
+            ganador_label = f"✓ {p['winner']}"
+            lineas.append(f"• {marcador}  ({ganador_label})")
+        return "\n".join(lineas)
 
-⏱️ Hora: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
-📰 Noticias: {'Sí' if noticias.get('procesadas') else 'No'}
-🏀 Resultados NBA: {len(nba_results)}
-🏀 Resultados Euro: {len(euro_results)}
+    def _fmt_euro(partidos):
+        if not partidos:
+            return "_Sin partidos Euroliga ayer_"
+        lineas = []
+        for p in partidos:
+            marcador = f"{p['home']} {p['score_home']} — {p['score_away']} {p['away']}"
+            ganador_label = f"✓ {p['winner']}"
+            lineas.append(f"• {marcador}  ({ganador_label})")
+        return "\n".join(lineas)
 
-_Generando contenido..._
+    nba_texto = _fmt_nba(nba_results)
+    euro_texto = _fmt_euro(euro_results)
+    fecha_display = (datetime.now() - __import__('datetime').timedelta(days=1)).strftime('%d/%m/%Y')
+
+    # Encabezado con resultados reales
+    header = f"""📌 *Dos Aros — {fecha_display}*
+
+🏀 *NBA PLAYOFFS* ({len(nba_results)} partidos)
+{nba_texto}
+
+🏀 *EUROLIGA* ({len(euro_results)} partidos)
+{euro_texto}
 """
     enviar_mensaje(header, TELEGRAM_CHAT_ID)
-    print("  ✅ Header enviado")
+    print("  ✅ Resultados enviados")
     
     # Insights
     if noticias.get("insights"):
@@ -142,16 +191,14 @@ _Basado en análisis de noticias_
         enviar_mensaje(msg_insights, TELEGRAM_CHAT_ID)
         print("  ✅ Insights enviados")
     
-    # Hilo X
+    # Hilo X — viene como lista de tweets, unir con saltos de línea
     if noticias.get("hilo_x"):
-        hilo_x = noticias.get("hilo_x", "")
-        msg_x = f"""
-*🧵 HILO X — NOTICIAS DEL DÍA*
-
-{hilo_x}
-
-_Revisar y publicar en X (Twitter)_
-"""
+        tweets = noticias.get("hilo_x", [])
+        if isinstance(tweets, list):
+            hilo_texto = "\n\n".join(tweets)
+        else:
+            hilo_texto = str(tweets)
+        msg_x = f"*🧵 HILO X — {fecha_display}*\n\n{hilo_texto}\n\n_Revisar y publicar en X_"
         enviar_mensaje(msg_x, TELEGRAM_CHAT_ID)
         print("  ✅ Hilo X enviado")
     
