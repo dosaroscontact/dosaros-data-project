@@ -201,6 +201,14 @@ _Basado en análisis de noticias_
         msg_x = f"*🧵 HILO X — {fecha_display}*\n\n{hilo_texto}\n\n_Revisar y publicar en X_"
         enviar_mensaje(msg_x, TELEGRAM_CHAT_ID)
         print("  ✅ Hilo X enviado")
+
+    # Fuentes con enlaces — para verificar cada noticia
+    fuentes = noticias.get("fuentes", [])
+    if fuentes:
+        lineas = [f"[{f['num']}] [{f['fuente']}]({f['url']}) — {f['titulo']}" for f in fuentes]
+        msg_fuentes = "*📰 Fuentes consultadas hoy:*\n\n" + "\n".join(lineas)
+        enviar_mensaje(msg_fuentes, TELEGRAM_CHAT_ID)
+        print("  ✅ Fuentes enviadas")
     
     # Reels
     if noticias.get("reels"):
