@@ -1,0 +1,87 @@
+# Configuración y secretos (CRÍTICO)
+.env
+.env.local
+.env.*.local
+secrets/
+*.key
+
+# Dependencias Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtualenv
+venv/
+ENV/
+env/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Data temporales y locales
+*.db
+*.sqlite
+*.sqlite3
+/data/raw/*
+/data/processed/*
+/logs/*
+*.log
+*.csv
+/tmp/
+/temp/
+
+# Tokens y credenciales
+*credentials*
+*token*
+*secret*
+*.pem
+*.key
+
+# Archivos del sistema
+Thumbs.db
+.DS_Store
+*.tmp
+
+# Test
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Notebooks
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Streamlit
+.streamlit/secrets.toml
+assets/generated/
+src/automation/config.py
+assets/avatars/generated/
+src/etl/all_eureleague_web.json
+src/etl/origin_estrucura_datos.json
+src/etl/players_full.json
