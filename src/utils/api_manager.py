@@ -479,32 +479,52 @@ class APIManager:
             raise
 
 
+    # Rotación diaria: cada día de la semana usa un LLM distinto como primario
+    # Distribuye uso entre free tiers y varía el estilo del contenido generado
+    _ROTATION_SCHEDULE = [
+        "gemini",    # lunes
+        "groq",      # martes
+        "deepseek",  # miércoles
+        "kimi",      # jueves
+        "gemini",    # viernes
+        "groq",      # sábado
+        "deepseek",  # domingo
+    ]
+
+    def get_provider_del_dia(self) -> str:
+        """Retorna el proveedor asignado a hoy según la rotación semanal."""
+        from datetime import datetime
+        dia = datetime.now().weekday()  # 0=lunes, 6=domingo
+        return self._ROTATION_SCHEDULE[dia]
+
     def generate_text(
         self,
         prompt: str,
         system_prompt: str = None,
-        providers: List[str] = None
+        providers: List[str] = None,
+        rotate: bool = False
     ) -> str:
         """
         Genera texto usando múltiples proveedores con fallback automático.
-        
+
         Args:
             prompt: Pregunta o instrucción
             system_prompt: Contexto adicional
             providers: Lista de proveedores en orden de preferencia.
-                      Default: ['gemini', 'claude', 'groq', 'openai']
-                      
+                      Default: ['gemini', 'groq', 'deepseek', 'kimi', 'venice', 'claude', 'openai']
+            rotate: Si True, usa el proveedor del día como primario (varía estilo y distribuye free tiers)
+
         Returns:
             Respuesta del primer proveedor disponible
-            
-        Example:
-            # Intenta Gemini, si falla Claude, luego Groq
-            response = api.generate_text(
-                prompt="...",
-                providers=['gemini', 'claude', 'groq']
-            )
         """
-        providers = providers or ["gemini", "groq", "deepseek", "kimi", "venice", "claude", "openai"]
+        all_providers = ["gemini", "groq", "deepseek", "kimi", "venice", "claude", "openai"]
+        providers = providers or all_providers
+
+        if rotate:
+            primario = self.get_provider_del_dia()
+            # Poner el proveedor del día primero, mantener el resto como fallback
+            providers = [primario] + [p for p in providers if p != primario]
+            logger.info(f"🔄 Rotación activa — proveedor del día: {primario.upper()}")
 
         for provider in providers:
             try:

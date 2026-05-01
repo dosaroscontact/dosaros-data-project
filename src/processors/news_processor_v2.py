@@ -20,6 +20,7 @@ Uso:
 
 import json
 import requests
+from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
 from typing import List, Dict
 import os
@@ -33,90 +34,95 @@ logger = logging.getLogger(__name__)
 # Añade la raíz al path para imports correctos
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 
+_HEADERS = {
+    'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36'
+}
+
 
 # ============================================================================
 # PASO 1: SCRAPEAR NOTICIAS
 # ============================================================================
 
 def scrapear_noticias_basketnews() -> List[Dict]:
-    """Scrapeea noticias de BasketNews."""
+    """Extrae titulares reales de BasketNews."""
     noticias = []
     try:
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-        }
-        
-        resp = requests.get("https://www.basketnews.com/news", headers=headers, timeout=10)
-        
-        if resp.status_code == 200:
-            keywords = ["NBA", "Euroliga", "playoffs", "trade", "lesión", "MVP"]
-            content_lower = resp.text.lower()
-            
-            for keyword in keywords:
-                if keyword.lower() in content_lower:
-                    noticias.append({
-                        "fuente": "BasketNews",
-                        "titulo": f"Noticia destacada: {keyword}",
-                        "url": "https://www.basketnews.com/news",
-                        "fecha": datetime.now().strftime('%Y-%m-%d'),
-                        "relevancia": "medium"
-                    })
-                    break
-    
+        resp = requests.get("https://www.basketnews.com/news", headers=_HEADERS, timeout=10)
+        if resp.status_code != 200:
+            return noticias
+        soup = BeautifulSoup(resp.text, 'html.parser')
+        # Titulares en etiquetas h2, h3 o enlaces con clase de artículo
+        candidatos = soup.find_all(['h2', 'h3'], limit=15)
+        for tag in candidatos:
+            texto = tag.get_text(strip=True)
+            if len(texto) > 20:
+                enlace = tag.find('a')
+                url = enlace['href'] if enlace and enlace.get('href') else "https://www.basketnews.com/news"
+                if url.startswith('/'):
+                    url = "https://www.basketnews.com" + url
+                noticias.append({
+                    "fuente": "BasketNews",
+                    "titulo": texto,
+                    "url": url,
+                    "fecha": datetime.now().strftime('%Y-%m-%d'),
+                })
     except Exception as e:
-        logger.warning(f"⚠️ Error scrapear BasketNews: {e}")
-    
-    return noticias
+        logger.warning(f"⚠️ BasketNews: {e}")
+    return noticias[:5]
 
 
 def scrapear_noticias_espn() -> List[Dict]:
-    """Scrapeea noticias de ESPN."""
+    """Extrae titulares reales de ESPN NBA."""
     noticias = []
     try:
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-        }
-        
-        resp = requests.get("https://www.espn.com/nba/", headers=headers, timeout=10)
-        
-        if resp.status_code == 200:
-            noticias.append({
-                "fuente": "ESPN",
-                "titulo": "Últimas noticias NBA",
-                "url": "https://www.espn.com/nba/",
-                "fecha": datetime.now().strftime('%Y-%m-%d'),
-                "relevancia": "medium"
-            })
-    
+        resp = requests.get("https://www.espn.com/nba/", headers=_HEADERS, timeout=10)
+        if resp.status_code != 200:
+            return noticias
+        soup = BeautifulSoup(resp.text, 'html.parser')
+        candidatos = soup.find_all(['h1', 'h2', 'h3'], limit=20)
+        for tag in candidatos:
+            texto = tag.get_text(strip=True)
+            if len(texto) > 20:
+                enlace = tag.find('a')
+                url = enlace['href'] if enlace and enlace.get('href') else "https://www.espn.com/nba/"
+                if url.startswith('/'):
+                    url = "https://www.espn.com" + url
+                noticias.append({
+                    "fuente": "ESPN",
+                    "titulo": texto,
+                    "url": url,
+                    "fecha": datetime.now().strftime('%Y-%m-%d'),
+                })
     except Exception as e:
-        logger.warning(f"⚠️ Error scrapear ESPN: {e}")
-    
-    return noticias
+        logger.warning(f"⚠️ ESPN: {e}")
+    return noticias[:5]
 
 
 def scrapear_noticias_eurohoops() -> List[Dict]:
-    """Scrapeea noticias de Eurohoops."""
+    """Extrae titulares reales de Eurohoops."""
     noticias = []
     try:
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-        }
-        
-        resp = requests.get("https://www.eurohoops.net", headers=headers, timeout=10)
-        
-        if resp.status_code == 200:
-            noticias.append({
-                "fuente": "Eurohoops",
-                "titulo": "Últimas noticias Euroliga",
-                "url": "https://www.eurohoops.net",
-                "fecha": datetime.now().strftime('%Y-%m-%d'),
-                "relevancia": "medium"
-            })
-    
+        resp = requests.get("https://www.eurohoops.net", headers=_HEADERS, timeout=10)
+        if resp.status_code != 200:
+            return noticias
+        soup = BeautifulSoup(resp.text, 'html.parser')
+        candidatos = soup.find_all(['h2', 'h3'], limit=15)
+        for tag in candidatos:
+            texto = tag.get_text(strip=True)
+            if len(texto) > 20:
+                enlace = tag.find('a')
+                url = enlace['href'] if enlace and enlace.get('href') else "https://www.eurohoops.net"
+                if url.startswith('/'):
+                    url = "https://www.eurohoops.net" + url
+                noticias.append({
+                    "fuente": "Eurohoops",
+                    "titulo": texto,
+                    "url": url,
+                    "fecha": datetime.now().strftime('%Y-%m-%d'),
+                })
     except Exception as e:
-        logger.warning(f"⚠️ Error scrapear Eurohoops: {e}")
-    
-    return noticias
+        logger.warning(f"⚠️ Eurohoops: {e}")
+    return noticias[:5]
 
 
 # ============================================================================
@@ -143,39 +149,42 @@ def procesar_noticias_con_ia(noticias: List[Dict]) -> Dict:
         # Inicializa API Manager
         api = APIManager()
         
-        # Formatea noticias en texto para el prompt
+        # Formatea titulares reales para el prompt
         noticias_texto = "\n".join([
-            f"- {n['fuente']}: {n['titulo']} ({n.get('relevancia', 'unknown')})"
+            f"- [{n['fuente']}] {n['titulo']}"
             for n in noticias
         ])
-        
-        # Prompt para IA
-        prompt = f"""
-Eres un analista de baloncesto profesional.
 
-Tienes estas noticias de HOY ({datetime.now().strftime('%d/%m/%Y')}):
+        if not noticias_texto.strip():
+            noticias_texto = "Sin noticias disponibles hoy."
 
-NOTICIAS:
+        # Prompt para IA — fuerza uso de los titulares concretos
+        prompt = f"""Eres el analista de Dos Aros: baloncesto NBA + EuroLeague con datos, contexto y opinión.
+Filosofía: "Datos primero. Contexto después. Opinión al final."
+Estilo: directo, irónico, nunca genérico. Cita los titulares EXACTOS que te doy, no inventes noticias.
+
+TITULARES REALES DE HOY {datetime.now().strftime('%d/%m/%Y')}:
 {noticias_texto}
 
-TAREA: Analiza las noticias y genera:
+TAREA — genera EXACTAMENTE esto en JSON:
 
-1. INSIGHTS: Los 3 puntos más importantes (no titulares, sino conexiones/contexto)
+1. INSIGHTS: 3 observaciones que conecten los titulares con contexto o historia. Menciona nombres/equipos reales.
 
-2. HILO X: 6 tweets formateados como hilo (cada uno es un tweet independiente)
-   - Tweet 1: Hook provocador
-   - Tweets 2-4: Desarrollo
-   - Tweet 5: Contexto
-   - Tweet 6: CTA
+2. HILO X: 6 tweets basados en los titulares reales.
+   - Tweet 1: Hook con un dato o frase de los titulares que sorprenda
+   - Tweets 2-4: Desarrollo con los hechos reales
+   - Tweet 5: Dato histórico o comparativa que contextualice
+   - Tweet 6: Pregunta de debate concreta (nunca "¿qué opináis?")
+   Máximo 250 caracteres por tweet. Sin hashtags. Máximo 1 emoji por tweet.
 
-3. REELS: 2 propuestas de reel (título, hook, estructura)
+3. REELS: 2 ideas basadas en los titulares reales.
 
-4. STORIES: 2 propuestas de story (título, estructura de frames)
+4. STORIES: 2 ideas basadas en los titulares reales.
 
-Devuelve SOLO JSON (sin markdown, sin triple backticks):
+RESPONDE SOLO con JSON válido (sin markdown, sin triple backticks):
 {{
   "insights": ["insight 1", "insight 2", "insight 3"],
-  "hilo_x": ["tweet 1", "tweet 2", "tweet 3", "tweet 4", "tweet 5", "tweet 6"],
+  "hilo_x": ["1/ tweet", "2/ tweet", "3/ tweet", "4/ tweet", "5/ tweet", "6/ tweet"],
   "reels": [
     {{"titulo": "...", "hook": "...", "estructura": "..."}},
     {{"titulo": "...", "hook": "...", "estructura": "..."}}
@@ -184,13 +193,12 @@ Devuelve SOLO JSON (sin markdown, sin triple backticks):
     {{"titulo": "...", "frames": ["frame 1", "frame 2", "frame 3"]}},
     {{"titulo": "...", "frames": ["frame 1", "frame 2", "frame 3"]}}
   ]
-}}
-"""
+}}"""
         
         logger.info("🤖 Procesando noticias con IA...")
         
-        # Usa generate_text con fallback automático (gemini → groq → deepseek → kimi → venice → claude → openai)
-        respuesta = api.generate_text(prompt, providers=["gemini", "groq", "deepseek", "kimi", "venice", "claude", "openai"])
+        # Rotación diaria: cada día usa un LLM distinto → variedad de estilo + distribuye free tiers
+        respuesta = api.generate_text(prompt, rotate=True)
         
         # Limpia markdown si existe
         respuesta_limpia = respuesta.replace('```json', '').replace('```', '').strip()
