@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -o 'reel-[0-9]*' \"\\\\\\\\192.168.1.136\\\\pi\\\\dosaros-data-project\\\\docs\\\\Reel Librarian.html\")"
+    ]
+  }
+}
