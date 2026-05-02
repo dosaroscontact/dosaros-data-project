@@ -274,6 +274,47 @@ def _procesar_comando_status():
     _enviar("\n".join(lineas))
 
 
+def _procesar_comando_sync():
+    """Procesa /Sync — Lanza el proceso de sincronización diaria (master_sync_v3.py)."""
+    import subprocess
+    from pathlib import Path
+
+    proyecto_dir = Path(os.getenv("LOCAL_DB", "/mnt/nba_data/dosaros_local.db")).parent.parent
+    master_sync = proyecto_dir / "master_sync_v3.py"
+
+    if not master_sync.exists():
+        _enviar("❌ No se encontró master_sync_v3.py")
+        return
+
+    _enviar("⏳ *Iniciando sincronización...*\n\n🔄 Paso 1: Extrayendo resultados NBA + EuroLeague...\n⏳ Paso 2: Procesando noticias...\n⏳ Paso 3: Generando hilo X...\n⏳ Paso 4: Propuestas reels + stories...\n\n⏳ Esto puede tomar 15-30 segundos...")
+
+    try:
+        # Ejecutar en background (sin bloquear el bot)
+        proceso = subprocess.Popen(
+            ["python", str(master_sync)],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            cwd=str(proyecto_dir),
+            env={**os.environ}
+        )
+
+        # Esperar resultado (con timeout de 120s)
+        try:
+            stdout, stderr = proceso.communicate(timeout=120)
+
+            if proceso.returncode == 0:
+                _enviar("✅ *Sincronización completada exitosamente*\n\n📊 Resultados enviados a Telegram")
+            else:
+                error_msg = stderr.decode('utf-8', errors='ignore')[:200] if stderr else "Error desconocido"
+                _enviar(f"⚠️ Sincronización completada con errores:\n\n```\n{error_msg}\n```")
+        except subprocess.TimeoutExpired:
+            proceso.kill()
+            _enviar("⏱️ Timeout: Sincronización tomó más de 2 minutos")
+
+    except Exception as e:
+        _enviar(f"❌ Error ejecutando sincronización:\n\n{str(e)[:100]}")
+
+
 def _procesar_comando_status_ia():
     """Procesa /StatusIA — Verifica estado detallado de cada API configurada."""
     from src.utils.api_manager import APIManager
@@ -355,7 +396,8 @@ def main():
     print("  /avatar_random — Avatar aleatorio")
     print("  /avatar_today — 5 avatares del día")
     print("  /status — Estado de APIs")
-    print("  /StatusIA — Verifica estado detallado de cada IA\n")
+    print("  /StatusIA — Verifica estado detallado de cada IA")
+    print("  /Sync — Lanza sincronización manual (master_sync_v3.py)\n")
     
     ultimo_update_id = 0
     
@@ -407,8 +449,11 @@ def main():
                 elif text == "/StatusIA":
                     _procesar_comando_status_ia()
 
+                elif text == "/Sync":
+                    _procesar_comando_sync()
+
                 else:
-                    _enviar(f"❓ Comando no reconocido: {text}\n\nComandos disponibles:\n/perla <consulta>\n/avatar_*\n/status\n/StatusIA")
+                    _enviar(f"❓ Comando no reconocido: {text}\n\nComandos disponibles:\n/perla <consulta>\n/avatar_*\n/status\n/StatusIA\n/Sync")
         
         except Exception as e:
             print(f"❌ Error en loop: {e}")
