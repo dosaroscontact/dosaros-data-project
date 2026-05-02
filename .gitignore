@@ -85,3 +85,6 @@ assets/avatars/generated/
 src/etl/all_eureleague_web.json
 src/etl/origin_estrucura_datos.json
 src/etl/players_full.json
+.env
+.env.local
+.env.production
