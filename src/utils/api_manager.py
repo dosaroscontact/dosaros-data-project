@@ -28,6 +28,8 @@ from dotenv import load_dotenv
 # Importar cargador de credenciales
 try:
     from src.utils.credentials_loader import setup_env_from_credentials
+    # EJECUTAR INMEDIATAMENTE para cargar tokens
+    setup_env_from_credentials()
 except ImportError:
     def setup_env_from_credentials():
         pass
