@@ -140,6 +140,9 @@ class APIManager:
             
             'claude_api_key': os.getenv('CLAUDE_API_KEY'),
             'claude_model': os.getenv('CLAUDE_MODEL', 'claude-3-5-sonnet-latest'),
+
+            'claude_api_key_rove': os.getenv('CLAUDE_API_KEY_ROVE'),
+            'claude_model_rove': os.getenv('CLAUDE_MODEL_ROVE', 'claude-3-5-sonnet-latest'),
             
             'groq_api_key': os.getenv('GROQ_API_KEY'),
             'groq_model': os.getenv('GROQ_MODEL', 'llama-3.1-70b-versatile'),
@@ -209,6 +212,17 @@ class APIManager:
                     logger.info("✅ Claude cliente inicializado")
             except Exception as e:
                 logger.warning(f"⚠️ Error inicializando Claude: {e}")
+
+        # Anthropic Claude - Cuenta ROVE (segunda cuenta)
+        if self.config.get('claude_api_key_rove'):
+            try:
+                if anthropic:
+                    self.clients['claude_rove'] = anthropic.Anthropic(
+                        api_key=self.config['claude_api_key_rove']
+                    )
+                    logger.info("✅ Claude ROVE cliente inicializado")
+            except Exception as e:
+                logger.warning(f"⚠️ Error inicializando Claude ROVE: {e}")
         
         # OpenAI
         if self.config.get('openai_api_key'):
@@ -332,18 +346,18 @@ class APIManager:
     def claude(self, prompt: str, system_prompt: str = None, max_tokens: int = 2048) -> str:
         """
         Usa Anthropic Claude para generar respuesta.
-        
+
         Args:
             prompt: Pregunta o instrucción
             system_prompt: Contexto adicional (opcional)
             max_tokens: Número máximo de tokens en respuesta
-            
+
         Returns:
             Respuesta de Claude como string
         """
         if 'claude' not in self.clients:
             raise ValueError("Claude no está configurado. Verifica CLAUDE_API_KEY en .env")
-        
+
         try:
             response = self.clients['claude'].messages.create(
                 model=self.config['claude_model'],
@@ -358,6 +372,38 @@ class APIManager:
             return result
         except Exception as e:
             logger.error(f"❌ Error en Claude: {e}")
+            raise
+
+    def claude_rove(self, prompt: str, system_prompt: str = None, max_tokens: int = 2048) -> str:
+        """
+        Usa Anthropic Claude (Cuenta ROVE) para generar respuesta.
+        Segunda cuenta de Claude para rotación o distribución de carga.
+
+        Args:
+            prompt: Pregunta o instrucción
+            system_prompt: Contexto adicional (opcional)
+            max_tokens: Número máximo de tokens en respuesta
+
+        Returns:
+            Respuesta de Claude ROVE como string
+        """
+        if 'claude_rove' not in self.clients:
+            raise ValueError("Claude ROVE no está configurado. Verifica CLAUDE_API_KEY_ROVE en .env")
+
+        try:
+            response = self.clients['claude_rove'].messages.create(
+                model=self.config['claude_model_rove'],
+                max_tokens=max_tokens,
+                system=system_prompt or "Eres un asistente experto en análisis de datos deportivos.",
+                messages=[
+                    {"role": "user", "content": prompt}
+                ]
+            )
+            result = response.content[0].text
+            logger.debug(f"✅ Claude ROVE: {len(result)} caracteres generados")
+            return result
+        except Exception as e:
+            logger.error(f"❌ Error en Claude ROVE: {e}")
             raise
     
     
@@ -810,7 +856,7 @@ class APIManager:
         print("="*60)
         
         categories = {
-            'LLMs': ['gemini', 'claude', 'openai', 'groq', 'deepseek', 'kimi', 'grok', 'manus'],
+            'LLMs': ['gemini', 'claude', 'claude_rove', 'openai', 'groq', 'deepseek', 'kimi', 'grok', 'manus'],
             'Imágenes': ['together', 'pollinations'],
             'Audio': ['elevenlabs', 'playht'],
             'Vídeo': ['luma', 'heygen'],
