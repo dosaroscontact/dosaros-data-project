@@ -131,6 +131,9 @@ class APIManager:
             'grok_api_key': os.getenv('GROK_API_KEY'),
             'grok_model': os.getenv('GROK_MODEL', 'grok-beta'),
 
+            'manus_api_key': os.getenv('MANUS_API_KEY'),
+            'manus_model': os.getenv('MANUS_MODEL', 'default'),
+
             'venice_api_key': os.getenv('VENICE_API_KEY'),
             'venice_model': os.getenv('VENICE_MODEL', 'venice-uncensored'),
             
@@ -244,6 +247,30 @@ class APIManager:
                     logger.info("✅ Kimi cliente inicializado")
             except Exception as e:
                 logger.warning(f"⚠️ Error inicializando Kimi: {e}")
+
+        # X.AI (Grok)
+        if self.config.get('grok_api_key'):
+            try:
+                if openai:
+                    self.clients['grok'] = openai.OpenAI(
+                        api_key=self.config['grok_api_key'],
+                        base_url='https://api.x.ai/v1'
+                    )
+                    logger.info("✅ Grok cliente inicializado")
+            except Exception as e:
+                logger.warning(f"⚠️ Error inicializando Grok: {e}")
+
+        # Manus AI
+        if self.config.get('manus_api_key'):
+            try:
+                if openai:
+                    self.clients['manus'] = openai.OpenAI(
+                        api_key=self.config['manus_api_key'],
+                        base_url='https://api.manus.ai/v1'
+                    )
+                    logger.info("✅ Manus cliente inicializado")
+            except Exception as e:
+                logger.warning(f"⚠️ Error inicializando Manus: {e}")
 
 
     # ========================================================================
@@ -478,6 +505,46 @@ class APIManager:
             logger.error(f"❌ Error en Kimi: {e}")
             raise
 
+    def grok(self, prompt: str, system_prompt: str = None) -> str:
+        """Usa X.AI Grok para generar respuesta (API compatible con OpenAI)."""
+        if 'grok' not in self.clients:
+            raise ValueError("Grok no está configurado. Verifica GROK_API_KEY en .env")
+
+        try:
+            response = self.clients['grok'].chat.completions.create(
+                model=self.config['grok_model'],
+                messages=[
+                    {"role": "system", "content": system_prompt or "Eres un asistente experto en análisis de datos deportivos."},
+                    {"role": "user", "content": prompt}
+                ]
+            )
+            result = response.choices[0].message.content
+            logger.debug(f"✅ Grok: {len(result)} caracteres generados")
+            return result
+        except Exception as e:
+            logger.error(f"❌ Error en Grok: {e}")
+            raise
+
+    def manus(self, prompt: str, system_prompt: str = None) -> str:
+        """Usa Manus AI para generar respuesta (API compatible con OpenAI)."""
+        if 'manus' not in self.clients:
+            raise ValueError("Manus no está configurado. Verifica MANUS_API_KEY en .env")
+
+        try:
+            response = self.clients['manus'].chat.completions.create(
+                model=self.config.get('manus_model', 'default'),
+                messages=[
+                    {"role": "system", "content": system_prompt or "Eres un asistente experto en análisis de datos deportivos."},
+                    {"role": "user", "content": prompt}
+                ]
+            )
+            result = response.choices[0].message.content
+            logger.debug(f"✅ Manus: {len(result)} caracteres generados")
+            return result
+        except Exception as e:
+            logger.error(f"❌ Error en Manus: {e}")
+            raise
+
 
     # Rotación diaria: cada día de la semana usa un LLM distinto como primario
     # Distribuye uso entre free tiers y varía el estilo del contenido generado
@@ -517,7 +584,7 @@ class APIManager:
         Returns:
             Respuesta del primer proveedor disponible
         """
-        all_providers = ["gemini", "groq", "deepseek", "kimi", "venice", "claude", "openai"]
+        all_providers = ["gemini", "groq", "deepseek", "kimi", "grok", "manus", "venice", "claude", "openai"]
         providers = providers or all_providers
 
         if rotate:
@@ -721,7 +788,7 @@ class APIManager:
         print("="*60)
         
         categories = {
-            'LLMs': ['gemini', 'claude', 'openai', 'groq', 'deepseek', 'kimi', 'grok'],
+            'LLMs': ['gemini', 'claude', 'openai', 'groq', 'deepseek', 'kimi', 'grok', 'manus'],
             'Imágenes': ['together', 'pollinations'],
             'Audio': ['elevenlabs', 'playht'],
             'Vídeo': ['luma', 'heygen'],

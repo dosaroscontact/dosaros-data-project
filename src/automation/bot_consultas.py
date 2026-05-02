@@ -274,6 +274,74 @@ def _procesar_comando_status():
     _enviar("\n".join(lineas))
 
 
+def _procesar_comando_status_ia():
+    """Procesa /StatusIA — Verifica estado detallado de cada API configurada."""
+    from src.utils.api_manager import APIManager
+    import time
+
+    _enviar("🔍 *Verificando estado de IAs...*")
+
+    api = APIManager()
+
+    # APIs a verificar (en orden de prioridad)
+    apis = ["openai", "gemini", "claude", "groq", "grok", "kimi", "manus"]
+
+    lineas = ["<b>🤖 Estado de IAs — Dos Aros</b>\n"]
+
+    for ia in apis:
+        try:
+            # Obtener el método de la API
+            if ia == "manus":
+                # Manus usa formato OpenAI compatible
+                metodo = getattr(api, 'generate_text', None)
+                if not metodo:
+                    lineas.append(f"⚪ <b>{ia.upper()}</b> — APIManager sin método")
+                    continue
+                # Intenta con Manus
+                respuesta = api.generate_text(
+                    "OK",
+                    providers=["manus"]
+                )
+                lineas.append(f"✅ <b>{ia.upper()}</b> — Respondiendo")
+            elif ia == "grok":
+                # Grok también usa formato OpenAI compatible
+                metodo = getattr(api, 'generate_text', None)
+                if not metodo:
+                    lineas.append(f"⚪ <b>{ia.upper()}</b> — APIManager sin método")
+                    continue
+                respuesta = api.generate_text(
+                    "OK",
+                    providers=["grok"]
+                )
+                lineas.append(f"✅ <b>{ia.upper()}</b> — Respondiendo")
+            else:
+                # Para el resto, usa el método directo
+                metodo = getattr(api, ia, None)
+                if metodo is None:
+                    lineas.append(f"❓ <b>{ia.upper()}</b> — sin método")
+                    continue
+
+                respuesta = metodo("OK")
+                lineas.append(f"✅ <b>{ia.upper()}</b> — Respondiendo")
+
+        except ValueError as e:
+            if "no API key" in str(e) or "no configurado" in str(e).lower():
+                lineas.append(f"⚪ <b>{ia.upper()}</b> — no configurado")
+            else:
+                lineas.append(f"⚪ <b>{ia.upper()}</b> — {str(e)[:40]}")
+        except Exception as e:
+            error_msg = str(e)[:50]
+            if "401" in error_msg or "invalid" in error_msg.lower():
+                lineas.append(f"🔴 <b>{ia.upper()}</b> — token inválido")
+            else:
+                lineas.append(f"❌ <b>{ia.upper()}</b> — {error_msg}")
+
+        time.sleep(0.5)  # Pequeña pausa entre APIs
+
+    lineas.append(f"\n<i>✓ Verificación completada — {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}</i>")
+    _enviar("\n".join(lineas))
+
+
 # ============================================================================
 # LOOP PRINCIPAL (escucha comandos)
 # ============================================================================
@@ -286,7 +354,8 @@ def main():
     print("  /avatar_prompt <equipo> — Avatar de un equipo")
     print("  /avatar_random — Avatar aleatorio")
     print("  /avatar_today — 5 avatares del día")
-    print("  /status — Estado de APIs\n")
+    print("  /status — Estado de APIs")
+    print("  /StatusIA — Verifica estado detallado de cada IA\n")
     
     ultimo_update_id = 0
     
@@ -334,9 +403,12 @@ def main():
                 
                 elif text == "/status":
                     _procesar_comando_status()
-                
+
+                elif text == "/StatusIA":
+                    _procesar_comando_status_ia()
+
                 else:
-                    _enviar(f"❓ Comando no reconocido: {text}\n\nComandos disponibles:\n/perla <consulta>\n/avatar_*\n/status")
+                    _enviar(f"❓ Comando no reconocido: {text}\n\nComandos disponibles:\n/perla <consulta>\n/avatar_*\n/status\n/StatusIA")
         
         except Exception as e:
             print(f"❌ Error en loop: {e}")
