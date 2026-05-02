@@ -25,6 +25,13 @@ import logging
 from typing import Optional, List, Dict, Any
 from dotenv import load_dotenv
 
+# Importar cargador de credenciales
+try:
+    from src.utils.credentials_loader import setup_env_from_credentials
+except ImportError:
+    def setup_env_from_credentials():
+        pass
+
 # Importar clientes de APIs
 try:
     from google import genai  # Nueva librería google-genai
@@ -52,6 +59,9 @@ except ImportError:
 # ============================================================================
 
 load_dotenv()
+
+# Cargar credenciales desde src/credentials/*.env (prioridad alta)
+setup_env_from_credentials()
 
 # Cargar también /etc/environment (para variables de sistema en Pi)
 if os.path.exists('/etc/environment'):

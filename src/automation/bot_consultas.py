@@ -34,6 +34,13 @@ from dotenv import load_dotenv
 # Cargar variables de entorno desde múltiples fuentes
 load_dotenv()
 
+# Cargar credenciales desde src/credentials/*.env (prioridad alta)
+try:
+    from src.utils.credentials_loader import setup_env_from_credentials
+    setup_env_from_credentials()
+except ImportError:
+    pass
+
 # Cargar también /etc/environment (para variables de sistema en Pi)
 if os.path.exists('/etc/environment'):
     with open('/etc/environment') as f:
