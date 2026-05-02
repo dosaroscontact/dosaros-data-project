@@ -52,6 +52,18 @@ except ImportError:
 # ============================================================================
 
 load_dotenv()
+
+# Cargar también /etc/environment (para variables de sistema en Pi)
+if os.path.exists('/etc/environment'):
+    with open('/etc/environment') as f:
+        for line in f:
+            line = line.strip()
+            if line and '=' in line and not line.startswith('#'):
+                key, val = line.split('=', 1)
+                key = key.strip()
+                val = val.strip().strip('"').strip("'")
+                if key not in os.environ:  # No sobrescribir si ya existe
+                    os.environ[key] = val
 logger = logging.getLogger(__name__)
 logging.basicConfig(
     level=os.getenv("LOG_LEVEL", "INFO"),

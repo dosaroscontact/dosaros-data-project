@@ -31,7 +31,20 @@ from pathlib import Path
 from datetime import datetime
 from dotenv import load_dotenv
 
+# Cargar variables de entorno desde múltiples fuentes
 load_dotenv()
+
+# Cargar también /etc/environment (para variables de sistema en Pi)
+if os.path.exists('/etc/environment'):
+    with open('/etc/environment') as f:
+        for line in f:
+            line = line.strip()
+            if line and '=' in line and not line.startswith('#'):
+                key, val = line.split('=', 1)
+                key = key.strip()
+                val = val.strip().strip('"').strip("'")
+                if key not in os.environ:  # No sobrescribir si ya existe
+                    os.environ[key] = val
 
 DB_PATH        = os.getenv("LOCAL_DB", "/mnt/nba_data/dosaros_local.db")
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
