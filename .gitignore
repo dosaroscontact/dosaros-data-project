@@ -4,6 +4,7 @@
 .env.*.local
 secrets/
 *.key
+src/credentials/*.env
 
 # Dependencias Python
 __pycache__/
