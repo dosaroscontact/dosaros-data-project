@@ -330,69 +330,94 @@ def _procesar_comando_sync():
 
 def _procesar_comando_status_ia():
     """Procesa /StatusIA — Verifica estado detallado de cada API configurada."""
-    from src.utils.api_manager import APIManager
+    import threading
     import time
 
     _enviar("🔍 *Verificando estado de IAs...*")
 
-    api = APIManager()
-
     # APIs a verificar (en orden de prioridad)
     apis = ["openai", "gemini", "claude", "groq", "grok", "kimi", "manus"]
+    resultados = {}
 
-    lineas = ["<b>🤖 Estado de IAs — Dos Aros</b>\n"]
-
-    for ia in apis:
+    def test_api(ia_name):
+        """Test individual de cada API con timeout."""
         try:
-            # Obtener el método de la API
-            if ia == "manus":
-                # Manus usa formato OpenAI compatible
-                metodo = getattr(api, 'generate_text', None)
-                if not metodo:
-                    lineas.append(f"⚪ <b>{ia.upper()}</b> — APIManager sin método")
-                    continue
-                # Intenta con Manus
-                respuesta = api.generate_text(
-                    "OK",
-                    providers=["manus"]
-                )
-                lineas.append(f"✅ <b>{ia.upper()}</b> — Respondiendo")
-            elif ia == "grok":
-                # Grok también usa formato OpenAI compatible
-                metodo = getattr(api, 'generate_text', None)
-                if not metodo:
-                    lineas.append(f"⚪ <b>{ia.upper()}</b> — APIManager sin método")
-                    continue
-                respuesta = api.generate_text(
-                    "OK",
-                    providers=["grok"]
-                )
-                lineas.append(f"✅ <b>{ia.upper()}</b> — Respondiendo")
+            from src.utils.api_manager import APIManager
+            api = APIManager()
+
+            # Verificar si la API está configurada
+            if ia_name == "manus":
+                if not api.config.get('manus_api_key'):
+                    resultados[ia_name] = "⚪ no configurado"
+                    return
+                try:
+                    api.manus("OK")
+                    resultados[ia_name] = "✅ Respondiendo"
+                except Exception as e:
+                    err = str(e).lower()
+                    if "401" in err or "invalid" in err or "unauthorized" in err:
+                        resultados[ia_name] = "🔴 token inválido"
+                    else:
+                        resultados[ia_name] = f"❌ {str(e)[:30]}"
+            elif ia_name == "grok":
+                if not api.config.get('grok_api_key'):
+                    resultados[ia_name] = "⚪ no configurado"
+                    return
+                try:
+                    api.grok("OK")
+                    resultados[ia_name] = "✅ Respondiendo"
+                except Exception as e:
+                    err = str(e).lower()
+                    if "401" in err or "invalid" in err or "unauthorized" in err:
+                        resultados[ia_name] = "🔴 token inválido"
+                    else:
+                        resultados[ia_name] = f"❌ {str(e)[:30]}"
             else:
-                # Para el resto, usa el método directo
-                metodo = getattr(api, ia, None)
+                # Verificar disponibilidad del método
+                metodo = getattr(api, ia_name, None)
                 if metodo is None:
-                    lineas.append(f"❓ <b>{ia.upper()}</b> — sin método")
-                    continue
+                    resultados[ia_name] = "❓ sin método"
+                    return
 
-                respuesta = metodo("OK")
-                lineas.append(f"✅ <b>{ia.upper()}</b> — Respondiendo")
+                # Verificar si está configurada
+                key_name = f"{ia_name}_api_key"
+                if not api.config.get(key_name):
+                    resultados[ia_name] = "⚪ no configurado"
+                    return
 
-        except ValueError as e:
-            if "no API key" in str(e) or "no configurado" in str(e).lower():
-                lineas.append(f"⚪ <b>{ia.upper()}</b> — no configurado")
-            else:
-                lineas.append(f"⚪ <b>{ia.upper()}</b> — {str(e)[:40]}")
+                try:
+                    metodo("OK")
+                    resultados[ia_name] = "✅ Respondiendo"
+                except Exception as e:
+                    err = str(e).lower()
+                    if "401" in err or "invalid" in err or "unauthorized" in err or "expired" in err:
+                        resultados[ia_name] = "🔴 token inválido"
+                    else:
+                        resultados[ia_name] = f"❌ {str(e)[:30]}"
+
         except Exception as e:
-            error_msg = str(e)[:50]
-            if "401" in error_msg or "invalid" in error_msg.lower():
-                lineas.append(f"🔴 <b>{ia.upper()}</b> — token inválido")
-            else:
-                lineas.append(f"❌ <b>{ia.upper()}</b> — {error_msg}")
+            resultados[ia_name] = f"❌ Error: {str(e)[:20]}"
 
-        time.sleep(0.5)  # Pequeña pausa entre APIs
+    # Ejecutar tests en paralelo (con timeout)
+    threads = []
+    for ia in apis:
+        t = threading.Thread(target=test_api, args=(ia,), daemon=True)
+        t.start()
+        threads.append((ia, t))
 
-    lineas.append(f"\n<i>✓ Verificación completada — {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}</i>")
+    # Esperar máximo 15 segundos
+    for ia, thread in threads:
+        thread.join(timeout=15)
+        if ia not in resultados:
+            resultados[ia] = "⏱️ timeout"
+
+    # Construir respuesta
+    lineas = ["<b>🤖 Estado de IAs — Dos Aros</b>\n"]
+    for ia in apis:
+        status = resultados.get(ia, "❓ error desconocido")
+        lineas.append(f"{status} <b>{ia.upper()}</b>")
+
+    lineas.append(f"\n<i>✓ {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}</i>")
     _enviar("\n".join(lineas))
 
 
