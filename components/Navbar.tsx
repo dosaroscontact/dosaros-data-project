@@ -24,7 +24,7 @@ export default function Navbar() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-dos-white/95 dark:bg-dos-blue/95 backdrop-blur-md border-b border-dos-gray/20 dark:border-dos-magenta/20 shadow-sm">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
-        <a href="#" className="flex items-center gap-2 sm:gap-3 group">
+        <a href="/" className="flex items-center gap-2 sm:gap-3 group hover:opacity-80 transition-opacity">
           <Image
             src="/logo-dos-aros-official.png"
             alt="DOS AROS logo"
@@ -58,7 +58,7 @@ export default function Navbar() {
               href={social.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 text-dos-blue dark:text-dos-gray hover:opacity-80 transition-opacity"
+              className="flex items-center gap-2 text-dos-blue dark:text-dos-white hover:opacity-80 transition-opacity"
               aria-label={`Seguir en ${social.account}`}
               title={social.account}
             >
