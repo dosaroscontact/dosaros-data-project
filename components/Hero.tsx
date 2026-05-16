@@ -66,13 +66,20 @@ export default function Hero() {
           </div>
         </motion.div>
 
-        {/* Headline */}
-        <motion.h1
+        {/* Headline with Lettering Banner */}
+        <motion.div
           variants={headlineVariants}
-          className="text-3xl sm:text-4xl md:text-5xl font-heading font-bold text-dos-white mb-4 sm:mb-6 leading-tight"
+          className="w-full max-w-2xl mx-auto mb-4 sm:mb-6"
         >
-          Analytics para el deporte que amamos
-        </motion.h1>
+          <Image
+            src="/banners/letering-orange.png"
+            alt="DOS AROS - Analytics para el deporte que amamos"
+            width={2744}
+            height={447}
+            className="w-full h-auto"
+            priority
+          />
+        </motion.div>
 
         {/* Subheading */}
         <motion.p
