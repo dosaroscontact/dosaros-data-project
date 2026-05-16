@@ -18,9 +18,14 @@ export default function Navbar() {
             className="w-8 h-8 sm:w-10 sm:h-10"
             priority
           />
-          <span className="text-lg sm:text-xl font-heading font-bold text-dos-blue dark:text-dos-white">
-            DOS AROS
-          </span>
+          <Image
+            src="/banner-dos-aros.png"
+            alt="DOS AROS"
+            width={120}
+            height={40}
+            className="h-8 sm:h-10 w-auto"
+            priority
+          />
         </a>
 
         <div className="hidden md:flex items-center gap-8">

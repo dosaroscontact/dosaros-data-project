@@ -26,7 +26,20 @@
       "Bash(pdftoppm -v)",
       "Bash(/c/poppler/Library/bin/pdftoppm \"C:/Users/rover/Pictures/Branding/Guia de estilos Dos Aros \\(1\\).pdf\" /tmp/guia -png -f 1 -l 8)",
       "Bash(/c/poppler/Library/bin/pdftoppm \"C:/Users/rover/Pictures/Branding/Guia de estilos Dos Aros \\(1\\).pdf\" \"C:/Users/rover/dosaros-data-project/guia\" -png -f 1 -l 10)",
-      "Bash(git commit -m 'style: Update brand colors per design system guide *)"
+      "Bash(git commit -m 'style: Update brand colors per design system guide *)",
+      "Bash(awk '{print $2}')",
+      "Bash(xargs -r kill -9)",
+      "Bash(PORT=3000 npm run dev)",
+      "Bash(curl -s -o /dev/null -w \"Status: %{http_code}\\\\n\" http://localhost:3000)",
+      "Bash(pkill -f \"node.*next\")",
+      "Bash(rm -rf .next)",
+      "Bash(pkill -f \"next dev\\\\|node.*next\")",
+      "Bash(rm -rf .next .turbo)",
+      "Bash(curl -s http://localhost:3009)",
+      "Bash(git commit -m 'fix: Add error boundary components for Next.js 15 *)",
+      "Bash(npm list *)",
+      "Bash(node scripts/generate-favicon.js)",
+      "Bash(git commit -m 'feat: Add banner to navbar and generate favicon *)"
     ]
   }
 }
