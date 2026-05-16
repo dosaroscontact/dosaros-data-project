@@ -51,19 +51,14 @@ export default function Hero() {
       >
         {/* Logo */}
         <motion.div variants={logoVariants} className="mb-8 sm:mb-12">
-          <div className="inline-flex items-center justify-center gap-2 sm:gap-3 px-4 py-2 rounded-lg bg-dos-magenta/10 border border-dos-magenta/30 backdrop-blur-sm">
-            <Image
-              src="/logo-dos-aros-official.png"
-              alt="DOS AROS logo"
-              width={40}
-              height={40}
-              className="w-8 h-8 sm:w-10 sm:h-10"
-              priority
-            />
-            <span className="text-base sm:text-lg font-heading font-bold text-dos-white">
-              DOS AROS
-            </span>
-          </div>
+          <Image
+            src="/logo-dos-aros-official.png"
+            alt="DOS AROS logo"
+            width={40}
+            height={40}
+            className="w-8 h-8 sm:w-10 sm:h-10"
+            priority
+          />
         </motion.div>
 
         {/* Headline with Lettering Banner */}
