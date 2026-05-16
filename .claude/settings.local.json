@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(winget install *)",
+      "Bash(npm install *)",
+      "Skill(agent-browser)",
+      "Bash(curl -s http://localhost:3000)",
+      "Bash(pkill -f \"next dev\")",
+      "Bash(npm run *)",
+      "Bash(curl -s http://localhost:3004)",
+      "Bash(agent-browser screenshot *)",
+      "Bash(agent-browser help *)",
+      "Bash(agent-browser *)",
+      "Bash(cp \"C:\\\\Users\\\\rover\\\\Pictures\\\\Branding\\\\paraWeb\\\\logo-dos-aros.png\" \"C:\\\\Users\\\\rover\\\\dosaros-data-project\\\\public\\\\logo-dos-aros-official.png\")",
+      "Bash(cp \"C:\\\\Users\\\\rover\\\\Pictures\\\\Branding\\\\paraWeb\\\\baner-dos-aros.png\" \"C:\\\\Users\\\\rover\\\\dosaros-data-project\\\\public\\\\banner-dos-aros.png\")",
+      "Bash(cp \"C:\\\\Users\\\\rover\\\\Pictures\\\\Branding\\\\paraWeb\\\\primerosProductos\\\\camiseta-chico-beig.png\" \"C:\\\\Users\\\\rover\\\\dosaros-data-project\\\\public\\\\products\\\\camiseta-beige.png\")",
+      "Bash(cp \"C:\\\\Users\\\\rover\\\\Pictures\\\\Branding\\\\paraWeb\\\\primerosProductos\\\\camiseta-chico-verde-tierra.png\" \"C:\\\\Users\\\\rover\\\\dosaros-data-project\\\\public\\\\products\\\\camiseta-verde.png\")",
+      "Bash(cp \"C:\\\\Users\\\\rover\\\\Pictures\\\\Branding\\\\paraWeb\\\\primerosProductos\\\\camiseta-gris-tierra-chico-primer-plano.png\" \"C:\\\\Users\\\\rover\\\\dosaros-data-project\\\\public\\\\products\\\\camiseta-gris.png\")",
+      "Bash(netstat -tuln)",
+      "Bash(curl -s http://localhost:3005)",
+      "Bash(rm -f \"--output\" \"-o\")",
+      "Bash(git add *)",
+      "Bash(git commit -m 'feat: Add products section and update branding assets *)",
+      "Bash(rm -f \"./--output\" \"./-o\")",
+      "Bash(export PATH=\"/c/poppler/Library/bin:$PATH\")",
+      "Bash(pdftoppm -v)",
+      "Bash(/c/poppler/Library/bin/pdftoppm \"C:/Users/rover/Pictures/Branding/Guia de estilos Dos Aros \\(1\\).pdf\" /tmp/guia -png -f 1 -l 8)",
+      "Bash(/c/poppler/Library/bin/pdftoppm \"C:/Users/rover/Pictures/Branding/Guia de estilos Dos Aros \\(1\\).pdf\" \"C:/Users/rover/dosaros-data-project/guia\" -png -f 1 -l 10)",
+      "Bash(git commit -m 'style: Update brand colors per design system guide *)"
+    ]
+  }
+}

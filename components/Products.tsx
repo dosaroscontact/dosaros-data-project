@@ -111,7 +111,7 @@ export default function Products() {
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />
                   {/* Category badge */}
-                  <div className="absolute top-3 right-3 bg-dos-orange text-dos-blue px-3 py-1 rounded-full text-xs font-heading font-bold">
+                  <div className="absolute top-3 right-3 bg-dos-orange-dark text-dos-white px-3 py-1 rounded-full text-xs font-heading font-bold">
                     {product.category}
                   </div>
                 </div>
