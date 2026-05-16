@@ -34,11 +34,11 @@ export default function Navbar() {
             priority
           />
           <Image
-            src="/banner-dos-aros.png"
+            src="/banners/letering-orange.png"
             alt="DOS AROS"
-            width={120}
-            height={40}
-            className="h-8 sm:h-10 w-auto"
+            width={2744}
+            height={447}
+            className="h-6 sm:h-8 w-auto"
             priority
           />
         </a>
