@@ -66,7 +66,7 @@ export default function ContactForm() {
   }
 
   return (
-    <section id="contacto" className="relative w-full py-16 sm:py-24 bg-dos-blue-dark px-4 sm:px-6">
+    <section className="relative w-full py-16 sm:py-24 bg-dos-blue-dark px-4 sm:px-6">
       <div className="max-w-2xl mx-auto">
         <motion.div
           initial="hidden"

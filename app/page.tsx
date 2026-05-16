@@ -5,7 +5,6 @@ import Highlights from '@/components/Highlights'
 import Products from '@/components/Products'
 import QueryBox from '@/components/QueryBox'
 import Newsletter from '@/components/Newsletter'
-import ContactForm from '@/components/ContactForm'
 
 export default function Home() {
   return (
@@ -17,7 +16,6 @@ export default function Home() {
       <Products />
       <QueryBox />
       <Newsletter />
-      <ContactForm />
 
       {/* Footer */}
       <footer className="bg-dos-blue text-dos-white py-8 sm:py-12 px-4 sm:px-6">

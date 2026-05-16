@@ -39,7 +39,27 @@
       "Bash(git commit -m 'fix: Add error boundary components for Next.js 15 *)",
       "Bash(npm list *)",
       "Bash(node scripts/generate-favicon.js)",
-      "Bash(git commit -m 'feat: Add banner to navbar and generate favicon *)"
+      "Bash(git commit -m 'feat: Add banner to navbar and generate favicon *)",
+      "Bash(bash /tmp/navbar-check.sh)",
+      "Bash(lsof -ti:3000)",
+      "Bash(xargs kill -9)",
+      "Bash(curl -s http://localhost:3001)",
+      "Bash(pkill -f \"next\\\\|node\")",
+      "Bash(npm start *)",
+      "Bash(curl -s -w \"\\\\nStatus: %{http_code}\\\\n\" http://localhost:3000)",
+      "Bash(curl -s -I http://localhost:3000)",
+      "PowerShell(Get-Process *)",
+      "Bash(file \"C:\\\\Users\\\\rover\\\\Pictures\\\\Branding\\\\LETERING\"*.png)",
+      "Bash(file \"C:/Users/rover/Pictures/Branding/LETERING\"*.png)",
+      "Bash(cp \"C:/Users/rover/Pictures/Branding/LETERING AZUL.png\" \"C:/Users/rover/dosaros-data-project/public/banners/letering-blue.png\")",
+      "Bash(cp \"C:/Users/rover/Pictures/Branding/LETERING ROJO.png\" \"C:/Users/rover/dosaros-data-project/public/banners/letering-red.png\")",
+      "Bash(cp \"C:/Users/rover/Pictures/Branding/LETERING NARANJA.png\" \"C:/Users/rover/dosaros-data-project/public/banners/letering-orange.png\")",
+      "Bash(cp \"C:/Users/rover/Pictures/Branding/LETERING DORADO.png\" \"C:/Users/rover/dosaros-data-project/public/banners/letering-gold.png\")",
+      "Bash(cp \"C:/Users/rover/Pictures/Branding/LETERING GRIS.png\" \"C:/Users/rover/dosaros-data-project/public/banners/letering-gray.png\")",
+      "Bash(git commit *)",
+      "Bash(Get-Process node *)",
+      "Bash(Stop-Process -Force)",
+      "Bash(curl -s http://localhost:3000/contact)"
     ]
   }
 }

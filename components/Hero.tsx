@@ -89,18 +89,20 @@ export default function Hero() {
           variants={ctaVariants}
           className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center"
         >
-          <button
-            className="w-full sm:w-auto px-8 py-3 bg-dos-orange text-dos-blue font-heading font-bold rounded-lg hover:opacity-90 focus:outline-2 focus:outline-offset-2 focus:outline-dos-magenta transition-opacity duration-300 active:scale-95 min-h-[48px] sm:min-h-[44px]"
+          <a
+            href="/contact"
+            className="w-full sm:w-auto px-8 py-3 bg-dos-orange text-dos-blue font-heading font-bold rounded-lg hover:opacity-90 focus:outline-2 focus:outline-offset-2 focus:outline-dos-magenta transition-opacity duration-300 active:scale-95 min-h-[48px] sm:min-h-[44px] flex items-center justify-center"
             aria-label="Explorar partidos en vivo"
           >
             Explora partidos en vivo
-          </button>
-          <button
-            className="w-full sm:w-auto px-8 py-3 border-2 border-dos-magenta text-dos-white font-heading font-bold rounded-lg hover:bg-dos-magenta/10 focus:outline-2 focus:outline-offset-2 focus:outline-dos-magenta transition-colors duration-300 active:scale-95 min-h-[48px] sm:min-h-[44px]"
+          </a>
+          <a
+            href="/contact"
+            className="w-full sm:w-auto px-8 py-3 border-2 border-dos-magenta text-dos-white font-heading font-bold rounded-lg hover:bg-dos-magenta/10 focus:outline-2 focus:outline-offset-2 focus:outline-dos-magenta transition-colors duration-300 active:scale-95 min-h-[48px] sm:min-h-[44px] flex items-center justify-center"
             aria-label="Haz una pregunta"
           >
             Haz una pregunta
-          </button>
+          </a>
         </motion.div>
 
         {/* Scroll indicator */}
