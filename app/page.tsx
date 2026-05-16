@@ -5,6 +5,7 @@ import Highlights from '@/components/Highlights'
 import Products from '@/components/Products'
 import QueryBox from '@/components/QueryBox'
 import Newsletter from '@/components/Newsletter'
+import ContactForm from '@/components/ContactForm'
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
       <Products />
       <QueryBox />
       <Newsletter />
+      <ContactForm />
 
       {/* Footer */}
       <footer className="bg-dos-blue text-dos-white py-8 sm:py-12 px-4 sm:px-6">
@@ -44,8 +46,8 @@ export default function Home() {
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-dos-orange transition-colors">
-                    Precios
+                  <a href="#productos" className="hover:text-dos-orange transition-colors">
+                    Productos
                   </a>
                 </li>
               </ul>
@@ -56,13 +58,14 @@ export default function Home() {
               <h4 className="font-heading font-bold text-sm mb-3">Síguenos</h4>
               <div className="flex gap-4">
                 {[
-                  { name: 'X', href: '#' },
-                  { name: 'Instagram', href: '#' },
-                  { name: 'Discord', href: '#' },
+                  { name: 'X', href: 'https://twitter.com/dos_aros' },
+                  { name: 'Instagram', href: 'https://instagram.com/dosaros_basket' },
                 ].map((social) => (
                   <a
                     key={social.name}
                     href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="text-dos-gray hover:text-dos-orange transition-colors text-sm font-body"
                     aria-label={social.name}
                   >
