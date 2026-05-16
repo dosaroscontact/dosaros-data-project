@@ -6,11 +6,13 @@ import Image from 'next/image'
 const SocialLinks = [
   {
     name: 'X',
+    account: '@dos_aros',
     href: 'https://twitter.com/dos_aros',
     icon: '/twitter.svg',
   },
   {
     name: 'Instagram',
+    account: '@dosaros_basket',
     href: 'https://instagram.com/dosaros_basket',
     icon: '/instagram.svg',
   },
@@ -57,15 +59,15 @@ export default function Navbar() {
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 text-dos-blue dark:text-dos-gray hover:opacity-80 transition-opacity"
-              aria-label={`Seguir en ${social.name}`}
-              title={social.name}
+              aria-label={`Seguir en ${social.account}`}
+              title={social.account}
             >
               <img
                 src={social.icon}
                 alt={social.name}
                 className="w-6 h-6 sm:w-5 sm:h-5"
               />
-              <span className="hidden sm:inline text-sm font-body">{social.name}</span>
+              <span className="hidden sm:inline text-sm font-body">{social.account}</span>
             </a>
           ))}
           <button
