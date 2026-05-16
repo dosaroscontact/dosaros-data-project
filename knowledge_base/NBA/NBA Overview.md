@@ -1,4 +1,4 @@
-﻿# NBA 2025-26
+# NBA 2025-26
 
 ## Teams
 Ver: [[Teams]]

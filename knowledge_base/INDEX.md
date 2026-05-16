@@ -1,4 +1,4 @@
-﻿# DOS AROS Knowledge Base
+# DOS AROS Knowledge Base
 
 ## Secciones
 - [[NBA/NBA Overview]]

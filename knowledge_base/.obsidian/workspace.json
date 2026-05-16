@@ -1,20 +1,24 @@
 {
   "main": {
-    "id": "21d8dc18d109dd22",
+    "id": "dfdc43e13a4a9c03",
     "type": "split",
     "children": [
       {
-        "id": "29d0b4860962ce9c",
+        "id": "719b052a188d2f4c",
         "type": "tabs",
         "children": [
           {
-            "id": "aad36a223da21524",
+            "id": "2af44e564e5de657",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "INDEX.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "Nueva pestaña"
+              "title": "INDEX"
             }
           }
         ]
@@ -23,15 +27,15 @@
     "direction": "vertical"
   },
   "left": {
-    "id": "5697349627782950",
+    "id": "fdeb535c088c5ecc",
     "type": "split",
     "children": [
       {
-        "id": "b6e61d80702027e1",
+        "id": "d669c0efbb008ebb",
         "type": "tabs",
         "children": [
           {
-            "id": "6edcec326dc13293",
+            "id": "d925bb43d2653a65",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
@@ -44,7 +48,7 @@
             }
           },
           {
-            "id": "9c51ad386f5f7de8",
+            "id": "0b163caa27ab60f3",
             "type": "leaf",
             "state": {
               "type": "search",
@@ -61,7 +65,7 @@
             }
           },
           {
-            "id": "93c3bc30c3d3faa3",
+            "id": "86e5ea17c078803d",
             "type": "leaf",
             "state": {
               "type": "bookmarks",
@@ -77,20 +81,20 @@
     "width": 300
   },
   "right": {
-    "id": "fff93e4b74783298",
+    "id": "aee7ff66fbec2cf6",
     "type": "split",
     "children": [
       {
-        "id": "426d6f28f0529406",
+        "id": "71367da16427fef5",
         "type": "tabs",
         "children": [
           {
-            "id": "c8f9ca7c534b28c4",
+            "id": "35a6fe22e6d2a8a4",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Bienvenido.md",
+                "file": "INDEX.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -100,25 +104,25 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Enlaces entrantes de Bienvenido"
+              "title": "Enlaces entrantes de INDEX"
             }
           },
           {
-            "id": "50c8b566bea51208",
+            "id": "eb8ca573875c0aa3",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Bienvenido.md",
+                "file": "INDEX.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Enlaces salientes de Bienvenido"
+              "title": "Enlaces salientes de INDEX"
             }
           },
           {
-            "id": "d059865bfca08646",
+            "id": "c37f36ca726aa573",
             "type": "leaf",
             "state": {
               "type": "tag",
@@ -133,7 +137,7 @@
             }
           },
           {
-            "id": "be91d86ea22c671d",
+            "id": "9b18604f557d34c9",
             "type": "leaf",
             "state": {
               "type": "all-properties",
@@ -147,18 +151,28 @@
             }
           },
           {
-            "id": "5e1e2a8152ddeb7f",
+            "id": "b8c6ec23b2a320d6",
             "type": "leaf",
             "state": {
               "type": "outline",
               "state": {
-                "file": "Bienvenido.md",
+                "file": "INDEX.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Esquema de Bienvenido"
+              "title": "Esquema de INDEX"
+            }
+          },
+          {
+            "id": "121699225d5125d7",
+            "type": "leaf",
+            "state": {
+              "type": "calendar",
+              "state": {},
+              "icon": "calendar-with-checkmark",
+              "title": "Calendar"
             }
           }
         ]
@@ -176,11 +190,18 @@
       "daily-notes:Abrir la nota de hoy": false,
       "templates:Insertar plantilla": false,
       "command-palette:Abrir paleta de comandos": false,
-      "bases:Crear nueva base": false
+      "bases:Crear nueva base": false,
+      "templater-obsidian:Templater": false,
+      "obsidian-git:Open Git source control": false
     }
   },
-  "active": "aad36a223da21524",
+  "active": "2af44e564e5de657",
   "lastOpenFiles": [
-    "Bienvenido.md"
+    "NBA/NBA Overview.md",
+    "Project Docs/CLAUDE.md Summary.md",
+    "Project Docs/BRAND.md Summary.md",
+    "Project Docs/Databases.md",
+    "Project Docs",
+    "INDEX.md"
   ]
 }
