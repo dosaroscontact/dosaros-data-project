@@ -70,7 +70,11 @@ export default function Footer() {
                   <img
                     src={social.icon}
                     alt={social.name}
-                    className="w-6 h-6 hover:opacity-80 transition-opacity"
+                    className={`w-6 h-6 hover:opacity-80 transition-opacity ${
+                      social.name === 'Instagram'
+                        ? 'brightness-0 invert'
+                        : ''
+                    }`}
                   />
                 </a>
               ))}
