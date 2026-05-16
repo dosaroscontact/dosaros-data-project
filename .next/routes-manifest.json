@@ -44,10 +44,28 @@
       "namedRegex": "^/_not\\-found(?:/)?$"
     },
     {
+      "page": "/analisis",
+      "regex": "^/analisis(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/analisis(?:/)?$"
+    },
+    {
+      "page": "/comunidad",
+      "regex": "^/comunidad(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/comunidad(?:/)?$"
+    },
+    {
       "page": "/contact",
       "regex": "^/contact(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/contact(?:/)?$"
+    },
+    {
+      "page": "/predicciones",
+      "regex": "^/predicciones(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/predicciones(?:/)?$"
     }
   ],
   "dataRoutes": [],

@@ -2,5 +2,8 @@
   "/_not-found/page": "/_not-found",
   "/api/contact/route": "/api/contact",
   "/page": "/",
-  "/contact/page": "/contact"
+  "/analisis/page": "/analisis",
+  "/comunidad/page": "/comunidad",
+  "/contact/page": "/contact",
+  "/predicciones/page": "/predicciones"
 }

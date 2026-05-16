@@ -31,13 +31,18 @@ export default function Footer() {
             <h4 className="font-heading font-bold text-sm mb-3">Producto</h4>
             <ul className="space-y-2 text-sm text-dos-gray">
               <li>
-                <a href="#" className="hover:text-dos-orange transition-colors">
+                <a href="/analisis" className="hover:text-dos-orange transition-colors">
                   Análisis
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-dos-orange transition-colors">
+                <a href="/predicciones" className="hover:text-dos-orange transition-colors">
                   Predicciones
+                </a>
+              </li>
+              <li>
+                <a href="/comunidad" className="hover:text-dos-orange transition-colors">
+                  Comunidad
                 </a>
               </li>
               <li>

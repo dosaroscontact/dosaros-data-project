@@ -59,7 +59,10 @@
       "Bash(git commit *)",
       "Bash(Get-Process node *)",
       "Bash(Stop-Process -Force)",
-      "Bash(curl -s http://localhost:3000/contact)"
+      "Bash(curl -s http://localhost:3000/contact)",
+      "Bash(cp \"C:\\\\Users\\\\rover\\\\Pictures\\\\Branding\\\\paraWeb\\\\twitter.svg\" \"C:\\\\Users\\\\rover\\\\dosaros-data-project\\\\public\\\\twitter.svg\")",
+      "Bash(cp \"C:\\\\Users\\\\rover\\\\Pictures\\\\Branding\\\\paraWeb\\\\instagram.svg\" \"C:\\\\Users\\\\rover\\\\dosaros-data-project\\\\public\\\\instagram.svg\")",
+      "Bash(curl -s http://localhost:3000/analisis)"
     ]
   }
 }
