@@ -7,12 +7,12 @@ const SocialLinks = [
   {
     name: 'X',
     href: 'https://twitter.com/dos_aros',
-    emoji: '𝕏',
+    icon: '/twitter.svg',
   },
   {
     name: 'Instagram',
     href: 'https://instagram.com/dosaros_basket',
-    emoji: '📷',
+    icon: '/instagram.svg',
   },
 ]
 
@@ -56,12 +56,16 @@ export default function Navbar() {
               href={social.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-dos-blue dark:text-dos-gray hover:text-dos-orange dark:hover:text-dos-orange transition-colors text-lg sm:text-base"
+              className="flex items-center gap-2 text-dos-blue dark:text-dos-gray hover:opacity-80 transition-opacity"
               aria-label={`Seguir en ${social.name}`}
               title={social.name}
             >
+              <img
+                src={social.icon}
+                alt={social.name}
+                className="w-6 h-6 sm:w-5 sm:h-5"
+              />
               <span className="hidden sm:inline text-sm font-body">{social.name}</span>
-              <span className="sm:hidden">{social.emoji}</span>
             </a>
           ))}
           <button
@@ -88,11 +92,15 @@ export default function Navbar() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-dos-blue dark:text-dos-gray hover:text-dos-orange dark:hover:text-dos-orange transition-colors text-lg"
+                  className="text-dos-blue dark:text-dos-gray hover:opacity-80 transition-opacity"
                   aria-label={`Seguir en ${social.name}`}
                   title={social.name}
                 >
-                  {social.emoji}
+                  <img
+                    src={social.icon}
+                    alt={social.name}
+                    className="w-6 h-6"
+                  />
                 </a>
               ))}
             </div>
