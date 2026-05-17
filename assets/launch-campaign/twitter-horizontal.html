@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>DOS AROS — X Launch</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 1200px;
+      height: 675px;
+      overflow: hidden;
+      background: #FFFFFF;
+      font-family: 'Inter', sans-serif;
+      color: #011E3B;
+    }
+    .container {
+      width: 1200px;
+      height: 675px;
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      position: relative;
+    }
+
+    /* Left side — brand + headline */
+    .left {
+      padding: 60px 60px 60px 70px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .logo-mark {
+      width: 52px;
+      height: 52px;
+      object-fit: contain;
+    }
+    .lettering {
+      height: 64px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .headline {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 64px;
+      line-height: 1.02;
+      letter-spacing: -0.04em;
+      color: #011E3B;
+      margin-top: -20px;
+    }
+    .accent-line {
+      width: 130px;
+      height: 8px;
+      background: #FF7D28;
+      border-radius: 2px;
+      margin-top: 24px;
+    }
+
+    .bottom-left {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .meta-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #B1005A;
+    }
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 28px;
+      background: #FF7D28;
+      color: #011E3B;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 24px;
+      border-radius: 10px;
+      align-self: flex-start;
+      text-decoration: none;
+    }
+    .cta-arrow { font-size: 26px; }
+
+    /* Right side — catalog image */
+    .right {
+      position: relative;
+      overflow: hidden;
+      background: #F5F5F0;
+    }
+    .right img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+    .right-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 30%);
+    }
+    .right-label {
+      position: absolute;
+      bottom: 30px;
+      right: 30px;
+      background: rgba(1,30,59,0.92);
+      color: #FFFFFF;
+      padding: 10px 18px;
+      border-radius: 6px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 16px;
+      letter-spacing: 0.04em;
+    }
+
+    .meta-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 22px;
+      font-weight: 500;
+      color: #011E3B;
+      line-height: 1.4;
+    }
+    .meta-text strong { font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="left">
+      <div class="brand">
+        <img class="logo-mark" src="../../public/logo-dos-aros-official.png" alt="DOS AROS logo">
+        <img class="lettering" src="../../public/banners/letering-orange.png" alt="Dos Aros">
+      </div>
+
+      <div>
+        <div class="headline">
+          Datos primero.<br>
+          Contexto después.<br>
+          Opinión al final.
+        </div>
+        <div class="accent-line"></div>
+      </div>
+
+      <div class="bottom-left">
+        <div class="meta-label">Ya disponible</div>
+        <div class="meta-text">
+          Análisis <strong>NBA + EuroLeague</strong>, cada día<br>
+          Catálogo oficial DOS AROS
+        </div>
+        <a href="https://www.dosaros.com" class="cta">
+          <span>dosaros.com</span>
+          <span class="cta-arrow">→</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="right">
+      <img src="../../public/catalogo-dos-aros.png" alt="Catálogo DOS AROS">
+      <div class="right-overlay"></div>
+      <div class="right-label">CATÁLOGO OFICIAL</div>
+    </div>
+  </div>
+</body>
+</html>

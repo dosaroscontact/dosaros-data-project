@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>DOS AROS — IG Post Square</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 1080px;
+      height: 1080px;
+      overflow: hidden;
+      background: #FFFFFF;
+      font-family: 'Inter', sans-serif;
+      color: #011E3B;
+    }
+    .container {
+      width: 1080px;
+      height: 1080px;
+      padding: 70px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 50px;
+    }
+    .logo-mark {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+    }
+    .lettering {
+      height: 88px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .main {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 50px;
+      flex: 1;
+    }
+
+    .left {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .headline {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 74px;
+      line-height: 1.02;
+      letter-spacing: -0.04em;
+      color: #011E3B;
+    }
+    .accent-line {
+      width: 130px;
+      height: 10px;
+      background: #FF7D28;
+      border-radius: 2px;
+      margin-top: 28px;
+    }
+
+    .meta-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 18px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #B1005A;
+      margin-bottom: 12px;
+    }
+    .meta-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 24px;
+      font-weight: 500;
+      color: #011E3B;
+      line-height: 1.4;
+      margin-bottom: 24px;
+    }
+    .meta-text strong { font-weight: 600; }
+
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      padding: 22px 32px;
+      background: #FF7D28;
+      color: #011E3B;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 30px;
+      border-radius: 12px;
+      align-self: flex-start;
+      text-decoration: none;
+    }
+    .cta-arrow { font-size: 32px; }
+
+    .right {
+      border-radius: 24px;
+      overflow: hidden;
+      position: relative;
+      background: #F5F5F0;
+    }
+    .right img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+    .right-label {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      background: rgba(1,30,59,0.92);
+      color: #FFFFFF;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: 0.05em;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="brand">
+      <img class="logo-mark" src="../../public/logo-dos-aros-official.png" alt="DOS AROS logo">
+      <img class="lettering" src="../../public/banners/letering-orange.png" alt="Dos Aros">
+    </div>
+
+    <div class="main">
+      <div class="left">
+        <div>
+          <div class="headline">
+            Datos primero.<br>
+            Contexto después.<br>
+            Opinión al final.
+          </div>
+          <div class="accent-line"></div>
+        </div>
+
+        <div>
+          <div class="meta-label">Ya disponible</div>
+          <div class="meta-text">
+            Análisis <strong>NBA + EuroLeague</strong><br>
+            Catálogo oficial
+          </div>
+          <a href="https://www.dosaros.com" class="cta">
+            <span>dosaros.com</span>
+            <span class="cta-arrow">→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="right">
+        <img src="../../public/catalogo-dos-aros.png" alt="Catálogo DOS AROS">
+        <div class="right-label">CATÁLOGO</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

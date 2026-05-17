@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>DOS AROS — Story Launch</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      background: #FFFFFF;
+      font-family: 'Inter', sans-serif;
+      color: #011E3B;
+    }
+    .container {
+      width: 1080px;
+      height: 1920px;
+      padding: 90px 90px 70px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* Top: logo balón + lettering oficial */
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 80px;
+    }
+    .logo-mark {
+      width: 90px;
+      height: 90px;
+      object-fit: contain;
+    }
+    .lettering {
+      height: 110px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    /* Headline */
+    .headline {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 92px;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      color: #011E3B;
+      margin-bottom: 32px;
+    }
+    .accent-line {
+      width: 200px;
+      height: 12px;
+      background: #FF7D28;
+      border-radius: 2px;
+      margin-bottom: 60px;
+    }
+
+    /* Catalog/products preview — usa catalogo-banner real */
+    .products-strip {
+      margin: 0 -90px 60px;
+      height: 480px;
+      overflow: hidden;
+      position: relative;
+    }
+    .products-strip img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+    .products-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 60%, rgba(255,255,255,0.95) 100%);
+    }
+
+    /* Meta info */
+    .meta {
+      margin-bottom: 50px;
+    }
+    .meta-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 22px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #B1005A;
+      margin-bottom: 16px;
+    }
+    .meta-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 36px;
+      font-weight: 500;
+      color: #011E3B;
+      line-height: 1.4;
+    }
+    .meta-text strong { font-weight: 600; }
+
+    /* CTA */
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      padding: 32px 48px;
+      background: #FF7D28;
+      color: #011E3B;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 44px;
+      border-radius: 16px;
+      align-self: flex-start;
+      text-decoration: none;
+    }
+    .cta-arrow { font-size: 48px; }
+
+    .tagline {
+      position: absolute;
+      bottom: 32px;
+      left: 90px;
+      right: 90px;
+      font-family: 'Inter', sans-serif;
+      font-size: 22px;
+      color: #011E3B;
+      opacity: 0.45;
+      font-style: italic;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="brand">
+      <img class="logo-mark" src="../../public/logo-dos-aros-official.png" alt="DOS AROS logo">
+      <img class="lettering" src="../../public/banners/letering-orange.png" alt="Dos Aros">
+    </div>
+
+    <div class="headline">Datos primero.<br>Contexto después.<br>Opinión al final.</div>
+    <div class="accent-line"></div>
+
+    <div class="products-strip">
+      <img src="../../public/catalogo-dos-aros.png" alt="Catálogo DOS AROS">
+      <div class="products-overlay"></div>
+    </div>
+
+    <div class="meta">
+      <div class="meta-label">Ya disponible</div>
+      <div class="meta-text">
+        Análisis <strong>NBA + EuroLeague</strong> · Cada día<br>
+        Catálogo oficial: camisetas, sudaderas y más
+      </div>
+    </div>
+
+    <a href="https://www.dosaros.com" class="cta">
+      <span>dosaros.com</span>
+      <span class="cta-arrow">→</span>
+    </a>
+
+    <div class="tagline">basketball reimagined · @dos_aros · @dosaros_basket</div>
+  </div>
+</body>
+</html>
