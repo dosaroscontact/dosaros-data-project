@@ -115,9 +115,10 @@
 - [ ] Tests automatizados de ETL
 
 ### Mejoras Estratégicas
-- [ ] Migrar a Obsidian como fuente de verdad ✅ EN PROGRESO
-- [ ] Implementar sincronización automática Obsidian → CLAUDE.md
-- [ ] Sistema de Architecture Decision Records (ADRs)
+- [x] Migrar a Obsidian como fuente de verdad ✅ COMPLETADO (2026-05-17)
+- [x] Implementar sincronización automática Obsidian → CLAUDE.md ✅ COMPLETADO (2026-05-17)
+- [x] Sistema de Architecture Decision Records (ADRs) ✅ COMPLETADO (2026-05-17)
+- [ ] Probar flujo completo en producción
 
 ---
 
