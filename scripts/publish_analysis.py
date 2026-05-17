@@ -188,6 +188,11 @@ def generate_title(sections: list[dict], date: datetime) -> str:
     return title
 
 
+def yaml_escape(text: str) -> str:
+    """Escapa string para YAML double-quoted: escapa comillas y backslashes."""
+    return text.replace("\\", "\\\\").replace('"', '\\"')
+
+
 def build_frontmatter(date: datetime, content: str, slug: str) -> str:
     """Construye el bloque frontmatter YAML."""
     sections = extract_sections(content)
@@ -197,18 +202,18 @@ def build_frontmatter(date: datetime, content: str, slug: str) -> str:
 
     fm = ["---"]
     fm.append(f'date: "{date.strftime("%Y-%m-%d")}"')
-    fm.append(f'title: "{title}"')
+    fm.append(f'title: "{yaml_escape(title)}"')
     fm.append(f"slug: {slug}")
-    fm.append(f'summary: "{summary}"')
+    fm.append(f'summary: "{yaml_escape(summary)}"')
     fm.append(f"tags: [{', '.join(tags)}]")
     fm.append("sections:")
     for s in sections:
         fm.append(f"  - league: {s['league']}")
         if s["icon"]:
-            fm.append(f'    icon: "{s["icon"]}"')
-        fm.append(f'    title: "{s["title"]}"')
+            fm.append(f'    icon: "{yaml_escape(s["icon"])}"')
+        fm.append(f'    title: "{yaml_escape(s["title"])}"')
         if s["subtitle"]:
-            fm.append(f'    subtitle: "{s["subtitle"]}"')
+            fm.append(f'    subtitle: "{yaml_escape(s["subtitle"])}"')
     fm.append("published: true")
     fm.append("---")
     fm.append("")

@@ -2,7 +2,7 @@
 date: "2026-05-17"
 title: "SPURS vs THUNDER — Finales del Oeste"
 slug: 2026-05-17-spurs-vs-thunder
-summary: "La NBA llevaba años vendiéndonos "el futuro"."
+summary: "La NBA llevaba años vendiéndonos \"el futuro\"."
 tags: [EuroLeague, Europa, Finales, NBA, Playoffs, WNBA]
 sections:
   - league: NBA
