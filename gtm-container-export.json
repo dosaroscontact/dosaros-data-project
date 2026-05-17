@@ -1,0 +1,225 @@
+{
+  "exportFormatVersion": 2,
+  "exportTime": "2026-05-17T15:00:00.000Z",
+  "containerVersion": {
+    "path": "accounts/0/containers/0/versions/0",
+    "accountId": "0",
+    "containerId": "0",
+    "containerVersionId": "0",
+    "name": "DOS AROS - Full Tracking",
+    "description": "Container con todas las variables, triggers y tags GA4 para DOS AROS. Configurar el ID GA4 en la variable 'GA4 Measurement ID'.",
+    "container": {
+      "path": "accounts/0/containers/0",
+      "accountId": "0",
+      "containerId": "0",
+      "name": "DOS AROS",
+      "publicId": "GTM-MWDXWXZN",
+      "usageContext": ["WEB"],
+      "fingerprint": "0",
+      "tagManagerUrl": "https://tagmanager.google.com",
+      "features": {
+        "supportUserPermissions": true,
+        "supportEnvironments": true,
+        "supportWorkspaces": true,
+        "supportGtagConfigs": true,
+        "supportBuiltInVariables": true,
+        "supportClients": true,
+        "supportFolders": true,
+        "supportTags": true,
+        "supportTemplates": true,
+        "supportTriggers": true,
+        "supportVariables": true,
+        "supportVersions": true,
+        "supportZones": true,
+        "supportTransformations": true
+      }
+    },
+    "variable": [
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "variableId": "1",
+        "name": "GA4 Measurement ID",
+        "type": "c",
+        "parameter": [
+          {"type": "TEMPLATE", "key": "value", "value": "G-XXXXXXXXXX"}
+        ],
+        "notes": "REEMPLAZAR con tu Measurement ID real de GA4 (formato G-XXXXXXXXXX)"
+      },
+      {"accountId":"0","containerId":"0","variableId":"2","name":"DLV - link_text","type":"v","parameter":[{"type":"INTEGER","key":"dataLayerVersion","value":"2"},{"type":"BOOLEAN","key":"setDefaultValue","value":"false"},{"type":"TEMPLATE","key":"name","value":"link_text"}]},
+      {"accountId":"0","containerId":"0","variableId":"3","name":"DLV - link_url","type":"v","parameter":[{"type":"INTEGER","key":"dataLayerVersion","value":"2"},{"type":"BOOLEAN","key":"setDefaultValue","value":"false"},{"type":"TEMPLATE","key":"name","value":"link_url"}]},
+      {"accountId":"0","containerId":"0","variableId":"4","name":"DLV - nav_location","type":"v","parameter":[{"type":"INTEGER","key":"dataLayerVersion","value":"2"},{"type":"BOOLEAN","key":"setDefaultValue","value":"false"},{"type":"TEMPLATE","key":"name","value":"nav_location"}]},
+      {"accountId":"0","containerId":"0","variableId":"5","name":"DLV - cta_text","type":"v","parameter":[{"type":"INTEGER","key":"dataLayerVersion","value":"2"},{"type":"BOOLEAN","key":"setDefaultValue","value":"false"},{"type":"TEMPLATE","key":"name","value":"cta_text"}]},
+      {"accountId":"0","containerId":"0","variableId":"6","name":"DLV - cta_location","type":"v","parameter":[{"type":"INTEGER","key":"dataLayerVersion","value":"2"},{"type":"BOOLEAN","key":"setDefaultValue","value":"false"},{"type":"TEMPLATE","key":"name","value":"cta_location"}]},
+      {"accountId":"0","containerId":"0","variableId":"7","name":"DLV - destination","type":"v","parameter":[{"type":"INTEGER","key":"dataLayerVersion","value":"2"},{"type":"BOOLEAN","key":"setDefaultValue","value":"false"},{"type":"TEMPLATE","key":"name","value":"destination"}]},
+      {"accountId":"0","containerId":"0","variableId":"8","name":"DLV - product_name","type":"v","parameter":[{"type":"INTEGER","key":"dataLayerVersion","value":"2"},{"type":"BOOLEAN","key":"setDefaultValue","value":"false"},{"type":"TEMPLATE","key":"name","value":"product_name"}]},
+      {"accountId":"0","containerId":"0","variableId":"9","name":"DLV - product_category","type":"v","parameter":[{"type":"INTEGER","key":"dataLayerVersion","value":"2"},{"type":"BOOLEAN","key":"setDefaultValue","value":"false"},{"type":"TEMPLATE","key":"name","value":"product_category"}]},
+      {"accountId":"0","containerId":"0","variableId":"10","name":"DLV - category_id","type":"v","parameter":[{"type":"INTEGER","key":"dataLayerVersion","value":"2"},{"type":"BOOLEAN","key":"setDefaultValue","value":"false"},{"type":"TEMPLATE","key":"name","value":"category_id"}]},
+      {"accountId":"0","containerId":"0","variableId":"11","name":"DLV - category_name","type":"v","parameter":[{"type":"INTEGER","key":"dataLayerVersion","value":"2"},{"type":"BOOLEAN","key":"setDefaultValue","value":"false"},{"type":"TEMPLATE","key":"name","value":"category_name"}]},
+      {"accountId":"0","containerId":"0","variableId":"12","name":"DLV - analysis_slug","type":"v","parameter":[{"type":"INTEGER","key":"dataLayerVersion","value":"2"},{"type":"BOOLEAN","key":"setDefaultValue","value":"false"},{"type":"TEMPLATE","key":"name","value":"analysis_slug"}]},
+      {"accountId":"0","containerId":"0","variableId":"13","name":"DLV - analysis_title","type":"v","parameter":[{"type":"INTEGER","key":"dataLayerVersion","value":"2"},{"type":"BOOLEAN","key":"setDefaultValue","value":"false"},{"type":"TEMPLATE","key":"name","value":"analysis_title"}]},
+      {"accountId":"0","containerId":"0","variableId":"14","name":"DLV - analysis_date","type":"v","parameter":[{"type":"INTEGER","key":"dataLayerVersion","value":"2"},{"type":"BOOLEAN","key":"setDefaultValue","value":"false"},{"type":"TEMPLATE","key":"name","value":"analysis_date"}]},
+      {"accountId":"0","containerId":"0","variableId":"15","name":"DLV - tag_name","type":"v","parameter":[{"type":"INTEGER","key":"dataLayerVersion","value":"2"},{"type":"BOOLEAN","key":"setDefaultValue","value":"false"},{"type":"TEMPLATE","key":"name","value":"tag_name"}]},
+      {"accountId":"0","containerId":"0","variableId":"16","name":"DLV - status","type":"v","parameter":[{"type":"INTEGER","key":"dataLayerVersion","value":"2"},{"type":"BOOLEAN","key":"setDefaultValue","value":"false"},{"type":"TEMPLATE","key":"name","value":"status"}]},
+      {"accountId":"0","containerId":"0","variableId":"17","name":"DLV - source_product","type":"v","parameter":[{"type":"INTEGER","key":"dataLayerVersion","value":"2"},{"type":"BOOLEAN","key":"setDefaultValue","value":"false"},{"type":"TEMPLATE","key":"name","value":"source_product"}]},
+      {"accountId":"0","containerId":"0","variableId":"18","name":"DLV - platform","type":"v","parameter":[{"type":"INTEGER","key":"dataLayerVersion","value":"2"},{"type":"BOOLEAN","key":"setDefaultValue","value":"false"},{"type":"TEMPLATE","key":"name","value":"platform"}]},
+      {"accountId":"0","containerId":"0","variableId":"19","name":"DLV - handle","type":"v","parameter":[{"type":"INTEGER","key":"dataLayerVersion","value":"2"},{"type":"BOOLEAN","key":"setDefaultValue","value":"false"},{"type":"TEMPLATE","key":"name","value":"handle"}]},
+      {"accountId":"0","containerId":"0","variableId":"20","name":"DLV - location","type":"v","parameter":[{"type":"INTEGER","key":"dataLayerVersion","value":"2"},{"type":"BOOLEAN","key":"setDefaultValue","value":"false"},{"type":"TEMPLATE","key":"name","value":"location"}]},
+      {"accountId":"0","containerId":"0","variableId":"21","name":"DLV - page_path","type":"v","parameter":[{"type":"INTEGER","key":"dataLayerVersion","value":"2"},{"type":"BOOLEAN","key":"setDefaultValue","value":"false"},{"type":"TEMPLATE","key":"name","value":"page_path"}]},
+      {"accountId":"0","containerId":"0","variableId":"22","name":"DLV - page_title","type":"v","parameter":[{"type":"INTEGER","key":"dataLayerVersion","value":"2"},{"type":"BOOLEAN","key":"setDefaultValue","value":"false"},{"type":"TEMPLATE","key":"name","value":"page_title"}]}
+    ],
+    "trigger": [
+      {"accountId":"0","containerId":"0","triggerId":"1","name":"CE - page_view (SPA)","type":"CUSTOM_EVENT","customEventFilter":[{"type":"EQUALS","parameter":[{"type":"TEMPLATE","key":"arg0","value":"{{_event}}"},{"type":"TEMPLATE","key":"arg1","value":"page_view"}]}]},
+      {"accountId":"0","containerId":"0","triggerId":"2","name":"CE - nav_clicked","type":"CUSTOM_EVENT","customEventFilter":[{"type":"EQUALS","parameter":[{"type":"TEMPLATE","key":"arg0","value":"{{_event}}"},{"type":"TEMPLATE","key":"arg1","value":"nav_clicked"}]}]},
+      {"accountId":"0","containerId":"0","triggerId":"3","name":"CE - cta_clicked","type":"CUSTOM_EVENT","customEventFilter":[{"type":"EQUALS","parameter":[{"type":"TEMPLATE","key":"arg0","value":"{{_event}}"},{"type":"TEMPLATE","key":"arg1","value":"cta_clicked"}]}]},
+      {"accountId":"0","containerId":"0","triggerId":"4","name":"CE - product_interest","type":"CUSTOM_EVENT","customEventFilter":[{"type":"EQUALS","parameter":[{"type":"TEMPLATE","key":"arg0","value":"{{_event}}"},{"type":"TEMPLATE","key":"arg1","value":"product_interest"}]}]},
+      {"accountId":"0","containerId":"0","triggerId":"5","name":"CE - category_changed","type":"CUSTOM_EVENT","customEventFilter":[{"type":"EQUALS","parameter":[{"type":"TEMPLATE","key":"arg0","value":"{{_event}}"},{"type":"TEMPLATE","key":"arg1","value":"category_changed"}]}]},
+      {"accountId":"0","containerId":"0","triggerId":"6","name":"CE - analysis_clicked","type":"CUSTOM_EVENT","customEventFilter":[{"type":"EQUALS","parameter":[{"type":"TEMPLATE","key":"arg0","value":"{{_event}}"},{"type":"TEMPLATE","key":"arg1","value":"analysis_clicked"}]}]},
+      {"accountId":"0","containerId":"0","triggerId":"7","name":"CE - tag_filter_clicked","type":"CUSTOM_EVENT","customEventFilter":[{"type":"EQUALS","parameter":[{"type":"TEMPLATE","key":"arg0","value":"{{_event}}"},{"type":"TEMPLATE","key":"arg1","value":"tag_filter_clicked"}]}]},
+      {"accountId":"0","containerId":"0","triggerId":"8","name":"CE - form_submitted","type":"CUSTOM_EVENT","customEventFilter":[{"type":"EQUALS","parameter":[{"type":"TEMPLATE","key":"arg0","value":"{{_event}}"},{"type":"TEMPLATE","key":"arg1","value":"form_submitted"}]}]},
+      {"accountId":"0","containerId":"0","triggerId":"9","name":"CE - social_clicked","type":"CUSTOM_EVENT","customEventFilter":[{"type":"EQUALS","parameter":[{"type":"TEMPLATE","key":"arg0","value":"{{_event}}"},{"type":"TEMPLATE","key":"arg1","value":"social_clicked"}]}]}
+    ],
+    "tag": [
+      {
+        "accountId":"0","containerId":"0","tagId":"1","name":"GA4 - Configuration",
+        "type":"googtag",
+        "parameter":[
+          {"type":"TEMPLATE","key":"tagId","value":"{{GA4 Measurement ID}}"}
+        ],
+        "firingTriggerId":["2147479553"],
+        "tagFiringOption":"ONCE_PER_EVENT",
+        "notes":"Configuración base de GA4. Trigger: All Pages (Initialization)."
+      },
+      {
+        "accountId":"0","containerId":"0","tagId":"2","name":"GA4 - page_view (SPA)",
+        "type":"gaawe",
+        "parameter":[
+          {"type":"TEMPLATE","key":"eventName","value":"page_view"},
+          {"type":"TEMPLATE","key":"measurementIdOverride","value":"{{GA4 Measurement ID}}"},
+          {"type":"LIST","key":"eventParameters","list":[
+            {"type":"MAP","map":[{"type":"TEMPLATE","key":"name","value":"page_path"},{"type":"TEMPLATE","key":"value","value":"{{DLV - page_path}}"}]},
+            {"type":"MAP","map":[{"type":"TEMPLATE","key":"name","value":"page_title"},{"type":"TEMPLATE","key":"value","value":"{{DLV - page_title}}"}]}
+          ]}
+        ],
+        "firingTriggerId":["1"]
+      },
+      {
+        "accountId":"0","containerId":"0","tagId":"3","name":"GA4 - nav_clicked",
+        "type":"gaawe",
+        "parameter":[
+          {"type":"TEMPLATE","key":"eventName","value":"nav_clicked"},
+          {"type":"TEMPLATE","key":"measurementIdOverride","value":"{{GA4 Measurement ID}}"},
+          {"type":"LIST","key":"eventParameters","list":[
+            {"type":"MAP","map":[{"type":"TEMPLATE","key":"name","value":"link_text"},{"type":"TEMPLATE","key":"value","value":"{{DLV - link_text}}"}]},
+            {"type":"MAP","map":[{"type":"TEMPLATE","key":"name","value":"link_url"},{"type":"TEMPLATE","key":"value","value":"{{DLV - link_url}}"}]},
+            {"type":"MAP","map":[{"type":"TEMPLATE","key":"name","value":"nav_location"},{"type":"TEMPLATE","key":"value","value":"{{DLV - nav_location}}"}]}
+          ]}
+        ],
+        "firingTriggerId":["2"]
+      },
+      {
+        "accountId":"0","containerId":"0","tagId":"4","name":"GA4 - cta_clicked",
+        "type":"gaawe",
+        "parameter":[
+          {"type":"TEMPLATE","key":"eventName","value":"cta_clicked"},
+          {"type":"TEMPLATE","key":"measurementIdOverride","value":"{{GA4 Measurement ID}}"},
+          {"type":"LIST","key":"eventParameters","list":[
+            {"type":"MAP","map":[{"type":"TEMPLATE","key":"name","value":"cta_text"},{"type":"TEMPLATE","key":"value","value":"{{DLV - cta_text}}"}]},
+            {"type":"MAP","map":[{"type":"TEMPLATE","key":"name","value":"cta_location"},{"type":"TEMPLATE","key":"value","value":"{{DLV - cta_location}}"}]},
+            {"type":"MAP","map":[{"type":"TEMPLATE","key":"name","value":"destination"},{"type":"TEMPLATE","key":"value","value":"{{DLV - destination}}"}]}
+          ]}
+        ],
+        "firingTriggerId":["3"]
+      },
+      {
+        "accountId":"0","containerId":"0","tagId":"5","name":"GA4 - product_interest",
+        "type":"gaawe",
+        "parameter":[
+          {"type":"TEMPLATE","key":"eventName","value":"product_interest"},
+          {"type":"TEMPLATE","key":"measurementIdOverride","value":"{{GA4 Measurement ID}}"},
+          {"type":"LIST","key":"eventParameters","list":[
+            {"type":"MAP","map":[{"type":"TEMPLATE","key":"name","value":"product_name"},{"type":"TEMPLATE","key":"value","value":"{{DLV - product_name}}"}]},
+            {"type":"MAP","map":[{"type":"TEMPLATE","key":"name","value":"product_category"},{"type":"TEMPLATE","key":"value","value":"{{DLV - product_category}}"}]}
+          ]}
+        ],
+        "firingTriggerId":["4"]
+      },
+      {
+        "accountId":"0","containerId":"0","tagId":"6","name":"GA4 - category_changed",
+        "type":"gaawe",
+        "parameter":[
+          {"type":"TEMPLATE","key":"eventName","value":"category_changed"},
+          {"type":"TEMPLATE","key":"measurementIdOverride","value":"{{GA4 Measurement ID}}"},
+          {"type":"LIST","key":"eventParameters","list":[
+            {"type":"MAP","map":[{"type":"TEMPLATE","key":"name","value":"category_id"},{"type":"TEMPLATE","key":"value","value":"{{DLV - category_id}}"}]},
+            {"type":"MAP","map":[{"type":"TEMPLATE","key":"name","value":"category_name"},{"type":"TEMPLATE","key":"value","value":"{{DLV - category_name}}"}]}
+          ]}
+        ],
+        "firingTriggerId":["5"]
+      },
+      {
+        "accountId":"0","containerId":"0","tagId":"7","name":"GA4 - analysis_clicked",
+        "type":"gaawe",
+        "parameter":[
+          {"type":"TEMPLATE","key":"eventName","value":"analysis_clicked"},
+          {"type":"TEMPLATE","key":"measurementIdOverride","value":"{{GA4 Measurement ID}}"},
+          {"type":"LIST","key":"eventParameters","list":[
+            {"type":"MAP","map":[{"type":"TEMPLATE","key":"name","value":"analysis_slug"},{"type":"TEMPLATE","key":"value","value":"{{DLV - analysis_slug}}"}]},
+            {"type":"MAP","map":[{"type":"TEMPLATE","key":"name","value":"analysis_title"},{"type":"TEMPLATE","key":"value","value":"{{DLV - analysis_title}}"}]},
+            {"type":"MAP","map":[{"type":"TEMPLATE","key":"name","value":"analysis_date"},{"type":"TEMPLATE","key":"value","value":"{{DLV - analysis_date}}"}]}
+          ]}
+        ],
+        "firingTriggerId":["6"]
+      },
+      {
+        "accountId":"0","containerId":"0","tagId":"8","name":"GA4 - tag_filter_clicked",
+        "type":"gaawe",
+        "parameter":[
+          {"type":"TEMPLATE","key":"eventName","value":"tag_filter_clicked"},
+          {"type":"TEMPLATE","key":"measurementIdOverride","value":"{{GA4 Measurement ID}}"},
+          {"type":"LIST","key":"eventParameters","list":[
+            {"type":"MAP","map":[{"type":"TEMPLATE","key":"name","value":"tag_name"},{"type":"TEMPLATE","key":"value","value":"{{DLV - tag_name}}"}]}
+          ]}
+        ],
+        "firingTriggerId":["7"]
+      },
+      {
+        "accountId":"0","containerId":"0","tagId":"9","name":"GA4 - form_submitted",
+        "type":"gaawe",
+        "parameter":[
+          {"type":"TEMPLATE","key":"eventName","value":"form_submitted"},
+          {"type":"TEMPLATE","key":"measurementIdOverride","value":"{{GA4 Measurement ID}}"},
+          {"type":"LIST","key":"eventParameters","list":[
+            {"type":"MAP","map":[{"type":"TEMPLATE","key":"name","value":"form_name"},{"type":"TEMPLATE","key":"value","value":"contact"}]},
+            {"type":"MAP","map":[{"type":"TEMPLATE","key":"name","value":"status"},{"type":"TEMPLATE","key":"value","value":"{{DLV - status}}"}]},
+            {"type":"MAP","map":[{"type":"TEMPLATE","key":"name","value":"source_product"},{"type":"TEMPLATE","key":"value","value":"{{DLV - source_product}}"}]}
+          ]}
+        ],
+        "firingTriggerId":["8"]
+      },
+      {
+        "accountId":"0","containerId":"0","tagId":"10","name":"GA4 - social_clicked",
+        "type":"gaawe",
+        "parameter":[
+          {"type":"TEMPLATE","key":"eventName","value":"social_clicked"},
+          {"type":"TEMPLATE","key":"measurementIdOverride","value":"{{GA4 Measurement ID}}"},
+          {"type":"LIST","key":"eventParameters","list":[
+            {"type":"MAP","map":[{"type":"TEMPLATE","key":"name","value":"platform"},{"type":"TEMPLATE","key":"value","value":"{{DLV - platform}}"}]},
+            {"type":"MAP","map":[{"type":"TEMPLATE","key":"name","value":"handle"},{"type":"TEMPLATE","key":"value","value":"{{DLV - handle}}"}]},
+            {"type":"MAP","map":[{"type":"TEMPLATE","key":"name","value":"location"},{"type":"TEMPLATE","key":"value","value":"{{DLV - location}}"}]}
+          ]}
+        ],
+        "firingTriggerId":["9"]
+      }
+    ],
+    "builtInVariable": [
+      {"accountId":"0","containerId":"0","type":"PAGE_URL","name":"Page URL"},
+      {"accountId":"0","containerId":"0","type":"PAGE_HOSTNAME","name":"Page Hostname"},
+      {"accountId":"0","containerId":"0","type":"PAGE_PATH","name":"Page Path"},
+      {"accountId":"0","containerId":"0","type":"REFERRER","name":"Referrer"},
+      {"accountId":"0","containerId":"0","type":"EVENT","name":"Event"}
+    ],
+    "fingerprint": "0",
+    "tagManagerUrl": "https://tagmanager.google.com"
+  }
+}
