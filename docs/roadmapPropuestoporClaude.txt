@@ -1,0 +1,70 @@
+ Diagnóstico rápido
+
+  El problema del contenido genérico está identificado: el código de gemini_social.py sí intenta leer datos reales de la BD, pero cuando las queries devuelven vacío (ETL falla o tabla vacía), la IA inventa
+  contenido. Hay que validar el ETL primero — todo lo demás depende de eso.
+
+  ---
+  Plan de proyecto DOS — 5 Fases
+
+  FASE 0 — Diagnóstico y organización (urgente, ~1 semana)
+
+  ▎ Sin esto no podemos construir nada encima
+
+  1. Validar ETL diario: ¿nba_daily_results y euro_games tienen datos de ayer?
+  2. Confirmar por qué el hilo X es genérico (datos vacíos → IA inventa)
+  3. Inventario de avatars + prompts dispersos → carpeta organizada
+  4. Exportar ideas clave de REEL para informar decisiones de herramientas
+
+  FASE 1 — Fix pipeline de contenido diario (2 semanas)
+
+  ▎ Prioridad máxima: 25/20 seguidores significa que cada post cuenta
+
+  1. Arreglar ETL para que los datos del día lleguen correctamente
+  2. Hilo X con estadísticas reales de los partidos de ayer
+  3. Story con datos reales (mejor actuación del día con imagen)
+  4. Primer contenido publicado en TikTok
+
+  FASE 2 — Automatización y monitorización RRSS (2-3 semanas)
+
+  1. Monitor de cuentas de referencia (cuando publican algo importante → alerta Telegram)
+  2. Semi-autopublicación en X (apruebas desde Telegram, se publica solo)
+  3. Calendario de contenido: no solo resultados, también datos históricos, comparativas
+
+  FASE 3 — Portal web dosaros.com (3-4 semanas)
+
+  1. Cloudflare Tunnel expone la Pi → dominio propio sin coste de servidor
+  2. Resultados en directo + calendarios NBA/EuroLeague
+  3. Contenido RRSS publicado automáticamente en web
+  4. Zona de afiliados integrada desde el inicio (NBA Store, Amazon)
+
+  FASE 4 — Voz y Podcast (mes 2-3)
+
+  1. Grabar 10-15 min de tu voz (sesión única)
+  2. ElevenLabs voz clonada (free tier: 10k chars/mes)
+  3. Pipeline podcast: fuentes YouTube/Spotify → resumen → guión estilo DOS → voz generada
+  4. Publicación automática en plataformas de podcast
+
+  FASE 5 — Monetización (mes 3+)
+
+  1. Afiliados: NBA Store, Bet365/Betway (deportes), Amazon libros basket
+  2. Merch sin stock: Printful/Printify con tus diseños (0 inversión inicial)
+  3. Zona premium en web (newsletters, análisis en profundidad)
+
+  ---
+  Herramientas propuestas (coste ~0)
+
+  ┌────────────────────┬──────────────────────────────────┬────────────────────────┐
+  │     Necesidad      │           Herramienta            │         Coste          │
+  ├────────────────────┼──────────────────────────────────┼────────────────────────┤
+  │ Web hosting        │ Cloudflare Tunnel + Pages        │ Gratis                 │
+  ├────────────────────┼──────────────────────────────────┼────────────────────────┤
+  │ Voz clonada        │ ElevenLabs                       │ Gratis (10k chars/mes) │
+  ├────────────────────┼──────────────────────────────────┼────────────────────────┤
+  │ Podcast generation │ NotebookLM (Google Pro) + Python │ Incluido en tu Pro     │
+  ├────────────────────┼──────────────────────────────────┼────────────────────────┤
+  │ Merch              │ Printful vía su tienda directa   │ 0 upfront              │
+  ├────────────────────┼──────────────────────────────────┼────────────────────────┤
+  │ RRSS scheduling    │ Buffer free o API directa        │ Gratis                 │
+  ├────────────────────┼──────────────────────────────────┼────────────────────────┤
+  │ Monitorización X   │ Nitter scraping                  │ Gratis                 │
+  └────────────────────┴──────────────────────────────────┴────────────────────────┘

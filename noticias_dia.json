@@ -1,0 +1,201 @@
+{
+  "fecha": "2026-04-10",
+  "resultados": {
+    "nba": [
+      {
+        "equipo": "UTA",
+        "puntos": 147,
+        "resultado": "W"
+      },
+      {
+        "equipo": "BOS",
+        "puntos": 144,
+        "resultado": "W"
+      },
+      {
+        "equipo": "MIA",
+        "puntos": 140,
+        "resultado": "W"
+      },
+      {
+        "equipo": "SAS",
+        "puntos": 139,
+        "resultado": "W"
+      },
+      {
+        "equipo": "MIN",
+        "puntos": 136,
+        "resultado": "W"
+      },
+      {
+        "equipo": "HOU",
+        "puntos": 132,
+        "resultado": "L"
+      },
+      {
+        "equipo": "ORL",
+        "puntos": 127,
+        "resultado": "W"
+      },
+      {
+        "equipo": "DEN",
+        "puntos": 127,
+        "resultado": "W"
+      },
+      {
+        "equipo": "MIL",
+        "puntos": 125,
+        "resultado": "W"
+      },
+      {
+        "equipo": "ATL",
+        "puntos": 124,
+        "resultado": "W"
+      },
+      {
+        "equipo": "SAC",
+        "puntos": 124,
+        "resultado": "W"
+      },
+      {
+        "equipo": "DAL",
+        "puntos": 120,
+        "resultado": "L"
+      },
+      {
+        "equipo": "DET",
+        "puntos": 118,
+        "resultado": "W"
+      },
+      {
+        "equipo": "NOP",
+        "puntos": 118,
+        "resultado": "L"
+      },
+      {
+        "equipo": "GSW",
+        "puntos": 118,
+        "resultado": "L"
+      },
+      {
+        "equipo": "WAS",
+        "puntos": 117,
+        "resultado": "L"
+      },
+      {
+        "equipo": "POR",
+        "puntos": 116,
+        "resultado": "W"
+      },
+      {
+        "equipo": "NYK",
+        "puntos": 112,
+        "resultado": "W"
+      },
+      {
+        "equipo": "BKN",
+        "puntos": 108,
+        "resultado": "L"
+      },
+      {
+        "equipo": "OKC",
+        "puntos": 107,
+        "resultado": "L"
+      },
+      {
+        "equipo": "PHI",
+        "puntos": 105,
+        "resultado": "W"
+      },
+      {
+        "equipo": "CHI",
+        "puntos": 103,
+        "resultado": "L"
+      },
+      {
+        "equipo": "CLE",
+        "puntos": 102,
+        "resultado": "L"
+      },
+      {
+        "equipo": "MEM",
+        "puntos": 101,
+        "resultado": "L"
+      },
+      {
+        "equipo": "LAL",
+        "puntos": 101,
+        "resultado": "W"
+      },
+      {
+        "equipo": "CHA",
+        "puntos": 100,
+        "resultado": "L"
+      },
+      {
+        "equipo": "LAC",
+        "puntos": 97,
+        "resultado": "L"
+      },
+      {
+        "equipo": "TOR",
+        "puntos": 95,
+        "resultado": "L"
+      },
+      {
+        "equipo": "IND",
+        "puntos": 94,
+        "resultado": "L"
+      },
+      {
+        "equipo": "PHX",
+        "puntos": 73,
+        "resultado": "L"
+      }
+    ],
+    "euroliga": [
+      {
+        "home": "19:30",
+        "away": "AS MONACO",
+        "score_home": "FC BARCELONA",
+        "score_away": 93
+      },
+      {
+        "home": "20:00",
+        "away": "DUBAI BASKETBALL",
+        "score_home": "ANADOLU EFES ISTANBUL",
+        "score_away": 69
+      },
+      {
+        "home": "20:45",
+        "away": "LDLC ASVEL VILLEURBANNE",
+        "score_home": "CRVENA ZVEZDA MERIDIANBET BELGRADE",
+        "score_away": 93
+      },
+      {
+        "home": "20:30",
+        "away": "PARTIZAN MOZZART BET BELGRADE",
+        "score_home": "ZALGIRIS KAUNAS",
+        "score_away": 74
+      },
+      {
+        "home": "20:30",
+        "away": "VIRTUS BOLOGNA",
+        "score_home": "KOSNER BASKONIA VITORIA-GASTEIZ",
+        "score_away": 72
+      }
+    ]
+  },
+  "proximos": {
+    "nba": [],
+    "euroliga": [
+      {
+        "date": "2026-04-12",
+        "home_team": "TEL",
+        "away_team": "HTA"
+      }
+    ]
+  },
+  "tweets": [],
+  "timestamp": "2026-04-11T21:01:03.969067"
+}

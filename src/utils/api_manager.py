@@ -25,6 +25,15 @@ import logging
 from typing import Optional, List, Dict, Any
 from dotenv import load_dotenv
 
+# Importar cargador de credenciales
+try:
+    from src.utils.credentials_loader import setup_env_from_credentials
+    # EJECUTAR INMEDIATAMENTE para cargar tokens
+    setup_env_from_credentials()
+except ImportError:
+    def setup_env_from_credentials():
+        pass
+
 # Importar clientes de APIs
 try:
     from google import genai  # Nueva librería google-genai
@@ -52,6 +61,21 @@ except ImportError:
 # ============================================================================
 
 load_dotenv()
+
+# Cargar credenciales desde src/credentials/*.env (prioridad alta)
+setup_env_from_credentials()
+
+# Cargar también /etc/environment (para variables de sistema en Pi)
+if os.path.exists('/etc/environment'):
+    with open('/etc/environment') as f:
+        for line in f:
+            line = line.strip()
+            if line and '=' in line and not line.startswith('#'):
+                key, val = line.split('=', 1)
+                key = key.strip()
+                val = val.strip().strip('"').strip("'")
+                if key not in os.environ:  # No sobrescribir si ya existe
+                    os.environ[key] = val
 logger = logging.getLogger(__name__)
 logging.basicConfig(
     level=os.getenv("LOG_LEVEL", "INFO"),
@@ -118,6 +142,9 @@ class APIManager:
             
             'claude_api_key': os.getenv('CLAUDE_API_KEY'),
             'claude_model': os.getenv('CLAUDE_MODEL', 'claude-3-5-sonnet-latest'),
+
+            'claude_api_key_rove': os.getenv('CLAUDE_API_KEY_ROVE'),
+            'claude_model_rove': os.getenv('CLAUDE_MODEL_ROVE', 'claude-3-5-sonnet-latest'),
             
             'groq_api_key': os.getenv('GROQ_API_KEY'),
             'groq_model': os.getenv('GROQ_MODEL', 'llama-3.1-70b-versatile'),
@@ -130,6 +157,9 @@ class APIManager:
             
             'grok_api_key': os.getenv('GROK_API_KEY'),
             'grok_model': os.getenv('GROK_MODEL', 'grok-beta'),
+
+            'manus_api_key': os.getenv('MANUS_API_KEY'),
+            'manus_model': os.getenv('MANUS_MODEL', 'default'),
 
             'venice_api_key': os.getenv('VENICE_API_KEY'),
             'venice_model': os.getenv('VENICE_MODEL', 'venice-uncensored'),
@@ -184,6 +214,17 @@ class APIManager:
                     logger.info("✅ Claude cliente inicializado")
             except Exception as e:
                 logger.warning(f"⚠️ Error inicializando Claude: {e}")
+
+        # Anthropic Claude - Cuenta ROVE (segunda cuenta)
+        if self.config.get('claude_api_key_rove'):
+            try:
+                if anthropic:
+                    self.clients['claude_rove'] = anthropic.Anthropic(
+                        api_key=self.config['claude_api_key_rove']
+                    )
+                    logger.info("✅ Claude ROVE cliente inicializado")
+            except Exception as e:
+                logger.warning(f"⚠️ Error inicializando Claude ROVE: {e}")
         
         # OpenAI
         if self.config.get('openai_api_key'):
@@ -245,6 +286,30 @@ class APIManager:
             except Exception as e:
                 logger.warning(f"⚠️ Error inicializando Kimi: {e}")
 
+        # X.AI (Grok)
+        if self.config.get('grok_api_key'):
+            try:
+                if openai:
+                    self.clients['grok'] = openai.OpenAI(
+                        api_key=self.config['grok_api_key'],
+                        base_url='https://api.x.ai/v1'
+                    )
+                    logger.info("✅ Grok cliente inicializado")
+            except Exception as e:
+                logger.warning(f"⚠️ Error inicializando Grok: {e}")
+
+        # Manus AI
+        if self.config.get('manus_api_key'):
+            try:
+                if openai:
+                    self.clients['manus'] = openai.OpenAI(
+                        api_key=self.config['manus_api_key'],
+                        base_url='https://api.manus.ai/v1'
+                    )
+                    logger.info("✅ Manus cliente inicializado")
+            except Exception as e:
+                logger.warning(f"⚠️ Error inicializando Manus: {e}")
+
 
     # ========================================================================
     # MÉTODOS: LLMs - ANÁLISIS Y GENERACIÓN DE TEXTO
@@ -283,18 +348,18 @@ class APIManager:
     def claude(self, prompt: str, system_prompt: str = None, max_tokens: int = 2048) -> str:
         """
         Usa Anthropic Claude para generar respuesta.
-        
+
         Args:
             prompt: Pregunta o instrucción
             system_prompt: Contexto adicional (opcional)
             max_tokens: Número máximo de tokens en respuesta
-            
+
         Returns:
             Respuesta de Claude como string
         """
         if 'claude' not in self.clients:
             raise ValueError("Claude no está configurado. Verifica CLAUDE_API_KEY en .env")
-        
+
         try:
             response = self.clients['claude'].messages.create(
                 model=self.config['claude_model'],
@@ -309,6 +374,38 @@ class APIManager:
             return result
         except Exception as e:
             logger.error(f"❌ Error en Claude: {e}")
+            raise
+
+    def claude_rove(self, prompt: str, system_prompt: str = None, max_tokens: int = 2048) -> str:
+        """
+        Usa Anthropic Claude (Cuenta ROVE) para generar respuesta.
+        Segunda cuenta de Claude para rotación o distribución de carga.
+
+        Args:
+            prompt: Pregunta o instrucción
+            system_prompt: Contexto adicional (opcional)
+            max_tokens: Número máximo de tokens en respuesta
+
+        Returns:
+            Respuesta de Claude ROVE como string
+        """
+        if 'claude_rove' not in self.clients:
+            raise ValueError("Claude ROVE no está configurado. Verifica CLAUDE_API_KEY_ROVE en .env")
+
+        try:
+            response = self.clients['claude_rove'].messages.create(
+                model=self.config['claude_model_rove'],
+                max_tokens=max_tokens,
+                system=system_prompt or "Eres un asistente experto en análisis de datos deportivos.",
+                messages=[
+                    {"role": "user", "content": prompt}
+                ]
+            )
+            result = response.content[0].text
+            logger.debug(f"✅ Claude ROVE: {len(result)} caracteres generados")
+            return result
+        except Exception as e:
+            logger.error(f"❌ Error en Claude ROVE: {e}")
             raise
     
     
@@ -478,33 +575,93 @@ class APIManager:
             logger.error(f"❌ Error en Kimi: {e}")
             raise
 
+    def grok(self, prompt: str, system_prompt: str = None) -> str:
+        """Usa X.AI Grok para generar respuesta (API compatible con OpenAI)."""
+        if 'grok' not in self.clients:
+            raise ValueError("Grok no está configurado. Verifica GROK_API_KEY en .env")
+
+        try:
+            response = self.clients['grok'].chat.completions.create(
+                model=self.config['grok_model'],
+                messages=[
+                    {"role": "system", "content": system_prompt or "Eres un asistente experto en análisis de datos deportivos."},
+                    {"role": "user", "content": prompt}
+                ]
+            )
+            result = response.choices[0].message.content
+            logger.debug(f"✅ Grok: {len(result)} caracteres generados")
+            return result
+        except Exception as e:
+            logger.error(f"❌ Error en Grok: {e}")
+            raise
+
+    def manus(self, prompt: str, system_prompt: str = None) -> str:
+        """Usa Manus AI para generar respuesta (API compatible con OpenAI)."""
+        if 'manus' not in self.clients:
+            raise ValueError("Manus no está configurado. Verifica MANUS_API_KEY en .env")
+
+        try:
+            response = self.clients['manus'].chat.completions.create(
+                model=self.config.get('manus_model', 'default'),
+                messages=[
+                    {"role": "system", "content": system_prompt or "Eres un asistente experto en análisis de datos deportivos."},
+                    {"role": "user", "content": prompt}
+                ]
+            )
+            result = response.choices[0].message.content
+            logger.debug(f"✅ Manus: {len(result)} caracteres generados")
+            return result
+        except Exception as e:
+            logger.error(f"❌ Error en Manus: {e}")
+            raise
+
+
+    # Rotación diaria: cada día de la semana usa un LLM distinto como primario
+    # Distribuye uso entre free tiers y varía el estilo del contenido generado
+    _ROTATION_SCHEDULE = [
+        "gemini",    # lunes
+        "groq",      # martes
+        "deepseek",  # miércoles
+        "kimi",      # jueves
+        "gemini",    # viernes
+        "groq",      # sábado
+        "deepseek",  # domingo
+    ]
+
+    def get_provider_del_dia(self) -> str:
+        """Retorna el proveedor asignado a hoy según la rotación semanal."""
+        from datetime import datetime
+        dia = datetime.now().weekday()  # 0=lunes, 6=domingo
+        return self._ROTATION_SCHEDULE[dia]
 
     def generate_text(
         self,
         prompt: str,
         system_prompt: str = None,
-        providers: List[str] = None
+        providers: List[str] = None,
+        rotate: bool = False
     ) -> str:
         """
         Genera texto usando múltiples proveedores con fallback automático.
-        
+
         Args:
             prompt: Pregunta o instrucción
             system_prompt: Contexto adicional
             providers: Lista de proveedores en orden de preferencia.
-                      Default: ['gemini', 'claude', 'groq', 'openai']
-                      
+                      Default: ['gemini', 'groq', 'deepseek', 'kimi', 'venice', 'claude', 'openai']
+            rotate: Si True, usa el proveedor del día como primario (varía estilo y distribuye free tiers)
+
         Returns:
             Respuesta del primer proveedor disponible
-            
-        Example:
-            # Intenta Gemini, si falla Claude, luego Groq
-            response = api.generate_text(
-                prompt="...",
-                providers=['gemini', 'claude', 'groq']
-            )
         """
-        providers = providers or ["gemini", "groq", "deepseek", "kimi", "venice", "claude", "openai"]
+        all_providers = ["gemini", "groq", "deepseek", "kimi", "grok", "manus", "venice", "claude", "openai"]
+        providers = providers or all_providers
+
+        if rotate:
+            primario = self.get_provider_del_dia()
+            # Poner el proveedor del día primero, mantener el resto como fallback
+            providers = [primario] + [p for p in providers if p != primario]
+            logger.info(f"🔄 Rotación activa — proveedor del día: {primario.upper()}")
 
         for provider in providers:
             try:
@@ -701,7 +858,7 @@ class APIManager:
         print("="*60)
         
         categories = {
-            'LLMs': ['gemini', 'claude', 'openai', 'groq', 'deepseek', 'kimi', 'grok'],
+            'LLMs': ['gemini', 'claude', 'claude_rove', 'openai', 'groq', 'deepseek', 'kimi', 'grok', 'manus'],
             'Imágenes': ['together', 'pollinations'],
             'Audio': ['elevenlabs', 'playht'],
             'Vídeo': ['luma', 'heygen'],

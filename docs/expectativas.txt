@@ -1,0 +1,91 @@
+Hola, como estoy algo perdido me he tomado unos minutos para describir y ordenar mi mente y que me ayudes a organizar todo lo que tengo hecho y como ir dando paso a paso cerrando cosas.
+
+En primero lugar, quiero continuar con el proyecto Dos Aros. Te pongo los objettivos e ideas que tengo para ver en que punto estamos y como podemos automatizar y crear lo que ya tenemos.
+
+Lo que tenemos actualmente.
+
+- Bot Telegram donde recibo todas las mañanas esta información pero se repite día tras día:
+
+		> Dos Aros Control:
+		📊 MASTER SYNC V3 EXECUTED
+
+		⏱️ Hora: 2026-04-30 09:00:15
+		📰 Noticias: Sí
+		🏀 Resultados NBA: 5
+		🏀 Resultados Euro: 5
+
+		Generando contenido...
+
+		> Dos Aros Control:
+		💡 INSIGHTS DEL DÍA
+
+		💡 La temporada de la NBA está llegando a su fin, lo que significa que los equipos están luchando por posiciones en los playoffs.
+		💡 La Euroliga también está en su recta final, con varios equipos europeos destacados compitiendo por el título.
+		💡 La competencia entre la NBA y la Euroliga está aumentando, lo que puede influir en la decisión de los jugadores sobre dónde jugar en el futuro.
+
+		Basado en análisis de noticias
+
+		> Dos Aros Control:
+		🧵 HILO X — NOTICIAS DEL DÍA
+
+		'¿Qué pasaría si te dijera que la próxima temporada de la NBA podría ser la más emocionante de la historia? ¡Estoy aquí para convencerte!', 'Con la adición de nuevos jugadores y la mejora de los equipos ya existentes, la competencia en la NBA está más fuerte que nunca.', 'Pero no solo se trata de la NBA. La Euroliga también está experimentando un resurgimiento, con equipos como el Barcelona y el Real Madrid liderando el camino.', 'La pregunta es, ¿cómo afectará esto a los jugadores y a los equipos en general? ¿Veremos un aumento en la movilidad de los jugadores entre la NBA y la Euroliga?', 'El contexto es crucial en este momento. La globalización del baloncesto está cambiando la forma en que los equipos y los jugadores se relacionan entre sí.', '¿Estás listo para unirte a la conversación? ¡Comparte tus pensamientos sobre el futuro del baloncesto y cómo crees que la NBA y la Euroliga se relacionarán en el futuro!'
+
+		Revisar y publicar en X (Twitter)
+
+		> Dos Aros Control:
+		📹 PROPUESTAS DE REELS
+
+		📹 {'titulo': 'La batalla por el título', 'hook': '¿Quién será el campeón de la NBA y la Euroliga esta temporada?', 'estructura': 'Análisis de los equipos favoritos, entrevistas con jugadores y entrenadores, y un resumen de los partidos clave'}
+		📹 {'titulo': 'El futuro del baloncesto', 'hook': '¿Cómo cambiará el baloncesto en los próximos años?', 'estructura': 'Entrevistas con expertos, análisis de las tendencias actuales y un debate sobre el impacto de la tecnología en el deporte'}
+
+		Crear manualmente en Instagram/TikTok
+
+		> Dos Aros Control:
+		📖 PROPUESTAS DE STORIES
+
+		📖 {'titulo': 'La historia de la NBA', 'frames': 'Introducción a la historia de la NBA, con imágenes y videos de los momentos más destacados', 'Análisis de la evolución del juego y los cambios en la liga a lo largo de los años', 'Conclusión con una mirada hacia el futuro y lo que se espera de la NBA en los próximos años'}
+		📖 {'titulo': 'La Euroliga en acción', 'frames': 'Resumen de los partidos más recientes, con highlights y estadísticas', 'Entrevistas con jugadores y entrenadores, y análisis de las estrategias de los equipos', 'Previsión de los próximos partidos y lo que se espera de la Euroliga en el futuro'}
+
+		Crear manualmente en Instagram
+
+		> Dos Aros Control:
+		✅ MASTER SYNC V3 COMPLETADO
+
+		⏱️ Duración: 15.5s
+		📊 Resultados: 10 partidos
+		📰 Noticias procesadas: Sí
+
+		Todo listo para revisión y publicación manual
+
+- Extracción diaria de los datos de la noche anterior tanto para Euroliga y NBA (faltaría confirmar que esto está occuriendo y validar que información es la que se está almaneceando en la BBDD)
+- Claude code conectado a la pi para modificaciones en el código, la bbdd y bots.
+- Gran variedad de avatars mios con camiseta de algunos equipos para usar en los reels, aunque no todos (tengo documentos dispersos con los prompts para algunos equipos aunque siento que todo muy desordenado)
+- Documentación de referencia en distintos .md que tienes compartidos para el contexto.
+- Logos de la marca y branding digamos que al 80% (primera guía de estilo compartida contigo tambien en unos de los .md mencionados antes)
+- Para ayudarme con todo este contexto hamos hecho tambien el proyecto Reel Librarian donde voy guardando reels de intagram con herramientas y skills que creo que pueden aportar al proyecto. (Ahora mismo es un poco ingobernable y no le saco el partido necesario para sacarle provecho)
+- Tambien tengo comprado los dominios www.dosaros.com y www.dosaros.es en proveedor DonDominio.com con el plan básico.
+
+** Que es lo que quiero para tener el proyecto Dos Aros operativo y generando tanto contenido como ingresos.
+
+- Un sistema automático o semi-automático para generar el contenido de diario en las RRSS de DosAros, es decir, resultados de los partidos y resumen de las jornadas tanto de Euroliga o NBA usando Agentes o Skills de IA ya que esta información esta disponible en multiples sitios.
+- Un sistema automático o semi-automático para generar contenido en las RRSS, donde cada cierto tiempo un agente o skill IA o similar verifique cuentas de referencia en las RRSS que ya te he compartido y estan por el codigo cuando encuentre una noticia impactante o importante se publique tambien en las RRSS de Dos Aros.
+- Montar el portal de Dos Aros donde se vayan tambien publicando los contenidos publicados den las RRSS ademas de calendarios de las ligas que manejamos actualmente y resultados en directo de los partidos. Este portal tambien tendra una zona o varias para ir monetizando el contenido. 
+- Tener un generador de voz con marca Dos Aros que podría ser mi voz clonada pero con algún matíz para diferenciarla.
+- Montar un agente, skill o similar donde yo añada fuentes como por ejemplo canales de youtube, podcast de diversas plataformas, etc.. y generar un Podcast con todo el contenido sacado de esas fuentes pero creando un nuevo guión al estilo Dos Aros.
+- Añadir sistema de afiliación a las plataformas que sea posible para monetizar el proyecto.
+- Generar o usar algunos proveedores para vender ropa estilo Dos Aros con mi Logo y diseños personalizados mios (camisestas, sudaderas, gorras, calcetines, shorts, etc...)
+- Proyecto organizado a todos los niveles, HHDD local en PC, en PI y en Drive. Sabiendo siempre donde esta la documentación para algo en concreto, o recursos como imagenes, logos, etc... 
+- Decidir que herramientas de terceros he de usar para cada punto anterior. 
+- Notion, Google Drive, etc... que herramientas debo usar.
+
+
+Este es el estado actual de mi proyecto en mi mente y lo que quiero hacer. No tengo aún claro el orden de ejecución de todo lo que te he comentado ya que tengo muchas cosas en el aire pero nada 100% cerrado. 
+
+Necesito que me des  orden y un plan de ejecución donde cada día me preguntaras cuantas horas puedo dedicarle en la sesión que comenzaremos y ajustar las expectativas para cada sesión aprendiendo de lo que puedo hacer en cada sesión y la cantidad de trabajo que podemos hacer en cada sesión. 
+
+Necesito que revises el contenido que tenemos en Reel Librarian y con esa información y lo que tu conozcas me ayudes a decidir mejores Skills a usar, Agentes que nos pueden facilitar la tarea, Scripts de Python a crear si es necesario. 
+
+Actualmente tengo la cuenta PRO tanto de Claude como la de Google. por si te ayuda a la hora de tomar desiciones, recuerda que la inversión debe ser muy cercana a 0 y si decidimos alguna herramienta que tiene coste tenemos que ver el retorno muy claro.
+
+Preguntame y dime de donde sacamos los datos necesarios para que me des todo el Plan de Proyecto, así como tu propuesta de orden de ejecución. 
+

@@ -240,7 +240,7 @@ def generar_hilo_x():
         api = APIManager()
         hilo = api.generate_text(
             prompt=prompt,
-            providers=['gemini', 'groq', 'claude']
+            rotate=True
         )
         return hilo
     except Exception as e:
