@@ -1,7 +1,7 @@
 # CLAUDE.md
 
 > ⚠️ **AUTO-GENERADO desde Obsidian** — No editar manualmente.
-> Fuente: `knowledge_base/` · Última sincronización: 2026-05-17 13:34:41
+> Fuente: `knowledge_base/` · Última sincronización: 2026-05-17 14:28:30
 > Para editar: modificar archivos en `knowledge_base/` y ejecutar `python scripts/sync_obsidian_to_claude.py`
 
 ---
@@ -86,7 +86,14 @@ Asistir en el desarrollo y mantenimiento de DOS AROS, un sistema de investigaci�
 - **Repo**: https://github.com/dosaroscontact/dosaros-data-project
 - **Rama principal**: `main`
 - **Historial**: ✅ Limpio (BFG aplicado 2026-05-17)
-- **Último commit**: `d991ba6` — docs: Add comprehensive project overview
+- **Auto-deploy**: Configurado para Vercel (push a main → deploy)
+
+#### Producción (Vercel)
+- **URL temporal**: `dosaros-data-project.vercel.app` (tras primer import)
+- **URL final**: `dosaros.com` (cuando DNS DonDominio propague)
+- **vercel.json**: Configurado con `--legacy-peer-deps` y región `fra1`
+- **GTM**: `GTM-MWDXWXZN` integrado en todas las páginas
+- **Setup paso a paso**: ../Workflows/Vercel Deployment
 
 ---
 
