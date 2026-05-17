@@ -97,11 +97,11 @@ export default function Hero() {
             Explora partidos en vivo
           </a>
           <a
-            href="/contact"
+            href="/productos"
             className="w-full sm:w-auto px-8 py-3 border-2 border-dos-magenta text-dos-white font-heading font-bold rounded-lg hover:bg-dos-magenta/10 focus:outline-2 focus:outline-offset-2 focus:outline-dos-magenta transition-colors duration-300 active:scale-95 min-h-[48px] sm:min-h-[44px] flex items-center justify-center"
-            aria-label="Haz una pregunta"
+            aria-label="Ver productos DOS AROS"
           >
-            Haz una pregunta
+            Productos
           </a>
         </motion.div>
 
