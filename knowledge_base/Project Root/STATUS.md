@@ -30,12 +30,25 @@
 - **Historial**: ✅ Limpio (BFG aplicado 2026-05-17)
 - **Auto-deploy**: Configurado para Vercel (push a main → deploy)
 
-### Producción (Vercel)
-- **URL temporal**: `dosaros-data-project.vercel.app` (tras primer import)
-- **URL final**: `dosaros.com` (cuando DNS DonDominio propague)
+### Producción (Vercel) ✅ LIVE
+- **URL principal**: `https://www.dosaros.com` ✅
+- **URL Vercel**: `dosaros-data-project.vercel.app`
+- **DNS**: DonDominio configurado (A + wildcard CNAME) ✅
+- **SSL**: Let's Encrypt auto ✅
 - **vercel.json**: Configurado con `--legacy-peer-deps` y región `fra1`
-- **GTM**: `GTM-MWDXWXZN` integrado en todas las páginas
+- **Auto-deploy**: Cada push a `main` se despliega automáticamente
 - **Setup paso a paso**: [[../Workflows/Vercel Deployment]]
+
+### Analytics (GA4 + GTM) ✅ ACTIVO
+- **GTM Container**: `GTM-MWDXWXZN` (todas las páginas)
+- **GA4**: Conectado vía GTM
+- **9 eventos custom** instrumentados:
+  page_view, nav_clicked, cta_clicked, product_interest,
+  category_changed, analysis_clicked, tag_filter_clicked,
+  form_submitted, social_clicked
+- **21 Data Layer Variables** + **9 Triggers** + **10 Tags** en GTM
+- **Tracking plan completo**: [[../Workflows/Analytics Tracking Plan]]
+- **Container exportable**: `gtm-container-export.json`
 
 ---
 
@@ -126,7 +139,11 @@
 - [x] Migrar a Obsidian como fuente de verdad ✅ COMPLETADO (2026-05-17)
 - [x] Implementar sincronización automática Obsidian → CLAUDE.md ✅ COMPLETADO (2026-05-17)
 - [x] Sistema de Architecture Decision Records (ADRs) ✅ COMPLETADO (2026-05-17)
-- [ ] Probar flujo completo en producción
+- [x] Deploy a producción (Vercel + dosaros.com) ✅ COMPLETADO (2026-05-17)
+- [x] Sistema completo de tracking GTM/GA4 ✅ COMPLETADO (2026-05-17)
+- [ ] Conectar `dosaros.es` (redirect 301 a `.com`)
+- [ ] Submit a Google Search Console
+- [ ] Lanzamiento promocional en redes sociales
 
 ---
 

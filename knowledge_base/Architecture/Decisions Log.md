@@ -137,6 +137,79 @@ Registro cronológico de decisiones arquitectónicas importantes.
 
 ---
 
+## ADR-008: Vercel como plataforma de deploy
+**Fecha**: 2026-05-17
+**Estado**: ✅ Activa
+
+**Decisión**: Usar Vercel (plan Hobby) para hostear el frontend Next.js.
+
+**Contexto**:
+- Necesitamos hosting para frontend Next.js 15
+- Buscamos coste mínimo, SSL automático, auto-deploy
+- Dominio dosaros.com está en DonDominio
+
+**Alternativas consideradas**:
+- **Netlify**: similar pero peor integración Next.js
+- **Cloudflare Pages**: bueno pero menos features Next.js
+- **VPS propio**: más control pero más mantenimiento y coste
+- **Pi** (auto-hosting): no escalable, sin SSL fácil
+
+**Consecuencias**:
+- ✅ 0€/mes (plan Hobby)
+- ✅ Auto-deploy en cada push a main
+- ✅ SSL automático Let's Encrypt
+- ✅ CDN global incluido
+- ✅ Preview URLs en cada PR
+- ⚠️ Vendor lock-in moderado (next/image, ISR optimizado para Vercel)
+- ⚠️ Plan Hobby: 100GB bandwidth/mes (suficiente al inicio)
+
+---
+
+## ADR-009: GTM + GA4 para analytics
+**Fecha**: 2026-05-17
+**Estado**: ✅ Activa
+
+**Decisión**: Usar GTM (`GTM-MWDXWXZN`) como capa de tag management y GA4 como destino.
+
+**Eventos custom diseñados**: 9 (page_view, nav_clicked, cta_clicked, product_interest, category_changed, analysis_clicked, tag_filter_clicked, form_submitted, social_clicked).
+
+**Implementación**:
+- `lib/analytics.ts` con `trackEvent()` tipado
+- Cada componente importa helper y llama trackEvent en interacciones clave
+- GTM container importado via JSON (21 vars + 9 triggers + 10 tags)
+
+**Consecuencias**:
+- ✅ Flexibilidad: añadir/quitar tags sin re-deploy
+- ✅ Multi-tool: GTM puede enviar a GA4, Meta Pixel, Hotjar, etc.
+- ✅ Naming consistency (snake_case, object_action)
+- ✅ Type-safe en código (TypeScript)
+- ⚠️ Dependencia de GTM (si falla, no hay tracking)
+- ⚠️ JavaScript required (no SSR-tracked)
+
+---
+
+## ADR-010: Markdown files para análisis diarios (no CMS)
+**Fecha**: 2026-05-17
+**Estado**: ✅ Activa
+
+**Decisión**: Sistema de blog basado en archivos `.md` en `content/analysis/YYYY/MM/`, con script Python que genera frontmatter automáticamente.
+
+**Alternativas consideradas**:
+- **Sanity/Contentful**: overkill, coste adicional
+- **Notion API**: dependencia externa, latencia
+- **WordPress headless**: complejidad innecesaria
+- **DB en Supabase**: pendiente para futuro (cuando haya múltiples autores)
+
+**Consecuencias**:
+- ✅ Versionado en git
+- ✅ Build estático ultra-rápido (`generateStaticParams`)
+- ✅ Zero infra adicional
+- ✅ Tu workflow actual (escribir .md) sigue igual
+- ⚠️ Solo un autor a la vez
+- ⚠️ Requiere git push para publicar
+
+---
+
 ## ADR-007: BFG Repo Cleaner para Limpieza de Historial
 **Fecha**: 2026-05-17
 **Estado**: ✅ Aplicada

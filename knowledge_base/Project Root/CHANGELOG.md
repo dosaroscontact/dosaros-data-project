@@ -34,6 +34,58 @@ Histórico de cambios significativos del proyecto.
 
 ---
 
+## [2026-05-17] — Sistema Tracking GTM/GA4 Completo
+
+### Added
+- **`lib/analytics.ts`**: helper tipado `trackEvent()` con 9 tipos de eventos
+- **`components/PageViewTracker.tsx`**: tracking SPA page_view en navegaciones
+- **9 eventos instrumentados** en componentes:
+  - `page_view` (PageViewTracker)
+  - `nav_clicked` (Navbar desktop + mobile + Footer)
+  - `cta_clicked` (Hero primary + secondary)
+  - `product_interest` (ProductCatalog "Ver disponibilidad")
+  - `category_changed` (ProductCatalog tabs)
+  - `analysis_clicked` (AnalysisList article cards)
+  - `tag_filter_clicked` (AnalysisList filtros)
+  - `form_submitted` (ContactForm success/error)
+  - `social_clicked` (Navbar + Footer X/Instagram)
+- **`gtm-container-export.json`**: container importable con todo configurado
+  - 21 Data Layer Variables
+  - 9 Custom Event Triggers
+  - 10 GA4 Tags (1 config + 9 events)
+- **Knowledge base**: `Workflows/Analytics Tracking Plan.md`
+
+### Configured (en GTM dashboard)
+- Container `GTM-MWDXWXZN` con import del JSON
+- GA4 Measurement ID conectado
+- Container publicado en producción
+
+---
+
+## [2026-05-17] — Deploy a Producción en Vercel
+
+### Added
+- **Cuenta Vercel** vinculada con GitHub
+- **Proyecto importado**: `dosaros-data-project`
+- **`vercel.json`** con `--legacy-peer-deps` y región `fra1` (Frankfurt)
+- **Dominio `dosaros.com`** apuntando a Vercel (76.76.21.21)
+- **Wildcard CNAME** `*.dosaros.com` → `cname.vercel-dns.com`
+- **SSL automático** vía Let's Encrypt
+- **Auto-deploy** activo: push a `main` → producción en ~2 min
+- **Knowledge base**: `Workflows/Vercel Deployment.md`
+
+### Fixed
+- 19 imágenes locales que no estaban en git (rompían home en prod)
+- `catalogo-banner.png` añadido al repo
+- `.gitignore`: ahora ignora `.next/`, `out/`, `.vercel/`, `node_modules/`
+- Removidos del tracking de git (eran 100+ MB innecesarios)
+
+### Live URLs
+- https://www.dosaros.com (principal)
+- https://dosaros.com (redirect a www)
+
+---
+
 ## [2026-05-17] — Competiciones Page + Comunidad Removed
 
 ### Added

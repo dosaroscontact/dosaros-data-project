@@ -7,17 +7,29 @@ Plan futuro del proyecto DOS AROS.
 ## 🎯 Q2 2026 — Consolidación
 
 ### Knowledge Base
-- [x] Migrar contenido a Obsidian (Fase 1)
-- [ ] Implementar sincronización Obsidian → CLAUDE.md (Fase 2)
-- [ ] Documentar workflow integrado (Fase 3)
+- [x] Migrar contenido a Obsidian (Fase 1) ✅
+- [x] Implementar sincronización Obsidian → CLAUDE.md (Fase 2) ✅
+- [x] Documentar workflow integrado (Fase 3) ✅
 - [ ] Crear plantillas (Templater) para nuevos análisis
 
+### Infrastructure
+- [x] Deploy a Vercel ✅ (2026-05-17)
+- [x] Dominio dosaros.com en producción ✅ (2026-05-17)
+- [x] SSL automático ✅
+- [x] Auto-deploy desde GitHub ✅
+- [x] Sistema completo de tracking GTM/GA4 ✅ (2026-05-17)
+- [ ] Redirect `dosaros.es` → `dosaros.com` (301)
+- [ ] Google Search Console
+- [ ] Sitemap.xml automático
+- [ ] OG Images dinámicas para análisis
+
 ### Frontend
-- [ ] Implementar `/analisis` con datos reales (NBA + Euro)
-- [ ] Implementar `/predicciones` con modelo ML básico
 - [x] Implementar `/competiciones` con NBA + EuroLeague ✅ (2026-05-17)
+- [x] Sistema de blog para análisis diarios ✅ (2026-05-17)
+- [ ] Implementar `/analisis` con datos reales de BD (no solo .md)
+- [ ] Implementar `/predicciones` con modelo ML básico
 - [ ] Conectar Newsletter a BD
-- [ ] Mejorar SEO (meta tags, OG images)
+- [ ] Mejorar SEO (meta tags personalizados, OG images)
 
 ### Backend
 - [ ] Reparar bug DeepSeek/Kimi en `api_manager.py`
