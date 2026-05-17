@@ -15,7 +15,7 @@ Plan futuro del proyecto DOS AROS.
 ### Frontend
 - [ ] Implementar `/analisis` con datos reales (NBA + Euro)
 - [ ] Implementar `/predicciones` con modelo ML básico
-- [ ] Implementar `/comunidad` (foro/chat)
+- [x] Implementar `/competiciones` con NBA + EuroLeague ✅ (2026-05-17)
 - [ ] Conectar Newsletter a BD
 - [ ] Mejorar SEO (meta tags, OG images)
 

@@ -46,8 +46,8 @@ export default function Navbar() {
         <div className="hidden md:flex items-center gap-8">
           <a href="/analisis" className="text-dos-blue dark:text-dos-gray font-body text-sm font-medium hover:text-dos-orange transition-colors">Análisis</a>
           <a href="/predicciones" className="text-dos-blue dark:text-dos-gray font-body text-sm font-medium hover:text-dos-orange transition-colors">Predicciones</a>
+          <a href="/competiciones" className="text-dos-blue dark:text-dos-gray font-body text-sm font-medium hover:text-dos-orange transition-colors">Competiciones</a>
           <a href="/productos" className="text-dos-blue dark:text-dos-gray font-body text-sm font-medium hover:text-dos-orange transition-colors">Productos</a>
-          <a href="/comunidad" className="text-dos-blue dark:text-dos-gray font-body text-sm font-medium hover:text-dos-orange transition-colors">Comunidad</a>
           <a href="/contact" className="text-dos-blue dark:text-dos-gray font-body text-sm font-medium hover:text-dos-orange transition-colors">Contacto</a>
         </div>
 
@@ -84,8 +84,8 @@ export default function Navbar() {
           <div className="px-4 py-4 space-y-3">
             <a href="/analisis" className="block px-4 py-2 text-dos-blue dark:text-dos-white text-sm hover:text-dos-orange dark:hover:text-dos-orange">Análisis</a>
             <a href="/predicciones" className="block px-4 py-2 text-dos-blue dark:text-dos-white text-sm hover:text-dos-orange dark:hover:text-dos-orange">Predicciones</a>
+            <a href="/competiciones" className="block px-4 py-2 text-dos-blue dark:text-dos-white text-sm hover:text-dos-orange dark:hover:text-dos-orange">Competiciones</a>
             <a href="/productos" className="block px-4 py-2 text-dos-blue dark:text-dos-white text-sm hover:text-dos-orange dark:hover:text-dos-orange">Productos</a>
-            <a href="/comunidad" className="block px-4 py-2 text-dos-blue dark:text-dos-white text-sm hover:text-dos-orange dark:hover:text-dos-orange">Comunidad</a>
             <a href="/contact" className="block px-4 py-2 text-dos-blue dark:text-dos-white text-sm hover:text-dos-orange dark:hover:text-dos-orange">Contacto</a>
             <div className="border-t border-dos-gray/20 dark:border-dos-magenta/20 mt-4 pt-4 flex gap-4">
               {SocialLinks.map((social) => (

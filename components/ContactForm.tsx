@@ -1,11 +1,19 @@
 'use client'
 
-import { useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { useReducedMotion } from '@/lib/hooks'
 
-export default function ContactForm() {
+function buildProductMessage(product: string) {
+  return `Hola, me interesa: ${product}. ¿Cuáles son las opciones disponibles (talla, stock) y el precio? Gracias.`
+}
+
+function ContactFormInner() {
   const prefersReducedMotion = useReducedMotion()
+  const searchParams = useSearchParams()
+  const productParam = searchParams.get('product')
+
   const [formData, setFormData] = useState({
     nombre: '',
     email: '',
@@ -14,6 +22,16 @@ export default function ContactForm() {
   const [loading, setLoading] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [error, setError] = useState('')
+
+  // Pre-rellenar mensaje con producto si viene por URL
+  useEffect(() => {
+    if (productParam) {
+      setFormData((prev) => ({
+        ...prev,
+        mensaje: buildProductMessage(productParam),
+      }))
+    }
+  }, [productParam])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -76,10 +94,12 @@ export default function ContactForm() {
           className="text-center mb-12"
         >
           <h2 className="text-3xl sm:text-4xl font-heading font-bold text-dos-white mb-4">
-            Ponte en contacto
+            {productParam ? 'Consulta de producto' : 'Ponte en contacto'}
           </h2>
           <p className="text-dos-gray text-base sm:text-lg mb-6">
-            La web está en fase de lanzamiento. Completa el formulario y nos pondremos en contacto contigo pronto.
+            {productParam
+              ? `Te pondremos en contacto para resolver tu consulta sobre ${productParam}.`
+              : 'La web está en fase de lanzamiento. Completa el formulario y nos pondremos en contacto contigo pronto.'}
           </p>
         </motion.div>
 
@@ -171,5 +191,13 @@ export default function ContactForm() {
         </motion.div>
       </div>
     </section>
+  )
+}
+
+export default function ContactForm() {
+  return (
+    <Suspense fallback={<div className="min-h-[400px]" />}>
+      <ContactFormInner />
+    </Suspense>
   )
 }

@@ -4,6 +4,53 @@ Histórico de cambios significativos del proyecto.
 
 ---
 
+## [2026-05-17] — Sistema de Análisis Diarios
+
+### Added
+- **Sistema completo de publicación de análisis** (`/analisis`)
+  - Script Python `scripts/publish_analysis.py` que genera frontmatter automáticamente
+  - Detección automática de fecha, secciones, tags y summary
+  - Estructura: `content/analysis/YYYY/MM/YYYY-MM-DD-slug.md`
+- **Página `/analisis`** con listado cronológico + filtros por tag
+- **Página `/analisis/[slug]`** con renderizado markdown completo
+- **Componentes**: AnalysisList, AnalysisArticle
+- **Estilos `.prose-dos-aros`** en globals.css siguiendo branding
+- **Dependencias**: gray-matter, react-markdown, remark-gfm
+- Primer análisis publicado: "SPURS 139 - TIMBERWOLVES 109 · EUROLIGA" (2026-05-16)
+
+### Changed
+- `/analisis` ya no es "En construcción", es funcional
+
+---
+
+## [2026-05-17] — Banner 3D Dinámico Productos
+
+### Added
+- Componente `ProductsBanner.tsx` con efecto 3D soft
+- Entrada spring + Ken Burns en imagen
+- Light sweep al cargar (diagonal)
+- Floating continuo + glow en esquinas
+- Mouse-follow tilt solo desktop (mobile-first)
+
+---
+
+## [2026-05-17] — Competiciones Page + Comunidad Removed
+
+### Added
+- **Página `/competiciones`** con NBA + EuroLeague
+  - Cards con stats: equipos, año fundación, cobertura
+  - Componente `CompetitionsList.tsx`
+  - Diseño con paleta DOS AROS (naranja para NBA, magenta para EuroLeague)
+
+### Removed
+- Página `/comunidad` (no había sido solicitada originalmente)
+
+### Changed
+- Navbar: "Comunidad" reemplazado por "Competiciones"
+- Mobile menu actualizado en consonancia
+
+---
+
 ## [2026-05-17] — Obsidian Knowledge Base + Frontend Recovery
 
 ### Added

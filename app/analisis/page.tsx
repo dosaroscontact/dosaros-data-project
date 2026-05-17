@@ -1,20 +1,33 @@
 import Navbar from '@/components/Navbar'
-import UnderConstruction from '@/components/UnderConstruction'
+import AnalysisList from '@/components/AnalysisList'
 import Footer from '@/components/Footer'
+import { getAllAnalyses, getAllTags, getAnalysesByTag } from '@/lib/analysis'
 
 export const metadata = {
   title: 'Análisis — DOS AROS',
-  description: 'Análisis detallados de partidos NBA y EuroLeague. Próximamente en DOS AROS.',
+  description: 'Análisis diarios NBA y EuroLeague. Datos primero. Contexto después. Opinión al final.',
 }
 
-export default function AnalisisPage() {
+interface PageProps {
+  searchParams: Promise<{ tag?: string }>
+}
+
+export default async function AnalisisPage({ searchParams }: PageProps) {
+  const params = await searchParams
+  const activeTag = params.tag
+  const allTags = getAllTags()
+  const analyses = activeTag ? getAnalysesByTag(activeTag) : getAllAnalyses()
+
   return (
     <main id="main-content">
       <Navbar />
-      <UnderConstruction
-        title="Análisis"
-        description="Explora análisis detallados de partidos, jugadores y equipos de NBA y EuroLeague. Estadísticas avanzadas, tendencias y patrones de juego."
-      />
+      <div className="pt-24">
+        <AnalysisList
+          analyses={analyses}
+          allTags={allTags}
+          activeTag={activeTag}
+        />
+      </div>
       <Footer />
     </main>
   )

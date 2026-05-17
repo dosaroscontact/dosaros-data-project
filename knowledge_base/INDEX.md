@@ -40,6 +40,7 @@
 
 ## 🔄 Workflows
 - [[Workflows/Daily Automation|⏰ Cron diario + Bot Telegram]]
+- [[Workflows/Daily Analysis Publishing|📰 Publicar análisis diario en web]]
 - [[Workflows/Release Process|🚀 Deployment]]
 - [[Workflows/Sync Obsidian to Claude|🔁 Sincronización Obsidian ↔ Claude Code]]
 

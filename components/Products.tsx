@@ -15,35 +15,35 @@ const PRODUCTS: Product[] = [
   {
     id: '1',
     name: 'Camiseta DOS AROS Beige',
-    image: '/products/camiseta-beige.png',
+    image: '/productos/camiseta-beige.png',
     category: 'Camiseta',
     color: 'Beige',
   },
   {
     id: '2',
     name: 'Camiseta DOS AROS Verde Tierra',
-    image: '/products/camiseta-verde.png',
+    image: '/productos/camiseta-verde.png',
     category: 'Camiseta',
     color: 'Verde Tierra',
   },
   {
     id: '3',
     name: 'Camiseta DOS AROS Gris Tierra',
-    image: '/products/camiseta-gris.png',
+    image: '/productos/camiseta-gris.png',
     category: 'Camiseta',
     color: 'Gris Tierra',
   },
   {
     id: '4',
     name: 'Sudadera DOS AROS Beige',
-    image: '/products/sudadera-beige.png',
+    image: '/productos/sudadera-beige.png',
     category: 'Sudadera',
     color: 'Beige',
   },
   {
     id: '5',
     name: 'Sudadera DOS AROS Clásica',
-    image: '/products/sudadera-dos-lados.png',
+    image: '/productos/sudadera-dos-lados.png',
     category: 'Sudadera',
     color: 'Multicolor',
   },
@@ -149,7 +149,6 @@ export default function Products() {
             className="inline-flex items-center gap-2 px-8 py-3 sm:py-4 bg-dos-blue hover:bg-dos-blue/90 text-dos-white font-heading font-bold rounded-lg transition-colors duration-300 active:scale-95 min-h-[48px]"
           >
             Explorar toda la colección
-            <span aria-hidden="true">→</span>
           </a>
         </motion.div>
       </div>

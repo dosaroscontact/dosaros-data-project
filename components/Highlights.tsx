@@ -153,7 +153,6 @@ export default function Highlights() {
             className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-dos-orange hover:opacity-90 text-dos-blue font-heading font-bold rounded-lg transition-opacity duration-300 active:scale-95 min-h-[48px]"
           >
             Ver todas las perlas
-            <span aria-hidden="true">→</span>
           </a>
         </motion.div>
       </div>

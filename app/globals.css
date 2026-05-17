@@ -97,3 +97,174 @@ img {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+/* ============================================================
+   Markdown content styling — DOS AROS analysis articles
+   Aplicado al body de cada análisis renderizado con ReactMarkdown
+   ============================================================ */
+.prose-dos-aros {
+  color: var(--dos-blue);
+  font-family: 'Inter', sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.75;
+}
+
+body.dark .prose-dos-aros {
+  color: var(--dos-white);
+}
+
+.prose-dos-aros h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-top: 3rem;
+  margin-bottom: 1.5rem;
+  color: var(--dos-blue);
+  border-bottom: 2px solid var(--dos-gray);
+  padding-bottom: 0.5rem;
+}
+
+body.dark .prose-dos-aros h1 {
+  color: var(--dos-white);
+  border-bottom-color: rgba(177, 0, 90, 0.2);
+}
+
+.prose-dos-aros h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  color: var(--dos-orange);
+  padding-left: 1rem;
+  border-left: 4px solid var(--dos-orange);
+}
+
+.prose-dos-aros h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  color: var(--dos-magenta);
+}
+
+.prose-dos-aros p {
+  margin-bottom: 1.25rem;
+}
+
+.prose-dos-aros strong {
+  color: var(--dos-blue);
+  font-weight: 700;
+}
+
+body.dark .prose-dos-aros strong {
+  color: var(--dos-white);
+}
+
+.prose-dos-aros em {
+  color: var(--dos-magenta);
+  font-style: italic;
+}
+
+.prose-dos-aros hr {
+  border: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--dos-gray), transparent);
+  margin: 3rem 0;
+}
+
+body.dark .prose-dos-aros hr {
+  background: linear-gradient(to right, transparent, rgba(177, 0, 90, 0.3), transparent);
+}
+
+.prose-dos-aros a {
+  color: var(--dos-orange);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color 0.2s;
+}
+
+.prose-dos-aros a:hover {
+  color: var(--dos-orange-dark);
+}
+
+.prose-dos-aros blockquote {
+  border-left: 4px solid var(--dos-magenta);
+  padding-left: 1.25rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: var(--dos-gray-dark);
+}
+
+body.dark .prose-dos-aros blockquote {
+  color: var(--dos-gray);
+}
+
+.prose-dos-aros ul,
+.prose-dos-aros ol {
+  margin: 1.25rem 0;
+  padding-left: 1.5rem;
+}
+
+.prose-dos-aros li {
+  margin-bottom: 0.5rem;
+}
+
+.prose-dos-aros code {
+  background: var(--dos-gray);
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.9em;
+  font-family: 'Courier New', monospace;
+  color: var(--dos-magenta);
+}
+
+body.dark .prose-dos-aros code {
+  background: rgba(177, 0, 90, 0.15);
+}
+
+.prose-dos-aros pre {
+  background: var(--dos-blue);
+  color: var(--dos-white);
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+}
+
+.prose-dos-aros pre code {
+  background: transparent;
+  color: inherit;
+  padding: 0;
+}
+
+/* Tablas */
+.prose-dos-aros table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.95em;
+}
+
+.prose-dos-aros th,
+.prose-dos-aros td {
+  padding: 0.6rem 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid var(--dos-gray);
+}
+
+.prose-dos-aros th {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  color: var(--dos-blue);
+  background: rgba(255, 125, 40, 0.05);
+}
+
+body.dark .prose-dos-aros th {
+  color: var(--dos-white);
+  background: rgba(177, 0, 90, 0.1);
+  border-bottom-color: rgba(177, 0, 90, 0.2);
+}
+
+body.dark .prose-dos-aros td {
+  border-bottom-color: rgba(177, 0, 90, 0.1);
+}

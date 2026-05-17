@@ -57,9 +57,10 @@
 | `/` | ✅ | Landing page (Hero, Highlights, Products, Newsletter, Footer) |
 | `/productos` | ✅ | Catálogo con 5 categorías × 6-8 colores (40 imágenes) |
 | `/contact` | ✅ | Formulario con pre-relleno por URL parameter |
-| `/analisis` | ⚠️ | En construcción (placeholder) |
+| `/analisis` | ✅ | Sistema de blog con análisis diarios |
+| `/analisis/[slug]` | ✅ | Artículo individual renderizado desde markdown |
 | `/predicciones` | ⚠️ | En construcción (placeholder) |
-| `/comunidad` | ⚠️ | En construcción (placeholder) |
+| `/competiciones` | ✅ | NBA + EuroLeague con cobertura y stats |
 | `/experimental` | ✅ | Glitch logo effect (hidden) |
 
 ### Funcionalidades

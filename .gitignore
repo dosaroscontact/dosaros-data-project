@@ -18,7 +18,7 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
+# Nota: lib/ (Next.js utils) NO se ignora; Python libs viven en venv/lib/
 lib64/
 parts/
 sdist/
