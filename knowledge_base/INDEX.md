@@ -41,7 +41,8 @@
 ## 🔄 Workflows
 - [[Workflows/Daily Automation|⏰ Cron diario + Bot Telegram]]
 - [[Workflows/Daily Analysis Publishing|📰 Publicar análisis diario en web]]
-- [[Workflows/Release Process|🚀 Deployment]]
+- [[Workflows/Vercel Deployment|🚀 Deploy a Vercel + DonDominio]]
+- [[Workflows/Release Process|🚀 Release Process]]
 - [[Workflows/Sync Obsidian to Claude|🔁 Sincronización Obsidian ↔ Claude Code]]
 
 ## 📊 Insights

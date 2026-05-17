@@ -1,4 +1,4 @@
-﻿# Análisis de Partido
+# Análisis de Partido
 
 ## Equipos
 - Local: [[]]

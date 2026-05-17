@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Project Root/README.md",
+                "file": "INDEX.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "README"
+              "title": "INDEX"
             }
           },
           {
@@ -211,6 +211,15 @@
   },
   "active": "2af44e564e5de657",
   "lastOpenFiles": [
+    "INDEX.md.tmp.14888.a38e022267f8",
+    "Project Root/STATUS.md.tmp.14888.841d284f0544",
+    "Templates/Match Analysis Template.md",
+    "Workflows/Vercel Deployment.md",
+    "Workflows/Vercel Deployment.md.tmp.14888.14c9a87a1dde",
+    "Insights/Newsletter Strategy.md",
+    "DosAros/Bienvenido.md",
+    "Project Root/README.md",
+    "INDEX.md.tmp.14888.b9d034a1e7cb",
     "Project Root/CHANGELOG.md.tmp.14888.242c9e45a178",
     "Project Root/STATUS.md.tmp.14888.34e9027182e3",
     "Workflows/Daily Analysis Publishing.md",

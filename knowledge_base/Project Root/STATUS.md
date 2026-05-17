@@ -28,7 +28,14 @@
 - **Repo**: https://github.com/dosaroscontact/dosaros-data-project
 - **Rama principal**: `main`
 - **Historial**: ✅ Limpio (BFG aplicado 2026-05-17)
-- **Último commit**: `d991ba6` — docs: Add comprehensive project overview
+- **Auto-deploy**: Configurado para Vercel (push a main → deploy)
+
+### Producción (Vercel)
+- **URL temporal**: `dosaros-data-project.vercel.app` (tras primer import)
+- **URL final**: `dosaros.com` (cuando DNS DonDominio propague)
+- **vercel.json**: Configurado con `--legacy-peer-deps` y región `fra1`
+- **GTM**: `GTM-MWDXWXZN` integrado en todas las páginas
+- **Setup paso a paso**: [[../Workflows/Vercel Deployment]]
 
 ---
 
