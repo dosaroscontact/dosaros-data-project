@@ -1,7 +1,7 @@
 # CLAUDE.md
 
 > ⚠️ **AUTO-GENERADO desde Obsidian** — No editar manualmente.
-> Fuente: `knowledge_base/` · Última sincronización: 2026-05-17 20:32:23
+> Fuente: `knowledge_base/` · Última sincronización: 2026-05-17 21:13:45
 > Para editar: modificar archivos en `knowledge_base/` y ejecutar `python scripts/sync_obsidian_to_claude.py`
 
 ---
