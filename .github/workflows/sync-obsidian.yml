@@ -1,0 +1,50 @@
+name: Sync Obsidian to CLAUDE.md
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'knowledge_base/**'
+      - 'scripts/sync_obsidian_to_claude.py'
+  workflow_dispatch:  # Permite ejecutar manualmente
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run sync script
+        run: python scripts/sync_obsidian_to_claude.py --verbose
+
+      - name: Commit updated CLAUDE.md
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          # Solo commitear si CLAUDE.md cambió
+          if git diff --quiet CLAUDE.md; then
+            echo "✅ No hay cambios en CLAUDE.md"
+            exit 0
+          fi
+
+          git add CLAUDE.md
+          git commit -m "chore: Auto-sync CLAUDE.md from Obsidian vault
+
+          Source: knowledge_base/
+          Triggered by: ${{ github.event_name }}"
+
+          git push origin main
