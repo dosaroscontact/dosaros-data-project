@@ -22,8 +22,10 @@ function formatDateES(dateStr: string): string {
 
 function leagueColor(league: string): string {
   if (league === 'NBA') return 'bg-dos-orange/10 text-dos-orange-dark border-dos-orange/30'
+  if (league === 'WNBA') return 'bg-dos-orange/5 text-dos-orange border-dos-orange/40'
   if (league === 'EuroLeague') return 'bg-dos-magenta/10 text-dos-magenta border-dos-magenta/30'
-  return 'bg-dos-gray/10 text-dos-blue dark:text-dos-white border-dos-gray/30'
+  if (league === 'Europa') return 'bg-dos-magenta/5 text-dos-magenta border-dos-magenta/40'
+  return 'bg-dos-blue/10 text-dos-blue dark:text-dos-white border-dos-blue/20'
 }
 
 export default function AnalysisList({ analyses, allTags, activeTag }: Props) {
@@ -59,7 +61,7 @@ export default function AnalysisList({ analyses, allTags, activeTag }: Props) {
           <h1 className="text-3xl sm:text-4xl font-heading font-bold text-dos-blue dark:text-dos-white mb-3">
             Análisis Diarios
           </h1>
-          <p className="text-dos-gray-dark dark:text-dos-gray text-base sm:text-lg max-w-2xl mx-auto">
+          <p className="text-dos-blue/70 dark:text-dos-gray text-base sm:text-lg max-w-2xl mx-auto">
             Datos primero. Contexto después. Opinión al final.
             <br />
             Análisis NBA + EuroLeague publicados diariamente.
@@ -103,7 +105,7 @@ export default function AnalysisList({ analyses, allTags, activeTag }: Props) {
         {/* Articles list */}
         {analyses.length === 0 ? (
           <div className="text-center py-20">
-            <p className="text-dos-gray-dark dark:text-dos-gray text-lg">
+            <p className="text-dos-blue/70 dark:text-dos-gray text-lg">
               No hay análisis publicados todavía{activeTag ? ` con el tag "${activeTag}"` : ''}.
             </p>
           </div>
@@ -134,23 +136,23 @@ export default function AnalysisList({ analyses, allTags, activeTag }: Props) {
                     </header>
 
                     {analysis.summary && (
-                      <p className="text-dos-gray-dark dark:text-dos-gray mb-4 leading-relaxed">
+                      <p className="text-dos-blue/70 dark:text-dos-gray mb-4 leading-relaxed">
                         {analysis.summary}
                       </p>
                     )}
 
                     <div className="flex flex-wrap items-center gap-2 pt-4 border-t border-dos-gray/10 dark:border-dos-magenta/10">
-                      {analysis.sections.map((section, idx) => (
+                      {/* Mostrar leagues únicas (sin duplicados) */}
+                      {Array.from(new Set(analysis.sections.map((s) => s.league))).map((league) => (
                         <span
-                          key={idx}
-                          className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold border ${leagueColor(section.league)}`}
+                          key={league}
+                          className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold border ${leagueColor(league)}`}
                         >
-                          {section.icon && <span aria-hidden="true">{section.icon}</span>}
-                          {section.league}
+                          {league}
                         </span>
                       ))}
                       {analysis.tags.length > 0 && (
-                        <span className="text-xs text-dos-gray-dark dark:text-dos-gray ml-auto">
+                        <span className="text-xs text-dos-blue/70 dark:text-dos-gray ml-auto">
                           {analysis.tags.slice(0, 3).join(' · ')}
                         </span>
                       )}

@@ -35,7 +35,7 @@ export default function AnalysisArticle({ analysis }: Props) {
         >
           <Link
             href="/analisis"
-            className="inline-flex items-center gap-2 text-sm text-dos-gray-dark dark:text-dos-gray hover:text-dos-orange transition-colors"
+            className="inline-flex items-center gap-2 text-sm text-dos-blue/70 dark:text-dos-gray hover:text-dos-orange transition-colors"
           >
             ← Volver a análisis
           </Link>
@@ -58,7 +58,7 @@ export default function AnalysisArticle({ analysis }: Props) {
             {analysis.title}
           </h1>
           {analysis.summary && (
-            <p className="text-lg text-dos-gray-dark dark:text-dos-gray leading-relaxed">
+            <p className="text-lg text-dos-blue/70 dark:text-dos-gray leading-relaxed">
               {analysis.summary}
             </p>
           )}
@@ -96,7 +96,7 @@ export default function AnalysisArticle({ analysis }: Props) {
           transition={{ duration: prefersReducedMotion ? 0 : 0.6, delay: 0.4 }}
           className="mt-16 pt-8 border-t border-dos-gray/20 dark:border-dos-magenta/20 text-center"
         >
-          <p className="text-sm text-dos-gray-dark dark:text-dos-gray italic">
+          <p className="text-sm text-dos-blue/70 dark:text-dos-gray italic">
             <span className="font-bold text-dos-blue dark:text-dos-white">Dos Aros</span>
             {' · '}
             Donde la NBA y la EuroLeague se cruzan.

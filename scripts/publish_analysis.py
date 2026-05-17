@@ -42,12 +42,13 @@ MESES_ES = {
 
 # Tags conocidos a detectar en el cuerpo
 TAG_KEYWORDS = {
-    "NBA": ["NBA", "Spurs", "Lakers", "Celtics", "Warriors", "Wolves", "Thunder", "Knicks", "Heat", "Bucks"],
-    "EuroLeague": ["EuroLeague", "Euroliga", "Real Madrid", "Barcelona", "Valencia", "Olympiacos", "Panathinaikos", "Fenerbahçe", "Žalgiris"],
-    "Playoffs": ["Playoffs", "Game 1", "Game 2", "Game 3", "Game 4", "Game 5", "Game 6", "Game 7", "serie"],
-    "FinalFour": ["Final Four", "F4", "Atenas"],
-    "Finales": ["Finales", "Conference Finals", "NBA Finals"],
-    "RegularSeason": ["regular season", "temporada regular"],
+    "NBA": ["NBA", "Spurs", "Lakers", "Celtics", "Warriors", "Thunder", "Knicks", "Heat", "Bucks", "Timberwolves", "Wemby", "Wembanyama"],
+    "WNBA": ["WNBA", "Caitlin Clark", "Paige Bueckers", "A'ja Wilson", "Angel Reese"],
+    "EuroLeague": ["EuroLeague", "Euroliga", "Real Madrid", "Valencia Basket", "Olympiacos", "Panathinaikos", "Fenerbahçe", "Žalgiris"],
+    "Europa": ["FIBA", "Liga Endesa", "ACB", "EuroCup", "BCL"],
+    "Playoffs": ["Playoffs", "Game 1", "Game 2", "Game 3", "Game 4", "Game 5", "Game 6", "Game 7"],
+    "FinalFour": ["Final Four", "Atenas"],
+    "Finales": ["Finales del Oeste", "Finales del Este", "Conference Finals", "NBA Finals"],
 }
 
 
@@ -116,10 +117,23 @@ def extract_sections(content: str) -> list[dict]:
 
 
 def detect_league(icon: str, title: str) -> str:
-    """Detecta liga por icono o palabras clave."""
-    if "🇺🇸" in icon or any(k in title for k in ["NBA", "Spurs", "Lakers", "Game"]):
+    """Detecta liga por título primero (más específico), luego por icono."""
+    title_upper = title.upper()
+
+    # WNBA tiene prioridad sobre NBA (ambas usan bandera US)
+    if "WNBA" in title_upper:
+        return "WNBA"
+    # Europa genérico vs EuroLeague específico
+    if "EUROPA" in title_upper or "FIBA" in title_upper or "ACB" in title_upper:
+        return "Europa"
+    if "EUROLIGA" in title_upper or "EUROLEAGUE" in title_upper or "FINAL FOUR" in title_upper:
+        return "EuroLeague"
+    if "NBA" in title_upper or "FINALES" in title_upper or any(k in title for k in ["SPURS", "LAKERS", "Game"]):
         return "NBA"
-    if "🇪🇺" in icon or any(k in title for k in ["EUROLIGA", "Euroliga", "EuroLeague", "ACB"]):
+    # Fallback por bandera (menos preciso)
+    if "🇺🇸" in icon:
+        return "NBA"
+    if "🇪🇺" in icon:
         return "EuroLeague"
     return "General"
 
@@ -159,17 +173,19 @@ def clean_markdown_escapes(text: str) -> str:
 
 
 def generate_title(sections: list[dict], date: datetime) -> str:
-    """Genera título combinando primera frase de cada sección."""
+    """Genera título usando la primera sección (más limpio y enfocado)."""
     if not sections:
         return f"Análisis del {date.strftime('%d de %B de %Y')}"
-    parts = []
-    for s in sections[:2]:
-        if s["title"]:
-            # Limpiar escapes y truncar marcadores numéricos
-            t = clean_markdown_escapes(s["title"])
-            t = re.sub(r"\s+\d+\s*-\s*\d+.*$", "", t).strip()
-            parts.append(t)
-    return " · ".join(parts) if parts else f"Análisis del {date.strftime('%d/%m/%Y')}"
+
+    s = sections[0]
+    title = clean_markdown_escapes(s["title"])
+
+    # Si tiene subtitle descriptivo, usarlo: "SPURS vs THUNDER | Finales del Oeste"
+    if s.get("subtitle"):
+        subtitle = clean_markdown_escapes(s["subtitle"])
+        return f"{title} — {subtitle}"
+
+    return title
 
 
 def build_frontmatter(date: datetime, content: str, slug: str) -> str:

@@ -49,6 +49,17 @@ function walkMarkdownFiles(dir: string): string[] {
 /**
  * Lee y parsea un .md de análisis
  */
+/**
+ * Elimina emojis de bandera unicode que no renderizan en todas las plataformas (Windows).
+ * Mantiene otros emojis. El branding por color ya distingue las ligas.
+ */
+function stripFlagEmojis(text: string): string {
+  // Regional indicators (banderas): U+1F1E6–U+1F1FF
+  // EU flag: U+1F1EA U+1F1FA
+  const flagRegex = /(?:\uD83C[\uDDE6-\uDDFF]){2}\s*/g
+  return text.replace(flagRegex, '')
+}
+
 function parseAnalysisFile(filePath: string): Analysis | null {
   try {
     const raw = fs.readFileSync(filePath, 'utf-8')
@@ -72,7 +83,7 @@ function parseAnalysisFile(filePath: string): Analysis | null {
       tags: Array.isArray(data.tags) ? data.tags.map(String) : [],
       sections: Array.isArray(data.sections) ? data.sections : [],
       published: data.published !== false,
-      content,
+      content: stripFlagEmojis(content),
     }
   } catch (err) {
     console.error(`Error parsing ${filePath}:`, err)

@@ -1,9 +1,9 @@
 ---
-date: 2026-05-16
-title: "SPURS 139 - TIMBERWOLVES 109 · EUROLIGA"
+date: "2026-05-16"
+title: "SPURS 139 - TIMBERWOLVES 109 — Game 6"
 slug: 2026-05-16-spurs-139-timberwolves-109
 summary: "Stephon Castle metió 32 puntos para cerrar una serie de playoffs. A domicilio. Con 21 años."
-tags: [EuroLeague, FinalFour, Finales, NBA, Playoffs, RegularSeason]
+tags: [EuroLeague, Europa, FinalFour, Finales, NBA, Playoffs]
 sections:
   - league: NBA
     icon: "🇺🇸"

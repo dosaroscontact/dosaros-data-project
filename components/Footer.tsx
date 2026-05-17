@@ -41,12 +41,12 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="/comunidad" className="hover:text-dos-orange transition-colors">
-                  Comunidad
+                <a href="/competiciones" className="hover:text-dos-orange transition-colors">
+                  Competiciones
                 </a>
               </li>
               <li>
-                <a href="/#productos" className="hover:text-dos-orange transition-colors">
+                <a href="/productos" className="hover:text-dos-orange transition-colors">
                   Productos
                 </a>
               </li>
