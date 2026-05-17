@@ -50,14 +50,13 @@ function walkMarkdownFiles(dir: string): string[] {
  * Lee y parsea un .md de análisis
  */
 /**
- * Elimina emojis de bandera unicode que no renderizan en todas las plataformas (Windows).
- * Mantiene otros emojis. El branding por color ya distingue las ligas.
+ * Elimina emojis decorativos al inicio de los H2 (banderas, círculos, etc.)
+ * que no renderizan consistentemente en todas las plataformas.
+ * El branding por color ya distingue las ligas en los badges.
  */
 function stripFlagEmojis(text: string): string {
-  // Regional indicators (banderas): U+1F1E6–U+1F1FF
-  // EU flag: U+1F1EA U+1F1FA
-  const flagRegex = /(?:\uD83C[\uDDE6-\uDDFF]){2}\s*/g
-  return text.replace(flagRegex, '')
+  // Solo strip al INICIO de líneas H2 (## ...)
+  return text.replace(/^(##\s+)((?:\uD83C[\uDDE6-\uDDFF]){2}|🟠|🟡|🟢|🔵|🟣|🔴|⚫|⚪)\s*/gm, '$1')
 }
 
 function parseAnalysisFile(filePath: string): Analysis | null {

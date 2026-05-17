@@ -46,6 +46,7 @@ TAG_KEYWORDS = {
     "WNBA": ["WNBA", "Caitlin Clark", "Paige Bueckers", "A'ja Wilson", "Angel Reese"],
     "EuroLeague": ["EuroLeague", "Euroliga", "Real Madrid", "Valencia Basket", "Olympiacos", "Panathinaikos", "Fenerbahçe", "Žalgiris"],
     "Europa": ["FIBA", "Liga Endesa", "ACB", "EuroCup", "BCL"],
+    "LigaFemenina": ["Femenino", "Femenina", "Valencia Basket femenino", "Liga Femenina", "Awa Fam", "Roig Arena"],
     "Playoffs": ["Playoffs", "Game 1", "Game 2", "Game 3", "Game 4", "Game 5", "Game 6", "Game 7"],
     "FinalFour": ["Final Four", "Atenas"],
     "Finales": ["Finales del Oeste", "Finales del Este", "Conference Finals", "NBA Finals"],
@@ -120,6 +121,9 @@ def detect_league(icon: str, title: str) -> str:
     """Detecta liga por título primero (más específico), luego por icono."""
     title_upper = title.upper()
 
+    # Liga Femenina (España) — palabra clave o icono naranja
+    if "FEMENINO" in title_upper or "FEMENINA" in title_upper or "🟠" in icon:
+        return "Liga Femenina"
     # WNBA tiene prioridad sobre NBA (ambas usan bandera US)
     if "WNBA" in title_upper:
         return "WNBA"

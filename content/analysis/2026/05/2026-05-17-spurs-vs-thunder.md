@@ -3,7 +3,7 @@ date: "2026-05-17"
 title: "SPURS vs THUNDER — Finales del Oeste"
 slug: 2026-05-17-spurs-vs-thunder
 summary: "La NBA llevaba años vendiéndonos \"el futuro\"."
-tags: [EuroLeague, Europa, Finales, NBA, Playoffs, WNBA]
+tags: [EuroLeague, Europa, Finales, LigaFemenina, NBA, Playoffs, WNBA]
 sections:
   - league: NBA
     icon: "🇺🇸"
@@ -17,6 +17,10 @@ sections:
     icon: "🇪🇺"
     title: "EUROPA"
     subtitle: "El verano del miedo para muchos grandes"
+  - league: Liga Femenina
+    icon: "🟠"
+    title: "VALENCIA BASKET FEMENINO"
+    subtitle: "El Roig Arena ya tiene su primera dinastía"
 published: true
 ---
 # 🏀 DOS AROS — 17 de mayo de 2026
@@ -187,6 +191,86 @@ y parece que ha caído el gobierno.
 
 Y sinceramente:
 eso también tiene su encanto.
+
+## 🟠 VALENCIA BASKET FEMENINO | El Roig Arena ya tiene su primera dinastía
+
+El Valencia Basket femenino acaba de ganar su cuarta Liga consecutiva.
+
+Cuarta.
+
+En España hay clubes históricos que tardaron décadas en construir eso.
+Valencia lo ha convertido en rutina.
+
+Y lo más bestia es cómo llegó el título:
+canasta ganadora sobre la bocina de Yvonne Anderson.
+68-67.
+Final igualadísima.
+Roig Arena explotando.
+
+El equipo de Rubén Burgos ya no es "el proyecto serio".
+Ya no es "el club que está creciendo".
+Eso murió hace tiempo.
+
+Ahora son el estándar.
+
+Lo curioso es que el femenino del Valencia ha construido algo que muchos clubes europeos masculinos persiguen desde hace años:
+continuidad.
+
+Porque ganar un año puede ser una buena plantilla.
+Ganar cuatro seguidos ya es cultura competitiva.
+
+Y además lo han hecho mientras media Europa les va desmontando el roster cada verano.
+
+WNBA.
+EuroLeague.
+Mercado.
+Selecciones.
+
+Da igual.
+
+Siempre vuelven.
+
+Siempre compiten.
+
+Y siempre llegan a mayo pareciendo el equipo más estable emocionalmente del país.
+
+Eso en baloncesto femenino europeo vale oro.
+
+Awa Fam se despide rumbo a la WNBA con otro título.
+
+Y ahí hay otro detalle importante:
+Valencia ya produce talento que no solo domina España.
+Produce talento exportable al máximo nivel.
+
+Hace no tanto el objetivo era competir contra Avenida o Girona.
+
+Ahora el objetivo real del club es mucho más ambicioso:
+convertirse en una potencia estructural europea.
+
+Porque sí:
+este año en EuroLeague Women se quedaron fuera antes de la Final Six.
+
+Pero el contexto importa.
+
+El club femenino:
+
+- juega ya en el Roig Arena
+- encadena títulos nacionales
+- tiene estabilidad institucional
+- mantiene identidad de juego
+- y cada año atrae más talento internacional.
+
+Y mientras muchos equipos europeos sobreviven…
+
+Valencia parece planificado a diez años.
+
+Eso en deporte europeo casi da más miedo que un pick and roll de Wemby.
+
+Porque los proyectos normales tienen picos.
+
+Las dinastías tienen estructura.
+
+Y ahora mismo el Valencia Basket femenino huele muchísimo más a lo segundo que a lo primero.
 
 ---
 

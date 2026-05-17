@@ -25,6 +25,7 @@ function leagueColor(league: string): string {
   if (league === 'WNBA') return 'bg-dos-orange/5 text-dos-orange border-dos-orange/40'
   if (league === 'EuroLeague') return 'bg-dos-magenta/10 text-dos-magenta border-dos-magenta/30'
   if (league === 'Europa') return 'bg-dos-magenta/5 text-dos-magenta border-dos-magenta/40'
+  if (league === 'Liga Femenina') return 'bg-dos-blue/10 text-dos-blue dark:bg-dos-blue/30 dark:text-dos-white border-dos-blue/30'
   return 'bg-dos-blue/10 text-dos-blue dark:text-dos-white border-dos-blue/20'
 }
 
