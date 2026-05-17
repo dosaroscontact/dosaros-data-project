@@ -1,7 +1,7 @@
 # CLAUDE.md
 
 > ⚠️ **AUTO-GENERADO desde Obsidian** — No editar manualmente.
-> Fuente: `knowledge_base/` · Última sincronización: 2026-05-17 20:15:26
+> Fuente: `knowledge_base/` · Última sincronización: 2026-05-17 20:32:23
 > Para editar: modificar archivos en `knowledge_base/` y ejecutar `python scripts/sync_obsidian_to_claude.py`
 
 ---
@@ -88,12 +88,25 @@ Asistir en el desarrollo y mantenimiento de DOS AROS, un sistema de investigaci�
 - **Historial**: ✅ Limpio (BFG aplicado 2026-05-17)
 - **Auto-deploy**: Configurado para Vercel (push a main → deploy)
 
-#### Producción (Vercel)
-- **URL temporal**: `dosaros-data-project.vercel.app` (tras primer import)
-- **URL final**: `dosaros.com` (cuando DNS DonDominio propague)
+#### Producción (Vercel) ✅ LIVE
+- **URL principal**: `https://www.dosaros.com` ✅
+- **URL Vercel**: `dosaros-data-project.vercel.app`
+- **DNS**: DonDominio configurado (A + wildcard CNAME) ✅
+- **SSL**: Let's Encrypt auto ✅
 - **vercel.json**: Configurado con `--legacy-peer-deps` y región `fra1`
-- **GTM**: `GTM-MWDXWXZN` integrado en todas las páginas
+- **Auto-deploy**: Cada push a `main` se despliega automáticamente
 - **Setup paso a paso**: ../Workflows/Vercel Deployment
+
+#### Analytics (GA4 + GTM) ✅ ACTIVO
+- **GTM Container**: `GTM-MWDXWXZN` (todas las páginas)
+- **GA4**: Conectado vía GTM
+- **9 eventos custom** instrumentados:
+  page_view, nav_clicked, cta_clicked, product_interest,
+  category_changed, analysis_clicked, tag_filter_clicked,
+  form_submitted, social_clicked
+- **21 Data Layer Variables** + **9 Triggers** + **10 Tags** en GTM
+- **Tracking plan completo**: ../Workflows/Analytics Tracking Plan
+- **Container exportable**: `gtm-container-export.json`
 
 ---
 
