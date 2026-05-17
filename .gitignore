@@ -45,6 +45,13 @@ env/
 *~
 .DS_Store
 
+# Next.js build artifacts (NO commitear)
+.next/
+out/
+.vercel/
+*.tsbuildinfo
+node_modules/
+
 # Data temporales y locales
 *.db
 *.sqlite
