@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
+import { trackEvent, type NavLocation, type SocialLocation } from '@/lib/analytics'
 
 const SocialLinks = [
   {
@@ -18,8 +19,34 @@ const SocialLinks = [
   },
 ]
 
+const NAV_LINKS = [
+  { text: 'Análisis', href: '/analisis' },
+  { text: 'Predicciones', href: '/predicciones' },
+  { text: 'Competiciones', href: '/competiciones' },
+  { text: 'Productos', href: '/productos' },
+  { text: 'Contacto', href: '/contact' },
+] as const
+
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
+
+  const handleNavClick = (text: string, href: string, location: NavLocation) => {
+    trackEvent({
+      event: 'nav_clicked',
+      link_text: text,
+      link_url: href,
+      nav_location: location,
+    })
+  }
+
+  const handleSocialClick = (platform: 'twitter' | 'instagram', handle: string, location: SocialLocation) => {
+    trackEvent({
+      event: 'social_clicked',
+      platform,
+      handle,
+      location,
+    })
+  }
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-dos-white/95 dark:bg-dos-blue/95 backdrop-blur-md border-b border-dos-gray/20 dark:border-dos-magenta/20 shadow-sm">
@@ -44,11 +71,16 @@ export default function Navbar() {
         </a>
 
         <div className="hidden md:flex items-center gap-8">
-          <a href="/analisis" className="text-dos-blue dark:text-dos-gray font-body text-sm font-medium hover:text-dos-orange transition-colors">Análisis</a>
-          <a href="/predicciones" className="text-dos-blue dark:text-dos-gray font-body text-sm font-medium hover:text-dos-orange transition-colors">Predicciones</a>
-          <a href="/competiciones" className="text-dos-blue dark:text-dos-gray font-body text-sm font-medium hover:text-dos-orange transition-colors">Competiciones</a>
-          <a href="/productos" className="text-dos-blue dark:text-dos-gray font-body text-sm font-medium hover:text-dos-orange transition-colors">Productos</a>
-          <a href="/contact" className="text-dos-blue dark:text-dos-gray font-body text-sm font-medium hover:text-dos-orange transition-colors">Contacto</a>
+          {NAV_LINKS.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              onClick={() => handleNavClick(link.text, link.href, 'header_desktop')}
+              className="text-dos-blue dark:text-dos-gray font-body text-sm font-medium hover:text-dos-orange transition-colors"
+            >
+              {link.text}
+            </a>
+          ))}
         </div>
 
         <div className="flex items-center gap-3 sm:gap-6">
@@ -58,6 +90,7 @@ export default function Navbar() {
               href={social.href}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => handleSocialClick(social.name.toLowerCase() as 'twitter' | 'instagram', social.account, 'navbar')}
               className="flex items-center gap-2 text-dos-blue dark:text-dos-white hover:opacity-80 transition-opacity"
               aria-label={`Seguir en ${social.account}`}
               title={social.account}
@@ -82,11 +115,16 @@ export default function Navbar() {
       {isOpen && (
         <div className="md:hidden bg-dos-white dark:bg-dos-blue-dark border-t">
           <div className="px-4 py-4 space-y-3">
-            <a href="/analisis" className="block px-4 py-2 text-dos-blue dark:text-dos-white text-sm hover:text-dos-orange dark:hover:text-dos-orange">Análisis</a>
-            <a href="/predicciones" className="block px-4 py-2 text-dos-blue dark:text-dos-white text-sm hover:text-dos-orange dark:hover:text-dos-orange">Predicciones</a>
-            <a href="/competiciones" className="block px-4 py-2 text-dos-blue dark:text-dos-white text-sm hover:text-dos-orange dark:hover:text-dos-orange">Competiciones</a>
-            <a href="/productos" className="block px-4 py-2 text-dos-blue dark:text-dos-white text-sm hover:text-dos-orange dark:hover:text-dos-orange">Productos</a>
-            <a href="/contact" className="block px-4 py-2 text-dos-blue dark:text-dos-white text-sm hover:text-dos-orange dark:hover:text-dos-orange">Contacto</a>
+            {NAV_LINKS.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={() => handleNavClick(link.text, link.href, 'header_mobile')}
+                className="block px-4 py-2 text-dos-blue dark:text-dos-white text-sm hover:text-dos-orange dark:hover:text-dos-orange"
+              >
+                {link.text}
+              </a>
+            ))}
             <div className="border-t border-dos-gray/20 dark:border-dos-magenta/20 mt-4 pt-4 flex gap-4">
               {SocialLinks.map((social) => (
                 <a
@@ -94,6 +132,7 @@ export default function Navbar() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => handleSocialClick(social.name.toLowerCase() as 'twitter' | 'instagram', social.account, 'mobile_menu')}
                   className="text-dos-blue dark:text-dos-gray hover:opacity-80 transition-opacity"
                   aria-label={`Seguir en ${social.name}`}
                   title={social.name}

@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import { trackEvent } from '@/lib/analytics'
 
 interface ProductCategory {
   id: string
@@ -150,7 +151,14 @@ export default function ProductCatalog() {
           {products.map((category) => (
             <button
               key={category.id}
-              onClick={() => setSelectedCategoryId(category.id)}
+              onClick={() => {
+                setSelectedCategoryId(category.id)
+                trackEvent({
+                  event: 'category_changed',
+                  category_id: category.id,
+                  category_name: category.name,
+                })
+              }}
               className={`px-4 py-2 rounded-lg font-heading font-bold text-sm transition-all ${
                 selectedCategoryId === category.id
                   ? 'bg-dos-orange text-dos-blue'
@@ -225,6 +233,12 @@ export default function ProductCatalog() {
                     )}
                     <Link
                       href={`/contact?product=${encodeURIComponent(productName)}`}
+                      onClick={() => trackEvent({
+                        event: 'product_interest',
+                        product_name: productName,
+                        product_category: selected.name,
+                        action: 'view_disponibilidad',
+                      })}
                       className="block w-full px-4 py-2.5 bg-dos-orange hover:opacity-90 text-dos-blue font-heading font-bold rounded-lg transition-opacity duration-300 active:scale-95 text-sm text-center"
                       aria-label={`Consultar disponibilidad de ${productName}`}
                     >

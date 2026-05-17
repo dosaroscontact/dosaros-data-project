@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
+import PageViewTracker from '@/components/PageViewTracker'
 import './globals.css'
 
 const GTM_ID = 'GTM-MWDXWXZN'
@@ -60,6 +61,7 @@ export default function RootLayout({
         <a href="#main-content" className="sr-only">
           Saltar al contenido principal
         </a>
+        <PageViewTracker />
         {children}
       </body>
     </html>

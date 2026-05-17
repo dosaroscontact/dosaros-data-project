@@ -4,6 +4,7 @@ import { Suspense, useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { useReducedMotion } from '@/lib/hooks'
+import { trackEvent } from '@/lib/analytics'
 
 function buildProductMessage(product: string) {
   return `Hola, me interesa: ${product}. ¿Cuáles son las opciones disponibles (talla, stock) y el precio? Gracias.`
@@ -61,13 +62,31 @@ function ContactFormInner() {
       })
 
       if (response.ok) {
+        trackEvent({
+          event: 'form_submitted',
+          form_name: 'contact',
+          status: 'success',
+          source_product: productParam || undefined,
+        })
         setSubmitted(true)
         setFormData({ nombre: '', email: '', mensaje: '' })
         setTimeout(() => setSubmitted(false), 5000)
       } else {
+        trackEvent({
+          event: 'form_submitted',
+          form_name: 'contact',
+          status: 'error',
+          source_product: productParam || undefined,
+        })
         setError('Error al enviar el mensaje. Por favor intenta nuevamente.')
       }
     } catch (err) {
+      trackEvent({
+        event: 'form_submitted',
+        form_name: 'contact',
+        status: 'error',
+        source_product: productParam || undefined,
+      })
       setError('Error al enviar el mensaje. Por favor intenta nuevamente.')
     } finally {
       setLoading(false)

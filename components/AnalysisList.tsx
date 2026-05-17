@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { useReducedMotion } from '@/lib/hooks'
 import type { AnalysisMeta } from '@/lib/analysis'
+import { trackEvent } from '@/lib/analytics'
 
 interface Props {
   analyses: AnalysisMeta[]
@@ -79,6 +80,7 @@ export default function AnalysisList({ analyses, allTags, activeTag }: Props) {
           >
             <Link
               href="/analisis"
+              onClick={() => trackEvent({ event: 'tag_filter_clicked', tag_name: 'todos' })}
               className={`px-4 py-2 rounded-lg font-heading font-bold text-sm transition-all ${
                 !activeTag
                   ? 'bg-dos-blue text-dos-white'
@@ -91,6 +93,7 @@ export default function AnalysisList({ analyses, allTags, activeTag }: Props) {
               <Link
                 key={tag}
                 href={`/analisis?tag=${encodeURIComponent(tag)}`}
+                onClick={() => trackEvent({ event: 'tag_filter_clicked', tag_name: tag })}
                 className={`px-4 py-2 rounded-lg font-heading font-bold text-sm transition-all ${
                   activeTag?.toLowerCase() === tag.toLowerCase()
                     ? 'bg-dos-orange text-dos-blue'
@@ -121,6 +124,12 @@ export default function AnalysisList({ analyses, allTags, activeTag }: Props) {
               <motion.li key={analysis.slug} variants={itemVariants}>
                 <Link
                   href={`/analisis/${analysis.slug}`}
+                  onClick={() => trackEvent({
+                    event: 'analysis_clicked',
+                    analysis_slug: analysis.slug,
+                    analysis_title: analysis.title,
+                    analysis_date: analysis.date,
+                  })}
                   className="block group"
                 >
                   <article className="rounded-xl border-2 border-dos-gray/20 dark:border-dos-magenta/20 bg-dos-white dark:bg-dos-blue-dark/50 p-6 sm:p-8 hover:border-dos-orange/50 hover:shadow-lg transition-all">

@@ -1,12 +1,26 @@
+'use client'
+
+import { trackEvent } from '@/lib/analytics'
+
+const FOOTER_LINKS = [
+  { text: 'Análisis', href: '/analisis' },
+  { text: 'Predicciones', href: '/predicciones' },
+  { text: 'Competiciones', href: '/competiciones' },
+  { text: 'Productos', href: '/productos' },
+  { text: 'Contacto', href: '/contact' },
+] as const
+
 const SocialLinks = [
   {
-    name: 'X',
+    name: 'X' as const,
+    platform: 'twitter' as const,
     account: '@dos_aros',
     href: 'https://twitter.com/dos_aros',
     icon: '/twitter.svg',
   },
   {
-    name: 'Instagram',
+    name: 'Instagram' as const,
+    platform: 'instagram' as const,
     account: '@dosaros_basket',
     href: 'https://instagram.com/dosaros_basket',
     icon: '/instagram.svg',
@@ -30,31 +44,22 @@ export default function Footer() {
           <div>
             <h4 className="font-heading font-bold text-sm mb-3">Producto</h4>
             <ul className="space-y-2 text-sm text-dos-gray">
-              <li>
-                <a href="/analisis" className="hover:text-dos-orange transition-colors">
-                  Análisis
-                </a>
-              </li>
-              <li>
-                <a href="/predicciones" className="hover:text-dos-orange transition-colors">
-                  Predicciones
-                </a>
-              </li>
-              <li>
-                <a href="/competiciones" className="hover:text-dos-orange transition-colors">
-                  Competiciones
-                </a>
-              </li>
-              <li>
-                <a href="/productos" className="hover:text-dos-orange transition-colors">
-                  Productos
-                </a>
-              </li>
-              <li>
-                <a href="/contact" className="hover:text-dos-orange transition-colors">
-                  Contacto
-                </a>
-              </li>
+              {FOOTER_LINKS.map((link) => (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    onClick={() => trackEvent({
+                      event: 'nav_clicked',
+                      link_text: link.text,
+                      link_url: link.href,
+                      nav_location: 'footer',
+                    })}
+                    className="hover:text-dos-orange transition-colors"
+                  >
+                    {link.text}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -68,6 +73,12 @@ export default function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackEvent({
+                    event: 'social_clicked',
+                    platform: social.platform,
+                    handle: social.account,
+                    location: 'footer',
+                  })}
                   className="text-dos-gray hover:text-dos-orange transition-colors"
                   aria-label={`Seguir en ${social.account}`}
                   title={social.account}

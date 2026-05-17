@@ -3,9 +3,19 @@
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { useReducedMotion } from '@/lib/hooks'
+import { trackEvent, type CtaLocation } from '@/lib/analytics'
 
 export default function Hero() {
   const prefersReducedMotion = useReducedMotion()
+
+  const handleCtaClick = (text: string, location: CtaLocation, destination: string) => {
+    trackEvent({
+      event: 'cta_clicked',
+      cta_text: text,
+      cta_location: location,
+      destination,
+    })
+  }
 
   const logoVariants = {
     hidden: { opacity: 0 },
@@ -91,6 +101,7 @@ export default function Hero() {
         >
           <a
             href="/contact"
+            onClick={() => handleCtaClick('Explora partidos en vivo', 'hero_primary', '/contact')}
             className="w-full sm:w-auto px-8 py-3 bg-dos-orange text-dos-blue font-heading font-bold rounded-lg hover:opacity-90 focus:outline-2 focus:outline-offset-2 focus:outline-dos-magenta transition-opacity duration-300 active:scale-95 min-h-[48px] sm:min-h-[44px] flex items-center justify-center"
             aria-label="Explorar partidos en vivo"
           >
@@ -98,6 +109,7 @@ export default function Hero() {
           </a>
           <a
             href="/productos"
+            onClick={() => handleCtaClick('Productos', 'hero_secondary', '/productos')}
             className="w-full sm:w-auto px-8 py-3 border-2 border-dos-magenta text-dos-white font-heading font-bold rounded-lg hover:bg-dos-magenta/10 focus:outline-2 focus:outline-offset-2 focus:outline-dos-magenta transition-colors duration-300 active:scale-95 min-h-[48px] sm:min-h-[44px] flex items-center justify-center"
             aria-label="Ver productos DOS AROS"
           >
