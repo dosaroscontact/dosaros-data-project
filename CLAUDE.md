@@ -1,7 +1,7 @@
 # CLAUDE.md
 
 > ⚠️ **AUTO-GENERADO desde Obsidian** — No editar manualmente.
-> Fuente: `knowledge_base/` · Última sincronización: 2026-05-18 18:39:53
+> Fuente: `knowledge_base/` · Última sincronización: 2026-05-18 19:09:27
 > Para editar: modificar archivos en `knowledge_base/` y ejecutar `python scripts/sync_obsidian_to_claude.py`
 
 ---
@@ -96,6 +96,14 @@ Asistir en el desarrollo y mantenimiento de DOS AROS, un sistema de investigaci�
 - **vercel.json**: Configurado con `--legacy-peer-deps` y región `fra1`
 - **Auto-deploy**: Cada push a `main` se despliega automáticamente
 - **Setup paso a paso**: ../Workflows/Vercel Deployment
+
+#### Contact Form ✅ FUNCIONANDO (2026-05-18)
+- **Endpoint**: `/api/contact`
+- **Proveedor**: SMTP DonDominio (`smtp.dondominio.com:587`)
+- **From**: `contact@dosaros.com`
+- **Fallbacks**: Web3Forms → FormSubmit
+- **Email branded** HTML con paleta DOS AROS
+- **Setup completo**: ../Workflows/Contact Form Setup
 
 #### Analytics (GA4 + GTM) ✅ ACTIVO
 - **GTM Container**: `GTM-MWDXWXZN` (todas las páginas)
