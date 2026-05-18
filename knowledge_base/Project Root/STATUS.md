@@ -39,6 +39,14 @@
 - **Auto-deploy**: Cada push a `main` se despliega automáticamente
 - **Setup paso a paso**: [[../Workflows/Vercel Deployment]]
 
+### Contact Form ✅ FUNCIONANDO (2026-05-18)
+- **Endpoint**: `/api/contact`
+- **Proveedor**: SMTP DonDominio (`smtp.dondominio.com:587`)
+- **From**: `contact@dosaros.com`
+- **Fallbacks**: Web3Forms → FormSubmit
+- **Email branded** HTML con paleta DOS AROS
+- **Setup completo**: [[../Workflows/Contact Form Setup]]
+
 ### Analytics (GA4 + GTM) ✅ ACTIVO
 - **GTM Container**: `GTM-MWDXWXZN` (todas las páginas)
 - **GA4**: Conectado vía GTM

@@ -34,6 +34,40 @@ Histórico de cambios significativos del proyecto.
 
 ---
 
+## [2026-05-18] — Lanzamiento Listo + Contact Form Operativo
+
+### Added
+- **Campaña de lanzamiento completa** en `assets/launch-campaign/`:
+  - 3 imágenes (Story 1080x1920, Twitter 1200x675, IG Square 1080x1080)
+  - 3 videos MP4 (Reel, Square, Horizontal) — 25s con Remotion
+  - Diseño editorial minimalist con assets oficiales (logo + lettering naranja + catálogo)
+- **Plan social 10 días** con captions ready-to-copy por plataforma
+- **UTMs + redirector** `dosaros.com/r/<slug>` (25 URLs cortas, edge-served)
+- **Sistema email contact form 3-tier cascade**:
+  1. SMTP DonDominio (`smtp.dondominio.com:587`)
+  2. Web3Forms (fallback)
+  3. FormSubmit (último recurso)
+- **Email HTML branded** con paleta DOS AROS y Reply-To
+- **GA4 Conversions guide** (form_submitted, product_interest, analysis_clicked)
+- **Knowledge base** ampliado:
+  - `Launch Social Plan.md`
+  - `Launch UTM Tracking Links.md`
+  - `GA4 Conversions Setup.md`
+  - `Contact Form Setup.md`
+
+### Fixed
+- `route.ts` SMTP_HOST corregido a `smtp.dondominio.com` (no `mailsrv1...`)
+- FormSubmit caído → migrado a SMTP DonDominio
+- Container GTM publicado y enviando eventos a GA4 (G-EYPB37DEGE)
+
+### Verified
+- ✅ GA4 recibiendo eventos custom (probado con `nav_clicked`)
+- ✅ Form contact enviando emails desde dominio propio
+- ✅ Redirects /r/* funcionando en producción
+- ✅ Assets de campaña usando recursos oficiales del proyecto
+
+---
+
 ## [2026-05-17] — Sistema Tracking GTM/GA4 Completo
 
 ### Added
