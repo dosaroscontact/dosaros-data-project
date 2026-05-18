@@ -48,7 +48,7 @@ El sistema usa el primero que tenga credenciales válidas.
 
 | Campo | Valor |
 |-------|-------|
-| **Servidor SMTP** | `mailsrv1.dondominio.com` |
+| **Servidor SMTP** | `smtp.dondominio.com` |
 | **Puerto** | `587` (STARTTLS) |
 | **Usuario** | `contact@dosaros.com` |
 | **Contraseña** | la del email |
@@ -64,7 +64,7 @@ Añade estas **5 variables**:
 
 | Key | Value | Environments |
 |-----|-------|--------------|
-| `SMTP_HOST` | `mailsrv1.dondominio.com` | Production, Preview, Development |
+| `SMTP_HOST` | `smtp.dondominio.com` | Production, Preview, Development |
 | `SMTP_PORT` | `587` | Production, Preview, Development |
 | `SMTP_USER` | `contact@dosaros.com` | Production, Preview, Development |
 | `SMTP_PASS` | (tu contraseña) | Production (solo, por seguridad) |
@@ -106,7 +106,7 @@ Para probar SMTP en local antes de subir:
 1. Crea archivo `.env.local` en raíz del proyecto:
 
 ```
-SMTP_HOST=mailsrv1.dondominio.com
+SMTP_HOST=smtp.dondominio.com
 SMTP_PORT=587
 SMTP_USER=contact@dosaros.com
 SMTP_PASS=tu-contraseña-aqui
