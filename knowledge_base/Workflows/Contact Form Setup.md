@@ -5,132 +5,189 @@
 
 ---
 
-## 🎯 Arquitectura
+## 🎯 Arquitectura (Cascade de Proveedores)
 
 ```
 Usuario rellena form
       ↓
-POST /api/contact  (route.ts)
+POST /api/contact
       ↓
-Web3Forms (PRIMARIO) ← gratis, fiable
-      ↓
-Si falla: FormSubmit.co (FALLBACK)
-      ↓
-Si falla: error UI con fallback email manual
-      ↓
-✉️ dosaroscontact@gmail.com
+1️⃣ SMTP DonDominio  (recomendado, dominio propio)
+      ↓ falla
+2️⃣ Web3Forms        (gratis, fallback)
+      ↓ falla
+3️⃣ FormSubmit       (último recurso)
+      ↓ falla
+🆘 Error UI con email manual: dosaroscontact@gmail.com
 ```
+
+El sistema usa el primero que tenga credenciales válidas.
 
 ---
 
-## 🔧 Configurar Web3Forms (Recomendado — 3 min)
+## ⭐ Setup Recomendado: SMTP DonDominio
 
-Web3Forms es más fiable que FormSubmit y tiene 250 envíos/mes gratis.
+**Ventajas vs servicios externos**:
+- ✅ Usa tu dominio propio (`contact@dosaros.com`)
+- ✅ Sin límites de mensajes
+- ✅ Sin dependencia de terceros
+- ✅ Ya está pagado (incluido con DonDominio)
+- ✅ Más profesional ("from contact@dosaros.com" vs "from form@web3forms.com")
 
-### Paso 1 — Crear cuenta
+### Paso 1 — Crear/Verificar email en DonDominio
 
-1. 👉 https://web3forms.com
-2. Click **"Get Started Free"** o **"Create Access Key"**
-3. Introduce tu email: `dosaroscontact@gmail.com`
-4. Confirma el email (te llega un access key)
+1. 👉 https://www.dondominio.com/panel/
+2. Login → **Mis dominios** → `dosaros.com`
+3. **Correo** o **Email** en el menú lateral
+4. Verificar que existe `contact@dosaros.com` (o crearlo)
+5. **Copiar la contraseña** (la necesitarás en Vercel)
 
-### Paso 2 — Copiar el Access Key
+⚠️ Si no recuerdas la contraseña, puedes resetearla desde el panel de DonDominio.
 
-Te darán un código tipo: `abc12345-def6-7890-ghij-klmn0pqrstuv`
+### Paso 2 — Datos SMTP de DonDominio
 
-### Paso 3 — Añadir como env var en Vercel
+| Campo | Valor |
+|-------|-------|
+| **Servidor SMTP** | `mailsrv1.dondominio.com` |
+| **Puerto** | `587` (STARTTLS) |
+| **Usuario** | `contact@dosaros.com` |
+| **Contraseña** | la del email |
+| **Seguridad** | STARTTLS |
 
-1. 👉 https://vercel.com/dashboard
-2. Click en tu proyecto `dosaros-data-project`
-3. **Settings → Environment Variables**
-4. **Add New**:
-   - **Key**: `WEB3FORMS_ACCESS_KEY`
-   - **Value**: (pega tu access key)
-   - **Environments**: marcar `Production`, `Preview`, `Development`
-5. **Save**
+Alternativa con SSL: puerto `465` (más legacy)
+
+### Paso 3 — Añadir env vars en Vercel
+
+👉 https://vercel.com/dashboard → tu proyecto → **Settings → Environment Variables**
+
+Añade estas **5 variables**:
+
+| Key | Value | Environments |
+|-----|-------|--------------|
+| `SMTP_HOST` | `mailsrv1.dondominio.com` | Production, Preview, Development |
+| `SMTP_PORT` | `587` | Production, Preview, Development |
+| `SMTP_USER` | `contact@dosaros.com` | Production, Preview, Development |
+| `SMTP_PASS` | (tu contraseña) | Production (solo, por seguridad) |
+| `CONTACT_EMAIL` | `contact@dosaros.com` | Production, Preview, Development |
+
+⚠️ `SMTP_PASS` **solo en Production** para que no se exponga en preview deployments.
 
 ### Paso 4 — Redeploy
 
-Vercel necesita re-desplegar para usar la nueva env var:
-
-1. **Deployments** (menú izquierda)
-2. Último deployment → **...** (tres puntos) → **Redeploy**
+1. Vercel → **Deployments**
+2. Último deployment → **...** → **Redeploy**
 3. Esperar ~2 min
 
 ### Paso 5 — Verificar
 
-```bash
-curl -X POST "https://www.dosaros.com/api/contact" \
-  -H "Content-Type: application/json" \
-  -d '{"nombre":"Test","email":"test@example.com","mensaje":"Hola"}'
-```
+Visita https://www.dosaros.com/contact en incógnito, rellena el form, envía.
 
-Esperado: `{"success":true,...}`
+Deberías recibir el email en `contact@dosaros.com` con formato bonito:
+
+```
+┌─────────────────────────────────────────┐
+│ DOS AROS                                │
+│ Nuevo mensaje desde dosaros.com         │
+├─────────────────────────────────────────┤
+│ NOMBRE   │ Test User                    │
+│ EMAIL    │ test@example.com             │
+│ MENSAJE  │ Hola, me interesa...         │
+├─────────────────────────────────────────┤
+│ dosaros.com                             │
+└─────────────────────────────────────────┘
+```
 
 ---
 
-## 🔄 Fallback Automático
+## 🧪 Test Local (sin Vercel)
 
-Si Web3Forms falla (o no está configurado), el endpoint intenta FormSubmit.co automáticamente.
+Para probar SMTP en local antes de subir:
 
-Si AMBOS fallan, el usuario ve:
-> "No pudimos enviar el mensaje ahora mismo. Escríbenos directamente a dosaroscontact@gmail.com y te respondemos."
+1. Crea archivo `.env.local` en raíz del proyecto:
 
-Esto evita que pierdas leads aunque haya outages.
+```
+SMTP_HOST=mailsrv1.dondominio.com
+SMTP_PORT=587
+SMTP_USER=contact@dosaros.com
+SMTP_PASS=tu-contraseña-aqui
+CONTACT_EMAIL=contact@dosaros.com
+```
+
+2. `npm run dev`
+3. Visita `http://localhost:3000/contact` y prueba
+
+⚠️ `.env.local` está en `.gitignore` (NO se sube a GitHub). Si lo creas, no lo commitees nunca.
+
+---
+
+## 🔧 Fallbacks Configurados
+
+### Web3Forms (opcional, 250 envíos/mes)
+- Var: `WEB3FORMS_ACCESS_KEY`
+- Setup: https://web3forms.com
+- Usado si SMTP no está configurado o falla
+
+### FormSubmit (último recurso)
+- Sin configuración necesaria
+- Va a `dosaroscontact@gmail.com` (gmail personal)
+- A veces caído (522), no fiable para producción
 
 ---
 
 ## 🚨 Troubleshooting
 
-### Error: "Error al enviar el mensaje"
+### Email no llega tras configurar SMTP
 
-**Causa más común**: Web3Forms access key no configurado en Vercel.
+1. **Revisar carpeta spam** del destinatario
+2. **Revisar logs Vercel**: Deployments → último → Functions → `/api/contact`
+3. **Confirmar credenciales SMTP** son correctas
+4. **Verificar email account activa** en DonDominio
 
-**Solución**:
-1. Verificar `WEB3FORMS_ACCESS_KEY` existe en Vercel env vars
-2. Verificar que está en environment `Production`
-3. Hacer redeploy si acabas de añadirlo
+### Error "Invalid login"
 
-### Error 522 desde FormSubmit
+- Contraseña incorrecta o expirada
+- Verifica copy-paste sin espacios
+- DonDominio puede requerir "contraseñas de aplicación" si tienes 2FA
 
-FormSubmit.co tiene caídas frecuentes (Cloudflare 522). Por eso usamos Web3Forms como primario.
+### Error "Connection timeout"
 
-### Email no llega a la bandeja
+- Puerto bloqueado por Vercel (raro, suelen permitir 587/465)
+- Probar puerto alternativo: cambiar `SMTP_PORT` a `465`
 
-1. Revisar carpeta **Spam**
-2. Verificar que activaste el email en el proveedor (Web3Forms te envía un confirmation email la primera vez)
-3. Ver logs en Vercel: `Deployments → [last] → Functions → /api/contact`
+### Email llega pero como spam
 
-### Form se quedaba colgado
-
-Antes del fix de 2026-05-18, FormSubmit caído provocaba que el form mostrara error genérico.
-
-Ahora el fallback es:
-- Web3Forms → FormSubmit → error UI con email manual
+- DonDominio incluye SPF en los DNS (ya lo vimos: `v=spf1 include:spf.dondominio.com`)
+- Verificar que SPF está activo en DonDominio
+- Considerar añadir DKIM (más config en DonDominio)
 
 ---
 
-## 📋 Datos del Form
+## 📋 Datos del Email Enviado
 
-Campos enviados al destinatario:
+| Campo | Contenido |
+|-------|-----------|
+| **From** | `"DOS AROS Contact" <contact@dosaros.com>` |
+| **To** | `contact@dosaros.com` (o CONTACT_EMAIL) |
+| **Reply-To** | email del visitante (para responder directo) |
+| **Subject** | `Nuevo mensaje DOS AROS — [nombre]` |
+| **Body** | HTML branded con paleta DOS AROS + texto plano |
 
-| Campo | Valor enviado |
-|-------|---------------|
-| Subject | `Nuevo mensaje DOS AROS — [nombre]` |
-| Name | nombre del visitante |
-| Email | email del visitante |
-| Message | mensaje |
-| Origen | `from DOS AROS Contact Form` |
+### Body HTML incluye
 
-### Pre-fill por URL
+- Header con logo "DOS AROS" naranja sobre azul
+- Tabla con: Nombre, Email (clickeable), Mensaje
+- Footer con link a dosaros.com
+- Branding completo
 
-Si el usuario viene de `/productos`, el form pre-rellena el mensaje:
-```
-Hola, me interesa: Camiseta Hombre Crema.
-¿Cuáles son las opciones disponibles (talla, stock) y el precio? Gracias.
-```
+---
 
-Esto se trackea en GA4 como `form_submitted` con `source_product` parameter.
+## 🔒 Seguridad
+
+- ✅ HTML escapado para prevenir XSS
+- ✅ Validación de email
+- ✅ Campos requeridos verificados
+- ✅ `SMTP_PASS` solo en Production (no en preview/dev)
+- ✅ Reply-To = email visitante (permite responder sin exponer remitente)
 
 ---
 
@@ -138,6 +195,6 @@ Esto se trackea en GA4 como `form_submitted` con `source_product` parameter.
 
 - Código: `app/api/contact/route.ts`
 - Component: `components/ContactForm.tsx`
-- Web3Forms docs: https://docs.web3forms.com
-- FormSubmit docs: https://formsubmit.co
+- DonDominio SMTP: https://www.dondominio.com/help/es/article/2/cliente-correo-pop3-imap-smtp/
+- Nodemailer docs: https://nodemailer.com
 - [[Analytics Tracking Plan|📊 Tracking eventos]]
