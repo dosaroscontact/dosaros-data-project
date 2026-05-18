@@ -4,6 +4,8 @@
 **Fecha**: 2026-05-18
 **Objetivo**: Atribuir cada visita a su plataforma de origen exacta
 
+> 🎯 **TIP**: Tienes URLs cortas listas. En vez de pegar la URL UTM completa, usa `dosaros.com/r/<slug>` que redirige automáticamente. Lista al final del doc.
+
 ---
 
 ## 📚 Convención UTM Establecida
@@ -266,8 +268,70 @@ Antes del lunes 08:30:
 
 ---
 
+---
+
+## ⚡ URLs Cortas (Recomendado para X)
+
+Tienes redirector activo en `dosaros.com/r/<slug>`. **Pega la versión corta, GA4 lee igual los UTMs**.
+
+### Día 1 (DROP)
+| Slug corto | Plataforma · Formato |
+|------------|---------------------|
+| `dosaros.com/r/d1-x` | X post |
+| `dosaros.com/r/d1-ig` | IG feed |
+| `dosaros.com/r/d1-story` | IG Story |
+| `dosaros.com/r/d1-wa` | WhatsApp Status |
+| `dosaros.com/r/d1-reel` | IG Reel |
+| `dosaros.com/r/d1-xvideo` | X video |
+
+### Día 2 (Thread X)
+| Slug | Destino |
+|------|---------|
+| `dosaros.com/r/d2-analisis` | /analisis |
+| `dosaros.com/r/d2-productos` | /productos |
+| `dosaros.com/r/d2-compes` | /competiciones |
+| `dosaros.com/r/d2-cierre` | / |
+| `dosaros.com/r/d2-story` | IG Story día 2 |
+
+### Día 3-7
+| Slug | Plataforma · Acción |
+|------|---------------------|
+| `dosaros.com/r/d3-reel` | IG Reel productos |
+| `dosaros.com/r/d3-analisis` | X análisis del día |
+| `dosaros.com/r/d4-preview` | X EuroLeague preview |
+| `dosaros.com/r/d4-recap` | IG Story recap |
+| `dosaros.com/r/d5-weekly` | X resumen semanal |
+| `dosaros.com/r/d5-carousel` | IG carrusel productos |
+| `dosaros.com/r/d5-repost-ig` | IG Story repost |
+| `dosaros.com/r/d5-repost-wa` | WhatsApp repost |
+| `dosaros.com/r/d6-reel` | IG Reel catálogo |
+| `dosaros.com/r/d7-summary` | X thread semanal |
+| `dosaros.com/r/d7-poll` | IG Story encuesta |
+
+### Bio Links (permanentes)
+| Slug | Uso |
+|------|-----|
+| `dosaros.com/r/ig` | Bio Instagram |
+| `dosaros.com/r/x` | Bio X / Twitter |
+| `dosaros.com/r/wa` | WhatsApp share |
+
+### Cómo se ve en GA4
+Cuando alguien hace click en `dosaros.com/r/d1-x`, GA4 registra:
+- `source: twitter`
+- `medium: organic_post`
+- `campaign: launch_2026_05`
+- `content: day1_drop`
+
+Mismo dato que la URL larga, pero pega bonito en redes.
+
+### Añadir slugs nuevos
+Editar `next.config.js` en la sección `REDIRECTS`. Push a main → activo en ~2 min.
+
+---
+
 ## 🔗 Referencias
 
 - Plan completo: [[Launch Social Plan]]
 - Tracking events: [[Analytics Tracking Plan]]
 - Production status: [[../Project Root/STATUS]]
+- Config: `next.config.js`
